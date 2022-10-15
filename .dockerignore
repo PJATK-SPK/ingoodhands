@@ -1,0 +1,2 @@
+# Exclude node modules in every level
+**/node_modules
