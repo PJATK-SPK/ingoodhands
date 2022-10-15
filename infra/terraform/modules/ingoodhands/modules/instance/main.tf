@@ -1,6 +1,7 @@
 resource "google_project_service" "project" {
   project = var.google-project
   service = "compute.googleapis.com"
+  disable_on_destroy = false
 }
 
 resource "google_compute_instance" "main" {
