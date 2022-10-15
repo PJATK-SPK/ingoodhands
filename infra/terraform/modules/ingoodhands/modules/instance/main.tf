@@ -27,6 +27,11 @@ resource "google_compute_instance" "main" {
     email  = google_service_account.service_account.email
     scopes = ["cloud-platform"]
   }
+  metadata = {
+    ssh-keys = file("${path.module}/keys/marcel.pub")
+  }
+  #metadata_startup_script = file("../../../../../../docker-compose.cloud.yml")
+  //metadata_startup_script = "curl -sSL https://get.docker.com/ | sudo sh | sudo usermod -aG docker indagoodhandsdev"
   }
 
 resource "google_compute_address" "static" {
