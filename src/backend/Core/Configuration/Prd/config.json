@@ -1,0 +1,14 @@
+﻿{
+  "authorization": {
+    "authority": "https://dev-ucasdm13.us.auth0.com/",
+    "audience": "https://starter.com/",
+    "clientId": "YT06XmzPs...............nNkPKNG",
+    "scopes": "openid profile offline_access email api"
+  },
+  "connectionStrings": {
+    "database": "User ID=AWS_POSTGRES_USER;Password=AWS_POSTGRES_PASS;Database=starter;Host=AWS_POSTGRES_HOST;Port=AWS_POSTGRES_PORT;Connection Lifetime=0;"
+  },
+  "urls": {
+    "frontend": "https://starter.asdas.pl/"
+  }
+}
