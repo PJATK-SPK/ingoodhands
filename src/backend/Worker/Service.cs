@@ -1,12 +1,16 @@
+using Core.Database;
+
 namespace Worker
 {
     public class Service : BackgroundService
     {
         private readonly ILogger<Service> _logger;
 
-        public Service(ILogger<Service> logger)
+        public Service(ILogger<Service> logger, AppDbContext dbContext)
         {
             _logger = logger;
+
+            var test = dbContext.Users.ToList();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
