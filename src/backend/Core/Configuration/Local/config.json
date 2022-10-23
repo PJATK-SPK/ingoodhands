@@ -6,7 +6,7 @@
     "scopes": "openid profile offline_access email api"
   },
   "connectionStrings": {
-    "database": "User ID=postgres;Password=postgres;Database=MYDB;Host=localhost;Port=5432;Connection Lifetime=0;"
+    "database": "User ID=postgres;Password=ingoodhands;Database=in_good_hands;Host=localhost;Port=5432;Connection Lifetime=0;"
   },
   "urls": {
     "frontend": "http://localhost:4200/"
