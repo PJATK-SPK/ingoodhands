@@ -26,6 +26,6 @@ namespace Core.Database.Base
                    Status == entity.Status;
         }
         public override int GetHashCode()
-            => HashCode.Combine(base.GetHashCode(), UpdateUserId, UpdatedAt, Status);
+            => HashCode.Combine(Id, UpdateUserId, UpdatedAt, Status);
     }
 }

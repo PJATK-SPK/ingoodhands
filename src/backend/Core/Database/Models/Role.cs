@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Models
 {
-    public class Permission : DbEntity, IEntityTypeConfiguration<Permission>
+    public class Role : DbEntity, IEntityTypeConfiguration<Role>
     {
-        public PermissionName Name { get; set; }
+        public RoleName Name { get; set; }
         public List<RolePermission>? RolePermissions { get; set; }
 
-        public void Configure(EntityTypeBuilder<Permission> builder)
-           => new PermissionConfig<Permission>().Configure(builder);
+        public void Configure(EntityTypeBuilder<Role> builder)
+           => new RoleConfig<Role>().Configure(builder);
 
         public override int GetHashCode()
             => HashCode.Combine(base.GetHashCode(), Name);

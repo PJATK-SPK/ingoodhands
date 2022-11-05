@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Models
 {
-    public class AuthUser : DbEntity, IEntityTypeConfiguration<AuthUser>
+    public class Auth0User : DbEntity, IEntityTypeConfiguration<Auth0User>
     {
         public string FirstName { get; set; } = default!;
         public string? LastName { get; set; }
@@ -15,17 +15,8 @@ namespace Core.Database.Models
         public User User { get; set; } = default!;
         public long UserId { get; set; } = default!;
 
-        public void Configure(EntityTypeBuilder<AuthUser> builder)
-            => new AuthUserConfig<AuthUser>().Configure(builder);
-
-        public override bool Equals(object? obj)
-            => obj is AuthUser compare &&
-                FirstName == compare.FirstName &&
-                LastName == compare.LastName &&
-                Nickname == compare.Nickname &&
-                Email == compare.Email &&
-                UserId == compare.UserId &&
-                Identifier == compare.Identifier;
+        public void Configure(EntityTypeBuilder<Auth0User> builder)
+            => new Auth0UserConfig<Auth0User>().Configure(builder);
 
         public override int GetHashCode()
             => HashCode.Combine(

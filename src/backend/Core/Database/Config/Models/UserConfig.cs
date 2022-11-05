@@ -17,7 +17,6 @@ namespace Core.Database.Config.Models
             builder.Property(c => c.LastName).HasMaxLength(50);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(254);
             builder.HasIndex(c => c.Email).IsUnique().HasDatabaseName("users_email_idx");
-            builder.Property(c => c.Locale).IsRequired().HasMaxLength(20);
         }
     }
 }

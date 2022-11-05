@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Config.Models
 {
-    public class AuthUserConfig<TBase> : IEntityTypeConfiguration<TBase>
-    where TBase : AuthUser
+    public class Auth0UserConfig<TBase> : IEntityTypeConfiguration<TBase>
+    where TBase : Auth0User
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
@@ -20,7 +20,7 @@ namespace Core.Database.Config.Models
             builder.Property(c => c.Identifier).IsRequired().HasMaxLength(80);
             builder.HasUniqueConstraint(c => c.Identifier);
             builder.Property(c => c.UserId).IsRequired();
-            builder.HasOne(c => c.User).WithMany(c => (IEnumerable<TBase>?)c.AuthUsers).HasForeignKey(c => c.UserId).HasConstraintName("auth_users_user_id_fkey");
+            builder.HasOne(c => c.User).WithMany(c => (IEnumerable<TBase>?)c.Auth0Users).HasForeignKey(c => c.UserId).HasConstraintName("auth_users_user_id_fkey");
             builder.HasIndex(c => new { c.Status, c.Identifier }).HasDatabaseName("auth_users_status_identifier_idx");
         }
     }

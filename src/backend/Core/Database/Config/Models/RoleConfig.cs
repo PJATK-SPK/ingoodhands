@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Config.Models
 {
-    public class PermissionConfig<TBase> : IEntityTypeConfiguration<TBase>
-    where TBase : Permission
+    public class RoleConfig<TBase> : IEntityTypeConfiguration<TBase>
+    where TBase : Role
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
             new DbEntityConfig<TBase>().Configure(builder);
-            builder.ToTable("permissions", "core");
-            builder.Property(c => c.Name).IsRequired().HasMaxLength(25).HasConversion(c => c.ToString(), c => Enum.Parse<PermissionName>(c!));
+            builder.ToTable("roles", "core");
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(25).HasConversion(c => c.ToString(), c => Enum.Parse<RoleName>(c!));
             builder.HasUniqueConstraint(c => c.Name);
         }
     }
