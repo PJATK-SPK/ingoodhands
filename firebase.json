@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "src/frontend/dist/ingoodhands",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

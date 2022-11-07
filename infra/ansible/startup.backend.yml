@@ -1,9 +1,0 @@
-- hosts: backend
-
-  tasks:
-    - name: Update & upgrade machine via apt
-      shell: |
-        sudo apt-get update -y
-        sudo apt-get upgrade -y
-      args:
-        executable: /bin/bash
