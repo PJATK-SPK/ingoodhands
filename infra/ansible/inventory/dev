@@ -1,2 +1,0 @@
-[backend]
-34.107.115.121 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
