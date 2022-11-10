@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.8.2'
+        with:
+          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
+
       - name: Build, tag and push Docker image
         run: |
           ./infra/scripts/push_images.sh $SERVICE
