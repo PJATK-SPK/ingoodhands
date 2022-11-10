@@ -1,11 +1,8 @@
-name: "Build deploy Docker image"
+name: "Build deploy to Firebase"
 
 on:
   workflow_dispatch:
-    inputs:
-      service:
-        required: true
-        type: string
+
 
 permissions:
   contents: read
@@ -26,4 +23,12 @@ jobs:
 
       - name: Build, tag and push Docker image
         run: |
-          ./infra/scripts/push_images.sh $SERVICE
+          npm i -g @angular/cli
+
+          npm ci
+
+          ng build --configuration=production
+          
+          firebase login
+          
+          firebase deploy
