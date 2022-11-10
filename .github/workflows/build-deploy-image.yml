@@ -14,6 +14,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SERVICE: ${{ inputs.service }}
     steps:
       - uses: actions/checkout@v3
 
+      - name: Build, tag and push Docker image
+        run: |
+          ./infra/scripts/push_images.sh $SERVICE
