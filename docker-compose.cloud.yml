@@ -3,6 +3,7 @@ version: '3.8'
 services:
   frontend:
     image: frontend
+    platform: linux/amd64
     build:
       context: .
       dockerfile: src/frontend/Dockerfile
@@ -11,12 +12,14 @@ services:
 
   backend:
     image: backend
+    platform: linux/amd64
     build:
       context: .
       dockerfile: src/backend/Dockerfile
 
   postgres:
     image: postgres:14
+    platform: linux/amd64
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:

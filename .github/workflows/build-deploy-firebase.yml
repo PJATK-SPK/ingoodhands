@@ -1,0 +1,34 @@
+name: "Build deploy to Firebase"
+
+on:
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SERVICE: ${{ inputs.service }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.8.2'
+        with:
+          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
+
+      - name: Build, tag and push Docker image
+        run: |
+          npm i -g @angular/cli
+
+          npm ci
+
+          ng build --configuration=production
+          
+          firebase login
+          
+          firebase deploy
