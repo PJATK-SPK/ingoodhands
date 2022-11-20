@@ -1,5 +1,4 @@
 using Core.Auth0;
-using Core.WebApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,20 +10,20 @@ namespace WebApi.Controllers;
 [Route("test")]
 public class TestController : ControllerBase
 {
-    private readonly ICurrentUserService _webApiCurrentUserService;
+    private readonly ICurrentUserService _currentUserService;
 
-    public TestController(ICurrentUserService webApiCurrentUserService)
+    public TestController(ICurrentUserService currentUserService)
     {
-        _webApiCurrentUserService = webApiCurrentUserService;
+        _currentUserService = currentUserService;
     }
 
     [Authorize]
     [HttpGet("user-info")]
     public async Task<CurrentUserInfo> GetUserInfo()
     {
-        var email = _webApiCurrentUserService.GetUserEmail();
-        var identifier = _webApiCurrentUserService.GetUserAuthIdentifier();
-        var info = await _webApiCurrentUserService.GetUserInfo();
+        var email = _currentUserService.GetUserEmail();
+        var identifier = _currentUserService.GetUserAuthIdentifier();
+        var info = await _currentUserService.GetUserInfo();
         return info;
     }
 

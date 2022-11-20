@@ -8,7 +8,7 @@ namespace Core.Database
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; } = default!;
-        public DbSet<Auth0User> AuthUsers { get; set; } = default!;
+        public DbSet<Auth0User> Auth0Users { get; set; } = default!;
         public DbSet<Permission> Permissions { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

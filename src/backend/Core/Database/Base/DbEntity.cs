@@ -1,5 +1,4 @@
-﻿using Core.Database.Config;
-using Core.Database.Config.Base;
+﻿using Core.Database.Config.Base;
 using Core.Database.Enums;
 using Core.Database.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -10,7 +9,7 @@ namespace Core.Database.Base
     {
         public long Id { get; set; }
         public User? UpdateUser { get; set; }
-        public long UpdateUserId { get; set; }
+        public long? UpdateUserId { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DbEntityStatus Status { get; set; }
 

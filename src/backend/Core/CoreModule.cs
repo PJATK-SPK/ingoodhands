@@ -25,7 +25,7 @@ namespace Core
         protected override void Load(ContainerBuilder builder)
         {
             InjectAppConfiguration(builder);
-            InjectEntityFramework(builder);
+            AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().ConnectionStrings.Database);
 
             if (_registerWebApiSerivces)
             {
@@ -36,19 +36,6 @@ namespace Core
         private void InjectAppConfiguration(ContainerBuilder builder)
         {
             builder.RegisterInstance(ConfigurationReader.Get()).SingleInstance();
-        }
-
-        private void InjectEntityFramework(ContainerBuilder builder)
-        {
-            builder.Register(x =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-                optionsBuilder.UseNpgsql(ConfigurationReader.Get().ConnectionStrings.Database);
-                optionsBuilder.UseSnakeCaseNamingConvention();
-                var result = new AppDbContext(optionsBuilder.Options);
-                result.Database.Migrate();
-                return result;
-            }).InstancePerLifetimeScope();
         }
 
         private void RegisterWebApiServices(ContainerBuilder builder)
