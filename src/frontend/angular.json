@@ -28,7 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/shared/scss/theme.scss",
+              "src/app/shared/scss/styles.scss",
+              "src/app/shared/scss/bootstrap-grid.css"
             ],
             "scripts": []
           },

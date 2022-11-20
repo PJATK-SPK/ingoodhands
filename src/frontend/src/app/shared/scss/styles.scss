@@ -1,0 +1,46 @@
+// Handle 125% and 150% Windows 10 Font Scaling
+@media (min-resolution: 120dpi) {
+    html {
+        font-size: 80%;
+    }
+}
+
+html,
+body {
+    height: calc(100% - 35px);
+}
+
+.mat-tooltip {
+    font-size: 14px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+}
+
+table.mat-table,
+table {
+    width: 100%;
+}
+
+.mat-option-text {
+    font-size: 12px;
+}
+
+body {
+    margin: 0;
+    font-family: Sora, "Helvetica Neue", sans-serif;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mat-sidenav-container {
+    height: 100%;
+    display: flex;
+    flex: 1 1 auto;
+}
