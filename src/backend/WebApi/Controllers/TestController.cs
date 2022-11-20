@@ -11,9 +11,9 @@ namespace WebApi.Controllers;
 [Route("test")]
 public class TestController : ControllerBase
 {
-    private readonly WebApiCurrentUserService _webApiCurrentUserService;
+    private readonly ICurrentUserService _webApiCurrentUserService;
 
-    public TestController(WebApiCurrentUserService webApiCurrentUserService)
+    public TestController(ICurrentUserService webApiCurrentUserService)
     {
         _webApiCurrentUserService = webApiCurrentUserService;
     }

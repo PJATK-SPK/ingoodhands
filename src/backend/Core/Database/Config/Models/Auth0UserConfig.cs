@@ -12,7 +12,7 @@ namespace Core.Database.Config.Models
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
             new DbEntityConfig<TBase>().Configure(builder);
-            builder.ToTable("auth_users", "core");
+            builder.ToTable("auth0_users", "core");
             builder.Property(c => c.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(c => c.LastName).HasMaxLength(50);
             builder.Property(c => c.Nickname).IsRequired().HasMaxLength(50);
