@@ -1,6 +1,7 @@
 name: "Build deploy to Firebase"
 
 on:
+  pull_request:
   workflow_dispatch:
 
 
@@ -21,14 +22,25 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
-      - name: Build, tag and push Docker image
+      - name: Generate env variables and login to Firebase
         run: |
+          echo "${{ secrets.CICD_SA_GCP_JSON_KEY }}" > gcloud.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud.json" >> GITHUB_ENV
+
+      - name: Install dependencies, build and deploy to Firebase
+        run: |
+          cd ./src/frontend
+          
           npm i -g @angular/cli
 
+          npm install -g firebase-tools
+          
           npm ci
 
           ng build --configuration=production
           
-          firebase login
+          cd ../..
           
-          firebase deploy
+          firebase deploy     
+          
+         
