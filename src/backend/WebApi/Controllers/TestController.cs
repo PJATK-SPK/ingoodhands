@@ -1,5 +1,5 @@
-using Core.Auth;
-using Core.Auth.Models;
+using Core.Auth0;
+using Core.WebApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

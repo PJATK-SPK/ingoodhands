@@ -36,7 +36,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Auth\" />
 		<Folder Include="Migrations\" />
 		<Folder Include="Swagger\" />
 	</ItemGroup>

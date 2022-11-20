@@ -1,6 +1,4 @@
-﻿using Core.Auth.Models;
-
-namespace Core.Auth.Interfaces
+﻿namespace Core.Auth0
 {
     public interface ICurrentUserService
     {

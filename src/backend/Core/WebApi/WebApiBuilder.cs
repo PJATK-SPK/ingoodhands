@@ -8,10 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Text.Json;
 using Core.Swagger;
-using Core.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Core.ConfigSetup;
+using Core.WebApi.Auth;
 
 namespace Core.WebApi
 {

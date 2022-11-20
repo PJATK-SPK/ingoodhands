@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Core.Auth.Models
+namespace Core.Auth0
 {
     public class CurrentUserInfo
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Auth
+namespace Core.WebApi.Auth
 {
     internal static class WebApiBuilderOAuthExtensions
     {

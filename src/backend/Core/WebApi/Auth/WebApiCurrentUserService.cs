@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Auth0;
+using Microsoft.AspNetCore.Http;
 using RestSharp;
 using System.Security.Claims;
-using Core.Auth.Interfaces;
-using Core.Auth.Models;
 
-namespace Core.Auth
+namespace Core.WebApi.Auth
 {
     public class WebApiCurrentUserService : ICurrentUserService
     {
