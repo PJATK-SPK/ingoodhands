@@ -10,8 +10,10 @@ namespace Core.Database.Config.Models
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
-            new DbEntityConfig<TBase>().Configure(builder);
             builder.ToTable("users", "core");
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Property(c => c.Status).IsRequired();
             builder.Property(c => c.Status).IsRequired();
             builder.Property(c => c.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(c => c.LastName).HasMaxLength(50);

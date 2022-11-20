@@ -1,12 +1,14 @@
-﻿using Core.Database.Base;
-using Core.Database.Config.Models;
+﻿using Core.Database.Config.Models;
+using Core.Database.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Models
 {
-    public class User : DbEntity, IEntityTypeConfiguration<User>
+    public class User : IEntityTypeConfiguration<User>
     {
+        public long Id { get; set; }
+        public DbEntityStatus Status { get; set; }
         public string FirstName { get; set; } = default!;
         public string? LastName { get; set; }
         public string Email { get; set; } = default!;
