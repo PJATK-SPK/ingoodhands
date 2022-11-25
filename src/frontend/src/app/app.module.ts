@@ -1,12 +1,9 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { LuxonDateAdapter, MAT_LUXON_DATE_ADAPTER_OPTIONS, MAT_LUXON_DATE_FORMATS } from '@angular/material-luxon-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { environment } from 'src/environments/environment';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
@@ -46,14 +43,6 @@ import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
 
   ],
   providers: [
-    { provide: DateAdapter, useClass: LuxonDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_LUXON_DATE_FORMATS },
-
-    {
-      provide: MAT_LUXON_DATE_ADAPTER_OPTIONS,
-      useValue: 1, // Monday
-    },
-
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
