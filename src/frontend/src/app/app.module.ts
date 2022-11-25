@@ -8,6 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
 
+import { SidebarModule } from 'primeng/sidebar';
+import { RippleModule } from 'primeng/ripple';
+import { StyleClassModule } from 'primeng/styleclass';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,9 +22,14 @@ import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-
+    SidebarModule,
+    RippleModule,
     HttpClientModule,
     RouterModule,
+    StyleClassModule,
+    InputTextModule,
+    ButtonModule,
+    CardModule,
 
     AuthModule.forRoot({
       config: {
