@@ -1,0 +1,12 @@
+<div class="min-h-screen flex flex-column surface-ground">
+    <app-navbar></app-navbar>
+
+    <div class="flex relative lg:static p-5 flex-auto">
+        <app-sidebar></app-sidebar>
+        <div class="flex flex-column flex-auto max-w-screen">
+            <div class="border-2 border-dashed surface-border border-round surface-section flex-auto lg:ml-5">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

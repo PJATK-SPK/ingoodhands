@@ -8,6 +8,8 @@ export const WANTS_TO_BE_LOGGED_IN_KEY = 'wantsToBeLoggedIn';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
+    public isLoggedIn = false;
+
     constructor(public readonly oidc: OidcSecurityService) { }
 
     public get wantsToBeLoggedIn(): boolean {
