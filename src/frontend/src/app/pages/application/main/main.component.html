@@ -1,0 +1,38 @@
+<div class="p-3 flex justify-content-between flex-wrap">
+
+    <div class="flex lg:flex-none align-items-center justify-content-center font-bold">
+        Is logged in: {{auth.isLoggedIn}}
+    </div>
+
+    <div class="flex lg:flex-none align-items-center justify-content-center">
+        <button pButton class="p-button-sm" *ngIf="!auth.isLoggedIn" (click)="login()" type="button"
+            label="Login"></button>
+        <button pButton class="p-button-sm" *ngIf="auth.isLoggedIn" (click)="logout()" type="button"
+            label="Logout"></button>
+    </div>
+
+</div>
+
+<div class="grid">
+    <div class="col-12 lg:col-3">
+        <div class="p-3">
+            <b>No auth check (weather) -></b>
+
+            <p-card>
+                {{noAuth | async | json}}
+            </p-card>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-9">
+        <div class="p-3">
+            <b>Auth check -></b>
+
+            <p-card>
+                <div class="max-w-20rem" style="word-wrap: break-word">
+                    {{userinfo | async | json}}
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>

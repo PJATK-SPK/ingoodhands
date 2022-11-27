@@ -1,8 +1,14 @@
+@import "primeflex/primeflex.css";
+
 // Handle 125% and 150% Windows 10 Font Scaling
 @media (min-resolution: 120dpi) {
     html {
         font-size: 80%;
     }
+}
+
+a {
+    text-decoration: none;
 }
 
 html,
@@ -27,7 +33,9 @@ table {
 
 body {
     margin: 0;
-    font-family: Sora, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .no-select {

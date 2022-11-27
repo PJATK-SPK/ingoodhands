@@ -1,0 +1,38 @@
+<div class="surface-overlay py-3 px-6 flex align-items-center justify-content-between relative lg:static">
+    <a pRipple class="cursor-pointer inline-flex align-items-center justify-content-center lg:hidden text-700"
+        pStyleClass="#app-sidebar-12" enterClass="hidden" enterActiveClass="fadeinleft" leaveToClass="hidden"
+        leaveActiveClass="fadeoutleft" [hideOnOutsideClick]="true">
+        <i class="pi pi-bars text-4xl"></i>
+    </a>
+    <img src="assets/logo.svg" alt="ingoodhands" height="40" class="mr-0 lg:mr-6">
+    <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden"
+        leaveToClass="hidden" [hideOnOutsideClick]="true">
+        <i class="pi pi-ellipsis-v text-2xl"></i>
+    </a>
+    <ul
+        class="list-none p-3 lg:p-0 m-0 lg:align-items-center select-none flex-column lg:flex-row absolute hidden lg:flex lg:static surface-overlay right-0 top-100 z-1 shadow-2 lg:shadow-none">
+        <li class="lg:mr-1">
+            <a pRipple
+                class="flex p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
+                <i class="pi pi-inbox text-base lg:text-2xl mr-2 lg:mr-0"></i>
+                <span class="block lg:hidden font-medium">Inbox</span>
+            </a>
+        </li>
+        <li class="lg:mr-1">
+            <a pRipple
+                class="flex p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
+                <i class="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0" pBadge severity="danger"></i>
+                <span class="block lg:hidden font-medium">Notifications</span>
+            </a>
+        </li>
+        <li class="border-top-1 surface-border lg:border-top-none lg:mt-0 mt-2 lg:pt-0 pt-2">
+            <a pRipple
+                class="flex p-3 align-items-center hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
+                <img [src]="picture | async" class="mr-3 lg:mr-0" style="width: 25px; height: 25px" />
+                <div class="block lg:hidden">
+                    <div class="text-900 font-medium">{{ name | async }}</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -6,30 +6,19 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LayoutModule } from './layout/layout.module';
 import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
-
-import { SidebarModule } from 'primeng/sidebar';
-import { RippleModule } from 'primeng/ripple';
-import { StyleClassModule } from 'primeng/styleclass';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SidebarModule,
-    RippleModule,
     HttpClientModule,
     RouterModule,
-    StyleClassModule,
-    InputTextModule,
-    ButtonModule,
-    CardModule,
+    LayoutModule,
 
     AuthModule.forRoot({
       config: {
