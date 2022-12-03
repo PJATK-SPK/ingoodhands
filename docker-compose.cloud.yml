@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: src/backend/Dockerfile
+    ports:
+     - "5000:5000"
 
   postgres:
     image: postgres:14

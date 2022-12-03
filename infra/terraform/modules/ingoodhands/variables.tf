@@ -1,7 +1,7 @@
-variable "environment" {
+variable "google-project" {
   type = string
 }
 
-variable "google-project" {
+variable "region" {
   type = string
 }

@@ -1,11 +1,13 @@
 name: "Build push Docker image"
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/backend/**'
   workflow_dispatch:
-    inputs:
-      service:
-        required: true
-        type: string
+
 
 permissions:
   contents: read
@@ -19,11 +21,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 'Authenticate to Google Cloud'
+      - name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v0.8.2'
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
+      - name: Make backend uses prd config
+        run: |
+          echo "$( jq '.name = "Prd"' src/backend/Core/Configuration/environment.json )" > src/backend/Core/Configuration/environment.json
+
       - name: Build, tag and push Docker image
         run: |
-          ./infra/scripts/push_images.sh $SERVICE
+          ./infra/scripts/push_images.sh backend
+
+      - name: Deploy to Cloud Run
+        uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+          region: 'europe-west1'
+          service: 'backend'
+          image: 'europe-docker.pkg.dev/indagoodhandsdev/default-docker/backend'
