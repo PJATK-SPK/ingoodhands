@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   url: `https://indagoodhandsdev.web.app`,
-  api: `https://api.indagoodhandsdev.web.app`,
+  api: `https://backend-ka7w7ys4tq-ew.a.run.app`,
   auth: {
     authority: 'https://ingoodhands.eu.auth0.com',
     audience: 'ingoodhands',
