@@ -1,4 +1,8 @@
-﻿using Autofac;
+﻿using AuthService.BusinessLogic.PostLogin;
+using Autofac;
+using Core;
+using Core.Autofac;
+using Core.Database;
 
 namespace AuthService
 {
@@ -6,7 +10,9 @@ namespace AuthService
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterAsScoped<MyServiceClass>(); ...
+            builder.RegisterAsScoped<PostLoginAction>();
+            builder.RegisterAsScoped<UserDataValidationService>();
+            builder.RegisterAsScoped<UserCreationService>();
         }
     }
 }
