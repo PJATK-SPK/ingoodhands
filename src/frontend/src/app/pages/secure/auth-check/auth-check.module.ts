@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainComponent } from './main.component';
+import { AuthCheckComponent } from './auth-check.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
-    MainComponent
+    AuthCheckComponent
   ],
   imports: [
     CommonModule,
@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
   ],
   exports: [
-    MainComponent
+    AuthCheckComponent
   ]
 })
-export class MainModule { }
+export class AuthCheckModule { }

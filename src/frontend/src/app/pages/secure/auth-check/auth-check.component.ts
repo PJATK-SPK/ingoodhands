@@ -4,11 +4,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-auth-check',
+  templateUrl: './auth-check.component.html',
+  styleUrls: ['./auth-check.component.scss']
 })
-export class MainComponent {
+export class AuthCheckComponent {
 
   constructor(
     public readonly auth: AuthService,
