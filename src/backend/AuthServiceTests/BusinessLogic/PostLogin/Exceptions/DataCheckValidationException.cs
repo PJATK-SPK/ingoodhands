@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Exceptions
+namespace AuthService.BusinessLogic.PostLogin.Exceptions
 {
     public class DataCheckValidationException : Exception
     {

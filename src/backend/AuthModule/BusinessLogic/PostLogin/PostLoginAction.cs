@@ -19,7 +19,6 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly UserCreationService _userService;
         private readonly AppDbContext _appDbContext;
 
-
         public PostLoginAction(ICurrentUserService currentUserService, UserDataValidationService userDataValidationService, AppDbContext appDbContext, UserCreationService userService)
         {
             _currentUserService = currentUserService;
@@ -38,10 +37,7 @@ namespace AuthService.BusinessLogic.PostLogin
                 throw new DataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
             }
 
-            var user = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == auth0UserInfo.Email);
-            var auth0UserFromDatabase = await _appDbContext.Auth0Users.SingleOrDefaultAsync(c => c.Identifier == auth0UserInfo.Identifier);
-
-            var result = await _userService.CreateUserAndAddToDatabase(user, auth0UserFromDatabase, auth0UserInfo);
+            await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
             return new OkObjectResult(true);
         }

@@ -20,36 +20,11 @@ namespace AuthService.BusinessLogic.PostLogin
             _appDbContext = appDbContext;
         }
 
-        private User CreateUser(CurrentUserInfo currentAuth0UserInfo)
+        public async Task<User?> CreateUserAndAddToDatabase(CurrentUserInfo auth0UserInfo)
         {
-            return new User
-            {
-                Status = Core.Database.Enums.DbEntityStatus.Active,
-                FirstName = currentAuth0UserInfo.GivenName!,
-                LastName = currentAuth0UserInfo.FamilyName,
-                Email = currentAuth0UserInfo.Email!
-            };
-        }
+            var user = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == auth0UserInfo.Email);
+            var auth0UserFromDatabase = await _appDbContext.Auth0Users.SingleOrDefaultAsync(c => c.Identifier == auth0UserInfo.Identifier);
 
-        private Auth0User CreateAuth0User(CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
-        {
-            return new Auth0User
-            {
-                FirstName = currentAuth0UserInfo.GivenName!,
-                LastName = currentAuth0UserInfo.FamilyName,
-                Nickname = currentAuth0UserInfo.Nickname!,
-                UpdateUser = serviceUser,
-                UpdateUserId = serviceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                Email = currentAuth0UserInfo.Email!,
-                Identifier = currentAuth0UserInfo.Identifier!,
-                User = user,
-                UserId = user.Id
-            };
-        }
-
-        public async Task<User?> CreateUserAndAddToDatabase(User user, Auth0User auth0UserFromDatabase, CurrentUserInfo auth0UserInfo)
-        {
             var serviceUser = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == DbConstants.ServiceUserEmail);
             if (serviceUser == null)
             {
@@ -80,6 +55,33 @@ namespace AuthService.BusinessLogic.PostLogin
             }
 
             return user;
+        }
+        private User CreateUser(CurrentUserInfo currentAuth0UserInfo)
+        {
+            return new User
+            {
+                Status = Core.Database.Enums.DbEntityStatus.Active,
+                FirstName = currentAuth0UserInfo.GivenName!,
+                LastName = currentAuth0UserInfo.FamilyName,
+                Email = currentAuth0UserInfo.Email!
+            };
+        }
+
+        private Auth0User CreateAuth0User(CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
+        {
+            return new Auth0User
+            {
+                FirstName = currentAuth0UserInfo.GivenName!,
+                LastName = currentAuth0UserInfo.FamilyName,
+                Nickname = currentAuth0UserInfo.Nickname!,
+                UpdateUser = serviceUser,
+                UpdateUserId = serviceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                Email = currentAuth0UserInfo.Email!,
+                Identifier = currentAuth0UserInfo.Identifier!,
+                User = user,
+                UserId = user.Id
+            };
         }
     }
 }

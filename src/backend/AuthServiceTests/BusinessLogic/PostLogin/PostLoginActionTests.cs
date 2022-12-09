@@ -1,5 +1,6 @@
 ﻿using AuthService;
 using AuthService.BusinessLogic.PostLogin;
+using AuthService.BusinessLogic.PostLogin.Exceptions;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -57,9 +58,15 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {
-                Email = testingUser.Email,
+                Email = testingAuth0User.Email,
                 EmailVerified = true,
                 Identifier = testingAuth0User.Identifier,
+                GivenName = testingAuth0User.FirstName,
+                FamilyName = testingAuth0User.LastName,
+                Locale = "pl",
+                Name = testingAuth0User.FirstName + testingAuth0User.LastName,
+                Nickname = testingAuth0User.Nickname,
+                UpdatedAt = DateTime.UtcNow,
             });
             // Act
             var result = await action.Execute();
@@ -67,8 +74,8 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             // Assert
             Assert.AreEqual(testingUser.Auth0Users?[0], testingAuth0User);
             Assert.AreEqual(testingAuth0User.User, testingUser);
-            Assert.Equals(2, context.Users.Count());
-            Assert.Equals(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(1, context.Auth0Users.Count());
         }
 
         [TestMethod()]
@@ -99,8 +106,8 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
-            Assert.Equals(2, context.Users.Count());
-            Assert.Equals(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(1, context.Auth0Users.Count());
         }
 
         [TestMethod()]
@@ -139,8 +146,8 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
 
             // Assert
             Assert.AreEqual(context.Auth0Users.Single(x => x.Email == testingUser.Email)?.User, testingUser);
-            Assert.Equals(2, context.Users.Count());
-            Assert.Equals(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(1, context.Auth0Users.Count());
         }
 
         [TestMethod()]
@@ -184,24 +191,22 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
 
             // Assert
             Assert.AreEqual(context.Users.FirstOrDefault(x => x.Email == testingAuth0User.Email)?.Email, testingAuth0User.Email);
-            Assert.Equals(2, context.Users.Count());
-            Assert.Equals(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(1, context.Auth0Users.Count());
         }
 
         //[TestMethod()]
-        //public async Task PostLoginActionTest_UserNoAuth0UserYes()
+        //[ExpectedException(typeof(DataCheckValidationException))]
+        //public async Task PostLoginActionTest_UserDataValidationThrowsError()
         //{
         //    using var toolkit = new TestsToolkit(_usedModules);
         //    var context = toolkit.Resolve<AppDbContext>();
         //    var action = toolkit.Resolve<PostLoginAction>();
 
-
-        //    await context.SaveChangesAsync();
-
         //    toolkit.UpdateUserInfo(new CurrentUserInfo
         //    {
         //        Email = null,
-        //        EmailVerified = null,
+        //        EmailVerified = false,
         //        Identifier = null,
         //        GivenName = null,
         //        FamilyName = null,
@@ -211,13 +216,12 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
         //        UpdatedAt = DateTime.UtcNow,
         //    });
 
-        //    // Act
-        //    var result = await action.Execute();
+        //    //Act 
+        //    var exception = await Assert.ThrowsExceptionAsync<DataCheckValidationException>(() => action.Execute());
 
-        //    // Assert
-        //    Assert.AreEqual(context.Users.FirstOrDefault(x => x.Email == testingAuth0User.Email)?.Email, testingAuth0User.Email);
-        //    Assert.Equals(2, context.Users.Count());
-        //    Assert.Equals(1, context.Auth0Users.Count());
+        //    //Assert
+        //    // Assert.IsInstanceOfType(exception, typeof(DataCheckValidationException));
+        //    Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in PostLoginAction didn't pass validation", exception.Message);
         //}
     }
 }
