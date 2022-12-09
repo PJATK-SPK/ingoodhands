@@ -1,1 +1,28 @@
-<p>home works!</p>
+<div class="min-h-screen flex flex-column surface-ground">
+
+    <app-navbar></app-navbar>
+
+    <div class="separator"></div>
+
+    <div class="sm:hidden md:block lg:block xl:block">
+        <app-dinner></app-dinner>
+    </div>
+
+    <p-tabView>
+        <p-tabPanel header="Donate">
+            Donate
+        </p-tabPanel>
+        <p-tabPanel header="Request help">
+            Request help
+        </p-tabPanel>
+        <p-tabPanel header="Work">
+            Work
+        </p-tabPanel>
+    </p-tabView>
+
+    <div class="md:hidden">
+        <app-dinner></app-dinner>
+    </div>
+
+
+</div>

@@ -1,0 +1,17 @@
+<div class="surface-overlay py-3 px-3 flex align-items-center justify-content-between relative lg:static">
+    <img src="assets/logo.svg" alt="ingoodhands" height="40" class="mr-0 lg:mr-6">
+    <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden"
+        leaveToClass="hidden" [hideOnOutsideClick]="true">
+        <i class="pi pi-ellipsis-v text-2xl"></i>
+    </a>
+    <ul
+        class="list-none p-3 lg:p-0 m-0 lg:align-items-center select-none flex-column lg:flex-row absolute hidden lg:flex lg:static surface-overlay right-0 top-100 z-1 shadow-2 lg:shadow-none">
+        <li class="lg:mr-1">
+            <a pRipple (click)="login()"
+                class="flex p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
+                <i class="pi pi-sign-in text-base lg:text-2xl mr-2 lg:mr-0"></i>
+                <span class="block lg:hidden font-medium">{{ auth.isLoggedIn ? 'Login' : 'Continue'}}</span>
+            </a>
+        </li>
+    </ul>
+</div>
