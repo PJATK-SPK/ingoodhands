@@ -11,6 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\AuthModule\AuthService.csproj" />
 		<ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>
 
