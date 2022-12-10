@@ -1,7 +1,7 @@
 ﻿using Core.Auth0;
 using Core.Database;
 using Core.Database.Models;
-using Core.Exceptions;
+using AuthService.BusinessLogic.PostLogin.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,7 +34,7 @@ namespace AuthService.BusinessLogic.PostLogin
 
             if (!isUserInfoValid)
             {
-                throw new DataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
+                throw new PostLoginDataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
             }
 
             await _userService.CreateUserAndAddToDatabase(auth0UserInfo);

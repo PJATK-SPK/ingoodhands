@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuthService.BusinessLogic.PostLogin.Exceptions
 {
-    public class DataCheckValidationException : Exception
+    public class PostLoginDataCheckValidationException : Exception
     {
-        public DataCheckValidationException(string message)
+        public PostLoginDataCheckValidationException(string message)
          : base(String.Format("Data is invalid at: {0}", message))
         {
         }

@@ -195,33 +195,32 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             Assert.AreEqual(1, context.Auth0Users.Count());
         }
 
-        //[TestMethod()]
-        //[ExpectedException(typeof(DataCheckValidationException))]
-        //public async Task PostLoginActionTest_UserDataValidationThrowsError()
-        //{
-        //    using var toolkit = new TestsToolkit(_usedModules);
-        //    var context = toolkit.Resolve<AppDbContext>();
-        //    var action = toolkit.Resolve<PostLoginAction>();
+        [TestMethod()]
+        public async Task PostLoginActionTest_UserDataValidationThrowsError()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
 
-        //    toolkit.UpdateUserInfo(new CurrentUserInfo
-        //    {
-        //        Email = null,
-        //        EmailVerified = false,
-        //        Identifier = null,
-        //        GivenName = null,
-        //        FamilyName = null,
-        //        Locale = "pl",
-        //        Name = null,
-        //        Nickname = null,
-        //        UpdatedAt = DateTime.UtcNow,
-        //    });
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = null,
+                EmailVerified = false,
+                Identifier = null,
+                GivenName = null,
+                FamilyName = null,
+                Locale = "pl",
+                Name = null,
+                Nickname = null,
+                UpdatedAt = DateTime.UtcNow,
+            });
 
-        //    //Act 
-        //    var exception = await Assert.ThrowsExceptionAsync<DataCheckValidationException>(() => action.Execute());
+            //Act 
+            var exception = await Assert.ThrowsExceptionAsync<PostLoginDataCheckValidationException>(() => action.Execute());
 
-        //    //Assert
-        //    // Assert.IsInstanceOfType(exception, typeof(DataCheckValidationException));
-        //    Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in PostLoginAction didn't pass validation", exception.Message);
-        //}
+            //Assert
+            Assert.IsInstanceOfType(exception, typeof(PostLoginDataCheckValidationException));
+            Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in PostLoginAction didn't pass validation", exception.Message);
+        }
     }
 }
