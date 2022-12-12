@@ -1,4 +1,5 @@
-﻿using Core.Database.Models;
+﻿using Core.Database.Enums;
+using Core.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Database
@@ -22,6 +23,15 @@ namespace Core.Database
                     ).Contains("PJATK"));
 
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                Status = DbEntityStatus.Active,
+                FirstName = "Service",
+                LastName = "Service",
+                Email = DbConstants.ServiceUserEmail
+            });
         }
     }
 }
