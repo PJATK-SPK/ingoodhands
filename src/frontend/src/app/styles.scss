@@ -1,4 +1,5 @@
 @import "primeflex/primeflex.css";
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap:400,700');
 
 // Handle 125% and 150% Windows 10 Font Scaling
 @media (min-resolution: 120dpi) {
@@ -12,8 +13,13 @@ a {
 }
 
 html,
-body {
-    height: calc(100% - 35px);
+body,
+body .p-component {
+    font-family: 'Muli', sans-serif !important;
+}
+
+h1 {
+    color: black;
 }
 
 .mat-tooltip {
@@ -51,4 +57,29 @@ body {
     height: 100%;
     display: flex;
     flex: 1 1 auto;
+}
+
+.core-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .core-container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .core-container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .core-container {
+        width: 1170px;
+    }
 }
