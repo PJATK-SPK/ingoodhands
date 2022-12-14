@@ -20,16 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.8.2'
-        with:
-          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
-
-      - name: Generate env variables and login to Firebase
-        run: |
-          echo "${{ secrets.CICD_SA_GCP_JSON_KEY }}" > gcloud.json
-          echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud.json" >> GITHUB_ENV
-
       - name: Install dependencies, build
         run: |          
           npm i -g @angular/cli
@@ -39,8 +29,7 @@ jobs:
           npm ci
 
           ng build --configuration=production
-        working-directory: src/frontend
-
+        working-directory: ./src/frontend
 
       - name: Compress fe build files
         run: tar -cvf fe_artifact.tar ./build
