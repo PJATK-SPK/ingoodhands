@@ -30,7 +30,7 @@ jobs:
           echo "${{ secrets.CICD_SA_GCP_JSON_KEY }}" > gcloud.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud.json" >> GITHUB_ENV
 
-      - name: Install dependencies, build and deploy to Firebase
+      - name: Install dependencies, build
         run: |          
           npm i -g @angular/cli
 
@@ -44,10 +44,10 @@ jobs:
 
       - name: Compress fe build files
         run: tar -cvf fe_artifact.tar ./build
-        working-directory: src/frontend
+        working-directory: ./src/frontend
 
       - name: Upload fe artifact
         uses: actions/upload-artifact@v3
         with:
           name: fe-artifact
-          path: src/frontend/fe_artifact.tar
+          path: ./src/frontend/fe_artifact.tar

@@ -1,4 +1,4 @@
-name: "Build deploy to Firebase"
+name: "Deploy fe to Firebase"
 
 on:
   push:
