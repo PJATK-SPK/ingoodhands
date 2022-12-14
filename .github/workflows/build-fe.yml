@@ -1,4 +1,4 @@
-name: "Build deploy to Firebase"
+name: "Build and upload frontend artifact"
 
 on:
   push:
@@ -31,9 +31,7 @@ jobs:
           echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud.json" >> GITHUB_ENV
 
       - name: Install dependencies, build and deploy to Firebase
-        run: |
-          cd ./src/frontend
-          
+        run: |          
           npm i -g @angular/cli
 
           npm install -g firebase-tools
@@ -41,9 +39,15 @@ jobs:
           npm ci
 
           ng build --configuration=production
-          
-          cd ../..
-          
-          firebase deploy     
-          
-         
+        working-directory: src/frontend
+
+
+      - name: Compress fe build files
+        run: tar -cvf fe_artifact.tar ./build
+        working-directory: src/frontend
+
+      - name: Upload fe artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: fe-artifact
+          path: src/frontend/fe_artifact.tar

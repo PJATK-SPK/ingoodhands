@@ -1,13 +1,8 @@
-name: "Build push Docker image"
+name: "Build and push backend Docker image"
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/backend/**'
+  pull_request:
   workflow_dispatch:
-
 
 permissions:
   contents: read
@@ -16,8 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SERVICE: ${{ inputs.service }}
     steps:
       - uses: actions/checkout@v3
 
@@ -33,10 +26,3 @@ jobs:
       - name: Build, tag and push Docker image
         run: |
           ./infra/scripts/push_images.sh backend
-
-      - name: Deploy to Cloud Run
-        uses: 'google-github-actions/deploy-cloudrun@v1'
-        with:
-          region: 'europe-west1'
-          service: 'backend'
-          image: 'europe-docker.pkg.dev/indagoodhandsdev/default-docker/backend'
