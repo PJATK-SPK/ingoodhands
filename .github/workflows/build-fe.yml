@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-fe:
     runs-on: ubuntu-latest
     env:
       SERVICE: ${{ inputs.service }}

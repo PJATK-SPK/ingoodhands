@@ -14,7 +14,7 @@ permissions:
   actions: read
 
 jobs:
-  build:
+  deploy-fe:
     runs-on: ubuntu-latest
     env:
       SERVICE: ${{ inputs.service }}
@@ -24,6 +24,7 @@ jobs:
       - name: Download fe artifact
         uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: build-fe.yml
           name: fe-artifact
           path: .
 
