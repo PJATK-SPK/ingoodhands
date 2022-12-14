@@ -31,6 +31,10 @@ jobs:
       - name: Untar fe artifact
         run: tar -xvf fe_artifact.tar -C src/frontend
 
+      - name: Install firebase
+        run: |
+          npm install -g firebase-tools
+
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.8.2'
         with:

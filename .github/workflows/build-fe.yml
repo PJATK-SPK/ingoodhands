@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies, build
         run: |          
           npm i -g @angular/cli
-
-          npm install -g firebase-tools
           
           npm ci
 
