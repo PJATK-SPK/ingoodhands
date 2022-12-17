@@ -69,12 +69,8 @@ namespace Core.WebApi
             if (kernelConfig == null)
                 kernelConfig = ConfigurationReader.Get();
 
-            if (kernelConfig.Environment != ConfigurationEnvironment.Prd)
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.OAuthClientId(kernelConfig.Authorization.ClientId));
-            }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.OAuthClientId(kernelConfig.Authorization.ClientId));
             app.UsePathBase(new PathString(urlPrefix));
             app.UseHttpsRedirection();
             app.UseRouting();
