@@ -14,7 +14,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  deploy-be:
     runs-on: ubuntu-latest
     steps:
       - name: Authenticate to Google Cloud
