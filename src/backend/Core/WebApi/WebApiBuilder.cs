@@ -58,10 +58,7 @@ namespace Core.WebApi
                     options.JsonSerializerOptions.Converters.Add(new JsonDateTimeNullConverter());
                 });
             services.AddEndpointsApiExplorer();
-
-            if (kernelConfig.Environment != ConfigurationEnvironment.Prd)
-                services.SetupSwagger(kernelConfig);
-
+            services.SetupSwagger(kernelConfig);
             services.SetupAuth(kernelConfig);
 
             return kernelConfig;
