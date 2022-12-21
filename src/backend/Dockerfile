@@ -20,10 +20,6 @@ WORKDIR /app
 
 ENTRYPOINT ["dotnet", "test"]
 
-FROM build AS publish
-
-RUN dotnet publish -c release --no-build -o /app
-
 FROM  base AS final
 
 WORKDIR /app
