@@ -6,7 +6,6 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutModule } from './layout/layout.module';
 import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
-    LayoutModule,
 
     AuthModule.forRoot({
       config: {

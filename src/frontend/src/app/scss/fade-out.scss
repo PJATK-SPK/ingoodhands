@@ -1,0 +1,94 @@
+/*! Please set these properties before using:
+    height: 0px;
+    visibility: hidden;
+    max-height: your-value;
+*/
+@mixin fadeOut($time, $max-height) {
+    height: 0px;
+    visibility: hidden;
+    max-height: $max-height;
+
+    -webkit-animation: fadeout $time ease-in-out;
+    /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeout $time ease-in-out;
+    /* Firefox < 16 */
+    -ms-animation: fadeout $time ease-in-out;
+    /* Internet Explorer */
+    -o-animation: fadeout $time ease-in-out;
+    /* Opera < 12.1 */
+    animation: fadeout $time ease-in-out;
+}
+
+@keyframes fadeout {
+    from {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        height: 100%;
+        visibility: visible;
+        opacity: 0;
+    }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeout {
+    from {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        height: 100%;
+        visibility: visible;
+        opacity: 0;
+    }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeout {
+    from {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        height: 100%;
+        visibility: visible;
+        opacity: 0;
+    }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeout {
+    from {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        height: 100%;
+        visibility: visible;
+        opacity: 0;
+    }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeout {
+    from {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        height: 100%;
+        visibility: visible;
+        opacity: 0;
+    }
+}

@@ -35,4 +35,16 @@
             </p-card>
         </div>
     </div>
+
+    <div class="col-12 lg:col-12">
+        <div class="p-3">
+            <b>Db check -></b>
+
+            <p-card>
+                <div class="max-w-20rem" style="word-wrap: break-word">
+                    {{dbCheck | async | json}}
+                </div>
+            </p-card>
+        </div>
+    </div>
 </div>
