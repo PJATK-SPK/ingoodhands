@@ -8,6 +8,14 @@ services:
       context: .
       dockerfile: src/backend/Dockerfile
       target: test
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: 0.5
+        reservations:
+          memory: 128m
+          cpus: 0.25
 
   postgres:
     image: postgres:14
