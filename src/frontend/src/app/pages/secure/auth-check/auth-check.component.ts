@@ -17,6 +17,7 @@ export class AuthCheckComponent {
 
   public noAuth = this.httpClient.get(`${environment.api}/test/no-auth`);
   public userinfo = this.httpClient.get(`${environment.api}/test/user-info/`);
+  public dbCheck = this.httpClient.get(`${environment.api}/test/db-check/`);
 
   public login(): void {
     this.auth.login();
