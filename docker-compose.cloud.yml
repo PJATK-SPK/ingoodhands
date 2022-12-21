@@ -27,6 +27,14 @@ services:
     environment:
       - PGDATA=/data
       - POSTGRES_PASSWORD=ingoodhands
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: 0.5
+        reservations:
+          memory: 128m
+          cpus: 0.25
 
 volumes:
   pgdata:
