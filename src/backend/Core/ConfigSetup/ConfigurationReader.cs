@@ -1,5 +1,6 @@
 ﻿using Core.Configuration.App;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 
 namespace Core.ConfigSetup
@@ -24,9 +25,27 @@ namespace Core.ConfigSetup
                 throw new ArgumentException($"Config not found! {fileName}");
 
             var result = JsonSerializer.Deserialize<AppConfig>(config, _options)!;
+            FixConnectionStringByEnvVariables(result);
             _cache = result;
 
             return result;
+        }
+
+        private static void FixConnectionStringByEnvVariables(AppConfig result)
+        {
+            var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+
+            if (dbHost != null)
+            {
+                var sb = new StringBuilder();
+                sb.Append($"User ID={Environment.GetEnvironmentVariable("DB_USER")};");
+                sb.Append($"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};");
+                sb.Append($"Database={Environment.GetEnvironmentVariable("DB_DATABASE")};");
+                sb.Append($"Host={dbHost};");
+                sb.Append($"Port={Environment.GetEnvironmentVariable("DB_PORT")};");
+                sb.Append($"Connection Lifetime=0;");
+                result.ConnectionStrings.Database = sb.ToString();
+            }
         }
 
         public static string GetString(string fileName)
