@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Core.ConfigSetup;
 using Core.WebApi.Auth;
+using Autofac.Core;
+using System.Text.Json.Serialization;
 
 namespace Core.WebApi
 {
@@ -51,6 +53,7 @@ namespace Core.WebApi
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.Converters.Add(new JsonDateTimeConverter());
                     options.JsonSerializerOptions.Converters.Add(new JsonDateTimeNullConverter());
                 });

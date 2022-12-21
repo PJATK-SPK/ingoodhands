@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { first, Observable, tap } from 'rxjs';
+import { first, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,7 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly auth: AuthService,
     private readonly router: Router,
+    private readonly httpClient: HttpClient,
   ) { }
 
   public authChecked = false;
@@ -39,6 +42,7 @@ export class AppComponent implements OnInit {
 
           this.authChecked = true;
         }),
+        switchMap(c => c.isAuthenticated ? this.httpClient.get(`${environment.api}/auth/postlogin`) : of()),
         first()
       );
     return authCheck;
