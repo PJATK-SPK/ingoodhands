@@ -25,7 +25,7 @@ jobs:
 
       - name: Run backend and postgres for testing
         run: |
-          docker-compose -f docker-compose.ci.yml build
+          docker-compose -f docker-compose.ci.yml up -d
 
       - name: Exec into backend container and run tests
         run: |
