@@ -19,10 +19,6 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
-      - name: Make backend uses prd config
-        run: |
-          echo "$( jq '.name = "Prd"' src/backend/Core/Configuration/environment.json )" > src/backend/Core/Configuration/environment.json
-
       - name: Build, tag and push Docker image
         run: |
           ./infra/scripts/push_images.sh backend
