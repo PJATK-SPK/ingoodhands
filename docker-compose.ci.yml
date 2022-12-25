@@ -9,9 +9,11 @@ services:
       dockerfile: src/backend/Dockerfile
       target: test
     environment:
-      - PGDATA=/data
-      - POSTGRES_PASSWORD=ingoodhands
-      - POSTGRES_DB=in_good_hands
+      - DB_HOST=ingoodhands_postgres_1
+      - DB_USER=postgres
+      - DB_PASSWORD=ingoodhands
+      - DB_DATABASE=in_good_hands
+      - DB_PORT=5432
     deploy:
       resources:
         limits:
