@@ -1,11 +1,7 @@
 name: "Build and upload frontend artifact"
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/frontend/**'
+  pull_request:
   workflow_dispatch:
 
 permissions:
