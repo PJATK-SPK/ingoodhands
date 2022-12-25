@@ -15,8 +15,6 @@ permissions:
 jobs:
   build-fe:
     runs-on: ubuntu-latest
-    env:
-      SERVICE: ${{ inputs.service }}
     steps:
       - uses: actions/checkout@v3
 

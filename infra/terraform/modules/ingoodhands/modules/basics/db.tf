@@ -7,7 +7,13 @@ resource "google_sql_database_instance" "backend" {
     # Second-generation instance tiers are based on the machine
     # type. See argument reference below.
     tier = "db-f1-micro"
-
+    ip_configuration {
+      ipv4_enabled    = true
+      authorized_networks {
+        value           = "0.0.0.0/0"
+        name            = "all"
+      }
+    }
     database_flags {
       name  = "cloudsql.iam_authentication"
       value = "on"
