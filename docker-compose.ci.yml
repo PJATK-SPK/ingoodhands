@@ -8,6 +8,10 @@ services:
       context: .
       dockerfile: src/backend/Dockerfile
       target: test
+    environment:
+      - PGDATA=/data
+      - POSTGRES_PASSWORD=ingoodhands
+      - POSTGRES_DB=in_good_hands
     deploy:
       resources:
         limits:
