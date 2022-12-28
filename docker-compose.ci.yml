@@ -8,14 +8,20 @@ services:
       context: .
       dockerfile: src/backend/Dockerfile
       target: test
+    environment:
+      - DB_HOST=ingoodhands_postgres_1
+      - DB_USER=postgres
+      - DB_PASSWORD=ingoodhands
+      - DB_DATABASE=in_good_hands
+      - DB_PORT=5432
     deploy:
       resources:
         limits:
           memory: 512m
-          cpus: 0.5
+          cpus: '0.5'
         reservations:
           memory: 128m
-          cpus: 0.25
+          cpus: '0.25'
 
   postgres:
     image: postgres:14
@@ -31,10 +37,10 @@ services:
       resources:
         limits:
           memory: 512m
-          cpus: 0.5
+          cpus: '0.5'
         reservations:
           memory: 128m
-          cpus: 0.25
+          cpus: '0.25'
 
 volumes:
   pgdata:
