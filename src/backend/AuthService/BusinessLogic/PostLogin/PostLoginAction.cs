@@ -37,9 +37,9 @@ namespace AuthService.BusinessLogic.PostLogin
                 throw new PostLoginDataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
             }
 
-            await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
+            var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
-            return new OkObjectResult(true);
+            return new OkObjectResult(user);
         }
     }
 }

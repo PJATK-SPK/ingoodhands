@@ -1,4 +1,4 @@
-name: "Deploy backend Docker image"
+name: "Run db migration, deploy backend to Cloud Run"
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
       - 'src/backend/**'
   workflow_dispatch:
 
-
 permissions:
   contents: read
   id-token: write
@@ -17,10 +16,24 @@ jobs:
   deploy-be:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v0.8.2'
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
+
+      - name: Run database migration
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef database update --project Core.csproj --startup-project ../WebApi/WebApi.csproj
+        working-directory: src/backend/Core
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_PORT: 5432
 
       - name: Deploy to Cloud Run
         uses: 'google-github-actions/deploy-cloudrun@v1'
@@ -28,3 +41,9 @@ jobs:
           region: 'europe-west1'
           service: 'backend'
           image: 'europe-docker.pkg.dev/indagoodhandsdev/default-docker/backend'
+          env_vars: |
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_DATABASE=${{ secrets.DB_DATABASE }}
+            DB_PORT=5432

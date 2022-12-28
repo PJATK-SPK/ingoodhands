@@ -2,6 +2,8 @@ name: "Build and push backend Docker image"
 
 on:
   pull_request:
+    paths:
+      - 'src/backend/**'
   workflow_dispatch:
 
 permissions:

@@ -14,7 +14,6 @@ namespace Core.Autofac
                 optionsBuilder.UseNpgsql(connectionString);
                 optionsBuilder.UseSnakeCaseNamingConvention();
                 var result = new AppDbContext(optionsBuilder.Options);
-                result.Database.Migrate();
                 return result;
             }).InstancePerLifetimeScope();
         }
