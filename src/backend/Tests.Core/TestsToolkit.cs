@@ -23,6 +23,7 @@ namespace TestsCore
 
             var container = builder.Build();
             _autofac = container.BeginLifetimeScope();
+            _autofac.Resolve<AppDbContext>().Database.Migrate();
         }
 
         public void UpdateUserInfo(CurrentUserInfo info)
