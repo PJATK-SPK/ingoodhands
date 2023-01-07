@@ -1,0 +1,48 @@
+name: "Build, test and push Docker image"
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  check-changed-paths:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'src/frontend/**'
+            backend:
+              - 'src/backend/**'
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+      backend: ${{ steps.changes.outputs.backend }}
+
+  build-be:
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
+    needs:
+      - check-changed-paths
+    uses: ./.github/workflows/build-be.yml
+    secrets: inherit
+
+  test-be:
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
+    needs:
+      - check-changed-paths
+      - build-be
+    uses: ./.github/workflows/test-int-be.yml
+    secrets: inherit
+
+  build-fe:
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
+    needs:
+      - check-changed-paths
+    uses: ./.github/workflows/build-fe.yml
+    secrets: inherit

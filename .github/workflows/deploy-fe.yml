@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'src/frontend/**'
-  workflow_dispatch:
 
 permissions:
   contents: read

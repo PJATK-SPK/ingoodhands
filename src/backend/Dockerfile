@@ -8,16 +8,26 @@ WORKDIR /app
 
 COPY ["src/backend/.", "."]
 
-
 RUN dotnet restore
 
 COPY . .
 
 RUN dotnet publish "/app/WebApi/WebApi.csproj" -c Release -o /app/publish
 
-FROM  base AS final
+FROM publish AS test
+
 WORKDIR /app
+
+ENTRYPOINT ["dotnet", "test"]
+
+FROM  base AS final
+
+WORKDIR /app
+
 COPY --from=publish /app/publish .
+
 ENV ASPNETCORE_URLS=http://+:5000
+
 EXPOSE 5000
+
 ENTRYPOINT ["dotnet", "WebApi.dll"]
