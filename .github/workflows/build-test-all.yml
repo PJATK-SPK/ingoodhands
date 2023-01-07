@@ -28,6 +28,8 @@ jobs:
 
   build-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
+    needs:
+      - check-changed-paths
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/build-be
@@ -35,6 +37,7 @@ jobs:
   test-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
     needs:
+      - check-changed-paths
       - build-be
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +45,8 @@ jobs:
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
+    needs:
+      - check-changed-paths
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/build-fe
