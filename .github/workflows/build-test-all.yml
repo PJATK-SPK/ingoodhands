@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-be
+      - uses: ./.github/workflows/build-be.yml
 
   test-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-be
+      - uses: ./.github/workflows/test-int.yml
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
@@ -52,4 +52,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-fe
+      - uses: ./.github/workflows/build-fe.yml
