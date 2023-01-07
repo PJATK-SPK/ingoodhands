@@ -21,6 +21,10 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
+      - name: Auth to docker registry
+        run: |
+          gcloud auth configure-docker europe-docker.pkg.dev
+
       - name: Run backend and postgres for testing
         run: |
           docker-compose -f docker-compose.ci.yml up -d
