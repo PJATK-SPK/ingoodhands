@@ -1,4 +1,4 @@
-name: "Build and push backend Docker image"
+name: "Run integration tests"
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-be:
+  test-int:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,11 +21,10 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
+      - name: Run backend and postgres for testing
+        run: |
+          docker-compose -f docker-compose.ci.yml up -d
 
-#      - name: Run backend and postgres for testing
-#        run: |
-#          docker-compose -f docker-compose.ci.yml up -d
-#
-#      - name: Exec into backend container and run tests
-#        run: |
-#          docker exec ingoodhands_backend_1 dotnet test
+      - name: Exec into backend container and run tests
+        run: |
+          docker exec ingoodhands_backend_1 dotnet test
