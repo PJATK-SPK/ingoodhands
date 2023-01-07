@@ -25,11 +25,3 @@ jobs:
       - name: Build, tag and push Docker image
         run: |
           ./infra/scripts/push_images.sh backend-test
-
-#      - name: Run backend and postgres for testing
-#        run: |
-#          docker-compose -f docker-compose.ci.yml up -d
-#
-#      - name: Exec into backend container and run tests
-#        run: |
-#          docker exec ingoodhands_backend_1 dotnet test
