@@ -31,6 +31,7 @@ jobs:
     needs:
       - check-changed-paths
     uses: ./.github/workflows/build-be.yml
+    secrets: inherit
 
   test-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
@@ -38,12 +39,11 @@ jobs:
       - check-changed-paths
       - build-be
     uses: ./.github/workflows/test-int-be.yml
+    secrets: inherit
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
     needs:
       - check-changed-paths
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-fe.yml
+    uses: ./.github/workflows/build-fe.yml
+    secrets: inherit
