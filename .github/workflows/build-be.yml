@@ -21,18 +21,18 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
-#      - name: Make backend uses prd config
-#        run: |
-#          echo "$( jq '.name = "Ci"' src/backend/Core/Configuration/environment.json )" > src/backend/Core/Configuration/environment.json
-
-      - name: Run backend and postgres for testing
+      - name: Build, tag and push Docker image
         run: |
-          docker-compose -f docker-compose.ci.yml up -d
+          ./infra/scripts/push_images.sh backend
 
-      - name: Exec into backend container and run tests
+      - name: Build, tag and push Docker image
         run: |
-          docker exec ingoodhands_backend_1 dotnet test
+          ./infra/scripts/push_images.sh backend-test
 
-#      - name: Build, tag and push Docker image
+#      - name: Run backend and postgres for testing
 #        run: |
-#          ./infra/scripts/push_images.sh backend
+#          docker-compose -f docker-compose.ci.yml up -d
+#
+#      - name: Exec into backend container and run tests
+#        run: |
+#          docker exec ingoodhands_backend_1 dotnet test
