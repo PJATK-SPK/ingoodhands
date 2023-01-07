@@ -12,10 +12,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512m
+          memory: 1024M
           cpus: '0.5'
         reservations:
-          memory: 128m
+          memory: 512M
           cpus: '0.25'
 
   postgres:
