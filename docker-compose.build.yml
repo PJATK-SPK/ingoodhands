@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend-test:
+    image: backend-test
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+      target: test
+
+  backend:
+    image: backend
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile

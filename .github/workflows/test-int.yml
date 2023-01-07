@@ -1,0 +1,31 @@
+name: "Build and push backend Docker image"
+
+on:
+  pull_request:
+    paths:
+      - 'src/backend/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-be:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v0.8.2'
+        with:
+          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
+
+
+#      - name: Run backend and postgres for testing
+#        run: |
+#          docker-compose -f docker-compose.ci.yml up -d
+#
+#      - name: Exec into backend container and run tests
+#        run: |
+#          docker exec ingoodhands_backend_1 dotnet test
