@@ -31,4 +31,4 @@ jobs:
 
       - name: Exec into backend container and run tests
         run: |
-          docker exec ingoodhands_backend_1 dotnet test
+          docker exec ingoodhands_backend-test_1 dotnet test
