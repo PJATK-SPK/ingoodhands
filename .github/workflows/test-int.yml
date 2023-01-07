@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        #v2 action because v3 causes problem with dotnet containers
 
       - name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v0.8.2'

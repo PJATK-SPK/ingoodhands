@@ -32,6 +32,7 @@ jobs:
       - check-changed-paths
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/build-be
 
   test-be:
@@ -41,6 +42,7 @@ jobs:
       - build-be
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/build-be
 
   build-fe:
@@ -49,4 +51,5 @@ jobs:
       - check-changed-paths
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/build-fe
