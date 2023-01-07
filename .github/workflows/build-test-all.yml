@@ -31,9 +31,7 @@ jobs:
     needs:
       - check-changed-paths
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-be.yml
+    uses: ./.github/workflows/build-be.yml
 
   test-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
@@ -41,9 +39,7 @@ jobs:
       - check-changed-paths
       - build-be
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/test-int-be.yml
+    uses: ./.github/workflows/test-int-be.yml
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
