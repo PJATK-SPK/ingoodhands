@@ -1,7 +1,7 @@
 name: "Build and upload frontend artifact"
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read

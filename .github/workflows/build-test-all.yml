@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/test-int.yml
+      - uses: ./.github/workflows/test-int-be.yml
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
