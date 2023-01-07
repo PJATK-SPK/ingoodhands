@@ -30,7 +30,6 @@ jobs:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
     needs:
       - check-changed-paths
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/build-be.yml
 
   test-be:
@@ -38,7 +37,6 @@ jobs:
     needs:
       - check-changed-paths
       - build-be
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/test-int-be.yml
 
   build-fe:
