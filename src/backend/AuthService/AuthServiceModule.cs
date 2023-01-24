@@ -1,4 +1,5 @@
 ﻿using AuthService.BusinessLogic.PostLogin;
+using AuthService.BusinessLogic.UserSettings;
 using Autofac;
 using Core;
 using Core.Autofac;
@@ -13,6 +14,8 @@ namespace AuthService
             builder.RegisterAsScoped<PostLoginAction>();
             builder.RegisterAsScoped<UserDataValidationService>();
             builder.RegisterAsScoped<UserCreationService>();
+            builder.RegisterAsScoped<UserSettingsAction>();
+            builder.RegisterAsScoped<UserSettingsService>();
         }
     }
 }
