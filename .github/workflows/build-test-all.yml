@@ -36,7 +36,7 @@ jobs:
     secrets: inherit
 
   test-be:
-    if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     needs:
       - check-changed-paths
       - build-be
