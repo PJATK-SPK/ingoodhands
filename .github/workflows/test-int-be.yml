@@ -19,6 +19,9 @@ jobs:
         with:
           credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
       - name: Auth to docker registry
         run: |
           gcloud auth configure-docker europe-docker.pkg.dev
