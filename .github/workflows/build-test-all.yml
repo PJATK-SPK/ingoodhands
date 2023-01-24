@@ -21,12 +21,15 @@ jobs:
               - 'src/frontend/**'
             backend:
               - 'src/backend/**'
+            workflow:
+              - '.github/**'
     outputs:
       frontend: ${{ steps.changes.outputs.frontend }}
       backend: ${{ steps.changes.outputs.backend }}
+      workflow: ${{ steps.changes.outputs.workflow }}
 
   build-be:
-    if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     needs:
       - check-changed-paths
     uses: ./.github/workflows/build-be.yml
@@ -41,7 +44,7 @@ jobs:
     secrets: inherit
 
   build-fe:
-    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     needs:
       - check-changed-paths
     uses: ./.github/workflows/build-fe.yml
