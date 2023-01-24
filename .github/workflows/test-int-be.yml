@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   test-int:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
         #v2 action because v3 causes problem with dotnet containers
