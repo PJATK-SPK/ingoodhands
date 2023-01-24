@@ -1,6 +1,6 @@
 ﻿using AuthService;
+using AuthService.BusinessLogic.Exceptions;
 using AuthService.BusinessLogic.PostLogin;
-using AuthService.BusinessLogic.PostLogin.Exceptions;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -216,10 +216,10 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<PostLoginDataCheckValidationException>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<CurrentUserDataCheckValidationException>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(PostLoginDataCheckValidationException));
+            Assert.IsInstanceOfType(exception, typeof(CurrentUserDataCheckValidationException));
             Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in PostLoginAction didn't pass validation", exception.Message);
         }
     }
