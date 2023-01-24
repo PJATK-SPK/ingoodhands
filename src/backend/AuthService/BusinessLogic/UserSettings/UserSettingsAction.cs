@@ -11,11 +11,9 @@ namespace AuthService.BusinessLogic.UserSettings
         private readonly ICurrentUserService _currentUserService;
         private readonly UserSettingsService _userSettingsService;
         private readonly UserDataValidationService _userDataValidationService;
-        private readonly AppDbContext _appDbContext;
 
-        public UserSettingsAction(AppDbContext appDbContext, ICurrentUserService currentUserService, UserSettingsService userSettingsService, UserDataValidationService userDataValidationService)
+        public UserSettingsAction(ICurrentUserService currentUserService, UserSettingsService userSettingsService, UserDataValidationService userDataValidationService)
         {
-            _appDbContext = appDbContext;
             _currentUserService = currentUserService;
             _userSettingsService = userSettingsService;
             _userDataValidationService = userDataValidationService;

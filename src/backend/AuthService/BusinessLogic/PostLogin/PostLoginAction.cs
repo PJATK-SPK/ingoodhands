@@ -17,13 +17,11 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
-        private readonly AppDbContext _appDbContext;
 
-        public PostLoginAction(ICurrentUserService currentUserService, UserDataValidationService userDataValidationService, AppDbContext appDbContext, UserCreationService userService)
+        public PostLoginAction(ICurrentUserService currentUserService, UserDataValidationService userDataValidationService, UserCreationService userService)
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
-            _appDbContext = appDbContext;
             _userService = userService;
         }
 

@@ -91,5 +91,33 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
             Assert.AreEqual(testingUser.Auth0Users?[0].UserId, testingAuth0UserOne.UserId);
             Assert.AreEqual(testingUser.Auth0Users?[1].UserId, testingAuth0UserTwo.UserId);
         }
+
+        [TestMethod()]
+        public async Task UserSettingsActionTest_UserDataValidationThrowsError()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<UserSettingsAction>();
+
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = null,
+                EmailVerified = false,
+                Identifier = null,
+                GivenName = null,
+                FamilyName = null,
+                Locale = "pl",
+                Name = null,
+                Nickname = null,
+                UpdatedAt = DateTime.UtcNow,
+            });
+
+            //Act 
+            var exception = await Assert.ThrowsExceptionAsync<CurrentUserDataCheckValidationException>(() => action.Execute());
+
+            //Assert
+            Assert.IsInstanceOfType(exception, typeof(CurrentUserDataCheckValidationException));
+            Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in UserSettingsAction didn't pass validation", exception.Message);
+        }
     }
 }
