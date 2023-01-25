@@ -24,4 +24,4 @@ jobs:
 
       - name: Build, tag and push int-tests Docker image
         run: |
-          ./infra/scripts/push_images.sh backend-test
+          ./infra/scripts/push_images.sh backend-test test
