@@ -3,6 +3,11 @@ version: '3.8'
 services:
   backend-test:
     image: backend-test
+    platform: windows/amd64
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+      target: test
     environment:
       - DB_HOST=ingoodhands_postgres_1
       - DB_USER=postgres
