@@ -12,7 +12,7 @@ function build_tag {
     echo "Please provide image name to build"
     exit 1
   fi
-  docker-compose -f docker-compose.build.yml build "$image_to_build" --no-cache
+  docker-compose -f docker-compose.build.yml build --no-cache "$image_to_build"
   docker image tag "$image_to_build" europe-docker.pkg.dev/"$google_project"/default-docker/"$image_to_build":"$image_tag"
   docker push europe-docker.pkg.dev/"$google_project"/default-docker/"$image_to_build":"$image_tag"
 
