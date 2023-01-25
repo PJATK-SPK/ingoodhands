@@ -26,6 +26,11 @@ jobs:
         run: |
           gcloud auth configure-docker europe-docker.pkg.dev
 
+      - name: Auth to docker registry
+        shell: pwsh
+        run: |
+          & $Env:ProgramFiles\Docker\Docker\DockerCli.exe -SwitchDaemon
+
       - name: Run backend and postgres for testing
         run: |
           docker-compose -f docker-compose.ci.yml up -d --build
