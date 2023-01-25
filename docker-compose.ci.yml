@@ -21,9 +21,10 @@ services:
           memory: 512M
 
   postgres:
-    image: postgres:14
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    image: postgres
+    build:
+      context: .
+      dockerfile: src/backend/DockerfilePostgres
     environment:
       - PGDATA=/data
       - POSTGRES_PASSWORD=ingoodhands
@@ -37,5 +38,3 @@ services:
         reservations:
           memory: 128m
 
-volumes:
-  pgdata:

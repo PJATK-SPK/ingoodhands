@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+RUN [Net.ServicePointManager]::SecurityProtocol = 'Tls12, Tls11, Tls' ; \
+    Invoke-WebRequest -UseBasicParsing -Uri 'https://get.enterprisedb.com/postgresql/postgresql-12.4-1-windows-x64.exe' -OutFile 'postgresql-installer.exe' ; \
+    Start-Process postgresql-installer.exe -ArgumentList '--mode unattended --superpassword password' -Wait ; \
+    Remove-Item postgresql-installer.exe -Force
+
+RUN Invoke-WebRequest -UseBasicParsing -Uri 'https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.3/ServiceMonitor.exe' -OutFile 'ServiceMonitor.exe'
+
+SHELL ["cmd", "/S", "/C"]
+
+RUN setx /M PATH "C:\\Program Files\\PostgreSQL\\12\\bin;%PATH%" && \
+    setx /M DATA_DIR "C:\\Program Files\\PostgreSQL\\12\\data" && \
+    setx /M PGPASSWORD "password"
+
+RUN powershell -Command "Do { pg_isready -q } Until ($?)" && \
+    echo listen_addresses = '*' >> "%DATA_DIR%\\postgresql.conf" && \
+    echo host  all  all  0.0.0.0/0  trust >> "%DATA_DIR%\\pg_hba.conf" && \
+    echo host  all  all  ::0/0      trust >> "%DATA_DIR%\\pg_hba.conf" && \
+    net stop postgresql-x64-12
+
+EXPOSE 5432
+
+CMD ["ServiceMonitor.exe", "postgresql-x64-12"]
