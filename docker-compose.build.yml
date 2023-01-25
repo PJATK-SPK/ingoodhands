@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend-test:
     image: backend-test
-    platform: linux/amd64
+    platform: windows/amd64
     build:
       context: .
       dockerfile: src/backend/Dockerfile
