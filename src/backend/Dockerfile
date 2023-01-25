@@ -14,12 +14,6 @@ COPY . .
 
 RUN dotnet publish "/app/WebApi/WebApi.csproj" -c Release -o /app/publish
 
-FROM publish AS test
-
-WORKDIR /app
-
-ENTRYPOINT ["dotnet", "test"]
-
 FROM  base AS final
 
 WORKDIR /app

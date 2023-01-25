@@ -6,8 +6,7 @@ services:
     platform: windows/amd64
     build:
       context: .
-      dockerfile: src/backend/Dockerfile
-      target: test
+      dockerfile: src/backend/DockerfileTest
     environment:
       - DB_HOST=ingoodhands_postgres_1
       - DB_USER=postgres
