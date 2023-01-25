@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend-test:
-    image: europe-docker.pkg.dev/indagoodhandsdev/default-docker/backend-test:latest
+    image: backend-test
     environment:
       - DB_HOST=ingoodhands_postgres_1
       - DB_USER=postgres
