@@ -9,8 +9,8 @@ using Core.Database.Enums;
 using Core.Database.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
+using TestsBase;
 using TestsCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AuthServiceTests.BusinessLogic.PostLogin
 {
@@ -22,6 +22,27 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             new CoreModule(false),
             new AuthServiceModule(),
         };
+
+        [TestMethod()]
+        public async Task test()
+        {
+            using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
+
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var testingUser = new User()
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = "Normal",
+                LastName = "User",
+                Email = "test@testing.com"
+            };
+
+            // Assert
+            Assert.AreEqual(testingUser.FirstName, testingUser.FirstName);
+        }
 
         [TestMethod()]
         public async Task PostLoginActionTest_UserAndAuth0UserPresent()
