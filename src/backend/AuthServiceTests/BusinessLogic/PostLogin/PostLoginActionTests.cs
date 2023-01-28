@@ -24,27 +24,6 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
         };
 
         [TestMethod()]
-        public async Task test()
-        {
-            using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
-
-            var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<PostLoginAction>();
-
-            // Arrange
-            var testingUser = new User()
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = "Normal",
-                LastName = "User",
-                Email = "test@testing.com"
-            };
-
-            // Assert
-            Assert.AreEqual(testingUser.FirstName, testingUser.FirstName);
-        }
-
-        [TestMethod()]
         public async Task PostLoginActionTest_UserAndAuth0UserPresent()
         {
             using var toolkit = new TestsToolkit(_usedModules);
