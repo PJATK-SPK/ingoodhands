@@ -1,6 +1,11 @@
 @import "primeflex/primeflex.css";
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap:400,700');
 
+// @media only screen and (max-width: 480px) {}
+// @media only screen and (min-width: 480px) and (max-width: 768px) {}
+// @media only screen and (min-width: 768px) and (max-width: 992px) {}
+// @media only screen and (min-width: 992px) {}
+
 // Handle 125% and 150% Windows 10 Font Scaling
 @media (min-resolution: 120dpi) {
     html {

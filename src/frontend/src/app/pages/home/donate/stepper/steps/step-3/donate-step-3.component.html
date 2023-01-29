@@ -1,1 +1,19 @@
-Potwierdzenie i przekierowanie do logowania
+<div class="summary-box">
+    <h3>Warehouse:</h3>
+
+    <p>
+        {{service.selectedWarehouse?.name}} - {{service.selectedWarehouse?.city}},
+        {{service.selectedWarehouse?.postalCode}},
+        {{service.selectedWarehouse?.street}}
+    </p>
+
+    <h3>Items:</h3>
+    <div *ngFor="let product of service.products">
+
+        <div class="grid">
+            <div class="col-12">
+                {{product.quantity}}{{product.listItem.unit}} of {{product.listItem.name}}
+            </div>
+        </div>
+    </div>
+</div>

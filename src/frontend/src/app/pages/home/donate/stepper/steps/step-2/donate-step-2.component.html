@@ -1,1 +1,23 @@
-Wybór kraju i lista miast
+<div *ngFor="let warehouse of allWarehouses">
+    <div class="warehouse-box">
+        <div class="grid">
+
+            <div class="col-2">
+                <p-radioButton name="warehouseGroup" [value]="warehouse.id"
+                    [(ngModel)]="selectedWarehouseId"></p-radioButton>
+            </div>
+
+            <div class="col-3">
+                <b>{{warehouse.name}}</b>
+            </div>
+
+            <div class="col-2">
+                {{warehouse.countryName}}
+            </div>
+
+            <div class="col-5">
+                {{warehouse.city}}, {{warehouse.postalCode}}, {{warehouse.street}}
+            </div>
+        </div>
+    </div>
+</div>
