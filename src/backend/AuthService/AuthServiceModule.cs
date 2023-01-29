@@ -14,8 +14,8 @@ namespace AuthService
             builder.RegisterAsScoped<PostLoginAction>();
             builder.RegisterAsScoped<UserDataValidationService>();
             builder.RegisterAsScoped<UserCreationService>();
-            builder.RegisterAsScoped<UserSettingsAction>();
-            builder.RegisterAsScoped<UserSettingsService>();
+            builder.RegisterAsScoped<GetAuth0UsersByCurrentUserAction>();
+            builder.RegisterAsScoped<GetAuth0UsersByCurrentUserService>();
         }
     }
 }

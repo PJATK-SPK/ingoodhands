@@ -1,14 +1,7 @@
-﻿using Core.Auth0;
-using Core.Database;
-using Core.Database.Models;
-using AuthService.BusinessLogic.Exceptions;
+﻿using AuthService.BusinessLogic.Exceptions;
+using Core.Auth0;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace AuthService.BusinessLogic.PostLogin
 {
@@ -17,12 +10,19 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
+        private readonly ILogger<PostLoginAction> _logger;
 
-        public PostLoginAction(ICurrentUserService currentUserService, UserDataValidationService userDataValidationService, UserCreationService userService)
+        public PostLoginAction(
+            ICurrentUserService currentUserService,
+            UserDataValidationService userDataValidationService,
+            UserCreationService userService,
+            ILogger<PostLoginAction> logger
+            )
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
             _userService = userService;
+            _logger = logger;
         }
 
         public async Task<ActionResult> Execute()
@@ -32,7 +32,8 @@ namespace AuthService.BusinessLogic.PostLogin
 
             if (!isUserInfoValid)
             {
-                throw new CurrentUserDataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
+                _logger.LogError("Auth0UserInfo in PostLoginAction didn't pass validation as it has nulls");
+                throw new InvalidAuth0DataException();
             }
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
