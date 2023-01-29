@@ -1,0 +1,50 @@
+name: "Build, test and push Docker image"
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  check-changed-paths:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'src/frontend/**'
+            backend:
+              - 'src/backend/**'
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+      backend: ${{ steps.changes.outputs.backend }}
+
+  build-be:
+    if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
+    needs:
+      - check-changed-paths
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No run required"'
+
+  test-be:
+    if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
+    needs:
+      - check-changed-paths
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No run required"'
+
+  build-fe:
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'false' }}
+    needs:
+      - check-changed-paths
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No run required"'
