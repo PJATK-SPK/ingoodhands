@@ -3,18 +3,26 @@ description: "Run integration tests"
 runs:
   using: "composite"
   steps:
-      - uses: actions/checkout@v2
-        #v2 action because v3 causes problem with dotnet containers
+      - uses: actions/checkout@v3
         shell: bash
 
-      - name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v0.8.2'
-        with:
-          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
+#      - name: Authenticate to Google Cloud
+#        uses: 'google-github-actions/auth@v0.8.2'
+#        with:
+#          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
 
-      - name: Auth to docker registry
+#      - name: Auth to docker registry
+#        run: |
+#          gcloud auth configure-docker europe-docker.pkg.dev
+#        shell: bash
+
+      - name: Set variables for testing
         run: |
-          gcloud auth configure-docker europe-docker.pkg.dev
+          echo "DB_HOST=localhost" >> $GITHUB_ENV
+          echo "DB_USER=postgres" >> $GITHUB_ENV
+          echo "DB_PASSWORD=ingoodhands" >> $GITHUB_ENV
+          echo "DB_DATABASE=in_good_hands" >> $GITHUB_ENV
+          echo "DB_PORT=5432" >> $GITHUB_ENV
         shell: bash
 
       - name: Run backend and postgres for testing
@@ -24,5 +32,6 @@ runs:
 
       - name: Exec into backend container and run tests
         run: |
-          docker exec ingoodhands_backend-test_1 dotnet test
+          dotnet test
         shell: bash
+        working-directory: src/backend
