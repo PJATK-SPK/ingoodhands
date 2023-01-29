@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
     needs:
       - check-changed-paths
-    uses: ./.github/workflows/build-be.yml
+    uses: ./.github/actions/build-be
     secrets: inherit
 
   test-be:
@@ -37,12 +37,12 @@ jobs:
     needs:
       - check-changed-paths
       - build-be
-    uses: ./.github/workflows/test-int-be.yml
+    uses: ./.github/actions/test-int-be
     secrets: inherit
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
     needs:
       - check-changed-paths
-    uses: ./.github/workflows/build-fe.yml
+    uses: ./.github/actions/build-fe
     secrets: inherit
