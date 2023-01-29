@@ -27,18 +27,24 @@ jobs:
 
   build-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
+    needs:
+      - check-changed-paths
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No run required"'
 
   test-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
+    needs:
+      - check-changed-paths
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No run required"'
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'false' }}
+    needs:
+      - check-changed-paths
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No run required"'
