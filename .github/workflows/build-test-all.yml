@@ -57,3 +57,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build-fe
+
+  sonar:
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+      - test-be
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/sonar
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

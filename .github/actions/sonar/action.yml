@@ -1,5 +1,12 @@
 name: "test-int-bet"
 description: "Run integration tests"
+inputs:
+  SONAR_TOKEN:
+    description: 'Token to auth to Sonar'
+    required: true
+  GITHUB_TOKEN:
+    description: 'Token to auth to GitHub'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -27,8 +34,8 @@ runs:
 
     - name: Build and analyze
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
       run: |
         dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
         dotnet build --no-incremental
