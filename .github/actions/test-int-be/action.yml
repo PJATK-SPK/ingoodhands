@@ -1,6 +1,5 @@
 name: "test-int-bet"
 description: "Run integration tests"
-
 runs:
   using: "composite"
   steps:

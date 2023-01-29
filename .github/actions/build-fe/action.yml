@@ -1,7 +1,5 @@
 name: "build-be"
 description: "Build and upload frontend artifact"
-
-
 runs:
   using: "composite"
   steps:

@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'src/frontend/**'
+      - '.github/**'
 
 permissions:
   contents: read
@@ -47,5 +48,3 @@ jobs:
       - name: Deploy to Firebase
         run: |
           firebase deploy     
-          
-         
