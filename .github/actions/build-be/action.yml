@@ -18,8 +18,3 @@ runs:
       shell: bash
       run: |
         ./infra/scripts/push_images.sh backend
-
-    - name: Build, tag and push Docker image
-      shell: bash
-      run: |
-        ./infra/scripts/push_images.sh backend-test
