@@ -4,6 +4,7 @@ using Core.Autofac;
 using Core.ConfigSetup;
 using Core.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace TestsCore
 {
@@ -20,6 +21,7 @@ namespace TestsCore
 
             InjectCurrentUserService(builder);
             ChangeConnectionString(builder);
+            FixILogger(builder);
 
             var container = builder.Build();
             _autofac = container.BeginLifetimeScope();
@@ -52,6 +54,12 @@ namespace TestsCore
         private void InjectCurrentUserService(ContainerBuilder builder)
         {
             builder.RegisterType<TestsCurrentUserService>().AsSelf().As<ICurrentUserService>().SingleInstance();
+        }
+
+        private void FixILogger(ContainerBuilder builder)
+        {
+            builder.RegisterInstance(new LoggerFactory()).As<ILoggerFactory>();
+            builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>)).SingleInstance();
         }
 
         private void ChangeConnectionString(ContainerBuilder builder)
