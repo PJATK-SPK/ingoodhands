@@ -1,19 +1,9 @@
-name: "test-int-bet"
-description: "Run integration tests"
+name: "SonarCloud"
+description: "Run sonar analysis"
 runs:
   using: "composite"
   steps:
       - uses: actions/checkout@v3
-
-#      - name: Authenticate to Google Cloud
-#        uses: 'google-github-actions/auth@v0.8.2'
-#        with:
-#          credentials_json: '${{ secrets.CICD_SA_GCP_JSON_KEY }}'
-
-#      - name: Auth to docker registry
-#        run: |
-#          gcloud auth configure-docker europe-docker.pkg.dev
-#        shell: bash
 
       - name: Set variables for testing
         run: |
@@ -29,8 +19,20 @@ runs:
           docker-compose -f docker-compose.ci.yml up -d
         shell: bash
 
-      - name: Exec into backend container and run tests
+      - name: Run tests
         run: |
-          dotnet test
+          coverlet ./AuthServiceTests/bin/Debug/net7.0/AuthServiceTests.dll \
+            --target "dotnet" \
+            --targetargs "test --no-build" \
+            -f=opencover \
+            -o="coverage.xml"
         shell: bash
+        working-directory: src/backend
+
+      - uses: actions/upload-artifact@v3
+        if: always() && !cancelled()
+        with:
+          name: test-reports
+          path: |
+            coverage.xml
         working-directory: src/backend
