@@ -21,6 +21,8 @@ runs:
 
       - name: Run tests
         run: |
+          dotnet tool install --global coverlet.console
+          
           coverlet ./AuthServiceTests/bin/Debug/net7.0/AuthServiceTests.dll \
             --target "dotnet" \
             --targetargs "test --no-build" \
