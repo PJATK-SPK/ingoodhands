@@ -4,26 +4,32 @@ using Core.Autofac;
 using Core.ConfigSetup;
 using Core.Database;
 using Microsoft.EntityFrameworkCore;
+using TestsBase;
 
 namespace TestsCore
 {
     public class TestsToolkit : IDisposable
     {
         private readonly ILifetimeScope _autofac;
+        public readonly TestType TestType;
 
-        public TestsToolkit(IEnumerable<Module> modules)
+        public TestsToolkit(IEnumerable<Module> modules, TestType type = TestType.Integration)
         {
+            TestType = type;
+
             var builder = new ContainerBuilder();
 
             foreach (var module in modules)
                 builder.RegisterModule(module);
 
             InjectCurrentUserService(builder);
-            ChangeConnectionString(builder);
+            InjectTestDatabase(builder);
 
             var container = builder.Build();
             _autofac = container.BeginLifetimeScope();
-            _autofac.Resolve<AppDbContext>().Database.Migrate();
+
+            if (type == TestType.Integration)
+                _autofac.Resolve<AppDbContext>().Database.Migrate();
         }
 
         public void UpdateUserInfo(CurrentUserInfo info)
@@ -36,6 +42,11 @@ namespace TestsCore
 
         public void Dispose()
         {
+            if (TestType == TestType.Unit)
+            {
+                return;
+            }
+
             var appDbContext = _autofac.Resolve<AppDbContext>();
             var databaseName = appDbContext.Database.GetDbConnection().Database;
 
@@ -54,12 +65,17 @@ namespace TestsCore
             builder.RegisterType<TestsCurrentUserService>().AsSelf().As<ICurrentUserService>().SingleInstance();
         }
 
-        private void ChangeConnectionString(ContainerBuilder builder)
+        private void InjectTestDatabase(ContainerBuilder builder)
         {
             var connectionString = ConfigurationReader.Get().ConnectionStrings.Database;
             var yyyyMMddHHmmss = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             var randomNumber = new Random().Next(1000, 9999);
-            connectionString = connectionString.Replace("Database=in_good_hands", $"Database=tests_{yyyyMMddHHmmss}_{randomNumber}");
+
+            if (TestType == TestType.Unit)
+                connectionString = connectionString.Replace("Database=FAKEDB", $"Database=THIS_SHOULD_NOT_HAPPEN");
+            else if (TestType == TestType.Integration)
+                connectionString = connectionString.Replace("Database=in_good_hands", $"Database=tests_{yyyyMMddHHmmss}_{randomNumber}");
+
             AutofacPostgresDbContextInjector.Inject(builder, connectionString);
         }
     }
