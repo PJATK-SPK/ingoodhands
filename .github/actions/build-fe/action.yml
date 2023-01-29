@@ -1,0 +1,27 @@
+name: "build-be"
+description: "Build and upload frontend artifact"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies, build
+      shell: bash
+      run: |          
+        npm i -g @angular/cli
+        
+        npm ci
+
+        ng build --configuration=production
+      working-directory: src/frontend
+
+    - name: Compress fe build files
+      shell: bash
+      run: tar -cvf fe_artifact.tar ./dist
+      working-directory: src/frontend
+
+    - name: Upload fe artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: fe-artifact
+        path: src/frontend/fe_artifact.tar
