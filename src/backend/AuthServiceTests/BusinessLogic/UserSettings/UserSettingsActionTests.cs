@@ -8,6 +8,7 @@ using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
@@ -29,7 +30,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<UserSettingsAction>();
+            var action = toolkit.Resolve<GetAuth0UsersByCurrentUserAction>();
 
             // Arrange
             var testingUser = new User()
@@ -84,9 +85,14 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
                 Nickname = testingAuth0UserOne.Nickname,
                 UpdatedAt = DateTime.UtcNow,
             });
+            //Act
+            var executed = await action.Execute();
 
-            var result = await action.Execute();
+            //Assert
 
+            Assert.IsNotNull(executed);
+            var result = executed.Value as List<Auth0User>;
+            Assert.AreEqual(2, result!.Count);
             Assert.AreEqual(2, context.Auth0Users.Count());
             Assert.AreEqual(testingUser.Auth0Users?[0].UserId, testingAuth0UserOne.UserId);
             Assert.AreEqual(testingUser.Auth0Users?[1].UserId, testingAuth0UserTwo.UserId);
@@ -97,7 +103,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<UserSettingsAction>();
+            var action = toolkit.Resolve<GetAuth0UsersByCurrentUserAction>();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {
@@ -113,11 +119,11 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<CurrentUserDataCheckValidationException>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<InvalidAuth0DataException>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(CurrentUserDataCheckValidationException));
-            Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in UserSettingsAction didn't pass validation", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(InvalidAuth0DataException));
+            Assert.AreEqual("Your Auth0User data is invalid, please contact system administrator", exception.Message);
         }
     }
 }
