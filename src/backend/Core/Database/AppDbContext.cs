@@ -1,5 +1,5 @@
-﻿using Core.Database.Enums;
-using Core.Database.Models;
+﻿using Core.Database.Models;
+using Core.Database.Seeders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Database
@@ -24,14 +24,7 @@ namespace Core.Database
 
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                Id = 1,
-                Status = DbEntityStatus.Active,
-                FirstName = "Service",
-                LastName = "Service",
-                Email = DbConstants.ServiceUserEmail
-            });
+            UserSeeder.Execute(modelBuilder);
         }
     }
 }

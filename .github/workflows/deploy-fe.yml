@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'src/frontend/**'
+      - '.github/**'
 
 permissions:
   contents: read
@@ -23,7 +24,7 @@ jobs:
       - name: Download fe artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: build-fe.yml
+          workflow: build-test-all.yml
           name: fe-artifact
           path: .
 
@@ -47,5 +48,3 @@ jobs:
       - name: Deploy to Firebase
         run: |
           firebase deploy     
-          
-         
