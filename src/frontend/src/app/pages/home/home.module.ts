@@ -9,7 +9,7 @@ import { RequestHelpComponent } from './request-help/request-help.component';
 import { WorkComponent } from './work/work.component';
 import { ButtonModule } from 'primeng/button';
 import { SplashImgComponent } from './splash-img/splash-img.component';
-import { StepsModule } from 'primeng/steps';
+import { DonateStepperModule } from './donate/stepper/donate-stepper.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { StepsModule } from 'primeng/steps';
     ButtonModule,
     StyleClassModule,
     TabViewModule,
-    StepsModule,
+    DonateStepperModule,
   ],
   exports: [
     HomeComponent
