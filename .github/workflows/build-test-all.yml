@@ -29,7 +29,8 @@ jobs:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' }}
     needs:
       - check-changed-paths
-    uses: ./.github/actions/build-be
+    steps:
+      - uses: ./.github/actions/build-be
     secrets: inherit
 
   test-be:
@@ -37,12 +38,14 @@ jobs:
     needs:
       - check-changed-paths
       - build-be
-    uses: ./.github/actions/test-int-be
+    steps:
+      - uses: ./.github/actions/test-int-be
     secrets: inherit
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' }}
     needs:
       - check-changed-paths
-    uses: ./.github/actions/build-fe
+    steps:
+      - uses: ./.github/actions/build-fe
     secrets: inherit
