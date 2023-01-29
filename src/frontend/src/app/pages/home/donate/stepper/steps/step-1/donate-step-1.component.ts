@@ -25,6 +25,7 @@ export class DonateStep1Component implements OnInit, OnDestroy {
   public unitOptions = [
     { label: 'kg', value: 'kg' },
     { label: 'l', value: 'l' },
+    { label: 'pcs', value: 'pcs' },
   ];
 
   public ngOnInit(): void {
