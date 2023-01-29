@@ -26,6 +26,7 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
 
   build-be:
+    name: build-be
     if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
     needs:
       - check-changed-paths
@@ -34,6 +35,7 @@ jobs:
       - run: 'echo "No run required"'
 
   test-be:
+    name: test-be
     if: ${{ needs.check-changed-paths.outputs.backend == 'false' }}
     needs:
       - check-changed-paths
@@ -42,6 +44,7 @@ jobs:
       - run: 'echo "No run required"'
 
   build-fe:
+    name: build-fe
     if: ${{ needs.check-changed-paths.outputs.frontend == 'false' }}
     needs:
       - check-changed-paths
