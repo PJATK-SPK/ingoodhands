@@ -1,8 +1,10 @@
-﻿using Core.Auth0;
+﻿using AuthService.BusinessLogic.UserSettings;
+using Core.Auth0;
 using Core.Database;
 using Core.Database.Models;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,12 @@ namespace AuthService.BusinessLogic.PostLogin
     public class UserCreationService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
 
-        public UserCreationService(AppDbContext appDbContext)
+        public UserCreationService(AppDbContext appDbContext, ILogger<GetAuth0UsersByCurrentUserAction> logger)
         {
             _appDbContext = appDbContext;
+            _logger = logger;
         }
 
         public async Task<User?> CreateUserAndAddToDatabase(CurrentUserInfo auth0UserInfo)
@@ -28,7 +32,8 @@ namespace AuthService.BusinessLogic.PostLogin
             var serviceUser = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == DbConstants.ServiceUserEmail);
             if (serviceUser == null)
             {
-                throw new SingleOrDefaultException("ServiceUser in PostLoginAction didn't find serviceUser in database table Users");
+                _logger.LogError("Service user is null");
+                throw new SingleOrDefaultException("Sorry there seems to be a problem with our service. Please contact server administrator.");
             }
 
             if (user == null && auth0UserFromDatabase == null)
