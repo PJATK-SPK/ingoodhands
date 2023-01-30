@@ -9,8 +9,8 @@ using Core.Database.Enums;
 using Core.Database.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
+using TestsBase;
 using TestsCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AuthServiceTests.BusinessLogic.PostLogin
 {

@@ -94,6 +94,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
             var result = executed.Value as List<Auth0User>;
             Assert.AreEqual(2, result!.Count);
             Assert.AreEqual(2, context.Auth0Users.Count());
+            Assert.AreEqual(result!.Count, context.Auth0Users.Count());
             Assert.AreEqual(testingUser.Auth0Users?[0].UserId, testingAuth0UserOne.UserId);
             Assert.AreEqual(testingUser.Auth0Users?[1].UserId, testingAuth0UserTwo.UserId);
         }
