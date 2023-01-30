@@ -8,24 +8,7 @@
     </p>
 
     <div class="p-3">
-        <p-steps [model]="steps" [readonly]="true" [activeIndex]="currentIndex"></p-steps>
-
-        <div class="form-area m-3 p-3 border-dashed">
-            <div class="grid">
-                <div class="col-12">
-                    TODO: (zadanie)<br />
-                    1 - Plusik, lista produktow (nazwa, ilosc, kg/szt)<br />
-                    2 - Wybór kraju i lista miast<br />
-                    3 - Potwierdzenie i przekierowanie do logowania<br />
-                </div>
-                <div class="col-12">
-                    <div class="flex justify-content-end align-items-center mr-3">
-                        <button pButton type="button" label="NEXT" class="p-button-outlined"
-                            (click)="onNextClick()"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <app-donate-stepper></app-donate-stepper>
     </div>
 
 </div>
