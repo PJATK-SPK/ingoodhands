@@ -1,23 +1,20 @@
 ﻿using AuthService;
 using AuthService.BusinessLogic.Exceptions;
-using AuthService.BusinessLogic.PostLogin;
-using AuthService.BusinessLogic.UserSettings;
+using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Autofac;
 using Core;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AuthServiceTests.BusinessLogic.UserSettings
 {
     [TestClass()]
-    public class UserSettingsActionTests
+    public class GetAuth0UsersByCurrentUserActionTests
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -26,7 +23,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         };
 
         [TestMethod()]
-        public async Task UserSettingsActionTest_GetAllAutho0UsersFromUser()
+        public async Task GetAuth0UsersByCurrentUserActionTests_GetAllAutho0UsersFromUser()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -100,7 +97,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         }
 
         [TestMethod()]
-        public async Task UserSettingsActionTest_UserDataValidationThrowsError()
+        public async Task GetAuth0UsersByCurrentUserActionTests_UserDataValidationThrowsError()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

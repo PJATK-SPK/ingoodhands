@@ -1,4 +1,4 @@
-﻿using AuthService.BusinessLogic.UserSettings;
+﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Models;

@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthService.BusinessLogic.UserSettings
+namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
 {
     public class GetAuth0UsersByCurrentUserService
     {

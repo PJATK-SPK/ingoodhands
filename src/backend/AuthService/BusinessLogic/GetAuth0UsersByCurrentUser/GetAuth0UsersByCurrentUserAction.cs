@@ -5,23 +5,23 @@ using Core.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace AuthService.BusinessLogic.UserSettings
+namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
 {
     public class GetAuth0UsersByCurrentUserAction
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly GetAuth0UsersByCurrentUserService _userSettingsService;
+        private readonly GetAuth0UsersByCurrentUserService _getAuth0UsersByCurrentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
 
         public GetAuth0UsersByCurrentUserAction(
             ICurrentUserService currentUserService,
-            GetAuth0UsersByCurrentUserService userSettingsService,
+            GetAuth0UsersByCurrentUserService getAuth0UsersByCurrentUserService,
             UserDataValidationService userDataValidationService,
             ILogger<GetAuth0UsersByCurrentUserAction> logger)
         {
             _currentUserService = currentUserService;
-            _userSettingsService = userSettingsService;
+            _getAuth0UsersByCurrentUserService = getAuth0UsersByCurrentUserService;
             _userDataValidationService = userDataValidationService;
             _logger = logger;
         }
@@ -37,7 +37,7 @@ namespace AuthService.BusinessLogic.UserSettings
                 throw new InvalidAuth0DataException();
             }
 
-            var currentUserAuth0UsersList = await _userSettingsService.GetAllAuth0UsersFromUser(auth0UserInfo);
+            var currentUserAuth0UsersList = await _getAuth0UsersByCurrentUserService.GetAllAuth0UsersFromUser(auth0UserInfo);
 
             return new OkObjectResult(currentUserAuth0UsersList);
         }
