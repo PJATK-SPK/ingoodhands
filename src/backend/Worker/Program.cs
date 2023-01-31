@@ -2,7 +2,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Core.ConfigSetup;
 using Serilog;
-using System.Collections.Specialized;
 using Worker;
 
 var builder = Host.CreateDefaultBuilder(args);

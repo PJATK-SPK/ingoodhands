@@ -4,13 +4,7 @@ using Core.Database.Models;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
 {

@@ -1,6 +1,5 @@
 ﻿using AuthService.BusinessLogic.PostLogin;
 using Core.Auth0;
-using Core.Database.Models;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

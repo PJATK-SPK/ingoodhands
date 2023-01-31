@@ -1,6 +1,4 @@
-﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.BusinessLogic.PatchUserDetails
 {

@@ -1,12 +1,5 @@
-﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
-using Core.Auth0;
-using Core.Exceptions;
+﻿using Core.Exceptions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthService.BusinessLogic.PatchUserDetails
 {
@@ -30,8 +23,8 @@ namespace AuthService.BusinessLogic.PatchUserDetails
                 throw new HttpError400Exception("Sorry, You cannot save empty field");
             }
 
-            var isValidLength = userDetailsPayload.FirstName.Length <= 50;
-            isValidLength &= userDetailsPayload.LastName.Length <= 50;
+            var isValidLength = userDetailsPayload.FirstName!.Length <= 50;
+            isValidLength &= userDetailsPayload.LastName!.Length <= 50;
 
             if (!isValidLength)
             {

@@ -1,9 +1,7 @@
 ﻿using AuthService.BusinessLogic.PostLogin;
 using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Autofac;
-using Core;
 using Core.Autofac;
-using Core.Database;
 using AuthService.BusinessLogic.PatchUserDetails;
 
 namespace AuthService

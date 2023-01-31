@@ -1,7 +1,5 @@
 ﻿using AuthService.BusinessLogic.PatchUserDetails;
-using AuthService.BusinessLogic.PostLogin;
 using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
-using Core.Database.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
