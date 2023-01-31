@@ -81,8 +81,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             var result = executed.Value;
 
             Assert.IsNotNull(executed);
-            Assert.IsTrue(result!.Equals(true));
-            //Count should be 2, because there's also serviceUser in User database
+            //Count should be 2, because there's also serviceUser in User database         
             Assert.AreEqual(2, context.Users.Count());
             Assert.IsTrue(context.Users.Any(c => c.FirstName == "Test"));
             Assert.IsTrue(context.Users.Any(c => c.LastName == "Works"));
@@ -142,7 +141,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
-            Assert.AreEqual("Sorry we couldn't save you data. Please contact server administrator.", exception.Message);
+            Assert.AreEqual("Sorry we couldn't save your data. Please contact server administrator.", exception.Message);
         }
 
         [TestMethod()]
@@ -158,12 +157,35 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
                 FirstName = "Test",
                 LastName = "Works"
             };
+
             //Act
             var exception = await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => action.Execute(testPayload, 5));
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
             Assert.AreEqual("Sorry we couldn't find your user in database. Please contact server administrator.", exception.Message);
+        }
+
+        [TestMethod()]
+        public async Task PatchUserDetailsActionTest_ThrowExceptionOnPayloadExceedingDbFieldLength()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PatchUserDetailsAction>();
+
+            // Arrange          
+            var testPayload = new PatchUserDetailsPayload
+            {
+                FirstName = "AbcdefghijklmnouprstxyzAbcdefghijklmnouprstxyzAbcdefghijklmnouprstxyz", //69 letters to varchar(50)
+                LastName = "Works"
+            };
+
+            //Act
+            var exception = await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => action.Execute(testPayload, 5));
+
+            //Assert
+            Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
+            Assert.AreEqual("Sorry we couldn't save your data. Please contact server administrator.", exception.Message);
         }
     }
 }

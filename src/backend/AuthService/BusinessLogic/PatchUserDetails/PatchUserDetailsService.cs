@@ -1,5 +1,6 @@
 ﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Database;
+using Core.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -16,7 +17,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
             _logger = logger;
         }
 
-        public async Task<bool> PatchUserFirstNameAndLastName(PatchUserDetailsPayload userSettingsPayload, long id)
+        public async Task<User> PatchUserFirstNameAndLastName(PatchUserDetailsPayload userSettingsPayload, long id)
         {
             var userFromDatabase = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Id == id);
             if (userFromDatabase == null)
@@ -29,7 +30,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
             userFromDatabase.LastName = userSettingsPayload.LastName;
             await _appDbContext.SaveChangesAsync();
 
-            return true;
+            return userFromDatabase;
         }
     }
 }
