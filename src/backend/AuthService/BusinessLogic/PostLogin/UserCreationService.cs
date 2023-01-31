@@ -33,7 +33,7 @@ namespace AuthService.BusinessLogic.PostLogin
             if (serviceUser == null)
             {
                 _logger.LogError("Service user is null");
-                throw new SingleOrDefaultException("Sorry there seems to be a problem with our service. Please contact server administrator.");
+                throw new HttpError500Exception("Sorry there seems to be a problem with our service. Please contact server administrator.");
             }
 
             if (user == null && auth0UserFromDatabase == null)

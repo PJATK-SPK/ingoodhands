@@ -1,5 +1,6 @@
 ﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Auth0;
+using Core.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,22 @@ namespace AuthService.BusinessLogic.PatchUserDetails
 
         public void Check(PatchUserDetailsPayload userDetailsPayload)
         {
-            var isValid = (userDetailsPayload.FirstName != null && userDetailsPayload.FirstName.Length <= 50);
-            isValid &= (userDetailsPayload.LastName != null && userDetailsPayload.LastName.Length <= 50);
+            var isValid = userDetailsPayload.FirstName != null;
+            isValid &= userDetailsPayload.LastName != null;
 
             if (!isValid)
             {
-                _logger.LogError("UserSettingsPayload in PatchUserDetailsPayloadDataValidationService is didn't pass validation (null or too long)");
-                throw new ArgumentNullException(null, "Sorry we couldn't save your data. Please contact server administrator.");
+                _logger.LogError("UserDetailsPayload in PatchUserDetailsPayloadDataValidationService didn't pass null validation");
+                throw new HttpError400Exception("Sorry, You cannot save empty field");
+            }
+
+            var isValidLength = userDetailsPayload.FirstName.Length <= 50;
+            isValidLength &= userDetailsPayload.LastName.Length <= 50;
+
+            if (!isValidLength)
+            {
+                _logger.LogError("UserDetailsPayload in PatchUserDetailsPayloadDataValidationService didn't pass length validation");
+                throw new HttpError400Exception("Sorry, You cannot save name longer than 50 characters");
             }
         }
     }

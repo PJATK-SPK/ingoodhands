@@ -32,7 +32,7 @@ namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
             if (auth0UserFromDatabase == null)
             {
                 _logger.LogError("Object Auth0UserFromDatabase didn't pass through, because it is null");
-                throw new ArgumentNullException("Something went wrong, cannot find Auth0User in database. Please contact server administrator.");
+                throw new HttpError500Exception("Something went wrong, cannot find Auth0User in database");
             }
 
             var auth0UserUserId = auth0UserFromDatabase!.UserId;

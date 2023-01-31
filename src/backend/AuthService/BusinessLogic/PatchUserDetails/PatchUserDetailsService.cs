@@ -1,6 +1,7 @@
 ﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Database;
 using Core.Database.Models;
+using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
             if (userFromDatabase == null)
             {
                 _logger.LogError("UserFromDatabase in PatchUserDetailsService is null");
-                throw new ArgumentNullException(null, "Sorry we couldn't find your user in database. Please contact server administrator.");
+                throw new HttpError500Exception("Sorry we couldn't find your user in database");
             }
 
             userFromDatabase.FirstName = userSettingsPayload.FirstName;

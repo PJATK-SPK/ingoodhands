@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core.Exceptions
 {
-    public class SingleOrDefaultException : Exception
+    public class HttpError400Exception : Exception
     {
-        public SingleOrDefaultException(string message)
-            : base(String.Format("Data is null at: {0}", message))
+        public HttpError400Exception(string message)
+            : base($"{message}. Please, contact system administrator")
         {
         }
     }

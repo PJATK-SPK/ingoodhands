@@ -1,5 +1,5 @@
-﻿using AuthService.BusinessLogic.Exceptions;
-using Core.Auth0;
+﻿using Core.Auth0;
+using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -33,7 +33,7 @@ namespace AuthService.BusinessLogic.PostLogin
             if (!isUserInfoValid)
             {
                 _logger.LogError("Auth0UserInfo in PostLoginAction didn't pass validation as it has nulls");
-                throw new InvalidAuth0DataException();
+                throw new HttpError500Exception("Your Auth0User data is invalid");
             }
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);

@@ -1,5 +1,4 @@
 ﻿using AuthService;
-using AuthService.BusinessLogic.Exceptions;
 using AuthService.BusinessLogic.PatchUserDetails;
 using Autofac;
 using Core;
@@ -7,6 +6,7 @@ using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
+using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
@@ -83,8 +83,8 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             Assert.IsNotNull(executed);
             //Count should be 2, because there's also serviceUser in User database         
             Assert.AreEqual(2, context.Users.Count());
-            Assert.AreEqual(result!.FirstName, "Test");
-            Assert.AreEqual(result!.LastName, "Works");
+            Assert.AreEqual("Test", result!.FirstName);
+            Assert.AreEqual("Works", result!.LastName);
             Assert.IsTrue(context.Users.Any(c => c.FirstName == "Test"));
             Assert.IsTrue(context.Users.Any(c => c.LastName == "Works"));
         }
@@ -139,33 +139,11 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             var testPayload = new PatchUserDetailsPayload { };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => action.Execute(testPayload, testingUser.Id));
+            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, testingUser.Id));
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
-            Assert.AreEqual("Sorry we couldn't save your data. Please contact server administrator.", exception.Message);
-        }
-
-        [TestMethod()]
-        public async Task PatchUserDetailsActionTest_ThrowExceptionOnNoUsersInDatabase()
-        {
-            using var toolkit = new TestsToolkit(_usedModules);
-            var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<PatchUserDetailsAction>();
-
-            // Arrange          
-            var testPayload = new PatchUserDetailsPayload
-            {
-                FirstName = "Test",
-                LastName = "Works"
-            };
-
-            //Act
-            var exception = await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => action.Execute(testPayload, 5));
-
-            //Assert
-            Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
-            Assert.AreEqual("Sorry we couldn't find your user in database. Please contact server administrator.", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
+            Assert.AreEqual("Sorry, You cannot save empty field. Please, contact system administrator", exception.Message);
         }
 
         [TestMethod()]
@@ -183,11 +161,33 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => action.Execute(testPayload, 5));
+            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, 5));
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(ArgumentNullException));
-            Assert.AreEqual("Sorry we couldn't save your data. Please contact server administrator.", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
+            Assert.AreEqual("Sorry, You cannot save name longer than 50 characters. Please, contact system administrator", exception.Message);
+        }
+
+        [TestMethod()]
+        public async Task PatchUserDetailsActionTest_ThrowExceptionOnNoUsersInDatabase()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PatchUserDetailsAction>();
+
+            // Arrange          
+            var testPayload = new PatchUserDetailsPayload
+            {
+                FirstName = "Test",
+                LastName = "Works"
+            };
+
+            //Act
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute(testPayload, 5));
+
+            //Assert
+            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
+            Assert.AreEqual("Sorry we couldn't find your user in database. Please, contact system administrator", exception.Message);
         }
     }
 }
