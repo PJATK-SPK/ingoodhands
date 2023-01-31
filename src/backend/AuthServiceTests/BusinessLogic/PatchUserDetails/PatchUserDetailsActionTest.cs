@@ -78,11 +78,13 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             var executed = await action.Execute(testPayload, testingUser.Id);
 
             //Assert
-            var result = executed.Value;
+            var result = executed.Value as User;
 
             Assert.IsNotNull(executed);
             //Count should be 2, because there's also serviceUser in User database         
             Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(result!.FirstName, "Test");
+            Assert.AreEqual(result!.LastName, "Works");
             Assert.IsTrue(context.Users.Any(c => c.FirstName == "Test"));
             Assert.IsTrue(context.Users.Any(c => c.LastName == "Works"));
         }
