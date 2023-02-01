@@ -5,7 +5,7 @@ namespace Core.Exceptions
     [Serializable]
     public class HttpError500Exception : Exception
     {
-        protected HttpError500Exception(string message)
+        public HttpError500Exception(string message)
             : base($"{message}. Please, contact system administrator")
         {
         }
