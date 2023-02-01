@@ -32,6 +32,12 @@ runs:
         dotnet tool install --global coverlet.console
       shell: bash
 
+    - name: Download fe artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        name: coverage
+        path: .
+          
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any

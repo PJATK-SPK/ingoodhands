@@ -23,17 +23,13 @@ runs:
         run: |
           dotnet tool install --global coverlet.console
           
-          coverlet ./AuthServiceTests/bin/Debug/net7.0/AuthServiceTests.dll \
-            --target "dotnet" \
-            --targetargs "test --no-build" \
-            -f=opencover \
-            -o="coverage.xml"
+          dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage
         shell: bash
         working-directory: src/backend
 
       - uses: actions/upload-artifact@v3
         if: always() && !cancelled()
         with:
-          name: test-reports
+          name: coverage
           path: |
-            src/backend/coverage.xml
+            src/backend/**/coverage.cobertura.xml
