@@ -12,7 +12,7 @@ namespace Core.Database.Models
         public string Alpha3IsoCode { get; set; } = default!;
 
         public void Configure(EntityTypeBuilder<Country> builder)
-           => new CountryConfig<Country>().Configure(builder);
+            => new CountryConfig<Country>().Configure(builder);
 
         public override int GetHashCode()
             => HashCode.Combine(base.GetHashCode(), EnglishName, Alpha2IsoCode, Alpha3IsoCode);
