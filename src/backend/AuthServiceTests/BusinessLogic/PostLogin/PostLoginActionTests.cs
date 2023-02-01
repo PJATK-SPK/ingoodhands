@@ -219,7 +219,7 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
-            Assert.AreEqual("Your Auth0User data is invalid. Please, contact system administrator", exception.Message);
+            Assert.AreEqual("Sorry we couldn't fetch your Auth0 data. Please, contact system administrator", exception.Message);
         }
     }
 }

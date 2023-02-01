@@ -4,6 +4,7 @@ using Autofac;
 using Core.Autofac;
 using AuthService.BusinessLogic.PatchUserDetails;
 using AuthService.BusinessLogic.GetCurrentUser;
+using AuthService.Services;
 
 namespace AuthService
 {

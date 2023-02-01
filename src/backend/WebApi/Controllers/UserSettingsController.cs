@@ -34,7 +34,8 @@ namespace WebApi.Controllers
         [HttpPatch("{id}")]
         public async Task<ActionResult> Patch([FromBody] PatchUserDetailsPayload userSettingsPayload, long id) => await _patchUserDetailsAction.Execute(userSettingsPayload, id);
 
-        [HttpGet("current-user")]
+        [Authorize]
+        [HttpGet()]
         public async Task<ActionResult> GetUser() => await _getCurrentUserAction.Execute();
     }
 }

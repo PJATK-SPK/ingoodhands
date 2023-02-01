@@ -1,4 +1,4 @@
-﻿using AuthService.BusinessLogic.PostLogin;
+﻿using AuthService.Services;
 using Core.Auth0;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +28,7 @@ namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
         public async Task<OkObjectResult> Execute()
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
-            var isUserInfoValid = _userDataValidationService.Check(auth0UserInfo);
-
-            if (!isUserInfoValid)
-            {
-                _logger.LogError("Auth0UserInfo in GetAuth0UsersByCurrentUserAction didn't pass validation as it has nulls");
-                throw new HttpError500Exception("Your Auth0User data is invalid");
-            }
+            _userDataValidationService.Check(auth0UserInfo);
 
             var currentUserAuth0UsersList = await _getAuth0UsersByCurrentUserService.GetAllAuth0UsersFromUser(auth0UserInfo);
 
