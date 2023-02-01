@@ -9,5 +9,10 @@ namespace Core.Exceptions
             : base($"{message}. Please, contact system administrator")
         {
         }
+
+        protected HttpError400Exception(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 }
