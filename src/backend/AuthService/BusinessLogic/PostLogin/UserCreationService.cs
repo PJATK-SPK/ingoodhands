@@ -1,15 +1,10 @@
-﻿using AuthService.BusinessLogic.UserSettings;
+﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Models;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuthService.BusinessLogic.PostLogin
 {
@@ -33,7 +28,7 @@ namespace AuthService.BusinessLogic.PostLogin
             if (serviceUser == null)
             {
                 _logger.LogError("Service user is null");
-                throw new SingleOrDefaultException("Sorry there seems to be a problem with our service. Please contact server administrator.");
+                throw new HttpError500Exception("Sorry there seems to be a problem with our service. Please contact server administrator.");
             }
 
             if (user == null && auth0UserFromDatabase == null)

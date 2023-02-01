@@ -1,23 +1,20 @@
 ﻿using AuthService;
-using AuthService.BusinessLogic.Exceptions;
-using AuthService.BusinessLogic.PostLogin;
-using AuthService.BusinessLogic.UserSettings;
+using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Autofac;
 using Core;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
-using Microsoft.AspNetCore.Mvc;
+using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AuthServiceTests.BusinessLogic.UserSettings
 {
     [TestClass()]
-    public class UserSettingsActionTests
+    public class GetAuth0UsersByCurrentUserActionTests
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -26,7 +23,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         };
 
         [TestMethod()]
-        public async Task UserSettingsActionTest_GetAllAutho0UsersFromUser()
+        public async Task GetAuth0UsersByCurrentUserActionTests_GetAllAutho0UsersFromUser()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -100,7 +97,7 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         }
 
         [TestMethod()]
-        public async Task UserSettingsActionTest_UserDataValidationThrowsError()
+        public async Task GetAuth0UsersByCurrentUserActionTests_UserDataValidationThrowsError()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -120,11 +117,11 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<InvalidAuth0DataException>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(InvalidAuth0DataException));
-            Assert.AreEqual("Your Auth0User data is invalid, please contact system administrator", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
+            Assert.AreEqual("Your Auth0User data is invalid. Please, contact system administrator", exception.Message);
         }
     }
 }

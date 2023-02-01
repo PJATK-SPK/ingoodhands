@@ -1,5 +1,4 @@
 ﻿using AuthService;
-using AuthService.BusinessLogic.Exceptions;
 using AuthService.BusinessLogic.PostLogin;
 using Autofac;
 using Core;
@@ -7,9 +6,9 @@ using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
+using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
-using TestsBase;
 using TestsCore;
 
 namespace AuthServiceTests.BusinessLogic.PostLogin
@@ -216,11 +215,11 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<InvalidAuth0DataException>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(InvalidAuth0DataException));
-            Assert.AreEqual("Your Auth0User data is invalid, please contact system administrator", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
+            Assert.AreEqual("Your Auth0User data is invalid. Please, contact system administrator", exception.Message);
         }
     }
 }

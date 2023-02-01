@@ -1,27 +1,26 @@
-﻿using AuthService.BusinessLogic.Exceptions;
-using AuthService.BusinessLogic.PostLogin;
+﻿using AuthService.BusinessLogic.PostLogin;
 using Core.Auth0;
-using Core.Database.Models;
+using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace AuthService.BusinessLogic.UserSettings
+namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
 {
     public class GetAuth0UsersByCurrentUserAction
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly GetAuth0UsersByCurrentUserService _userSettingsService;
+        private readonly GetAuth0UsersByCurrentUserService _getAuth0UsersByCurrentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
 
         public GetAuth0UsersByCurrentUserAction(
             ICurrentUserService currentUserService,
-            GetAuth0UsersByCurrentUserService userSettingsService,
+            GetAuth0UsersByCurrentUserService getAuth0UsersByCurrentUserService,
             UserDataValidationService userDataValidationService,
             ILogger<GetAuth0UsersByCurrentUserAction> logger)
         {
             _currentUserService = currentUserService;
-            _userSettingsService = userSettingsService;
+            _getAuth0UsersByCurrentUserService = getAuth0UsersByCurrentUserService;
             _userDataValidationService = userDataValidationService;
             _logger = logger;
         }
@@ -34,10 +33,10 @@ namespace AuthService.BusinessLogic.UserSettings
             if (!isUserInfoValid)
             {
                 _logger.LogError("Auth0UserInfo in GetAuth0UsersByCurrentUserAction didn't pass validation as it has nulls");
-                throw new InvalidAuth0DataException();
+                throw new HttpError500Exception("Your Auth0User data is invalid");
             }
 
-            var currentUserAuth0UsersList = await _userSettingsService.GetAllAuth0UsersFromUser(auth0UserInfo);
+            var currentUserAuth0UsersList = await _getAuth0UsersByCurrentUserService.GetAllAuth0UsersFromUser(auth0UserInfo);
 
             return new OkObjectResult(currentUserAuth0UsersList);
         }

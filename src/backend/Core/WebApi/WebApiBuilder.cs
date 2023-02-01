@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Core.ConfigSetup;
 using Core.WebApi.Auth;
-using Autofac.Core;
 using System.Text.Json.Serialization;
 
 namespace Core.WebApi
