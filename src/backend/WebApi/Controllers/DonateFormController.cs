@@ -111,4 +111,3 @@ public class DonateFormController : ControllerBase
     public async Task<ActionResult> Donate([FromBody] DeleteMePerformDonatePayload payload)
         => await Task.FromResult(Ok(new DeleteMePerformDonateResponse { DonateNumber = "DNT000001" }));
 }
-}
