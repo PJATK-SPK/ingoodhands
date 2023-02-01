@@ -11,9 +11,9 @@ namespace AuthService.BusinessLogic.PostLogin
     public class UserCreationService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
+        private readonly ILogger<UserCreationService> _logger;
 
-        public UserCreationService(AppDbContext appDbContext, ILogger<GetAuth0UsersByCurrentUserAction> logger)
+        public UserCreationService(AppDbContext appDbContext, ILogger<UserCreationService> logger)
         {
             _appDbContext = appDbContext;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace AuthService.BusinessLogic.PostLogin
             if (serviceUser == null)
             {
                 _logger.LogError("Service user is null");
-                throw new HttpError500Exception("Sorry there seems to be a problem with our service. Please contact server administrator.");
+                throw new HttpError500Exception("Sorry there seems to be a problem with our service");
             }
 
             if (user == null && auth0UserFromDatabase == null)

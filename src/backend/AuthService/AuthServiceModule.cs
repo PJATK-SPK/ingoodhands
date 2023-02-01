@@ -3,6 +3,7 @@ using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Autofac;
 using Core.Autofac;
 using AuthService.BusinessLogic.PatchUserDetails;
+using AuthService.BusinessLogic.GetCurrentUser;
 
 namespace AuthService
 {
@@ -19,6 +20,8 @@ namespace AuthService
             builder.RegisterAsScoped<PatchUserDetailsPayload>();
             builder.RegisterAsScoped<PatchUserDetailsService>();
             builder.RegisterAsScoped<PatchUserDetailsPayloadDataValidationService>();
+            builder.RegisterAsScoped<GetCurrentUserAction>();
+            builder.RegisterAsScoped<GetCurrentUserService>();
         }
     }
 }
