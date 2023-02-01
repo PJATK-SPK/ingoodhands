@@ -11,6 +11,8 @@ namespace Core.Database.Models
         public string Alpha2IsoCode { get; set; } = default!;
         public string Alpha3IsoCode { get; set; } = default!;
 
+        public List<Address>? Addresses { get; set; }
+
         public void Configure(EntityTypeBuilder<Country> builder)
             => new CountryConfig<Country>().Configure(builder);
 
