@@ -52,6 +52,7 @@ public class DonateController : ControllerBase
 
     internal class DeleteMeGetProductsDto
     {
+        public long Id { get; set; } // ProductId
         public string Name { get; set; } = default!;
         public string Unit { get; set; } = default!;
     }
@@ -62,26 +63,31 @@ public class DonateController : ControllerBase
         {
             new DeleteMeGetProductsDto
             {
+               Id = 1,
                Name = "Fruits",
                Unit = "kg"
             },
             new DeleteMeGetProductsDto
             {
+               Id = 2,
                Name = "Water",
                Unit = "l"
             },
             new DeleteMeGetProductsDto
             {
+               Id = 3,
                Name = "Rice",
                Unit = "kg"
             },
             new DeleteMeGetProductsDto
             {
+               Id = 4,
                Name = "Milk",
                Unit = "l"
             },
             new DeleteMeGetProductsDto
             {
+               Id = 5,
                Name = "Meat",
                Unit = "kg"
             }
