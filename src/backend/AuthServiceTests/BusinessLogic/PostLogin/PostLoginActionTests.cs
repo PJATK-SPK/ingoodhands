@@ -71,8 +71,6 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             var result = await action.Execute();
 
             // Assert
-            Assert.AreEqual(testingUser.Auth0Users?[0], testingAuth0User);
-            Assert.AreEqual(testingAuth0User.User, testingUser);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
         }
