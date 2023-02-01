@@ -1,14 +1,7 @@
 ﻿using Core.Auth0;
-using Core.Database;
-using Core.Database.Models;
-using AuthService.BusinessLogic.PostLogin.Exceptions;
+using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace AuthService.BusinessLogic.PostLogin
 {
@@ -17,14 +10,19 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
-        private readonly AppDbContext _appDbContext;
+        private readonly ILogger<PostLoginAction> _logger;
 
-        public PostLoginAction(ICurrentUserService currentUserService, UserDataValidationService userDataValidationService, AppDbContext appDbContext, UserCreationService userService)
+        public PostLoginAction(
+            ICurrentUserService currentUserService,
+            UserDataValidationService userDataValidationService,
+            UserCreationService userService,
+            ILogger<PostLoginAction> logger
+            )
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
-            _appDbContext = appDbContext;
             _userService = userService;
+            _logger = logger;
         }
 
         public async Task<ActionResult> Execute()
@@ -34,7 +32,8 @@ namespace AuthService.BusinessLogic.PostLogin
 
             if (!isUserInfoValid)
             {
-                throw new PostLoginDataCheckValidationException("CurrentAuth0UserInfo in PostLoginAction didn't pass validation");
+                _logger.LogError("Auth0UserInfo in PostLoginAction didn't pass validation as it has nulls");
+                throw new HttpError500Exception("Your Auth0User data is invalid");
             }
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);

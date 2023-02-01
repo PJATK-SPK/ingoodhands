@@ -1,16 +1,15 @@
 ﻿using AuthService;
 using AuthService.BusinessLogic.PostLogin;
-using AuthService.BusinessLogic.PostLogin.Exceptions;
 using Autofac;
 using Core;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models;
+using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AuthServiceTests.BusinessLogic.PostLogin
 {
@@ -216,11 +215,11 @@ namespace AuthServiceTests.BusinessLogic.PostLogin
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<PostLoginDataCheckValidationException>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(PostLoginDataCheckValidationException));
-            Assert.AreEqual("Data is invalid at: CurrentAuth0UserInfo in PostLoginAction didn't pass validation", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
+            Assert.AreEqual("Your Auth0User data is invalid. Please, contact system administrator", exception.Message);
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Autofac;
 using Core.Autofac;
 using Core.ConfigSetup;
-using Core.Database;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Core.WebApi.Auth;
 
 namespace Core
