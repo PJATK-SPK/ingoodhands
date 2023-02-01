@@ -14,6 +14,8 @@ namespace Core.Database.Models
         public void Configure(EntityTypeBuilder<Permission> builder)
            => new PermissionConfig<Permission>().Configure(builder);
 
+        public override bool Equals(object? obj) => obj is User;
+
         public override int GetHashCode()
             => HashCode.Combine(base.GetHashCode(), Name);
     }

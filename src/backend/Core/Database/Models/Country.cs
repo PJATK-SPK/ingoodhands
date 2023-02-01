@@ -14,6 +14,8 @@ namespace Core.Database.Models
         public void Configure(EntityTypeBuilder<Country> builder)
             => new CountryConfig<Country>().Configure(builder);
 
+        public override bool Equals(object? obj) => obj is User;
+
         public override int GetHashCode()
             => HashCode.Combine(base.GetHashCode(), EnglishName, Alpha2IsoCode, Alpha3IsoCode);
     }
