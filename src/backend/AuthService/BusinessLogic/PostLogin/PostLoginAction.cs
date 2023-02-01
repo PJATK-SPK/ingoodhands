@@ -11,19 +11,16 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
-        private readonly ILogger<PostLoginAction> _logger;
 
         public PostLoginAction(
             ICurrentUserService currentUserService,
             UserDataValidationService userDataValidationService,
-            UserCreationService userService,
-            ILogger<PostLoginAction> logger
+            UserCreationService userService
             )
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
             _userService = userService;
-            _logger = logger;
         }
 
         public async Task<ActionResult> Execute()

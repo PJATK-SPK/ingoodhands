@@ -11,18 +11,16 @@ namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
         private readonly ICurrentUserService _currentUserService;
         private readonly GetAuth0UsersByCurrentUserService _getAuth0UsersByCurrentUserService;
         private readonly UserDataValidationService _userDataValidationService;
-        private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
 
         public GetAuth0UsersByCurrentUserAction(
             ICurrentUserService currentUserService,
             GetAuth0UsersByCurrentUserService getAuth0UsersByCurrentUserService,
-            UserDataValidationService userDataValidationService,
-            ILogger<GetAuth0UsersByCurrentUserAction> logger)
+            UserDataValidationService userDataValidationService
+            )
         {
             _currentUserService = currentUserService;
             _getAuth0UsersByCurrentUserService = getAuth0UsersByCurrentUserService;
             _userDataValidationService = userDataValidationService;
-            _logger = logger;
         }
 
         public async Task<OkObjectResult> Execute()

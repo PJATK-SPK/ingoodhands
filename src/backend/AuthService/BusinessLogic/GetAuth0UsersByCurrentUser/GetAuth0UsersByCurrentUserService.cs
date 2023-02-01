@@ -25,7 +25,7 @@ namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
 
             if (auth0UserFromDatabase == null)
             {
-                _logger.LogError("Object Auth0UserFromDatabase didn't pass through, because it is null");
+                _logger.LogError("User with email {email} was not found in table Auth0Users", auth0UserInfo.Email);
                 throw new HttpError500Exception("Something went wrong, cannot find Auth0User in database");
             }
 
