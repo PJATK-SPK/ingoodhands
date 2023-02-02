@@ -20,7 +20,7 @@ namespace AuthService
             builder.RegisterAsScoped<PatchUserDetailsAction>();
             builder.RegisterAsScoped<PatchUserDetailsPayload>();
             builder.RegisterAsScoped<PatchUserDetailsService>();
-            builder.RegisterAsScoped<PatchUserDetailsPayloadDataValidationService>();
+            builder.RegisterAsScoped<PatchUserDetailsPayloadValidator>();
             builder.RegisterAsScoped<GetCurrentUserAction>();
             builder.RegisterAsScoped<GetCurrentUserService>();
         }

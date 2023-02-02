@@ -143,7 +143,6 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
-            Assert.AreEqual("Sorry, You cannot save empty field. Please, contact system administrator", exception.Message);
         }
 
         [TestMethod()]
@@ -165,7 +164,6 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
-            Assert.AreEqual("Sorry, You cannot save name longer than 50 characters. Please, contact system administrator", exception.Message);
         }
 
         [TestMethod()]

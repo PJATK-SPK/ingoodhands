@@ -11,6 +11,8 @@ namespace Core.Database
         public DbSet<User> Users { get; set; } = default!;
         public DbSet<Auth0User> Auth0Users { get; set; } = default!;
         public DbSet<Permission> Permissions { get; set; } = default!;
+        public DbSet<Country> Countries { get; set; } = default!;
+        public DbSet<Address> Addresses { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

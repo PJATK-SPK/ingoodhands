@@ -15,6 +15,8 @@ namespace Core.Database.Models
         public void Configure(EntityTypeBuilder<RolePermission> builder)
            => new RolePermissionConfig<RolePermission>().Configure(builder);
 
+        public override bool Equals(object? obj) => ReferenceEquals(obj, this);
+
         public override int GetHashCode()
             => HashCode.Combine(base.GetHashCode(), RoleId, PermissionId);
     }

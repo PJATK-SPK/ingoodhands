@@ -17,6 +17,8 @@ namespace Core.Database.Models
         public void Configure(EntityTypeBuilder<User> builder)
             => new UserConfig<User>().Configure(builder);
 
+        public override bool Equals(object? obj) => ReferenceEquals(obj, this);
+
         public override int GetHashCode()
             => HashCode.Combine(
                 HashCode.Combine(base.GetHashCode(), FirstName),

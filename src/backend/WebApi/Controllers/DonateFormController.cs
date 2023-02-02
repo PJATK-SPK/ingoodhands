@@ -5,11 +5,10 @@ namespace WebApi.Controllers;
 
 [EnableCors]
 [ApiController]
-[Route("donate")]
-public class DonateController : ControllerBase
+[Route("donate-form")]
+public class DonateFormController : ControllerBase
 {
-
-    internal class DeleteMeGetWarehousesDto
+    internal class DeleteMeGetWarehousesResponse
     {
         public long Id { get; set; }
         public string Name { get; set; } = default!;
@@ -23,9 +22,9 @@ public class DonateController : ControllerBase
     [HttpGet("warehouses")]
     public async Task<ActionResult> GetWarehouses()
     {
-        return await Task.FromResult(Ok(new List<DeleteMeGetWarehousesDto>
+        return await Task.FromResult(Ok(new List<DeleteMeGetWarehousesResponse>
         {
-            new DeleteMeGetWarehousesDto
+            new DeleteMeGetWarehousesResponse
             {
                 CountryName = "Poland",
                 Id=1,
@@ -36,7 +35,7 @@ public class DonateController : ControllerBase
                 Street="Jaworowa 3/5",
                 PostalCode="82-500"
             },
-             new DeleteMeGetWarehousesDto
+             new DeleteMeGetWarehousesResponse
             {
                 CountryName = "France",
                 Id=2,
@@ -50,41 +49,65 @@ public class DonateController : ControllerBase
         }));
     }
 
-    internal class DeleteMeGetProductsDto
+    internal class DeleteMeGetProductsResponse
     {
+        public long Id { get; set; } // ProductId
         public string Name { get; set; } = default!;
         public string Unit { get; set; } = default!;
     }
     [HttpGet("products")]
     public async Task<ActionResult> GetProducts()
     {
-        return await Task.FromResult(Ok(new List<DeleteMeGetProductsDto>
+        return await Task.FromResult(Ok(new List<DeleteMeGetProductsResponse>
         {
-            new DeleteMeGetProductsDto
+            new DeleteMeGetProductsResponse
             {
+               Id = 1,
                Name = "Fruits",
                Unit = "kg"
             },
-            new DeleteMeGetProductsDto
+            new DeleteMeGetProductsResponse
             {
+               Id = 2,
                Name = "Water",
                Unit = "l"
             },
-            new DeleteMeGetProductsDto
+            new DeleteMeGetProductsResponse
             {
+               Id = 3,
                Name = "Rice",
                Unit = "kg"
             },
-            new DeleteMeGetProductsDto
+            new DeleteMeGetProductsResponse
             {
+               Id = 4,
                Name = "Milk",
                Unit = "l"
             },
-            new DeleteMeGetProductsDto
+            new DeleteMeGetProductsResponse
             {
+               Id = 5,
                Name = "Meat",
                Unit = "kg"
             }
         }));
     }
+
+    public class DeleteMePerformDonatePayloadProduct
+    {
+        public long Id { get; set; }
+        public int Quantity { get; set; }
+    }
+    public class DeleteMePerformDonatePayload
+    {
+        public long WarehouseId { get; set; }
+        public List<DeleteMePerformDonatePayloadProduct> Products { get; set; } = default!;
+    }
+    public class DeleteMePerformDonateResponse
+    {
+        public string DonateNumber { get; set; } = default!;
+    }
+    [HttpPost]
+    public async Task<ActionResult> Donate([FromBody] DeleteMePerformDonatePayload payload)
+        => await Task.FromResult(Ok(new DeleteMePerformDonateResponse { DonateNumber = "DNT000001" }));
 }

@@ -3,6 +3,7 @@ using System;
 using Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201201506_AddCountry")]
+    partial class AddCountry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,79 +24,6 @@ namespace Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Core.Database.Models.Address", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Apartment")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("apartment");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("city");
-
-                    b.Property<long>("CountryId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("country_id");
-
-                    b.Property<double>("GpsLatitude")
-                        .HasColumnType("double precision")
-                        .HasColumnName("gps_latitude");
-
-                    b.Property<double>("GpsLongitude")
-                        .HasColumnType("double precision")
-                        .HasColumnName("gps_longitude");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("postal_code");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
-
-                    b.Property<string>("Street")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("street");
-
-                    b.Property<string>("StreetNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("street_number");
-
-                    b.Property<long?>("UpdateUserId")
-                        .IsRequired()
-                        .HasColumnType("bigint")
-                        .HasColumnName("update_user_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_addresses");
-
-                    b.HasIndex("CountryId")
-                        .HasDatabaseName("ix_addresses_country_id");
-
-                    b.HasIndex("UpdateUserId")
-                        .HasDatabaseName("ix_addresses_update_user_id");
-
-                    b.ToTable("addresses", "core");
-                });
 
             modelBuilder.Entity("Core.Database.Models.Auth0User", b =>
                 {
@@ -403,27 +333,6 @@ namespace Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Address", b =>
-                {
-                    b.HasOne("Core.Database.Models.Country", "Country")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("addresses_country_id_fkey");
-
-                    b.HasOne("Core.Database.Models.User", "UpdateUser")
-                        .WithMany()
-                        .HasForeignKey("UpdateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_addresses_users_update_user_id");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("UpdateUser");
-                });
-
             modelBuilder.Entity("Core.Database.Models.Auth0User", b =>
                 {
                     b.HasOne("Core.Database.Models.User", "UpdateUser")
@@ -509,11 +418,6 @@ namespace Core.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("UpdateUser");
-                });
-
-            modelBuilder.Entity("Core.Database.Models.Country", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("Core.Database.Models.Permission", b =>

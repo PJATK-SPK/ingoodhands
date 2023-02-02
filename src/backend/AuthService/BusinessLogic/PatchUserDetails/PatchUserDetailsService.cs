@@ -23,7 +23,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
             var userFromDatabase = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Id == id);
             if (userFromDatabase == null)
             {
-                _logger.LogError("UserFromDatabase in PatchUserDetailsService is null");
+                _logger.LogError("User with id {id} was not found in users table!", id);
                 throw new HttpError500Exception("Sorry we couldn't find your user in database");
             }
 
