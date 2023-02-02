@@ -17,7 +17,7 @@ namespace AuthService.Services
         public bool Check(CurrentUserInfo currentAuth0UserInfo)
         {
             var check = currentAuth0UserInfo.Email != null;
-            check &= currentAuth0UserInfo.EmailVerified != false;
+            check &= currentAuth0UserInfo.EmailVerified;
             check &= currentAuth0UserInfo.Identifier != null;
             check &= currentAuth0UserInfo.FamilyName != null;
             check &= currentAuth0UserInfo.GivenName != null;
