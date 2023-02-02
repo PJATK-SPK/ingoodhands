@@ -1,5 +1,5 @@
 ﻿using AuthService;
-using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
+using AuthService.BusinessLogic.GetCurrentUser;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -11,10 +11,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsCore;
 
-namespace AuthServiceTests.BusinessLogic.UserSettings
+namespace AuthServiceTests.BusinessLogic.GetCurrentUser
 {
     [TestClass()]
-    public class GetAuth0UsersByCurrentUserActionTests
+    public class GetCurrentUserActionTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -23,11 +23,11 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
         };
 
         [TestMethod()]
-        public async Task GetAuth0UsersByCurrentUserActionTests_GetAllAutho0UsersFromUser()
+        public async Task GetCurrentUserActionTest_GetUserFromDatabase()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetAuth0UsersByCurrentUserAction>();
+            var action = toolkit.Resolve<GetCurrentUserAction>();
 
             // Arrange
             var testingUser = new User()
@@ -39,69 +39,51 @@ namespace AuthServiceTests.BusinessLogic.UserSettings
             };
             context.Add(testingUser);
 
-            var testingAuth0UserOne = new Auth0User()
+            var testingAuth0User = new Auth0User()
             {
                 FirstName = "Auth",
                 LastName = "Zerouser",
-                Nickname = "Auth0One",
+                Nickname = "Auth0",
                 UpdateUser = testingUser,
                 UpdateUserId = 1,
                 UpdatedAt = DateTime.UtcNow,
                 Email = testingUser.Email,
-                Identifier = "testingIdentifierOne",
+                Identifier = "testingIdentifier",
                 User = testingUser,
                 UserId = testingUser.Id
             };
-            context.Add(testingAuth0UserOne);
-
-            var testingAuth0UserTwo = new Auth0User()
-            {
-                FirstName = "AuthTwo",
-                LastName = "AnotherUser",
-                Nickname = "Auth0Two",
-                UpdateUser = testingUser,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Email = testingUser.Email,
-                Identifier = "testingIdentifierTwo",
-                User = testingUser,
-                UserId = testingUser.Id
-            };
-            context.Add(testingAuth0UserTwo);
+            context.Add(testingAuth0User);
             await context.SaveChangesAsync();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {
-                Email = testingAuth0UserOne.Email,
+                Email = testingAuth0User.Email,
                 EmailVerified = true,
-                Identifier = testingAuth0UserOne.Identifier,
-                GivenName = testingAuth0UserOne.FirstName,
-                FamilyName = testingAuth0UserOne.LastName,
+                Identifier = testingAuth0User.Identifier,
+                GivenName = testingAuth0User.FirstName,
+                FamilyName = testingAuth0User.LastName,
                 Locale = "pl",
-                Name = testingAuth0UserOne.FirstName + testingAuth0UserOne.LastName,
-                Nickname = testingAuth0UserOne.Nickname,
+                Name = testingAuth0User.FirstName + testingAuth0User.LastName,
+                Nickname = testingAuth0User.Nickname,
                 UpdatedAt = DateTime.UtcNow,
             });
             //Act
             var executed = await action.Execute();
 
             //Assert
-
-            Assert.IsNotNull(executed);
-            var result = executed.Value as List<Auth0User>;
-            Assert.AreEqual(2, result!.Count);
-            Assert.AreEqual(2, context.Auth0Users.Count());
-            Assert.AreEqual(result!.Count, context.Auth0Users.Count());
-            Assert.IsTrue(result.Any(c => c.Identifier == "testingIdentifierOne"));
-            Assert.IsTrue(result.Any(c => c.Identifier == "testingIdentifierTwo"));
+            var result = executed.Value as User;
+            Assert.AreEqual(testingUser.Id, result!.Id);
+            Assert.AreEqual("test@testing.com", result!.Email);
+            Assert.AreEqual(testingUser.Auth0Users!.Count, result.Auth0Users!.Count);
+            Assert.AreEqual(result.Id, context.Users.First(c => c.Id == result.Id).Id);
         }
 
         [TestMethod()]
-        public async Task GetAuth0UsersByCurrentUserActionTests_UserDataValidationThrowsError()
+        public async Task GetCurrentUserActionTest_UserDataValidationThrowsError()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetAuth0UsersByCurrentUserAction>();
+            var action = toolkit.Resolve<GetCurrentUserAction>();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {

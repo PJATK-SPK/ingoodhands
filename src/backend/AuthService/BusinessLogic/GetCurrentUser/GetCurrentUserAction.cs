@@ -1,25 +1,31 @@
-﻿using AuthService.Services;
+﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
+using AuthService.Services;
 using Core.Auth0;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
+namespace AuthService.BusinessLogic.GetCurrentUser
 {
-    public class GetAuth0UsersByCurrentUserAction
+    public class GetCurrentUserAction
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly GetAuth0UsersByCurrentUserService _getAuth0UsersByCurrentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
         private readonly UserDataValidationService _userDataValidationService;
 
-        public GetAuth0UsersByCurrentUserAction(
+        public GetCurrentUserAction(
             ICurrentUserService currentUserService,
-            GetAuth0UsersByCurrentUserService getAuth0UsersByCurrentUserService,
+            GetCurrentUserService getCurrentUserService,
             UserDataValidationService userDataValidationService
             )
         {
             _currentUserService = currentUserService;
-            _getAuth0UsersByCurrentUserService = getAuth0UsersByCurrentUserService;
+            _getCurrentUserService = getCurrentUserService;
             _userDataValidationService = userDataValidationService;
         }
 
@@ -28,9 +34,9 @@ namespace AuthService.BusinessLogic.GetAuth0UsersByCurrentUser
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             _userDataValidationService.Check(auth0UserInfo);
 
-            var currentUserAuth0UsersList = await _getAuth0UsersByCurrentUserService.GetAllAuth0UsersFromUser(auth0UserInfo);
+            var currentUser = await _getCurrentUserService.GetCurrentUser(auth0UserInfo);
 
-            return new OkObjectResult(currentUserAuth0UsersList);
+            return new OkObjectResult(currentUser);
         }
     }
 }
