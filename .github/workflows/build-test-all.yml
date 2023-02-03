@@ -48,6 +48,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test-int-be
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build-fe:
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
@@ -57,9 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build-fe
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
 #  sonar:
 #    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
