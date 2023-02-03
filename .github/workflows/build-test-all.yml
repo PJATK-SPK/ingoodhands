@@ -35,13 +35,14 @@ jobs:
       - check-changed-paths
     steps:
       - uses: actions/checkout@v3
-      - name: Run backend and postgres for testing
+      - name: Generate API docs
         run: |
           dotnet build
           dotnet swagger tofile --output api.json .\WebApi\bin\Debug\net7.0\WebApi.dll v1
+        working_directory: src/backend
       - uses: stoplightio/spectral-action@latest
         with:
-          file_glob: 'api.json'
+          file_glob: 'src/backend/api.json'
           spectral_ruleset: .spectral.yaml
 
   build-be:
