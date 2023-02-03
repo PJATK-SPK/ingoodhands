@@ -37,9 +37,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Generate API docs
         run: |
+          cd src/backend
           dotnet build
           dotnet swagger tofile --output api.json .\WebApi\bin\Debug\net7.0\WebApi.dll v1
-        working_directory: src/backend
       - uses: stoplightio/spectral-action@latest
         with:
           file_glob: 'src/backend/api.json'
