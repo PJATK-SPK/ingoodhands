@@ -48,9 +48,6 @@ runs:
 
     - name: Run tests
       run: |
-        dotnet tool install --global dotnet-sonarscanner
-        dotnet tool install --global coverlet.console
-        
         dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage
       shell: bash
       working-directory: src/backend
