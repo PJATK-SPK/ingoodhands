@@ -28,6 +28,22 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
       workflow: ${{ steps.changes.outputs.workflow }}
 
+  spectral:
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run backend and postgres for testing
+        run: |
+          dotnet build
+          dotnet swagger tofile --output api.json .\WebApi\bin\Debug\net7.0\WebApi.dll v1
+      - uses: stoplightio/spectral-action@latest
+        with:
+          file_glob: 'api.json'
+          spectral_ruleset: .spectral.yaml
+
   build-be:
     if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
