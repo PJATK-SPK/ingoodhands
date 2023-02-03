@@ -9,7 +9,7 @@ namespace Core.Migrations
     public partial class Init : Migration
     {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void TT(MigrationBuilder migrationBuilder)
         {
          Var user = new User();
          user = null;
