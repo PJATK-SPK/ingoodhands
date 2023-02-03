@@ -1,36 +1,71 @@
 name: "SonarCloud"
 description: "Run sonar analysis"
+inputs:
+  SONAR_TOKEN:
+    description: 'Token to auth to Sonar'
+    required: true
+  GITHUB_TOKEN:
+    description: 'Token to auth to GitHub'
+    required: true
 runs:
   using: "composite"
   steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-      - name: Set variables for testing
-        run: |
-          echo "DB_HOST=localhost" >> $GITHUB_ENV
-          echo "DB_USER=postgres" >> $GITHUB_ENV
-          echo "DB_PASSWORD=ingoodhands" >> $GITHUB_ENV
-          echo "DB_DATABASE=in_good_hands" >> $GITHUB_ENV
-          echo "DB_PORT=5432" >> $GITHUB_ENV
-        shell: bash
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
 
-      - name: Run backend and postgres for testing
-        run: |
-          docker-compose -f docker-compose.ci.yml up -d
-        shell: bash
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
 
-      - name: Run tests
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-          dotnet tool install --global coverlet.console
-          
-          dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage
-        shell: bash
-        working-directory: src/backend
+    - name: Install SonarCloud scanners
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet tool install --global coverlet.console
+      shell: bash
 
-      - uses: actions/upload-artifact@v3
-        if: always() && !cancelled()
-        with:
-          name: coverage
-          path: |
-            src/backend/**/coverage.cobertura.xml
+    - name: Set variables for testing
+      run: |
+        echo "DB_HOST=localhost" >> $GITHUB_ENV
+        echo "DB_USER=postgres" >> $GITHUB_ENV
+        echo "DB_PASSWORD=ingoodhands" >> $GITHUB_ENV
+        echo "DB_DATABASE=in_good_hands" >> $GITHUB_ENV
+        echo "DB_PORT=5432" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Run backend and postgres for testing
+      run: |
+        docker-compose -f docker-compose.ci.yml up -d
+      shell: bash
+
+    - name: Run tests
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet tool install --global coverlet.console
+        
+        dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage
+      shell: bash
+      working-directory: src/backend
+
+    - name: Move coverage
+      run: |
+        mv coverage/**/coverage.cobertura.xml .
+      shell: bash
+      working-directory: src/backend
+
+    - name: Build and analyze
+      run: |
+        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.cobertura.xml
+        dotnet build --no-incremental
+
+        dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
+      shell: bash
+      working-directory: src/backend

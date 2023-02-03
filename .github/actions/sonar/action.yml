@@ -38,6 +38,10 @@ runs:
         name: coverage
         path: .
 
+    - name: Move coverage
+      run: |
+      shell: bash
+
     - name: Build and analyze
       run: |
         dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
