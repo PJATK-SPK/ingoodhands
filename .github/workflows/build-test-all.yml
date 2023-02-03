@@ -40,7 +40,7 @@ jobs:
           cd src/backend
           dotnet build
           dotnet tool restore
-          dotnet swagger tofile --output api.json .\WebApi\bin\Debug\net7.0\WebApi.dll v1
+          dotnet swagger tofile --output api.json ./WebApi/bin/Debug/net7.0/WebApi.dll v1
       - uses: stoplightio/spectral-action@latest
         with:
           file_glob: 'src/backend/api.json'
