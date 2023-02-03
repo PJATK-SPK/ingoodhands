@@ -37,14 +37,17 @@ runs:
       with:
         name: coverage
         path: .
+      working-directory: src/backend
 
     - name: Move coverage
       run: |
+        mv coverage/**/coverage.opencover.xml .
       shell: bash
+      working-directory: src/backend
 
     - name: Build and analyze
       run: |
-        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
+        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
         dotnet build --no-incremental
 
         dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_TOKEN }}"

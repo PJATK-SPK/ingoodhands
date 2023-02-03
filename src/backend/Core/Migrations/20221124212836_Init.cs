@@ -229,12 +229,6 @@ namespace Core.Migrations
                 table: "users",
                 column: "email",
                 unique: true);
-            migrationBuilder.CreateIndex(
-                name: "users_email_idx",
-                schema: "core",
-                table: "users",
-                column: "email",
-                unique: true);
         }
 
         /// <inheritdoc />
