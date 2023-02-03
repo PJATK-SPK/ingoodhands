@@ -229,33 +229,16 @@ namespace Core.Migrations
                 table: "users",
                 column: "email",
                 unique: true);
+            migrationBuilder.CreateIndex(
+                name: "users_email_idx",
+                schema: "core",
+                table: "users",
+                column: "email",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "auth0_users",
-                schema: "core");
-
-            migrationBuilder.DropTable(
-                name: "role_permissions",
-                schema: "core");
-
-            migrationBuilder.DropTable(
-                name: "permissions",
-                schema: "core");
-
-            migrationBuilder.DropTable(
-                name: "roles",
-                schema: "core");
-
-            migrationBuilder.DropTable(
-                name: "users",
-                schema: "core");
-        }
-
-        protected override void Middle(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "auth0_users",
