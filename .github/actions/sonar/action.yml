@@ -37,7 +37,6 @@ runs:
       with:
         name: coverage
         path: .
-      working-directory: src/backend
 
     - name: Move coverage
       run: |
