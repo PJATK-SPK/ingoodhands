@@ -15,3 +15,4 @@ namespace Core.Migrations
          user = null;
     }
 }
+}
