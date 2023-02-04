@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using Core;
 
-public static class UsedModules
+namespace Worker
 {
-    public static readonly IEnumerable<Module> List = new List<Module>()
+    public static class UsedModules
     {
-        new CoreModule(false),
-    };
+        public static readonly IEnumerable<Module> List = new List<Module>()
+        {
+            new CoreModule(false),
+        };
+    }
 }

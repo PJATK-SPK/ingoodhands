@@ -34,16 +34,16 @@ namespace Core.WebApi
             return hostBuilder;
         }
 
-        public static AppConfig Configure(this IServiceCollection services, AppConfig? kernelConfig = null)
+        public static AppConfig Configure(this IServiceCollection services, AppConfig? config = null)
         {
-            if (kernelConfig == null)
-                kernelConfig = ConfigurationReader.Get();
+            if (config == null)
+                config = ConfigurationReader.Get();
 
             services.AddCors(c =>
                 c.AddDefaultPolicy(builder =>
                 {
                     builder.AllowAnyMethod();
-                    builder.AllowAnyOrigin();
+                    builder.WithOrigins(config.Urls.Frontend.Substring(0, config.Urls.Frontend.Length - 1));
                     builder.AllowAnyHeader();
                 })
             );
@@ -57,19 +57,19 @@ namespace Core.WebApi
                     options.JsonSerializerOptions.Converters.Add(new JsonDateTimeNullConverter());
                 });
             services.AddEndpointsApiExplorer();
-            services.SetupSwagger(kernelConfig);
-            services.SetupAuth(kernelConfig);
+            services.SetupSwagger(config);
+            services.SetupAuth(config);
 
-            return kernelConfig;
+            return config;
         }
 
-        public static AppConfig Configure(this IApplicationBuilder app, string urlPrefix, AppConfig? kernelConfig = null)
+        public static AppConfig Configure(this IApplicationBuilder app, string urlPrefix, AppConfig? config = null)
         {
-            if (kernelConfig == null)
-                kernelConfig = ConfigurationReader.Get();
+            if (config == null)
+                config = ConfigurationReader.Get();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.OAuthClientId(kernelConfig.Authorization.ClientId));
+            app.UseSwaggerUI(c => c.OAuthClientId(config.Authorization.ClientId));
             app.UsePathBase(new PathString(urlPrefix));
             app.UseHttpsRedirection();
             app.UseRouting();
@@ -78,7 +78,7 @@ namespace Core.WebApi
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-            return kernelConfig;
+            return config;
         }
     }
 }

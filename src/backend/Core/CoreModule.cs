@@ -31,12 +31,12 @@ namespace Core
             }
         }
 
-        private void InjectAppConfiguration(ContainerBuilder builder)
+        private static void InjectAppConfiguration(ContainerBuilder builder)
         {
             builder.RegisterInstance(ConfigurationReader.Get()).SingleInstance();
         }
 
-        private void RegisterWebApiServices(ContainerBuilder builder)
+        private static void RegisterWebApiServices(ContainerBuilder builder)
         {
             builder.RegisterType<HttpContextAccessor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAsScoped<WebApiCurrentUserService>();

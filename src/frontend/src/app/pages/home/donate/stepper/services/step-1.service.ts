@@ -16,7 +16,7 @@ export class Step1Service {
 
     public load(): FormItem[] {
         const products = sessionStorage.getItem(DONATE_FORM_TEMP_LIST_KEY);
-        console.log(products);
+
         if (products) {
             return JSON.parse(products) as FormItem[];
         }
