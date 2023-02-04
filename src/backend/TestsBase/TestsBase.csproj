@@ -16,6 +16,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<SonarQubeSetting Include="sonar.exclusions">
+			<Value>**</Value>
+		</SonarQubeSetting>
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>
 
