@@ -17,6 +17,7 @@ export class AuthService {
     }
 
     public set postLoginRoute(postLoginRoute: string | null) {
+        console.info('Post login redirection set to:', postLoginRoute);
         localStorage.setItem(POST_LOGIN_ROUTE_KEY, postLoginRoute!);
     }
 

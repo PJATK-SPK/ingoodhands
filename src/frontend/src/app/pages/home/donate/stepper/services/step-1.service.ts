@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, V
 import { Product } from '../interfaces/product';
 import { FormItem } from '../interfaces/form-item';
 
-const PRODUCTS_KEY = 'donate-stepper-products';
+export const DONATE_FORM_TEMP_LIST_KEY = 'donate-form-temp-list';
 
 @Injectable()
 export class Step1Service {
@@ -11,20 +11,29 @@ export class Step1Service {
 
     public save(): void {
         const products = JSON.stringify(this.form.get('items')?.value);
-        localStorage.setItem(PRODUCTS_KEY, products);
+        sessionStorage.setItem(DONATE_FORM_TEMP_LIST_KEY, products);
     }
 
-    public load(): void {
-        const products = localStorage.getItem(PRODUCTS_KEY);
-
+    public load(): FormItem[] {
+        const products = sessionStorage.getItem(DONATE_FORM_TEMP_LIST_KEY);
+        console.log(products);
         if (products) {
-            try {
-                const parsed = JSON.parse(products);
-                const fa = this.form.get('items') as FormArray;
-                fa.clear();
-                parsed.forEach((p: any) => fa.push(this.createNewFormItemFormGroup(p.product, p.quantity)));
-            } catch (e) { }
+            return JSON.parse(products) as FormItem[];
         }
+
+        return [];
+    }
+
+    public set(items: FormItem[]) {
+        if (!items || items.length === 0) {
+            return;
+        }
+
+        try {
+            const fa = this.form.get('items') as FormArray;
+            fa.clear();
+            items.forEach((p: any) => fa.push(this.createNewFormItemFormGroup(p.product, p.quantity)));
+        } catch (e) { }
     }
 
     public getData(): FormItem[] {

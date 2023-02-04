@@ -10,7 +10,7 @@ export class Step2Service {
 
     public allWarehouses: Warehouse[] = [];
 
-    public getSelectedWarehouseId(): number | null {
+    public get selectedWarehouseId(): number | null {
         return this.form.get('warehouseId')!.value;
     }
 

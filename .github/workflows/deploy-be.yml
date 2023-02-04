@@ -47,3 +47,9 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             DB_DATABASE=${{ secrets.DB_DATABASE }}
             DB_PORT=5432
+
+      - name: sonar
+        uses: ./.github/actions/sonar
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          branch: main

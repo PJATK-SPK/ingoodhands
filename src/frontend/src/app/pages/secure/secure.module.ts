@@ -3,7 +3,6 @@ import { SecureComponent } from './secure.component';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from './layout/layout.module';
 import { RouterModule } from '@angular/router';
-import { AuthCheckModule } from './auth-check/auth-check.module';
 import { SecureRoutingModule } from './secure.routing.module';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { SecureRoutingModule } from './secure.routing.module';
     CommonModule,
     RouterModule,
     LayoutModule,
-    AuthCheckModule,
   ],
   exports: [
     SecureComponent

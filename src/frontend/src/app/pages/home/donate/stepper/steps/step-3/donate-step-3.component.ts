@@ -16,6 +16,6 @@ export class DonateStep3Component {
   }
 
   public get selectedWarehouse(): Warehouse {
-    return this.service.step2.allWarehouses.find(x => x.id === this.service.step2.getSelectedWarehouseId())!;
+    return this.service.step2.allWarehouses.find(x => x.id === this.service.step2.selectedWarehouseId)!;
   }
 }
