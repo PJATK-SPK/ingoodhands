@@ -33,6 +33,7 @@ runs:
       shell: bash
 
     - name: Download fe artifact
+      id: download
       uses: actions/download-artifact@v3
       with:
         name: coverage
@@ -40,7 +41,8 @@ runs:
 
     - name: Move coverage
       run: |
-        
+        ls -R
+        echo ${{steps.download.outputs.download-path}}
         mv coverage/**/coverage.opencover.xml src/backend
       shell: bash
 
