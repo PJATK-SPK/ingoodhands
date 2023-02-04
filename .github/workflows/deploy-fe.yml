@@ -1,4 +1,4 @@
-name: "Deploy frontend to Firebase"
+name: "Frontend deploy"
 
 on:
   push:
