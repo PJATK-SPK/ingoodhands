@@ -37,7 +37,11 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: coverage
-        path: src/backend
+        path: .
+
+    - name: Move coverage report
+      shell: bash
+      run: mv coverage.opencover.xml src/backend/
 
     - name: Build and analyze
       run: |
