@@ -1,4 +1,4 @@
-name: "build-be"
+name: "Build frontend"
 description: "Build and upload frontend artifact"
 runs:
   using: "composite"

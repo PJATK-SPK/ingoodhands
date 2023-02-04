@@ -1,4 +1,4 @@
-name: "Build, test and push Docker image"
+name: "Docker"
 
 on:
   pull_request:
@@ -29,6 +29,7 @@ jobs:
       workflow: ${{ steps.changes.outputs.workflow }}
 
   build-be:
+    name: "Build backend"
     if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
@@ -40,6 +41,7 @@ jobs:
           CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
 
   test-be:
+    name: "Backend tests"
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
@@ -49,6 +51,7 @@ jobs:
       - uses: ./.github/actions/test-int-be
 
   build-fe:
+    name: "Build frontend"
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
@@ -58,6 +61,7 @@ jobs:
       - uses: ./.github/actions/build-fe
 
   sonar:
+    name: "SonarCloud analysis"
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:

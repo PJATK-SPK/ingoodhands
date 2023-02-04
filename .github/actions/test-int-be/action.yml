@@ -1,5 +1,5 @@
-name: "SonarCloud"
-description: "Run sonar analysis"
+name: "Backend tests"
+description: "Run backend integration and unit tests"
 #inputs:
 #  SONAR_TOKEN:
 #    description: 'Token to auth to Sonar'
