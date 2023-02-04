@@ -11,6 +11,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="WebApi\Hello.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="WebApi\Hello.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.5.0" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
@@ -64,9 +74,6 @@
 		</None>
 		<None Update="Configuration\Prd\serilog-service.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="WebApi\hello.html">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 

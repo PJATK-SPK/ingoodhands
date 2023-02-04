@@ -62,7 +62,7 @@ namespace WebApi.Controllers
             var path =
                Path.Combine(
                    Path.GetDirectoryName(location)!,
-                   Path.Join("WebApi/hello.html")
+                   Path.Join("WebApi/Hello.html")
                );
 
             return System.IO.File.ReadAllText(path);
