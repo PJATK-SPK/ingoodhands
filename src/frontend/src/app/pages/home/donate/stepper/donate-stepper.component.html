@@ -1,4 +1,4 @@
-<p-steps [model]="steps" [readonly]="true" [activeIndex]="currentIndex"></p-steps>
+<p-steps [model]="steps" [readonly]="true" [activeIndex]="service.currentIndex"></p-steps>
 
 <div class="spacer"></div>
 
@@ -6,22 +6,22 @@
     <div class="grid">
         <div class="col-12">
             <div class="step-area border-dashed">
-                <app-donate-step-1 *ngIf="currentIndex === 0"></app-donate-step-1>
-                <app-donate-step-2 *ngIf="currentIndex === 1"></app-donate-step-2>
-                <app-donate-step-3 *ngIf="currentIndex === 2"></app-donate-step-3>
-
+                <app-donate-step-1 *ngIf="service.currentIndex === 0"></app-donate-step-1>
+                <app-donate-step-2 *ngIf="service.currentIndex === 1"></app-donate-step-2>
+                <app-donate-step-3 *ngIf="service.currentIndex === 2"></app-donate-step-3>
             </div>
         </div>
         <div class="col-12">
             <div class="flex justify-content-end align-items-center mr-3">
-                <button pButton type="button" label="ADD" *ngIf="currentIndex === 0"
-                    class="p-button-outlined stepper-button p-button-success"
-                    (click)="service.onAddClick.next(null)"></button>
-                <button pButton type="button" label="CLEAR" *ngIf="currentIndex === 0"
-                    class="p-button-outlined stepper-button p-button-warning" (click)="service.clear()"></button>
-                <button pButton type="button" [disabled]="currentIndex === 0" label="BACK"
+                <button pButton type="button" label="ADD" (click)="service.step1.onAddClick()"
+                    *ngIf="service.currentIndex === 0"
+                    class="p-button-outlined stepper-button p-button-success"></button>
+                <button pButton type="button" label="CLEAR" *ngIf="service.currentIndex === 0"
+                    class="p-button-outlined stepper-button p-button-warning"
+                    (click)="service.step1.onClearClick()"></button>
+                <button pButton type="button" [disabled]="service.currentIndex === 0" label="BACK"
                     class="p-button-outlined stepper-button" (click)="onBackClick()"></button>
-                <button pButton type="button" [label]="currentIndex == 2 ? 'CONFIRM ' : 'NEXT'"
+                <button pButton type="button" [label]="service.currentIndex == 2 ? 'CONFIRM ' : 'NEXT'"
                     class="p-button-outlined stepper-button" (click)="onNextClick()"></button>
             </div>
         </div>

@@ -8,6 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { POST_LOGIN_ROUTE_KEY } from './services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
+    ToastModule,
+    MessagesModule,
 
     AuthModule.forRoot({
       config: {
@@ -49,6 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       useClass: AuthInterceptor,
       multi: true
     },
+    MessageService,
   ],
   bootstrap: [AppComponent]
 })

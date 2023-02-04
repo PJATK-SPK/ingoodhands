@@ -2,17 +2,17 @@
     <h3>Warehouse:</h3>
 
     <p>
-        {{service.selectedWarehouse?.name}} - {{service.selectedWarehouse?.city}},
-        {{service.selectedWarehouse?.postalCode}},
-        {{service.selectedWarehouse?.street}}
+        {{selectedWarehouse.name}} - {{selectedWarehouse.city}},
+        {{selectedWarehouse.postalCode}},
+        {{selectedWarehouse.street}}
     </p>
 
     <h3>Items:</h3>
-    <div *ngFor="let product of service.products">
+    <div *ngFor="let item of formItems">
 
         <div class="grid">
             <div class="col-12">
-                {{product.quantity}}{{product.listItem.unit}} of {{product.listItem.name}}
+                {{item.quantity}}{{item.product.unit}} of {{item.product.name}}
             </div>
         </div>
     </div>
