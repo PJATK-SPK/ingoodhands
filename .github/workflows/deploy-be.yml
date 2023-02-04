@@ -49,10 +49,7 @@ jobs:
             DB_PORT=5432
 
       - name: sonar
-        needs:
-        steps:
-          - uses: actions/checkout@v3
-          - uses: ./.github/actions/sonar
-            with:
-              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              branch: main
+        uses: ./.github/actions/sonar
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          branch: main
