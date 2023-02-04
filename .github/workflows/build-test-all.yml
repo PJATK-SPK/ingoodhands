@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   check-changed-paths:
+    name: "Check changed paths"
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
