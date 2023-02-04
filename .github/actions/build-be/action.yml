@@ -1,4 +1,4 @@
-name: "build-be"
+name: "Build backend"
 description: "Build and push backend Docker image"
 inputs:
   CICD_SA_GCP_JSON_KEY:

@@ -1,32 +1,35 @@
-<div *ngFor="let product of service.products">
-    <div class="product-box">
-        <div class="grid">
+<form [formGroup]="service.form">
+    <ng-container formArrayName="items">
+        <div *ngFor="let item of formItems.controls; let i=index">
+            <div class="product-box" [formGroupName]="i">
+                <div class="grid">
 
-            <div class="col-12 lg:col-3">
-                <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                    [(ngModel)]="product.listItem" [suggestions]="filteredProducts"
-                    (completeMethod)="filterProduct($event)" field="name" [forceSelection]="true" [dropdown]="true">
-                    <ng-template let-product pTemplate="item">
-                        <div>{{product.name}}</div>
-                    </ng-template>
-                </p-autoComplete>
-            </div>
+                    <div class="col-12 lg:col-5">
+                        <p-autoComplete [style]="{'width':'100%'}" formControlName="product"
+                            [inputStyle]="{'width':'100%'}" [suggestions]="filteredProducts"
+                            (completeMethod)="filterProduct($event)" field="name" [forceSelection]="true"
+                            [dropdown]="true">
+                            <ng-template let-listItem pTemplate="item">
+                                <div>{{listItem.name}}</div>
+                            </ng-template>
+                        </p-autoComplete>
+                    </div>
 
-            <div class="col-2 lg:col-3">
-                <input type="text" class="input-field" pInputText [(ngModel)]="product.quantity">
-            </div>
+                    <div class="col-8 lg:col-4">
+                        <div class="p-inputgroup input-field">
+                            <input type="text" pInputText formControlName="quantity">
+                            <span class="p-inputgroup-addon"> {{item.get('product')?.value?.unit}} </span>
+                        </div>
+                    </div>
 
-            <div class="col-6 lg:col-3">
-                <p-selectButton [options]="unitOptions" [disabled]="true" [(ngModel)]="product.listItem.unit"
-                    optionLabel="label" optionValue="value"></p-selectButton>
-            </div>
-
-            <div class="col-4 lg:col-3">
-                <div class="remove-btn-container">
-                    <button pButton type="button" label="Remove" (click)="onRemoveClick(product)"
-                        class="p-button-outlined p-button-warning"></button>
+                    <div class="col-4 lg:col-3">
+                        <div class="remove-btn-container">
+                            <button pButton type="button" label="Remove" (click)="service.onRemoveClick(i)"
+                                class="p-button-outlined p-button-warning"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </ng-container>
+</form>

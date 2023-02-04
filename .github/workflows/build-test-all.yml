@@ -1,4 +1,4 @@
-name: "Build, test and push Docker image"
+name: "Docker"
 
 on:
   pull_request:
@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   check-changed-paths:
+    name: "Check changed paths"
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
@@ -47,6 +48,7 @@ jobs:
           spectral_ruleset: .spectral.yaml
 
   build-be:
+    name: "Build backend"
     if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
@@ -58,16 +60,17 @@ jobs:
           CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
 
   test-be:
+    name: "Backend tests"
     if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
       - check-changed-paths
-      - build-be
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test-int-be
 
   build-fe:
+    name: "Build frontend"
     if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
@@ -75,3 +78,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build-fe
+
+  sonar:
+    name: "SonarCloud analysis"
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+      - test-be
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/sonar
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
