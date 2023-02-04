@@ -11,8 +11,10 @@ using TestsBase;
 
 namespace TestsCore
 {
+#pragma warning disable S3881
     public class TestsToolkit : IDisposable
     {
+
         private readonly ILifetimeScope _autofac;
         public readonly TestType TestType;
 
@@ -68,12 +70,12 @@ namespace TestsCore
 #pragma warning restore S2077
         }
 
-        private void InjectCurrentUserService(ContainerBuilder builder)
+        private static void InjectCurrentUserService(ContainerBuilder builder)
         {
             builder.RegisterType<TestsCurrentUserService>().AsSelf().As<ICurrentUserService>().SingleInstance();
         }
 
-        private void FixILogger(ContainerBuilder builder)
+        private static void FixILogger(ContainerBuilder builder)
         {
 #pragma warning disable S4792
             builder.RegisterInstance(new LoggerFactory()).As<ILoggerFactory>();
@@ -95,4 +97,5 @@ namespace TestsCore
             AutofacPostgresDbContextInjector.Inject(builder, connectionString);
         }
     }
+#pragma warning disable S3881
 }
