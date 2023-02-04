@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 using TestsBase;
 
-namespace TestsCore
+namespace TestsBase
 {
 #pragma warning disable S3881
     public class TestsToolkit : IDisposable
