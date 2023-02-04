@@ -1,4 +1,4 @@
-name: "test-int-bet"
+name: "Test backend"
 description: "Run integration tests"
 runs:
   using: "composite"
