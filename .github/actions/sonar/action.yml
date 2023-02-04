@@ -1,9 +1,13 @@
-name: "SonarCloud analysis"
-description: "Run Sonar analysis"
+name: "test-int-bet"
+description: "Run integration tests"
 inputs:
   SONAR_TOKEN:
     description: 'Token to auth to Sonar'
     required: true
+  branch:
+    description: 'Branch to scan'
+    required: false
+    default: "feature"
 runs:
   using: "composite"
   steps:
@@ -21,12 +25,22 @@ runs:
         dotnet tool install --global dotnet-sonarscanner
       shell: bash
 
-    - name: Download fe artifact
+    - name: Download coverage report
+      if: ${{ inputs.branch == 'feature' }}
       id: download
       uses: actions/download-artifact@v3
       with:
         name: coverage
         path: .
+
+    - name: Download coverage report
+      if: ${{ inputs.branch != 'feature' }}
+      id: download
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        name: coverage
+        path: .
+        workflow: build-test-all.yml
 
     - name: Move coverage report
       shell: bash
