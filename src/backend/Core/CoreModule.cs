@@ -35,7 +35,7 @@ namespace Core
 
         private void InjectHashids(ContainerBuilder builder, string salt)
         {
-            builder.RegisterInstance(new Hashids(salt)).SingleInstance();
+            builder.RegisterInstance(new Hashids(salt, 5)).SingleInstance();
         }
 
         private void InjectAppConfiguration(ContainerBuilder builder)
