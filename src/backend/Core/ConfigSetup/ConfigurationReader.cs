@@ -43,7 +43,7 @@ namespace Core.ConfigSetup
                 sb.Append($"Database={Environment.GetEnvironmentVariable("DB_DATABASE")};");
                 sb.Append($"Host={dbHost};");
                 sb.Append($"Port={Environment.GetEnvironmentVariable("DB_PORT")};");
-                sb.Append($"Connection Lifetime=0;");
+                sb.Append($"Connection Lifetime=0;Include Error Detail=true");
                 result.ConnectionStrings.Database = sb.ToString();
             }
         }
