@@ -1,0 +1,73 @@
+<div class="grid" *ngIf="!formData">
+    <div class="col-12">
+        <div class="p-3">
+            <p-card>
+                <h2 style="margin-top:0">Your summary should be here</h2>
+
+                <p>
+                    Something went wrong and we don't have data about your products that you would like to provide.
+                </p>
+                <p>
+                    If you have just created a transfer, please go to the <b>"My transfers"</b> tab, your transfer
+                    should be
+                    there.
+                </p>
+                <p>
+                    If you haven't done anything like that, please go back to the <b>main page</b> of the application.
+                </p>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<div class="grid" *ngIf="formData">
+    <div class="col-12">
+        <div class="p-3">
+
+            <p-card>
+                <h2 style="margin-top:0">Package and Send Your Items</h2>
+
+                <p>
+                    Dear User,
+                </p>
+
+                <p>
+                    Thank you for using our service. Please pack all the items you would like to send to the warehouse
+                    and send them either by mail or deliver them in person to the following address:
+                    <b>{{formData.warehouse.city}},
+                        {{formData.warehouse.postalCode}},
+                        {{formData.warehouse.street}}</b>. To ensure proper identification, please include the shipment
+                    number
+                    <b>{{donateNumber}}</b>
+                    in the package. This will help us match your shipment with your account.
+                </p>
+
+                <p>
+                    You can track the status of your shipment in the <b>"My donations"</b> section in the menu of the
+                    website.
+                </p>
+
+                <p>
+                    Thank you for your cooperation.
+                </p>
+            </p-card>
+
+            <div class="p-3"></div>
+
+            <p-card>
+
+                <h2 style="margin-top:0">Your items:</h2>
+
+                <div *ngFor="let item of formData.items">
+
+                    <div class="grid">
+                        <div class="col-12">
+                            {{item.quantity}}{{item.product.unit}} of {{item.product.name}}
+                        </div>
+                    </div>
+                </div>
+
+            </p-card>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
+import { AuthGuard } from './auth-guard';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MessageService } from 'primeng/api';
       useClass: AuthInterceptor,
       multi: true
     },
+    AuthGuard,
     MessageService,
   ],
   bootstrap: [AppComponent]

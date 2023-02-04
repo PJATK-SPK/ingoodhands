@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { StepperService } from './services/stepper.service';
-import { Router } from '@angular/router';
 import { Step1Service } from './services/step-1.service';
 import { Step2Service } from './services/step-2.service';
 
@@ -19,13 +18,12 @@ export class DonateStepperComponent {
 
   constructor(
     public readonly service: StepperService,
-    private readonly router: Router,
     private readonly msg: MessageService
   ) { }
 
   public steps: MenuItem[] = [
     { label: 'Your donation' },
-    { label: 'Collect destination' },
+    { label: 'Choose destination' },
     { label: 'Confirmation' },
   ];
 
@@ -39,18 +37,12 @@ export class DonateStepperComponent {
     this.moveForward();
 
     if (currentStep === this.steps.length - 1) {
-      this.goToApp();
+      this.service.loginAndGoToFinalConfirm();
     }
   }
 
   public onBackClick() {
     this.moveBackward();
-  }
-
-  private goToApp() {
-    this.service.step1.onClearClick();
-    this.service.step1.save();
-    this.router.navigateByUrl('/secure');
   }
 
   private hasErrors() {
@@ -59,7 +51,7 @@ export class DonateStepperComponent {
       const error = this.service.step1.hasError();
 
       if (error) {
-        this.msg.add({ severity: 'error', summary: 'Products form', detail: error });
+        this.msg.add({ severity: 'error', summary: 'Validation error', detail: error });
         return true;
       }
     }
@@ -68,7 +60,7 @@ export class DonateStepperComponent {
       const error = this.service.step2.hasError();
 
       if (error) {
-        this.msg.add({ severity: 'error', summary: 'Warehouse selection', detail: error });
+        this.msg.add({ severity: 'error', summary: 'Validation error', detail: error });
         return true;
       }
     }
