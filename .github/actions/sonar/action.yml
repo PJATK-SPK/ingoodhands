@@ -33,16 +33,11 @@ runs:
       shell: bash
 
     - name: Download fe artifact
+      id: download
       uses: actions/download-artifact@v3
       with:
         name: coverage
-        path: .
-
-    - name: Move coverage
-      run: |
-        mv coverage/**/coverage.opencover.xml .
-      shell: bash
-      working-directory: src/backend
+        path: src/backend
 
     - name: Build and analyze
       run: |
