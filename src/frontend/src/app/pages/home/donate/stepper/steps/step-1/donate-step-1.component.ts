@@ -31,7 +31,8 @@ export class DonateStep1Component implements OnInit {
 
   public ngOnInit(): void {
     this.fetchProducts$.subscribe();
-    this.service.load();
+    const items = this.service.load();
+    this.service.set(items);
   }
 
   public get formItems() {

@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthCheckComponent } from './auth-check.component';
+import { ConfirmDonationComponent } from './confirm-donation.component';
 import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
-    AuthCheckComponent
+    ConfirmDonationComponent
   ],
   imports: [
     CommonModule,
-    CardModule,
-    ButtonModule,
+    CardModule
   ],
   exports: [
-    AuthCheckComponent
+    ConfirmDonationComponent
   ]
 })
-export class AuthCheckModule { }
+export class ConfirmDonationModule { }

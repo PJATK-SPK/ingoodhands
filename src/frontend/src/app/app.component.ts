@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     const authCheck = this.auth.oidc.checkAuth()
       .pipe(
         tap(c => {
-          if (this.auth.wantsToBeLoggedIn && !c.isAuthenticated) {
+          if (this.auth.wantsToBeLoggedIn && !c.isAuthenticated && this.auth.postLoginRoute === location.pathname) {
             this.auth.login();
           } else if (!c.isAuthenticated) {
             if (location.pathname !== '/') {
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 
           this.authChecked = true;
         }),
-        switchMap(c => c.isAuthenticated ? this.httpClient.get(`${environment.api}/auth/postlogin`) : of()),
+        switchMap(c => c.isAuthenticated ? this.httpClient.get(`${environment.api}/auth/postlogin`) : of([])),
         first()
       );
     return authCheck;
