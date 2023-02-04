@@ -11,6 +11,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<SonarQubeSetting Include="sonar.coverage.exclusions">
+			<Value>Controllers/**</Value>
+		</SonarQubeSetting>
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\AuthService\AuthService.csproj" />
 		<ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>

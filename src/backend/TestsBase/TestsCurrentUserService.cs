@@ -1,6 +1,6 @@
 ﻿using Core.Auth0;
 
-namespace TestsCore
+namespace TestsBase
 {
     public class TestsCurrentUserService : ICurrentUserService
     {

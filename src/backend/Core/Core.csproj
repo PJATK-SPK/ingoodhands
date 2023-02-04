@@ -11,13 +11,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="WebApi\Hello.html" />
+		<None Remove="WebApi\Hello.html" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="WebApi\Hello.html">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Resource>
+		<Resource Include="WebApi\Hello.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<SonarQubeSetting Include="sonar.coverage.exclusions">
+			<Value>**</Value>
+		</SonarQubeSetting>
+	</ItemGroup>
+
+	<ItemGroup>
+		<SonarQubeSetting Include="sonar.exclusions">
+			<Value>Migrations/**</Value>
+		</SonarQubeSetting>
 	</ItemGroup>
 
 	<ItemGroup>
