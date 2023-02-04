@@ -47,6 +47,7 @@ jobs:
         with:
           file_glob: 'src/backend/api.json'
           spectral_ruleset: .spectral.yaml
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-be:
     name: "Build backend"
