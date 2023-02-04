@@ -27,7 +27,6 @@ runs:
 
     - name: Download coverage report
       if: ${{ inputs.branch == 'feature' }}
-      id: download
       uses: actions/download-artifact@v3
       with:
         name: coverage
@@ -35,7 +34,6 @@ runs:
 
     - name: Download coverage report
       if: ${{ inputs.branch != 'feature' }}
-      id: download
       uses: dawidd6/action-download-artifact@v2
       with:
         name: coverage
