@@ -3,6 +3,7 @@ using Core.Auth0;
 using Core.Autofac;
 using Core.ConfigSetup;
 using Core.Database;
+using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
@@ -42,6 +43,8 @@ namespace TestsCore
         }
 
         public T Resolve<T>() where T : notnull => _autofac.Resolve<T>();
+
+        public Hashids Hashids => _autofac.Resolve<Hashids>();
 
         public void Dispose()
         {

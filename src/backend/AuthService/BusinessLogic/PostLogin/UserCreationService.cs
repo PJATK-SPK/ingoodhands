@@ -19,7 +19,7 @@ namespace AuthService.BusinessLogic.PostLogin
             _logger = logger;
         }
 
-        public async Task<User?> CreateUserAndAddToDatabase(CurrentUserInfo auth0UserInfo)
+        public async Task<User> CreateUserAndAddToDatabase(CurrentUserInfo auth0UserInfo)
         {
             var user = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == auth0UserInfo.Email);
             var auth0UserFromDatabase = await _appDbContext.Auth0Users.SingleOrDefaultAsync(c => c.Identifier == auth0UserInfo.Identifier);
@@ -54,7 +54,7 @@ namespace AuthService.BusinessLogic.PostLogin
                 _appDbContext.SaveChanges();
             }
 
-            return user;
+            return user!;
         }
         private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {

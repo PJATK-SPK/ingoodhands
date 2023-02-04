@@ -33,7 +33,7 @@ public class MyDonationsController : ControllerBase
     }
     public class DeleteMeMyDonationDetailsWarehouseResponse
     {
-        public long Id { get; set; } = default!;
+        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string CountryName { get; set; } = default!;
         public double GpsLatitude { get; set; }
@@ -51,14 +51,14 @@ public class MyDonationsController : ControllerBase
         public List<DeleteMeMyDonationDetailsProductResponse> Products { get; set; } = default!;
     }
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetDetails(long id)
+    public async Task<ActionResult> GetDetails(string id)
         => await Task.FromResult(Ok(new DeleteMeMyDonationDetailsResponse
         {
             Name = "DNT000123",
             Warehouse = new DeleteMeMyDonationDetailsWarehouseResponse
             {
                 CountryName = "Poland",
-                Id = 1,
+                Id = "asj65n87",
                 Name = "PL001",
                 GpsLatitude = 52.403324,
                 GpsLongitude = 16.917781,

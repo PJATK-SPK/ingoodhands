@@ -1,8 +1,7 @@
 ﻿using AuthService.Services;
 using Core.Auth0;
-using Core.Exceptions;
+using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace AuthService.BusinessLogic.PostLogin
 {
@@ -11,16 +10,17 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
-
+        private readonly Hashids _hashids;
         public PostLoginAction(
             ICurrentUserService currentUserService,
             UserDataValidationService userDataValidationService,
-            UserCreationService userService
-            )
+            UserCreationService userService,
+            Hashids hashids)
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
             _userService = userService;
+            _hashids = hashids;
         }
 
         public async Task<ActionResult> Execute()
@@ -30,7 +30,14 @@ namespace AuthService.BusinessLogic.PostLogin
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
-            return new OkObjectResult(user);
+            var result = new PostLoginActionResponse
+            {
+                Id = _hashids.EncodeLong(user.Id),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+
+            return new OkObjectResult(result);
         }
     }
 }
