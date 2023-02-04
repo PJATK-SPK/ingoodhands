@@ -19,7 +19,7 @@
 [![Frontend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml)
 [![Backend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml)
 
-<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="40%" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
+<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="20%" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
 
 <br />
 <div align="center">
