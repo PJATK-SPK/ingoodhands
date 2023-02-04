@@ -1,4 +1,4 @@
-﻿namespace Core.Exceptions
+﻿namespace Core.Migrations
 {
     public class DuplicateCheck
     {
