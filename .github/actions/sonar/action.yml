@@ -42,8 +42,7 @@ runs:
     - name: Move coverage report
       shell: bash
       run: |
-        ls -R
-        echo ${{steps.download.outputs.download-path}}
+        mv **/coverage.opencover.xml src/backend/
 
     - name: Build and analyze
       run: |
