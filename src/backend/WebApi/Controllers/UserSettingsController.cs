@@ -32,10 +32,9 @@ namespace WebApi.Controllers
         public async Task<ActionResult> GetAuth0Users() => await _getAuth0UsersByCurrentUserAction.Execute();
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch([FromBody] PatchUserDetailsPayload userSettingsPayload, long id) => await _patchUserDetailsAction.Execute(userSettingsPayload, id);
+        public async Task<ActionResult> Patch([FromBody] PatchUserDetailsPayload userSettingsPayload, string id) => await _patchUserDetailsAction.Execute(userSettingsPayload, id);
 
-        [Authorize]
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult> GetUser() => await _getCurrentUserAction.Execute();
     }
 }

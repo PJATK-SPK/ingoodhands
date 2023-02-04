@@ -10,5 +10,6 @@
   },
   "urls": {
     "frontend": "http://localhost:4200/"
-  }
+  },
+  "hashidsSalt": "etBLE760H0n0Qc7"
 }
