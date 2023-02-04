@@ -36,4 +36,4 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: coverage
-        path: src/backend/coverage
+        path: src/backend/coverage/**/coverage.opencover.xml

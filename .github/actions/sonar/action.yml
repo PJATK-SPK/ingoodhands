@@ -40,9 +40,8 @@ runs:
 
     - name: Move coverage
       run: |
-        mv coverage/**/coverage.opencover.xml .
+        mv coverage.opencover.xml src/backend
       shell: bash
-      working-directory: src/backend
 
     - name: Build and analyze
       run: |
