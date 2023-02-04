@@ -11,9 +11,9 @@ namespace AuthService.BusinessLogic.PostLogin
     public class UserCreationService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetAuth0UsersByCurrentUserAction> _logger;
+        private readonly ILogger<UserCreationService> _logger;
 
-        public UserCreationService(AppDbContext appDbContext, ILogger<GetAuth0UsersByCurrentUserAction> logger)
+        public UserCreationService(AppDbContext appDbContext, ILogger<UserCreationService> logger)
         {
             _appDbContext = appDbContext;
             _logger = logger;
@@ -27,7 +27,7 @@ namespace AuthService.BusinessLogic.PostLogin
             var serviceUser = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == DbConstants.ServiceUserEmail);
             if (serviceUser == null)
             {
-                _logger.LogError("Service user is null");
+                _logger.LogError("Service user was not found in database!");
                 throw new HttpError500Exception("Sorry there seems to be a problem with our service. Please contact server administrator.");
             }
 

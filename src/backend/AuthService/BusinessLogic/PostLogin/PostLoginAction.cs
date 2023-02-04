@@ -1,4 +1,5 @@
-﻿using Core.Auth0;
+﻿using AuthService.Services;
+using Core.Auth0;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,31 +11,22 @@ namespace AuthService.BusinessLogic.PostLogin
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
         private readonly UserCreationService _userService;
-        private readonly ILogger<PostLoginAction> _logger;
 
         public PostLoginAction(
             ICurrentUserService currentUserService,
             UserDataValidationService userDataValidationService,
-            UserCreationService userService,
-            ILogger<PostLoginAction> logger
+            UserCreationService userService
             )
         {
             _currentUserService = currentUserService;
             _userDataValidationService = userDataValidationService;
             _userService = userService;
-            _logger = logger;
         }
 
         public async Task<ActionResult> Execute()
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
-            var isUserInfoValid = _userDataValidationService.Check(auth0UserInfo);
-
-            if (!isUserInfoValid)
-            {
-                _logger.LogError("Auth0UserInfo in PostLoginAction didn't pass validation as it has nulls");
-                throw new HttpError500Exception("Your Auth0User data is invalid");
-            }
+            _userDataValidationService.Check(auth0UserInfo);
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
