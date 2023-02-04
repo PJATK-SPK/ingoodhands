@@ -1,0 +1,42 @@
+name: "test-int-bet"
+description: "Run integration tests"
+inputs:
+  SONAR_TOKEN:
+    description: 'Token to auth to Sonar'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+
+    - name: Install SonarCloud scanners
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+      shell: bash
+
+    - name: Download fe artifact
+      id: download
+      uses: actions/download-artifact@v3
+      with:
+        name: coverage
+        path: .
+
+    - name: Move coverage report
+      shell: bash
+      run: |
+        mv **/coverage.opencover.xml src/backend/
+
+    - name: Build and analyze
+      run: |
+        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
+        dotnet build --no-incremental
+        dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
+      shell: bash
+      working-directory: src/backend

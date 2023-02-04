@@ -44,7 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - check-changed-paths
-      - build-be
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/test-int-be
@@ -57,3 +56,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build-fe
+
+  sonar:
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+      - test-be
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/sonar
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

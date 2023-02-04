@@ -21,6 +21,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=coverage)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
 
 <!-- PROJECT LOGO -->
 <br />
