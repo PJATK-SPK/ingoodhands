@@ -38,9 +38,9 @@ runs:
         name: coverage
         path: .
 
-    - name: Untar fe artifact
+    - name: Move coverage
       run: |
-        tar -xvf coverage -C .
+        
         mv coverage/**/coverage.opencover.xml src/backend
       shell: bash
 
