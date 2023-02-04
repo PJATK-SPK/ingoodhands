@@ -4,9 +4,6 @@ inputs:
   SONAR_TOKEN:
     description: 'Token to auth to Sonar'
     required: true
-  GITHUB_TOKEN:
-    description: 'Token to auth to GitHub'
-    required: true
 runs:
   using: "composite"
   steps:
@@ -19,17 +16,9 @@ runs:
       with:
         java-version: 1.11
 
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v1
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-
     - name: Install SonarCloud scanners
       run: |
         dotnet tool install --global dotnet-sonarscanner
-        dotnet tool install --global coverlet.console
       shell: bash
 
     - name: Download fe artifact
@@ -48,7 +37,6 @@ runs:
       run: |
         dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
         dotnet build --no-incremental
-
         dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
       shell: bash
       working-directory: src/backend
