@@ -28,9 +28,9 @@ namespace AuthService.BusinessLogic.PostLogin
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             _userDataValidationService.Check(auth0UserInfo);
 
-            var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
+            await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
-            return new OkObjectResult(user);
+            return new OkObjectResult(new { Message = "Ok" });
         }
     }
 }
