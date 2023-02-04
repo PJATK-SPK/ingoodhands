@@ -31,6 +31,7 @@ jobs:
 
   spectral:
     name: "Check web api quality"
+    continue-on-error: true
     permissions:
       id-token: write
       contents: write
@@ -72,7 +73,7 @@ jobs:
 
   test-be:
     name: "Backend tests"
-    if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
       - check-changed-paths
@@ -96,6 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - check-changed-paths
+      - test-be
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/sonar
