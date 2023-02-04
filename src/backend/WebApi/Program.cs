@@ -1,4 +1,5 @@
 using Core.WebApi;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -56,7 +56,7 @@ namespace AuthService.BusinessLogic.PostLogin
 
             return user!;
         }
-        private User CreateUser(CurrentUserInfo currentAuth0UserInfo)
+        private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {
             return new User
             {
@@ -67,7 +67,7 @@ namespace AuthService.BusinessLogic.PostLogin
             };
         }
 
-        private Auth0User CreateAuth0User(CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
+        private static Auth0User CreateAuth0User(CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
         {
             return new Auth0User
             {

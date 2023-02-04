@@ -6,12 +6,13 @@ using Core.Database;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TestsBase;
+using System.Security.Cryptography;
 
-namespace TestsCore
+namespace TestsBase
 {
     public class TestsToolkit : IDisposable
     {
+
         private readonly ILifetimeScope _autofac;
         public readonly TestType TestType;
 
@@ -65,12 +66,12 @@ namespace TestsCore
             tempDbContext.Database.ExecuteSqlRaw($"DROP DATABASE {databaseName} WITH (FORCE);");
         }
 
-        private void InjectCurrentUserService(ContainerBuilder builder)
+        private static void InjectCurrentUserService(ContainerBuilder builder)
         {
             builder.RegisterType<TestsCurrentUserService>().AsSelf().As<ICurrentUserService>().SingleInstance();
         }
 
-        private void FixILogger(ContainerBuilder builder)
+        private static void FixILogger(ContainerBuilder builder)
         {
             builder.RegisterInstance(new LoggerFactory()).As<ILoggerFactory>();
             builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>)).SingleInstance();
@@ -80,7 +81,7 @@ namespace TestsCore
         {
             var connectionString = ConfigurationReader.Get().ConnectionStrings.Database;
             var yyyyMMddHHmmss = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            var randomNumber = new Random().Next(1000, 9999);
+            var randomNumber = RandomNumberGenerator.GetInt32(1000, 9999);
 
             if (TestType == TestType.Unit)
                 connectionString = connectionString.Replace("Database=FAKEDB", $"Database=THIS_SHOULD_NOT_HAPPEN");

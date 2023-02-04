@@ -9,7 +9,7 @@ using Core.Database.Models;
 using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
-using TestsCore;
+using TestsBase;
 
 namespace AuthServiceTests.BusinessLogic.GetCurrentUser
 {

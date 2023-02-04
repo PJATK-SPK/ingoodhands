@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{588F1E45-AB8A-4663-95C0-B99154122AE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsBase", "Tests.Core\TestsBase.csproj", "{17E086CD-5571-49B1-BAE4-B52958394489}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsBase", "TestsBase\TestsBase.csproj", "{17E086CD-5571-49B1-BAE4-B52958394489}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServiceTests", "AuthServiceTests\AuthServiceTests.csproj", "{26D081DE-7E04-43A9-85DF-E348253BD505}"
 EndProject

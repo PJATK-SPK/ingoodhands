@@ -1,12 +1,5 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -19,11 +12,15 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=coverage)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
+[![Frontend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml)
+[![Backend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml)
 
-<!-- PROJECT LOGO -->
+<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="20%" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
+
 <br />
 <div align="center">
 
@@ -166,15 +163,13 @@ Project Link: [https://github.com/PJATK-SPK/ingoodhands](https://github.com/PJAT
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/PJATK-SPK/ingoodhands.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/PJATK-SPK/ingoodhands.svg
 [contributors-url]: https://github.com/PJATK-SPK/ingoodhands/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/PJATK-SPK/ingoodhands.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/PJATK-SPK/ingoodhands.svg
 [forks-url]: https://github.com/PJATK-SPK/ingoodhands/network/members
-[stars-shield]: https://img.shields.io/github/stars/PJATK-SPK/ingoodhands.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/PJATK-SPK/ingoodhands.svg
 [stars-url]: https://github.com/PJATK-SPK/ingoodhands/stargazers
-[issues-shield]: https://img.shields.io/github/issues/PJATK-SPK/ingoodhands.svg?style=for-the-badge
-[issues-url]: https://github.com/PJATK-SPK/ingoodhands/issues
-[license-shield]: https://img.shields.io/github/license/PJATK-SPK/ingoodhands.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/PJATK-SPK/ingoodhands.svg
 [license-url]: https://github.com/PJATK-SPK/ingoodhands/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username

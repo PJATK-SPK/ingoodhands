@@ -21,7 +21,7 @@ namespace Core.Database.Models
 
         public override int GetHashCode()
             => HashCode.Combine(
-                HashCode.Combine(base.GetHashCode(), FirstName),
+                HashCode.Combine(Id, Status, FirstName),
                 HashCode.Combine(LastName, Email)
                );
     }

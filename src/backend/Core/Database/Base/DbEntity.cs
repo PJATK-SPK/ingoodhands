@@ -13,7 +13,7 @@ namespace Core.Database.Base
         public DateTime UpdatedAt { get; set; }
         public DbEntityStatus Status { get; set; }
 
-        public void Configure(EntityTypeBuilder<DbEntity> builder)
+        public static void Configure(EntityTypeBuilder<DbEntity> builder)
             => new DbEntityConfig<DbEntity>().Configure(builder);
 
         public override bool Equals(object? obj)
