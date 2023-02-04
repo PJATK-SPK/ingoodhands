@@ -10,7 +10,7 @@ public class DonateFormController : ControllerBase
 {
     internal class DeleteMeGetWarehousesResponse
     {
-        public long Id { get; set; }
+        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string CountryName { get; set; } = default!;
         public double GpsLatitude { get; set; }
@@ -27,7 +27,7 @@ public class DonateFormController : ControllerBase
             new DeleteMeGetWarehousesResponse
             {
                 CountryName = "Poland",
-                Id=1,
+                Id="1nnn675aV",
                 Name="PL001",
                 GpsLatitude=52.403324,
                 GpsLongitude=16.917781,
@@ -38,7 +38,7 @@ public class DonateFormController : ControllerBase
              new DeleteMeGetWarehousesResponse
             {
                 CountryName = "France",
-                Id=2,
+                Id="856nn675aV",
                 Name="FR001",
                 GpsLatitude=12.403324,
                 GpsLongitude=26.917781,
@@ -51,7 +51,7 @@ public class DonateFormController : ControllerBase
 
     internal class DeleteMeGetProductsResponse
     {
-        public long Id { get; set; } // ProductId
+        public string Id { get; set; } = default!; // ProductId
         public string Name { get; set; } = default!;
         public string Unit { get; set; } = default!;
     }
@@ -62,31 +62,31 @@ public class DonateFormController : ControllerBase
         {
             new DeleteMeGetProductsResponse
             {
-               Id = 1,
+               Id = "b786543g",
                Name = "Fruits",
                Unit = "kg"
             },
             new DeleteMeGetProductsResponse
             {
-               Id = 2,
+               Id = "754654s",
                Name = "Water",
                Unit = "l"
             },
             new DeleteMeGetProductsResponse
             {
-               Id = 3,
+               Id = "127343g",
                Name = "Rice",
                Unit = "kg"
             },
             new DeleteMeGetProductsResponse
             {
-               Id = 4,
+               Id = "bi4543g",
                Name = "Milk",
                Unit = "l"
             },
             new DeleteMeGetProductsResponse
             {
-               Id = 5,
+               Id = "basg3g",
                Name = "Meat",
                Unit = "kg"
             }
@@ -95,12 +95,12 @@ public class DonateFormController : ControllerBase
 
     public class DeleteMePerformDonatePayloadProduct
     {
-        public long Id { get; set; }
+        public string Id { get; set; } = default!;
         public int Quantity { get; set; }
     }
     public class DeleteMePerformDonatePayload
     {
-        public long WarehouseId { get; set; }
+        public string WarehouseId { get; set; } = default!;
         public List<DeleteMePerformDonatePayloadProduct> Products { get; set; } = default!;
     }
     public class DeleteMePerformDonateResponse

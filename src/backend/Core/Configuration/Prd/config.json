@@ -10,5 +10,6 @@
   },
   "urls": {
     "frontend": "https://indagoodhandsdev.web.app/"
-  }
+  },
+  "hashidsSalt": "etBLE760H0n0Qc7"
 }

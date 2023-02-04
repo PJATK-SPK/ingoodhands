@@ -1,4 +1,4 @@
 export interface DonatePayloadProduct {
-    id: number;
+    id: string;
     quantity: number;
 }

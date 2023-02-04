@@ -79,7 +79,7 @@ export class Step1Service {
 
     private createNewFormItemFormGroup(product?: Product, quantity?: number): FormGroup {
         const result = new FormGroup({
-            product: new FormControl(product ?? { id: 0, name: '', unit: 'kg' } as Product, [
+            product: new FormControl(product ?? { id: '', name: '', unit: 'kg' } as Product, [
                 Validators.required,
                 this.idNotZeroValidator,
             ]),
@@ -91,7 +91,7 @@ export class Step1Service {
 
     private idNotZeroValidator(control: AbstractControl): ValidationErrors | null {
         const value = control.value as Product;
-        if (value.id === 0) {
+        if (value.id === '') {
             return { idNotZero: true };
         }
 

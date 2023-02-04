@@ -1,5 +1,6 @@
 ﻿using AuthService;
 using AuthService.BusinessLogic.PatchUserDetails;
+using AuthService.BusinessLogic.PostLogin;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -75,10 +76,10 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
                 LastName = "Works"
             };
             //Act
-            var executed = await action.Execute(testPayload, testingUser.Id);
+            var executed = await action.Execute(testPayload, toolkit.Hashids.EncodeLong(testingUser.Id));
 
             //Assert
-            var result = executed.Value as User;
+            var result = executed.Value as PatchUserDetailsResponse;
 
             Assert.IsNotNull(executed);
             //Count should be 2, because there's also serviceUser in User database         
@@ -139,7 +140,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             var testPayload = new PatchUserDetailsPayload { };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, testingUser.Id));
+            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(testingUser.Id)));
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
@@ -160,7 +161,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, 5));
+            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
@@ -181,7 +182,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute(testPayload, 5));
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
 
             //Assert
             Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));

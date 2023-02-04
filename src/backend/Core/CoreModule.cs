@@ -3,6 +3,7 @@ using Core.Autofac;
 using Core.ConfigSetup;
 using Microsoft.AspNetCore.Http;
 using Core.WebApi.Auth;
+using HashidsNet;
 
 namespace Core
 {
@@ -24,11 +25,17 @@ namespace Core
         {
             InjectAppConfiguration(builder);
             AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().ConnectionStrings.Database);
+            InjectHashids(builder, ConfigurationReader.Get().HashidsSalt);
 
             if (_registerWebApiSerivces)
             {
                 RegisterWebApiServices(builder);
             }
+        }
+
+        private void InjectHashids(ContainerBuilder builder, string salt)
+        {
+            builder.RegisterInstance(new Hashids(salt, 5)).SingleInstance();
         }
 
         private void InjectAppConfiguration(ContainerBuilder builder)
