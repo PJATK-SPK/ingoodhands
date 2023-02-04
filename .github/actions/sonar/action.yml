@@ -1,5 +1,5 @@
-name: "test-int-bet"
-description: "Run integration tests"
+name: "SonarCloud analysis"
+description: "Run Sonar analysis"
 inputs:
   SONAR_TOKEN:
     description: 'Token to auth to Sonar'
