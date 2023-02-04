@@ -31,6 +31,9 @@ jobs:
 
   spectral:
     name: "Check web api quality"
+    permissions:
+      id-token: write
+      contents: read
     if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
