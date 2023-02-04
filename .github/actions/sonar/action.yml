@@ -37,14 +37,7 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: coverage
-        path: .
-
-    - name: Move coverage
-      run: |
-        ls -R
-        echo ${{steps.download.outputs.download-path}}
-        mv coverage/**/coverage.opencover.xml src/backend
-      shell: bash
+        path: src/backend
 
     - name: Build and analyze
       run: |
