@@ -33,17 +33,17 @@ namespace Core
             }
         }
 
-        private void InjectHashids(ContainerBuilder builder, string salt)
+        private static void InjectHashids(ContainerBuilder builder, string salt)
         {
             builder.RegisterInstance(new Hashids(salt, 5)).SingleInstance();
         }
 
-        private void InjectAppConfiguration(ContainerBuilder builder)
+        private static void InjectAppConfiguration(ContainerBuilder builder)
         {
             builder.RegisterInstance(ConfigurationReader.Get()).SingleInstance();
         }
 
-        private void RegisterWebApiServices(ContainerBuilder builder)
+        private static void RegisterWebApiServices(ContainerBuilder builder)
         {
             builder.RegisterType<HttpContextAccessor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAsScoped<WebApiCurrentUserService>();

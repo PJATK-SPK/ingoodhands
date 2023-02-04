@@ -53,7 +53,7 @@ namespace WebApi.Controllers
             return Ok("OK");
         }
 
-        private string LoadHelloHtml()
+        private static string LoadHelloHtml()
         {
             var location = Assembly.GetExecutingAssembly().Location;
             var result = new Uri(location).LocalPath;

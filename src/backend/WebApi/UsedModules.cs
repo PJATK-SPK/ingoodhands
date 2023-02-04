@@ -2,11 +2,14 @@
 using Autofac;
 using Core;
 
-public static class UsedModules
+namespace WebApi
 {
-    public static readonly IEnumerable<Module> List = new List<Module>()
+    public static class UsedModules
     {
-        new CoreModule(true),
-        new AuthServiceModule(),
-    };
+        public static readonly IEnumerable<Module> List = new List<Module>()
+        {
+            new CoreModule(true),
+            new AuthServiceModule(),
+        };
+    }
 }
