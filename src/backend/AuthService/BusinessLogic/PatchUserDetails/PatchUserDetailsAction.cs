@@ -1,4 +1,5 @@
-﻿using Core.Exceptions;
+﻿using AuthService.Models;
+using Core.Exceptions;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,12 +29,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
 
             var patchedUser = await _patchUserDetailsService.PatchUserFirstNameAndLastName(userSettingsPayload, id);
 
-            var result = new PatchUserDetailsResponse
-            {
-                Id = _hashids.EncodeLong(patchedUser.Id),
-                FirstName = patchedUser.FirstName,
-                LastName = patchedUser.LastName,
-            };
+            var result = new UserDetailsResponse(patchedUser, _hashids);
 
             return new OkObjectResult(result);
         }

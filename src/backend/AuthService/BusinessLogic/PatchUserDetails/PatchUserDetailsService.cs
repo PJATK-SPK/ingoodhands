@@ -20,7 +20,11 @@ namespace AuthService.BusinessLogic.PatchUserDetails
 
         public async Task<User> PatchUserFirstNameAndLastName(PatchUserDetailsPayload userSettingsPayload, long id)
         {
-            var userFromDatabase = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Id == id);
+            var userFromDatabase = await _appDbContext.Users
+                .Include(c => c.Auth0Users!)
+                .Include(c => c.Roles!).ThenInclude(c => c.Role!)
+                .SingleOrDefaultAsync(c => c.Id == id);
+
             if (userFromDatabase == null)
             {
                 _logger.LogError("User with id {id} was not found in users table!", id);
@@ -29,6 +33,7 @@ namespace AuthService.BusinessLogic.PatchUserDetails
 
             userFromDatabase.FirstName = userSettingsPayload.FirstName;
             userFromDatabase.LastName = userSettingsPayload.LastName;
+
             await _appDbContext.SaveChangesAsync();
 
             return userFromDatabase;

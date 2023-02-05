@@ -1,5 +1,6 @@
 ﻿using AuthService;
-using AuthService.BusinessLogic.GetCurrentUser;
+using AuthService.BusinessLogic.GetUserDetails;
+using AuthService.Models;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -27,7 +28,7 @@ namespace AuthServiceTests.BusinessLogic.GetCurrentUser
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetCurrentUserAction>();
+            var action = toolkit.Resolve<GetUserDetailsAction>();
 
             // Arrange
             var testingUser = new User()
@@ -71,11 +72,11 @@ namespace AuthServiceTests.BusinessLogic.GetCurrentUser
             var executed = await action.Execute();
 
             //Assert
-            var result = executed.Value as User;
-            Assert.AreEqual(testingUser.Id, result!.Id);
+            var result = executed.Value as UserDetailsResponse;
+            Assert.AreEqual(testingUser.Id, toolkit.Hashids.DecodeSingleLong(result!.Id));
             Assert.AreEqual("test@testing.com", result!.Email);
-            Assert.AreEqual(testingUser.Auth0Users!.Count, result.Auth0Users!.Count);
-            Assert.AreEqual(result.Id, context.Users.First(c => c.Id == result.Id).Id);
+            Assert.AreEqual(testingUser.Auth0Users!.Count, result.Auth0Identifiers.Count);
+            Assert.AreEqual(toolkit.Hashids.DecodeSingleLong(result.Id), context.Users.First(c => c.Id == toolkit.Hashids.DecodeSingleLong(result.Id)).Id);
         }
 
         [TestMethod()]
@@ -83,7 +84,7 @@ namespace AuthServiceTests.BusinessLogic.GetCurrentUser
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetCurrentUserAction>();
+            var action = toolkit.Resolve<GetUserDetailsAction>();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {

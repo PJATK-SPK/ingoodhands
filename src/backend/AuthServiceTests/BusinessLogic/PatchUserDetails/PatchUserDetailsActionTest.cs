@@ -1,6 +1,6 @@
 ﻿using AuthService;
 using AuthService.BusinessLogic.PatchUserDetails;
-using AuthService.BusinessLogic.PostLogin;
+using AuthService.Models;
 using Autofac;
 using Core;
 using Core.Auth0;
@@ -79,7 +79,7 @@ namespace AuthServiceTests.BusinessLogic.PatchUserDetails
             var executed = await action.Execute(testPayload, toolkit.Hashids.EncodeLong(testingUser.Id));
 
             //Assert
-            var result = executed.Value as PatchUserDetailsResponse;
+            var result = executed.Value as UserDetailsResponse;
 
             Assert.IsNotNull(executed);
             //Count should be 2, because there's also serviceUser in User database         

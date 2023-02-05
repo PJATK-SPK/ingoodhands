@@ -9,7 +9,7 @@ namespace Core.Database.Models
     public class Role : DbEntity, IEntityTypeConfiguration<Role>
     {
         public RoleName Name { get; set; }
-        public List<RolePermission>? RolePermissions { get; set; }
+        public List<UserRole>? Users { get; set; }
 
         public void Configure(EntityTypeBuilder<Role> builder)
            => new RoleConfig<Role>().Configure(builder);

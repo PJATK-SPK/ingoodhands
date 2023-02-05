@@ -1,32 +1,28 @@
-﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
+﻿using AuthService.Models;
 using AuthService.Services;
 using Core.Auth0;
-using Core.Exceptions;
+using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AuthService.BusinessLogic.GetCurrentUser
+namespace AuthService.BusinessLogic.GetUserDetails
 {
-    public class GetCurrentUserAction
+    public class GetUserDetailsAction
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly GetUserDetailsService _getCurrentUserService;
         private readonly UserDataValidationService _userDataValidationService;
+        private readonly Hashids _hashids;
 
-        public GetCurrentUserAction(
+        public GetUserDetailsAction(
             ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService,
-            UserDataValidationService userDataValidationService
-            )
+            GetUserDetailsService getCurrentUserService,
+            UserDataValidationService userDataValidationService,
+            Hashids hashids)
         {
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _userDataValidationService = userDataValidationService;
+            _hashids = hashids;
         }
 
         public async Task<OkObjectResult> Execute()
@@ -36,7 +32,9 @@ namespace AuthService.BusinessLogic.GetCurrentUser
 
             var currentUser = await _getCurrentUserService.GetCurrentUser(auth0UserInfo);
 
-            return new OkObjectResult(currentUser);
+            var result = new UserDetailsResponse(currentUser, _hashids);
+
+            return new OkObjectResult(result);
         }
     }
 }
