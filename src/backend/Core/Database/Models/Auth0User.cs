@@ -12,7 +12,7 @@ namespace Core.Database.Models
         public string Nickname { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string Identifier { get; set; } = default!;
-        public User User { get; set; } = default!;
+        public User? User { get; set; }
         public long UserId { get; set; } = default!;
 
         public void Configure(EntityTypeBuilder<Auth0User> builder)

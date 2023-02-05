@@ -13,6 +13,7 @@ namespace Core.Database.Models
         public string? LastName { get; set; }
         public string Email { get; set; } = default!;
         public List<Auth0User>? Auth0Users { get; set; }
+        public List<UserRole>? Roles { get; set; }
 
         public void Configure(EntityTypeBuilder<User> builder)
             => new UserConfig<User>().Configure(builder);

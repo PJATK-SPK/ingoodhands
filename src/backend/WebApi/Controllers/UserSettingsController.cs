@@ -3,7 +3,7 @@ using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using AuthService.BusinessLogic.GetCurrentUser;
+using AuthService.BusinessLogic.GetUserDetails;
 
 namespace WebApi.Controllers
 {
@@ -15,12 +15,12 @@ namespace WebApi.Controllers
     {
         private readonly GetAuth0UsersByCurrentUserAction _getAuth0UsersByCurrentUserAction;
         private readonly PatchUserDetailsAction _patchUserDetailsAction;
-        private readonly GetCurrentUserAction _getCurrentUserAction;
+        private readonly GetUserDetailsAction _getCurrentUserAction;
 
         public UserSettingsController(
             GetAuth0UsersByCurrentUserAction getAuth0UsersByCurrentUserAction,
             PatchUserDetailsAction updateUserDetails,
-            GetCurrentUserAction getCurrentUserAction
+            GetUserDetailsAction getCurrentUserAction
             )
         {
             _getAuth0UsersByCurrentUserAction = getAuth0UsersByCurrentUserAction;
@@ -29,10 +29,12 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("auth0-users")]
-        public async Task<ActionResult> GetAuth0Users() => await _getAuth0UsersByCurrentUserAction.Execute();
+        public async Task<ActionResult> GetAuth0Users()
+            => await _getAuth0UsersByCurrentUserAction.Execute();
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch([FromBody] PatchUserDetailsPayload userSettingsPayload, string id) => await _patchUserDetailsAction.Execute(userSettingsPayload, id);
+        public async Task<ActionResult> Patch([FromBody] PatchUserDetailsPayload payload, string id)
+            => await _patchUserDetailsAction.Execute(payload, id);
 
         [HttpGet]
         public async Task<ActionResult> GetUser() => await _getCurrentUserAction.Execute();
