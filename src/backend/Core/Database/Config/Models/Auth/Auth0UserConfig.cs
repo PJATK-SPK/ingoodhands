@@ -1,10 +1,10 @@
 ﻿using Core.Database.Config.Base;
 using Core.Database.Extensions;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Config.Models
+namespace Core.Database.Config.Models.Auth
 {
     public class Auth0UserConfig<TBase> : IEntityTypeConfiguration<TBase>
     where TBase : Auth0User
@@ -12,7 +12,7 @@ namespace Core.Database.Config.Models
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
             new DbEntityConfig<TBase>().Configure(builder);
-            builder.ToTable("auth0_users", "core");
+            builder.ToTable("auth0_users", "auth");
             builder.Property(c => c.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(c => c.LastName).HasMaxLength(50);
             builder.Property(c => c.Nickname).IsRequired().HasMaxLength(50);

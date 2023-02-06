@@ -6,7 +6,7 @@ using Core;
 using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;

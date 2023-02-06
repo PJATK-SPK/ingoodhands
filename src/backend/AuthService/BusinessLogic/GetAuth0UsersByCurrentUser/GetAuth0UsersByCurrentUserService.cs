@@ -1,6 +1,6 @@
 ﻿using Core.Auth0;
 using Core.Database;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

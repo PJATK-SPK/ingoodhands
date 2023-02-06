@@ -1,5 +1,5 @@
 ﻿using Core.Database.Enums;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Database.Seeders

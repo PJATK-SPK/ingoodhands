@@ -1,4 +1,4 @@
-﻿using Core.Database.Models;
+﻿using Core.Database.Models.Auth;
 using HashidsNet;
 
 namespace AuthService.Models

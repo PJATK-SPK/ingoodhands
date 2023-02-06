@@ -1,6 +1,6 @@
 ﻿using Core.Database.Config.Base;
 using Core.Database.Enums;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Database.Base

@@ -1,15 +1,15 @@
-﻿using Core.Database.Models;
+﻿using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Config.Models
+namespace Core.Database.Config.Models.Auth
 {
     public class UserConfig<TBase> : IEntityTypeConfiguration<TBase>
     where TBase : User
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
-            builder.ToTable("users", "core");
+            builder.ToTable("users", "auth");
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Property(c => c.Status).IsRequired();
