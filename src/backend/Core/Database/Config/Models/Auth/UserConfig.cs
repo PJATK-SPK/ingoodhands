@@ -9,7 +9,7 @@ namespace Core.Database.Config.Models.Auth
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
-            builder.ToTable("users", "core");
+            builder.ToTable("users", "auth");
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Property(c => c.Status).IsRequired();

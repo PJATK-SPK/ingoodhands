@@ -22,7 +22,7 @@ namespace Core.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Database.Models.Auth.Address", b =>
+            modelBuilder.Entity("Core.Database.Models.Address", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,10 +166,146 @@ namespace Core.Migrations
                     b.HasIndex("Status", "Identifier")
                         .HasDatabaseName("auth_users_status_identifier_idx");
 
-                    b.ToTable("auth0_users", "core");
+                    b.ToTable("auth0_users", "auth");
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Auth.Country", b =>
+            modelBuilder.Entity("Core.Database.Models.Auth.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<long?>("UpdateUserId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
+                        .HasColumnName("update_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_roles");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_roles_name");
+
+                    b.HasIndex("UpdateUserId")
+                        .HasDatabaseName("ix_roles_update_user_id");
+
+                    b.ToTable("roles", "auth");
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Auth.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("last_name");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("users_email_idx");
+
+                    b.ToTable("users", "auth");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Email = "service@service.com",
+                            FirstName = "Service",
+                            LastName = "Service",
+                            Status = 0
+                        });
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Auth.UserRole", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("role_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<long?>("UpdateUserId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
+                        .HasColumnName("update_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user_roles");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_user_roles_role_id");
+
+                    b.HasIndex("UpdateUserId")
+                        .HasDatabaseName("ix_user_roles_update_user_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_user_roles_user_id");
+
+                    b.ToTable("user_roles", "auth");
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Country", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -226,145 +362,9 @@ namespace Core.Migrations
                     b.ToTable("countries", "core");
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Auth.Role", b =>
+            modelBuilder.Entity("Core.Database.Models.Address", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
-                        .HasColumnName("name");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
-
-                    b.Property<long?>("UpdateUserId")
-                        .IsRequired()
-                        .HasColumnType("bigint")
-                        .HasColumnName("update_user_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_roles");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ix_roles_name");
-
-                    b.HasIndex("UpdateUserId")
-                        .HasDatabaseName("ix_roles_update_user_id");
-
-                    b.ToTable("roles", "core");
-                });
-
-            modelBuilder.Entity("Core.Database.Models.Auth.User", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(254)
-                        .HasColumnType("character varying(254)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("last_name");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
-
-                    b.HasKey("Id")
-                        .HasName("pk_users");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasDatabaseName("users_email_idx");
-
-                    b.ToTable("users", "core");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Email = "service@service.com",
-                            FirstName = "Service",
-                            LastName = "Service",
-                            Status = 0
-                        });
-                });
-
-            modelBuilder.Entity("Core.Database.Models.Auth.UserRole", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("role_id");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
-
-                    b.Property<long?>("UpdateUserId")
-                        .IsRequired()
-                        .HasColumnType("bigint")
-                        .HasColumnName("update_user_id");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_roles");
-
-                    b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_user_roles_role_id");
-
-                    b.HasIndex("UpdateUserId")
-                        .HasDatabaseName("ix_user_roles_update_user_id");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_user_roles_user_id");
-
-                    b.ToTable("user_roles", "core");
-                });
-
-            modelBuilder.Entity("Core.Database.Models.Auth.Address", b =>
-                {
-                    b.HasOne("Core.Database.Models.Auth.Country", "Country")
+                    b.HasOne("Core.Database.Models.Country", "Country")
                         .WithMany("Addresses")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -402,18 +402,6 @@ namespace Core.Migrations
                     b.Navigation("UpdateUser");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Core.Database.Models.Auth.Country", b =>
-                {
-                    b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
-                        .WithMany()
-                        .HasForeignKey("UpdateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_countries_users_update_user_id");
-
-                    b.Navigation("UpdateUser");
                 });
 
             modelBuilder.Entity("Core.Database.Models.Auth.Role", b =>
@@ -458,9 +446,16 @@ namespace Core.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Auth.Country", b =>
+            modelBuilder.Entity("Core.Database.Models.Country", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_countries_users_update_user_id");
+
+                    b.Navigation("UpdateUser");
                 });
 
             modelBuilder.Entity("Core.Database.Models.Auth.Role", b =>
@@ -473,6 +468,11 @@ namespace Core.Migrations
                     b.Navigation("Auth0Users");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Country", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

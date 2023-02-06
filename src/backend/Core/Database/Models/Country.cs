@@ -1,9 +1,9 @@
 ﻿using Core.Database.Base;
-using Core.Database.Config.Models.Auth;
+using Core.Database.Config.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Models.Auth
+namespace Core.Database.Models
 {
     public class Country : DbEntity, IEntityTypeConfiguration<Country>
     {

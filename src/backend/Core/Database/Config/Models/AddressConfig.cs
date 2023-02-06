@@ -1,10 +1,10 @@
 ﻿using Core.Database.Config.Base;
 using Core.Database.Extensions;
-using Core.Database.Models.Auth;
+using Core.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Config.Models.Auth
+namespace Core.Database.Config.Models
 {
     public class AddressConfig<TBase> : IEntityTypeConfiguration<TBase>
     where TBase : Address
