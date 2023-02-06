@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Company>PJATK</Company>
@@ -11,15 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<SonarQubeSetting Include="sonar.coverage.exclusions">
-			<Value>Controllers/**</Value>
-		</SonarQubeSetting>
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\AuthService\AuthService.csproj" />
 		<ProjectReference Include="..\Core\Core.csproj" />
-		<ProjectReference Include="..\DonateService\DonateService.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using AuthService;
 using Autofac;
 using Core;
+using DonateService;
 
 namespace WebApi
 {
@@ -10,6 +11,7 @@ namespace WebApi
         {
             new CoreModule(true),
             new AuthServiceModule(),
+            new DonateServiceModule(),
         };
     }
 }
