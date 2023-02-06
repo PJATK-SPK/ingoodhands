@@ -1,6 +1,4 @@
-## Type of change
-
-Please delete options that are not relevant.
+## [YOUR PR NAME - CHANGE ME]
 
 - [X] Bug fix (non-breaking change which fixes an issue)
 - [X] New feature (non-breaking change which adds functionality)
