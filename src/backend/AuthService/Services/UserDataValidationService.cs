@@ -1,4 +1,4 @@
-﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
+﻿using AuthService.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
 using Core.Auth0;
 using Core.Exceptions;
 using Microsoft.Extensions.Logging;
