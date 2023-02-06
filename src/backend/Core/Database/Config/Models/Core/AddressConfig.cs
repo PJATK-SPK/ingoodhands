@@ -4,7 +4,7 @@ using Core.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Config.Models
+namespace Core.Database.Config.Models.Core
 {
     public class AddressConfig<TBase> : IEntityTypeConfiguration<TBase>
     where TBase : Address
