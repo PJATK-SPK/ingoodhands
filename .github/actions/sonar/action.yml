@@ -43,11 +43,12 @@ runs:
     - name: Move coverage report
       shell: bash
       run: |
-        mv **/coverage.opencover.xml src/backend/
+        find . -name "coverage.opencover.xml" -exec sh -c 'for f; do d=${f%/*}; mv -- "$f" "./src/backend/${d#./}${f##*/}"; done' findsh {} +
 
     - name: Build and analyze
       run: |
-        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
+        reports=$(find . -type f -name "*coverage.opencover.xml" | xargs -n1 -I{} basename "{}" | tr '\n' ',')
+        dotnet-sonarscanner begin /k:"PJATK-SPK_ingoodhands" /o:"pjatk-spk" /d:sonar.login="${{ inputs.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=$reports
         dotnet build --no-incremental
         dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
       shell: bash
