@@ -1,10 +1,10 @@
 ﻿using Core.Database.Base;
-using Core.Database.Config.Models;
+using Core.Database.Config.Models.Auth;
 using Core.Database.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Models
+namespace Core.Database.Models.Auth
 {
     public class Role : DbEntity, IEntityTypeConfiguration<Role>
     {

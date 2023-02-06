@@ -1,6 +1,6 @@
 ﻿using AuthService.BusinessLogic.GetAuth0UsersByCurrentUser;
 using Core.Database;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

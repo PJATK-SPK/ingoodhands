@@ -1,10 +1,10 @@
 ﻿using Core.Database.Config.Base;
 using Core.Database.Extensions;
-using Core.Database.Models;
+using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Core.Database.Config.Models
+namespace Core.Database.Config.Models.Auth
 {
     public class Auth0UserConfig<TBase> : IEntityTypeConfiguration<TBase>
     where TBase : Auth0User
