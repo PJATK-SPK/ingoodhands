@@ -93,7 +93,7 @@ jobs:
 
   sonar:
     name: "SonarCloud analysis"
-    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
     runs-on: ubuntu-latest
     needs:
       - check-changed-paths
@@ -103,3 +103,21 @@ jobs:
       - uses: ./.github/actions/sonar
         with:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  sonar-frontend:
+    name: "SonarCloud analysis"
+    if: ${{ needs.check-changed-paths.outputs.frontend == 'true' || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: src/frontend
