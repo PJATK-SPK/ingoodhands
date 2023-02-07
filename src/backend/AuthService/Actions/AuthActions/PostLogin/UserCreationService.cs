@@ -1,6 +1,7 @@
 ﻿using AuthService.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
 using Core.Auth0;
 using Core.Database;
+using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,9 @@ namespace AuthService.Actions.AuthActions.PostLogin
                 user = CreateUser(auth0UserInfo);
                 _appDbContext.Add(user);
 
+                var userRole = CreateUserRole(user, serviceUser);
+                _appDbContext.Add(userRole);
+
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
                 _appDbContext.Add(newAuth0User);
                 _appDbContext.SaveChanges();
@@ -45,12 +49,25 @@ namespace AuthService.Actions.AuthActions.PostLogin
             {
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
                 _appDbContext.Add(newAuth0User);
+
+                var userRole = CreateUserRole(user, serviceUser);
+                _appDbContext.Add(userRole);
+
                 _appDbContext.SaveChanges();
             }
             else if (user == null && auth0UserFromDatabase != null)
             {
                 user = CreateUser(auth0UserInfo);
                 _appDbContext.Add(user);
+                var userRole = CreateUserRole(user, serviceUser);
+                _appDbContext.Add(userRole);
+                _appDbContext.SaveChanges();
+            }
+
+            if (user!.Roles == null)
+            {
+                var userRole = CreateUserRole(user, serviceUser);
+                _appDbContext.Add(userRole);
                 _appDbContext.SaveChanges();
             }
 
@@ -81,6 +98,20 @@ namespace AuthService.Actions.AuthActions.PostLogin
                 Identifier = currentAuth0UserInfo.Identifier!,
                 User = user,
                 UserId = user.Id
+            };
+        }
+
+        private static UserRole CreateUserRole(User user, User serviceUser)
+        {
+            return new UserRole
+            {
+                RoleId = 2,
+                User = user,
+                UserId = user.Id,
+                UpdateUser = serviceUser,
+                UpdateUserId = serviceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                Status = Core.Database.Enums.DbEntityStatus.Active
             };
         }
     }

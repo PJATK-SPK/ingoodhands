@@ -7,6 +7,7 @@ using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
@@ -73,6 +74,7 @@ namespace AuthServiceTests.Actions.AuthActionsTest.PostLogin
             // Assert
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id).RoleId);
         }
 
         [TestMethod()]
@@ -105,6 +107,7 @@ namespace AuthServiceTests.Actions.AuthActionsTest.PostLogin
             Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.User.Email == newEmail).RoleId);
         }
 
         [TestMethod()]
@@ -145,6 +148,7 @@ namespace AuthServiceTests.Actions.AuthActionsTest.PostLogin
             Assert.AreEqual(context.Auth0Users.Single(x => x.Email == testingUser.Email)?.User, testingUser);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
+            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id).RoleId);
         }
 
         [TestMethod()]
