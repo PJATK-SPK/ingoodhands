@@ -77,7 +77,7 @@ namespace AuthService.Actions.AuthActions.PostLogin
         {
             return new User
             {
-                Status = Core.Database.Enums.DbEntityStatus.Active,
+                Status = DbEntityStatus.Active,
                 FirstName = currentAuth0UserInfo.GivenName!,
                 LastName = currentAuth0UserInfo.FamilyName,
                 Email = currentAuth0UserInfo.Email!
@@ -111,7 +111,7 @@ namespace AuthService.Actions.AuthActions.PostLogin
                 UpdateUser = serviceUser,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             };
         }
     }

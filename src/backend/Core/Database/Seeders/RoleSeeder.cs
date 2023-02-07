@@ -1,15 +1,10 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Database.Seeders
 {
-    internal class RoleSeeder
+    public static class RoleSeeder
     {
         public static void Execute(ModelBuilder builder)
         {
