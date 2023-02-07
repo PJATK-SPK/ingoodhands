@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { map, mergeMap, tap, timer } from "rxjs";
+import { map, mergeMap, timer } from "rxjs";
 import { environment } from "src/environments/environment";
 
 export const getSidebarConfig = (httpClient: HttpClient) => [
