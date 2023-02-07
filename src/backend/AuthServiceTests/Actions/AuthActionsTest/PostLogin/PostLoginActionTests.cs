@@ -107,7 +107,7 @@ namespace AuthServiceTests.Actions.AuthActionsTest.PostLogin
             Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.User.Email == newEmail)!.RoleId);
+            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.User!.Email == newEmail)!.RoleId);
         }
 
         [TestMethod()]
