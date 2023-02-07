@@ -16,9 +16,9 @@
                                 [ngClass]="router.url === page.routerLink ? 'bg-purple-50 text-purple-500 border-purple-500' : 'border-transparent'">
                                 <i [class]="page.icon"></i>
                                 <span class="font-medium">{{ page.label }}</span>
-                                <span *ngIf="page.alerts"
+                                <span *ngIf="page.alerts | async as alerts"
                                     class="inline-flex align-items-center justify-content-center ml-auto bg-purple-500 text-0 border-circle transition-duration-150"
-                                    style="min-width: 1.5rem; height: 1.5rem">{{ page.alerts | async }}</span>
+                                    style="min-width: 1.5rem; height: 1.5rem">{{ alerts }}</span>
                             </a>
                         </li>
 
