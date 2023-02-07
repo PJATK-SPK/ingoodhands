@@ -29,7 +29,8 @@
         <li class="border-top-1 surface-border lg:border-top-none lg:mt-0 mt-2 lg:pt-0 pt-2">
             <a pRipple
                 class="flex p-3 align-items-center hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
-                <img [src]="picture | async" class="mr-3 lg:mr-0" style="width: 25px; height: 25px" />
+                <img [src]="picture | async" alt="icon of currently logged user" class="mr-3 lg:mr-0"
+                    style="width: 25px; height: 25px" />
                 <div class="block lg:hidden">
                     <div class="text-900 font-medium">{{ name | async }}</div>
                 </div>
