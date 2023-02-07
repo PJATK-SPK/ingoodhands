@@ -7,11 +7,8 @@
     <ul
         class="list-none p-3 lg:p-0 m-0 lg:align-items-center select-none flex-column lg:flex-row absolute hidden lg:flex lg:static surface-overlay right-0 top-100 z-1 shadow-2 lg:shadow-none">
         <li class="lg:mr-1">
-            <a pRipple (click)="login()"
-                class="flex p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
-                <i class="pi pi-sign-in text-base lg:text-2xl mr-2 lg:mr-0"></i>
-                <span class="block lg:hidden font-medium">{{ auth.isLoggedIn ? 'Login' : 'Continue'}}</span>
-            </a>
+            <button (click)="login()" pButton pRipple type="button" [label]="auth.isLoggedIn ? 'GO TO APP' : 'LOGIN'"
+                class="p-button-outlined"></button>
         </li>
     </ul>
 </div>

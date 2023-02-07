@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,10 +6,11 @@ namespace WebApi.Controllers.Donate;
 
 [EnableCors]
 [ApiController]
+[Authorize]
 [Route("my-donations")]
 public class MyDonationsController : ControllerBase
 {
-    public class DeleteMeMyDonationsResponse
+    public class DeleteMeMyDonationsResponseItem
     {
         public string Name { get; set; } = default!; // DNT...
         public int ProductsCount { get; set; } = default!;
@@ -17,13 +19,20 @@ public class MyDonationsController : ControllerBase
     }
     [HttpGet]
     public async Task<ActionResult> GetList()
-        => await Task.FromResult(Ok(new DeleteMeMyDonationsResponse
+        => await Task.FromResult(Ok(new List<DeleteMeMyDonationsResponseItem>
         {
-            Name = "DNT000123",
-            ProductsCount = 10,
-            CreationDate = DateTime.Now,
-            IsDelivered = false,
+            new DeleteMeMyDonationsResponseItem
+            {
+                Name = "DNT000123",
+                ProductsCount = 10,
+                CreationDate = DateTime.Now,
+                IsDelivered = false,
+            }
         }));
+
+    [HttpGet("not-delivered-count")]
+    public async Task<ActionResult> GetCountOfNotDelivered()
+        => await Task.FromResult(Ok(new { Count = 3 }));
 
     public class DeleteMeMyDonationDetailsProductResponse
     {
@@ -47,6 +56,7 @@ public class MyDonationsController : ControllerBase
         public string Name { get; set; } = default!; // DNT...
         public DateTime CreationDate { get; set; } = default!;
         public bool IsDelivered { get; set; }
+        public bool IsExpired { get; set; }
         public DeleteMeMyDonationDetailsWarehouseResponse Warehouse { get; set; } = default!;
         public List<DeleteMeMyDonationDetailsProductResponse> Products { get; set; } = default!;
     }

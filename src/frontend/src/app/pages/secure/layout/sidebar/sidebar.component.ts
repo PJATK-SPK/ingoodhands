@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { SIDEBAR_CONFIG } from './sidebar-config';
+import { getSidebarConfig } from './sidebar-config';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,13 +12,18 @@ import { SIDEBAR_CONFIG } from './sidebar-config';
 })
 export class SidebarComponent {
 
-  public readonly config = SIDEBAR_CONFIG;
+  public readonly config = getSidebarConfig(this.http);
   public readonly picture = this.auth.oidc.getUserData().pipe(map(data => data?.picture));
   public readonly name = this.auth.oidc.getUserData().pipe(map(data => data?.name));
 
   constructor(
     public readonly router: Router,
     public readonly auth: AuthService,
+    public readonly http: HttpClient,
   ) { }
+
+  public onLogoutClick() {
+    this.auth.logout().subscribe();
+  }
 
 }
