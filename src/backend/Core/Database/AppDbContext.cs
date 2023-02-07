@@ -28,6 +28,7 @@ namespace Core.Database
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
             UserSeeder.Execute(modelBuilder);
+            RoleSeeder.Execute(modelBuilder);
         }
     }
 }

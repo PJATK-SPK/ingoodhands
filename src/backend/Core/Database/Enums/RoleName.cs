@@ -6,6 +6,6 @@
         Donor,
         Needy,
         WarehouseKeeper,
-        Supplier
+        Deliverer
     }
 }
