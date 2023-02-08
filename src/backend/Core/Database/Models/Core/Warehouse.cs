@@ -9,7 +9,7 @@ namespace Core.Database.Models.Core
     {
         public long AddressId { get; set; }
         public Address? Address { get; set; }
-        public string ShortName { get; set; }
+        public string ShortName { get; set; } = default!;
 
         public void Configure(EntityTypeBuilder<Warehouse> builder)
             => new WarehouseConfig<Warehouse>().Configure(builder);
