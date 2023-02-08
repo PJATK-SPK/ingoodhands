@@ -10,8 +10,8 @@ namespace WebApi
         public static readonly IEnumerable<Module> List = new List<Module>()
         {
             new CoreModule(true),
-            new AuthServiceModule(),
-            new DonateServiceModule(),
+            new AuthModule(),
+            new DonateModule(),
         };
     }
 }

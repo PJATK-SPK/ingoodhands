@@ -20,7 +20,7 @@ namespace AuthTests.Actions.UserSettingsTests.GetCurrentUser
         private readonly List<Module> _usedModules = new()
         {
             new CoreModule(false),
-            new AuthServiceModule(),
+            new AuthModule(),
         };
 
         [TestMethod()]

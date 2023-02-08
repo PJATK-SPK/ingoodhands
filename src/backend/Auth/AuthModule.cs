@@ -8,7 +8,7 @@ using Auth.Actions.UserSettingsActions.GetUserDetails;
 
 namespace Auth
 {
-    public class AuthServiceModule : Module
+    public class AuthModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
