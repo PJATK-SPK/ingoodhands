@@ -17,9 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AuthService\AuthService.csproj" />
+		<ProjectReference Include="..\Auth\Auth.csproj" />
 		<ProjectReference Include="..\Core\Core.csproj" />
-		<ProjectReference Include="..\DonateService\DonateService.csproj" />
+		<ProjectReference Include="..\Donate\Donate.csproj" />
 	</ItemGroup>
 
 </Project>
