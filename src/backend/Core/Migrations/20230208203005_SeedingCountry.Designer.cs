@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230208195216_SeedingCountries")]
-    partial class SeedingCountries
+    [Migration("20230208203005_SeedingCountry")]
+    partial class SeedingCountry
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

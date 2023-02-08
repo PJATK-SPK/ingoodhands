@@ -6,7 +6,7 @@ namespace Core.Database.Seeders
 {
     public static class CountrySeeder
     {
-        public static readonly List<string> countryNames = new List<string>()
+        private static readonly List<string> countryNames = new List<string>()
         {
             "Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda",
             "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
@@ -36,7 +36,7 @@ namespace Core.Database.Seeders
             "Viet Nam", "Virgin Islands, US", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"
         };
 
-        public static readonly List<string> countryNamesIso2 = new List<string>()
+        private static readonly List<string> countryNamesIso2 = new List<string>()
         {
             "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ",
             "BM", "BT", "BO", "BA", "BW", "BV", "BR", "VG", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "HK", "MO",
@@ -51,7 +51,7 @@ namespace Core.Database.Seeders
             "VN", "VI", "WF", "EH", "YE", "ZM", "ZW"
         };
 
-        public static readonly List<string> countryNamesIso3 = new List<string>()
+        private static readonly List<string> countryNamesIso3 = new List<string>()
         {
             "AFG", "ALA", "ALB", "DZA", "ASM", "AND", "AGO", "AIA", "ATA", "ATG", "ARG", "ARM", "ABW", "AUS", "AUT", "AZE", "BHS", "BHR", "BGD", "BRB", "BLR",
             "BEL", "BLZ", "BEN", "BMU", "BTN", "BOL", "BIH", "BWA", "BVT", "BRA", "VGB", "IOT", "BRN", "BGR", "BFA", "BDI", "KHM", "CMR", "CAN", "CPV", "CYM",

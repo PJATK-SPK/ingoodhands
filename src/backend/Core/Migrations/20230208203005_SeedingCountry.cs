@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Core.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedingCountries : Migration
+    public partial class SeedingCountry : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
