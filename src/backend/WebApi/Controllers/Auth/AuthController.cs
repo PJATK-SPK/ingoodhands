@@ -1,4 +1,4 @@
-﻿using AuthService.Actions.AuthActions.PostLogin;
+﻿using Auth.Actions.AuthActions.PostLogin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

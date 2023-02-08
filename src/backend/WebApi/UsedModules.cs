@@ -1,7 +1,7 @@
-﻿using AuthService;
+﻿using Auth;
 using Autofac;
 using Core;
-using DonateService;
+using Donate;
 
 namespace WebApi
 {
