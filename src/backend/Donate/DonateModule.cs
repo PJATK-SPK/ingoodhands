@@ -6,7 +6,6 @@ namespace Donate
     {
         protected override void Load(ContainerBuilder builder)
         {
-            throw new NotSupportedException("To be implemented");
         }
     }
 }
