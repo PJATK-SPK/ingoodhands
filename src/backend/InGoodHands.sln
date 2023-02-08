@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateService", "DonateServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateServiceTests", "DonateServiceTests\DonateServiceTests.csproj", "{95563EC6-EED2-4A9B-8009-54AE0ABCB8D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTests", "CoreTests\CoreTests.csproj", "{D3E34DEC-526E-485F-862C-E08939AFCD0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{95563EC6-EED2-4A9B-8009-54AE0ABCB8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95563EC6-EED2-4A9B-8009-54AE0ABCB8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95563EC6-EED2-4A9B-8009-54AE0ABCB8D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3E34DEC-526E-485F-862C-E08939AFCD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3E34DEC-526E-485F-862C-E08939AFCD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3E34DEC-526E-485F-862C-E08939AFCD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3E34DEC-526E-485F-862C-E08939AFCD0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
