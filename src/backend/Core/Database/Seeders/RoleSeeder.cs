@@ -12,45 +12,45 @@ namespace Core.Database.Seeders
             {
                 Id = 1,
                 Name = RoleName.Administrator,
-                UpdatedAt = new DateTime(2023, 01, 01),
+                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 UpdateUserId = 1,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             });
 
             builder.Entity<Role>().HasData(new Role
             {
                 Id = 2,
                 Name = RoleName.Donor,
-                UpdatedAt = new DateTime(2023, 01, 01),
+                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 UpdateUserId = 1,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             });
 
             builder.Entity<Role>().HasData(new Role
             {
                 Id = 3,
                 Name = RoleName.Needy,
-                UpdatedAt = new DateTime(2023, 01, 01),
+                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 UpdateUserId = 1,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             });
 
             builder.Entity<Role>().HasData(new Role
             {
                 Id = 4,
                 Name = RoleName.WarehouseKeeper,
-                UpdatedAt = new DateTime(2023, 01, 01),
+                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 UpdateUserId = 1,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             });
 
             builder.Entity<Role>().HasData(new Role
             {
                 Id = 5,
                 Name = RoleName.Deliverer,
-                UpdatedAt = new DateTime(2023, 01, 01),
+                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 UpdateUserId = 1,
-                Status = Core.Database.Enums.DbEntityStatus.Active
+                Status = DbEntityStatus.Active
             });
         }
     }
