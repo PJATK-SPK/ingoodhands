@@ -12,7 +12,7 @@ namespace Core.Database.Seeders
             {
                 Id = 1,
                 Name = RoleName.Administrator,
-                UpdatedAt = DateTime.UtcNow,
+                UpdatedAt = new DateTime(2023, 01, 01),
                 UpdateUserId = 1,
                 Status = Core.Database.Enums.DbEntityStatus.Active
             });
@@ -21,7 +21,7 @@ namespace Core.Database.Seeders
             {
                 Id = 2,
                 Name = RoleName.Donor,
-                UpdatedAt = DateTime.UtcNow,
+                UpdatedAt = new DateTime(2023, 01, 01),
                 UpdateUserId = 1,
                 Status = Core.Database.Enums.DbEntityStatus.Active
             });
@@ -30,7 +30,7 @@ namespace Core.Database.Seeders
             {
                 Id = 3,
                 Name = RoleName.Needy,
-                UpdatedAt = DateTime.UtcNow,
+                UpdatedAt = new DateTime(2023, 01, 01),
                 UpdateUserId = 1,
                 Status = Core.Database.Enums.DbEntityStatus.Active
             });
@@ -39,7 +39,7 @@ namespace Core.Database.Seeders
             {
                 Id = 4,
                 Name = RoleName.WarehouseKeeper,
-                UpdatedAt = DateTime.UtcNow,
+                UpdatedAt = new DateTime(2023, 01, 01),
                 UpdateUserId = 1,
                 Status = Core.Database.Enums.DbEntityStatus.Active
             });
@@ -48,7 +48,7 @@ namespace Core.Database.Seeders
             {
                 Id = 5,
                 Name = RoleName.Deliverer,
-                UpdatedAt = DateTime.UtcNow,
+                UpdatedAt = new DateTime(2023, 01, 01),
                 UpdateUserId = 1,
                 Status = Core.Database.Enums.DbEntityStatus.Active
             });
