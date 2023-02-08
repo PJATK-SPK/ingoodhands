@@ -11,6 +11,11 @@
 	</PropertyGroup>
 
 
+	<ItemGroup>
+		<Content Include="WebApi\Hello.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 	<ItemGroup>
 		<SonarQubeSetting Include="sonar.coverage.exclusions">

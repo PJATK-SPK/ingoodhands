@@ -30,6 +30,7 @@ namespace Core.Database
 
             UserSeeder.Execute(modelBuilder);
             RoleSeeder.Execute(modelBuilder);
+            CountrySeeder.Execute(modelBuilder);
         }
     }
 }
