@@ -10,15 +10,7 @@
 		<GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<None Remove="WebApi\Hello.html" />
-	</ItemGroup>
 
-	<ItemGroup>
-		<Resource Include="WebApi\Hello.html">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Resource>
-	</ItemGroup>
 
 	<ItemGroup>
 		<SonarQubeSetting Include="sonar.coverage.exclusions">
@@ -87,6 +79,15 @@
 		<None Update="Configuration\Prd\serilog-service.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="start.html">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="start.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>
