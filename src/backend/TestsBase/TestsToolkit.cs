@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Core.Auth0;
-using Core.Autofac;
-using Core.ConfigSetup;
 using Core.Database;
+using Core.Setup.Auth0;
+using Core.Setup.Autofac;
+using Core.Setup.ConfigSetup;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

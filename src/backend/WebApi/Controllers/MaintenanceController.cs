@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Core.Database;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Core.Setup.WebApi;
 
 namespace WebApi.Controllers
 {
@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         {
             return new ContentResult
             {
-                Content = LoadHelloHtml(),
+                Content = MaintenanceService.LoadHelloHtml(),
                 ContentType = "text/html"
             };
         }
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
 
             try
             {
-                LoadHelloHtml();
+                MaintenanceService.LoadHelloHtml();
             }
             catch (Exception)
             {
@@ -51,21 +51,6 @@ namespace WebApi.Controllers
             }
 
             return Ok("OK");
-        }
-
-        private static string LoadHelloHtml()
-        {
-            var location = Assembly.GetExecutingAssembly().Location;
-            var result = new Uri(location).LocalPath;
-            location = result.ToString();
-
-            var path =
-               Path.Combine(
-                   Path.GetDirectoryName(location)!,
-                   Path.Join("WebApi/Hello.html")
-               );
-
-            return System.IO.File.ReadAllText(path);
         }
     }
 }

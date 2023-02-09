@@ -14,6 +14,7 @@ namespace Core.Database
         public DbSet<UserRole> UserRoles { get; set; } = default!;
         public DbSet<Country> Countries { get; set; } = default!;
         public DbSet<Address> Addresses { get; set; } = default!;
+        public DbSet<Warehouse> Warehouses { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,8 @@ namespace Core.Database
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
             UserSeeder.Execute(modelBuilder);
+            RoleSeeder.Execute(modelBuilder);
+            CountrySeeder.Execute(modelBuilder);
         }
     }
 }

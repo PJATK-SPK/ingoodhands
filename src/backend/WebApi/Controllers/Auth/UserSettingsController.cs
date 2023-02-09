@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using AuthService.Actions.UserSettingsActions.PatchUserDetails;
-using AuthService.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
-using AuthService.Actions.UserSettingsActions.GetUserDetails;
+using Auth.Actions.UserSettingsActions.PatchUserDetails;
+using Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
+using Auth.Actions.UserSettingsActions.GetUserDetails;
 
 namespace WebApi.Controllers.Auth
 {

@@ -1,4 +1,4 @@
-﻿using Core.Auth0;
+﻿using Core.Setup.Auth0;
 
 namespace TestsBase
 {
