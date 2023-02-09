@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Donate.Jobs.SetExpiredDonations;
 
 namespace Donate
 {
@@ -6,6 +7,18 @@ namespace Donate
     {
         protected override void Load(ContainerBuilder builder)
         {
+            RegisterActions(builder);
+            RegisterJobs(builder);
+        }
+
+        private void RegisterActions(ContainerBuilder builder)
+        {
+
+        }
+
+        private void RegisterJobs(ContainerBuilder builder)
+        {
+            builder.RegisterModule<SetExpiredDonationsModule>();
         }
     }
 }

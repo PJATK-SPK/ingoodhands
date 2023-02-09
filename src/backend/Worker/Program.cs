@@ -1,31 +1,12 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Core.ConfigSetup;
-using Serilog;
+using Core.Setup.WebApi;
 using Worker;
 
-var builder = Host.CreateDefaultBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-var serilogConfigPath = ConfigurationReader.GetConfigFullPath("serilog-service.json");
-var serilogConfig = new ConfigurationBuilder()
-    .AddJsonFile(
-        serilogConfigPath,
-        optional: false,
-        reloadOnChange: true)
-    .Build();
+WebApiBuilder.Configure(builder.Host, UsedModules.List);
+WebApiBuilder.Configure(builder.Services);
 
-builder.UseSerilog((context, config) => config.ReadFrom.Configuration(serilogConfig));
-builder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.ConfigureServices((context, services) =>
-{
-    builder.ConfigureContainer<ContainerBuilder>(containerBuilder =>
-    {
-        foreach (var module in UsedModules.List)
-            containerBuilder.RegisterModule(module);
-    });
+var app = builder.Build();
+WebApiBuilder.Configure(app, "/");
 
-    services.AddHostedService<Service>();
-});
-
-var host = builder.Build();
-await host.RunAsync();
+app.Run();

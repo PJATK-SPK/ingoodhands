@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using Core.Autofac;
 using Auth.Services;
 using Auth.Actions.AuthActions.PostLogin;
 using Auth.Actions.UserSettingsActions.PatchUserDetails;
 using Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
 using Auth.Actions.UserSettingsActions.GetUserDetails;
+using Core.Setup.Autofac;
 
 namespace Auth
 {
@@ -12,17 +12,21 @@ namespace Auth
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAsScoped<PostLoginAction>();
+            RegisterActions(builder);
+            RegisterServices(builder);
+        }
+
+        private void RegisterActions(ContainerBuilder builder)
+        {
+            builder.RegisterModule<PostLoginModule>();
+            builder.RegisterModule<GetAuth0UsersByCurrentUserModule>();
+            builder.RegisterModule<GetUserDetailsModule>();
+            builder.RegisterModule<PatchUserDetailsModule>();
+        }
+
+        private void RegisterServices(ContainerBuilder builder)
+        {
             builder.RegisterAsScoped<UserDataValidationService>();
-            builder.RegisterAsScoped<UserCreationService>();
-            builder.RegisterAsScoped<GetAuth0UsersByCurrentUserAction>();
-            builder.RegisterAsScoped<GetAuth0UsersByCurrentUserService>();
-            builder.RegisterAsScoped<PatchUserDetailsAction>();
-            builder.RegisterAsScoped<PatchUserDetailsPayload>();
-            builder.RegisterAsScoped<PatchUserDetailsService>();
-            builder.RegisterAsScoped<PatchUserDetailsPayloadValidator>();
-            builder.RegisterAsScoped<GetUserDetailsAction>();
-            builder.RegisterAsScoped<GetUserDetailsService>();
         }
     }
 }

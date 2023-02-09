@@ -1,5 +1,5 @@
 ﻿using Auth.Services;
-using Core.Auth0;
+using Core.Setup.Auth0;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser
