@@ -127,7 +127,7 @@ namespace Core.Database.Seeders
             GpsLongitude = 7.202632419942202
         };
 
-        public static Address Address9France = new()
+        public static readonly Address Address9France = new()
         {
             Id = 9,
             Status = DbEntityStatus.Active,
