@@ -6,7 +6,7 @@ namespace Donate.Jobs.SetExpiredDonations
     {
         protected override void Load(ContainerBuilder builder)
         {
-
+            // Will be used in future
         }
     }
 }

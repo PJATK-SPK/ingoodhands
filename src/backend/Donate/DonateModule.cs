@@ -11,12 +11,12 @@ namespace Donate
             RegisterJobs(builder);
         }
 
-        private void RegisterActions(ContainerBuilder builder)
+        private static void RegisterActions(ContainerBuilder builder)
         {
-
+            // Will be used in future
         }
 
-        private void RegisterJobs(ContainerBuilder builder)
+        private static void RegisterJobs(ContainerBuilder builder)
         {
             builder.RegisterModule<SetExpiredDonationsModule>();
         }

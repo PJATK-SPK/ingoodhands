@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WebApi": {
+    "Worker": {
       "commandName": "Project",
       "commandLineArgs": "--urls https://localhost:7149;http://localhost:5115",
       "dotnetRunMessages": true,

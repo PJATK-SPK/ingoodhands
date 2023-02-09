@@ -16,7 +16,7 @@ namespace Auth
             RegisterServices(builder);
         }
 
-        private void RegisterActions(ContainerBuilder builder)
+        private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<PostLoginModule>();
             builder.RegisterModule<GetAuth0UsersByCurrentUserModule>();
@@ -24,7 +24,7 @@ namespace Auth
             builder.RegisterModule<PatchUserDetailsModule>();
         }
 
-        private void RegisterServices(ContainerBuilder builder)
+        private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<UserDataValidationService>();
         }

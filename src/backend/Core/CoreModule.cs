@@ -18,9 +18,9 @@ namespace Core
             RegisterServices(builder);
         }
 
-        private void RegisterServices(ContainerBuilder builder)
+        private static void RegisterServices(ContainerBuilder builder)
         {
-
+            // Will be used in future
         }
     }
 }
