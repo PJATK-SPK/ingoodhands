@@ -1,7 +1,7 @@
-﻿using Core.Auth0;
-using Core.Database;
+﻿using Core.Database;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
+using Core.Setup.Auth0;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core;

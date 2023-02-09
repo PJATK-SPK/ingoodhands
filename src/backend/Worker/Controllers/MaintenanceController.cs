@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         {
             return new ContentResult
             {
-                Content = MaintenanceService.LoadHelloHtml(),
+                Content = "<html><head><meta http-equiv=\"Refresh\" content=\"0; url='/swagger'\" /></head></html>",
                 ContentType = "text/html"
             };
         }

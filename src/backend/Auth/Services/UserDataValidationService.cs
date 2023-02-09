@@ -1,5 +1,5 @@
-﻿using Core.Auth0;
-using Core.Exceptions;
+﻿using Core.Exceptions;
+using Core.Setup.Auth0;
 using Microsoft.Extensions.Logging;
 
 namespace Auth.Services

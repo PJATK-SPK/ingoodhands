@@ -1,6 +1,6 @@
 ﻿using Auth.Models;
 using Auth.Services;
-using Core.Auth0;
+using Core.Setup.Auth0;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
