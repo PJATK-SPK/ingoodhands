@@ -8,7 +8,7 @@ namespace Worker.Controllers
     [Route("donate-jobs")]
     public class DonateJobs : ControllerBase
     {
-        [HttpPost("do-set-expired-donations")]
+        [HttpPost("set-expired-donations")]
         public async Task<ActionResult> SetExpiredDonations()
         {
             return await Task.FromResult(Ok());
