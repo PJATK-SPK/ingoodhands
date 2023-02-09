@@ -16,6 +16,7 @@
 			<Value>Migrations/**</Value>
 			<Value>Database/**</Value>
 			<Value>Setup/**</Value>
+			<Value>CoreModule.cs</Value>
 		</SonarQubeSetting>
 	</ItemGroup>
 
