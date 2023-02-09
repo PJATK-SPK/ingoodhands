@@ -2,11 +2,11 @@
 using Auth.Actions.AuthActions.PostLogin;
 using Autofac;
 using Core;
-using Core.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
+using Core.Setup.Auth0;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;

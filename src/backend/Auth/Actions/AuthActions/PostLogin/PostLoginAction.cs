@@ -1,5 +1,5 @@
 ﻿using Auth.Services;
-using Core.Auth0;
+using Core.Setup.Auth0;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +9,12 @@ namespace Auth.Actions.AuthActions.PostLogin
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly UserDataValidationService _userDataValidationService;
-        private readonly UserCreationService _userService;
+        private readonly PostLoginUserCreationService _userService;
         private readonly Hashids _hashids;
         public PostLoginAction(
             ICurrentUserService currentUserService,
             UserDataValidationService userDataValidationService,
-            UserCreationService userService,
+            PostLoginUserCreationService userService,
             Hashids hashids)
         {
             _currentUserService = currentUserService;

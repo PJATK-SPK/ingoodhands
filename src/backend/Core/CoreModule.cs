@@ -1,52 +1,26 @@
 ﻿using Autofac;
-using Core.Autofac;
-using Core.ConfigSetup;
-using Microsoft.AspNetCore.Http;
-using Core.WebApi.Auth;
-using HashidsNet;
+using Core.Setup;
 
 namespace Core
 {
-    /// <summary>
-    /// Injects: <br/>
-    /// - Entity Framework 
-    /// - AppConfig
-    /// </summary>
     public class CoreModule : Module
     {
-        private readonly bool _registerWebApiSerivces;
+        private readonly SetupModule _setupModule;
 
         public CoreModule(bool registerWebApiSerivces)
         {
-            _registerWebApiSerivces = registerWebApiSerivces;
+            _setupModule = new SetupModule(registerWebApiSerivces);
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            InjectAppConfiguration(builder);
-            AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().ConnectionStrings.Database);
-            InjectHashids(builder, ConfigurationReader.Get().HashidsSalt);
-
-            if (_registerWebApiSerivces)
-            {
-                RegisterWebApiServices(builder);
-            }
+            _setupModule.RegisterAll(builder);
+            RegisterServices(builder);
         }
 
-        private static void InjectHashids(ContainerBuilder builder, string salt)
+        private static void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new Hashids(salt, 5)).SingleInstance();
-        }
-
-        private static void InjectAppConfiguration(ContainerBuilder builder)
-        {
-            builder.RegisterInstance(ConfigurationReader.Get()).SingleInstance();
-        }
-
-        private static void RegisterWebApiServices(ContainerBuilder builder)
-        {
-            builder.RegisterType<HttpContextAccessor>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterAsScoped<WebApiCurrentUserService>();
+            // Will be used in future
         }
     }
 }

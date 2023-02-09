@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Core;
+using Donate;
 
 namespace Worker
 {
@@ -8,6 +9,7 @@ namespace Worker
         public static readonly IEnumerable<Module> List = new List<Module>()
         {
             new CoreModule(false),
+            new DonateModule(),
         };
     }
 }
