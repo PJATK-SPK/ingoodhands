@@ -22,8 +22,7 @@ WORKDIR /app
 ENTRYPOINT ["dotnet", "test"]
 
 FROM  base AS final
-ARG APP
-ENV APP=$APP
+
 WORKDIR /app
 
 COPY --from=publish /app/publish .

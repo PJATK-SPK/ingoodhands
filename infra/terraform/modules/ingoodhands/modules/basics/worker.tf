@@ -11,6 +11,7 @@ resource "google_cloud_run_service" "worker" {
           name  = "INSTANCE_CONNECTION_NAME"
           value = google_sql_database_instance.backend.connection_name
         }
+        args = "APP"
         ports {
             container_port = 5000
           }
