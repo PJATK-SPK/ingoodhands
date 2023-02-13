@@ -7,3 +7,14 @@ services:
     build:
       context: .
       dockerfile: src/backend/Dockerfile
+      args:
+        APP: WebApi
+
+  worker:
+    image: worker
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+      args:
+        APP: Worker
