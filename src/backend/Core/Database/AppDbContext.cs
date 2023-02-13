@@ -34,6 +34,7 @@ namespace Core.Database
             CountrySeeder.Execute(modelBuilder);
             AddressSeeder.Execute(modelBuilder);
             WarehouseSeeder.Execute(modelBuilder);
+            ProductSeeder.Execute(modelBuilder);
         }
     }
 }
