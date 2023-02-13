@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Donate;
 
@@ -18,17 +19,30 @@ public class MyDonationsController : ControllerBase
         public bool IsDelivered { get; set; }
     }
     [HttpGet]
-    public async Task<ActionResult> GetList()
-        => await Task.FromResult(Ok(new List<DeleteMeMyDonationsResponseItem>
+    public async Task<ActionResult> GetList(int page, int pageSize)
+    {
+        var appDbContextProducts = new List<DeleteMeMyDonationsResponseItem>
         {
             new DeleteMeMyDonationsResponseItem
             {
                 Name = "DNT000123",
                 ProductsCount = 10,
-                CreationDate = DateTime.Now,
+                CreationDate = DateTime.Now.AddDays(-10),
                 IsDelivered = false,
+            },
+            new DeleteMeMyDonationsResponseItem
+            {
+                Name = "DNT000234",
+                ProductsCount = 3,
+                CreationDate = DateTime.Now.AddDays(-1),
+                IsDelivered = true,
             }
-        }));
+        }.AsQueryable();
+
+        var result = appDbContextProducts.PageResult(page, pageSize);
+
+        return await Task.FromResult(Ok(result));
+    }
 
     [HttpGet("not-delivered-count")]
     public async Task<ActionResult> GetCountOfNotDelivered()
