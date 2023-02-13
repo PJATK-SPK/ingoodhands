@@ -6,7 +6,10 @@
 
                 <ng-container *ngIf="pagedResult">
 
-                    <!-- table here -->
+                    <div class="p-3">
+                        <!-- table here -->
+                        {{pagedResult.queryable | json}}}
+                    </div>
 
                     <p-paginator [rows]="pageSize" [totalRecords]="pagedResult.rowCount"
                         (onPageChange)="paginate($event)"></p-paginator>
