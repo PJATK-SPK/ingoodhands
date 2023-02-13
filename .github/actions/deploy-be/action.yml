@@ -34,6 +34,7 @@ runs:
       run: |
         dotnet tool install --global dotnet-ef
         dotnet ef database update --project Core.csproj --startup-project ../WebApi/WebApi.csproj
+      shell: bash
       working-directory: src/backend/Core
       env:
         DB_HOST: ${{ inputs.DB_HOST }}
