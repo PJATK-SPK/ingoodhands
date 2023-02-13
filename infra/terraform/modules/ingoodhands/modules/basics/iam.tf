@@ -37,3 +37,14 @@ resource "google_service_account_iam_member" "cicd-cloud-run-act-as" {
   role               = "roles/iam.serviceAccountUser"
   member             = format("serviceAccount:%s", google_service_account.cicd.email)
 }
+
+resource "google_service_account" "worker" {
+  account_id   = "worker"
+  display_name = "Worker Cloud Run Service Account"
+}
+
+resource "google_project_iam_member" "worker" {
+  project = var.google-project
+  member  = format("serviceAccount:%s", google_service_account.worker.email)
+  role    = "roles/run.invoker"
+}

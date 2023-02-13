@@ -1,0 +1,62 @@
+name: "Deploy backend"
+description: "Deploy backend Docker image to Cloud Run"
+inputs:
+  CICD_SA_GCP_JSON_KEY:
+    description: 'Json key to GCP SA'
+    required: true
+  APP:
+    description: 'Application to deploy'
+    required: true
+  DB_HOST:
+    description: 'Database host'
+    required: true
+  DB_USER:
+    description: 'Database user'
+    required: true
+  DB_PASSWORD:
+    description: 'Database password'
+    required: true
+  DB_DATABASE:
+    description: 'Database name'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: 'google-github-actions/auth@v0.8.2'
+      with:
+        credentials_json: '${{ inputs.CICD_SA_GCP_JSON_KEY }}'
+
+    - name: Run database migration
+      if: ${{ inputs.app }} == 'backend'
+      run: |
+        dotnet tool install --global dotnet-ef
+        dotnet ef database update --project Core.csproj --startup-project ../WebApi/WebApi.csproj
+      working-directory: src/backend/Core
+      env:
+        DB_HOST: ${{ inputs.DB_HOST }}
+        DB_USER: ${{ inputs.DB_USER }}
+        DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
+        DB_DATABASE: ${{ inputs.DB_DATABASE }}
+        DB_PORT: 5432
+
+    - name: Deploy to Cloud Run
+      uses: 'google-github-actions/deploy-cloudrun@v1'
+      with:
+        region: 'europe-west1'
+        service: '${{ inputs.app }}'
+        image: 'europe-docker.pkg.dev/indagoodhandsdev/default-docker/${{ inputs.app }}'
+        env_vars: |
+          DB_HOST=${{ inputs.DB_HOST }}
+          DB_USER=${{ inputs.DB_USER }}
+          DB_PASSWORD=${{ inputs.DB_PASSWORD }}
+          DB_DATABASE=${{ inputs.DB_DATABASE }}
+          DB_PORT=5432
+
+    - name: sonar
+      uses: ./.github/actions/sonar
+      with:
+        SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
+        branch: main
