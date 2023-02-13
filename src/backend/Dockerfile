@@ -32,4 +32,4 @@ ENV ASPNETCORE_URLS=http://+:5000
 
 EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "$APP.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet", "$APP.dll"]
