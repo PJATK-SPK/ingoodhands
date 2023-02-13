@@ -37,7 +37,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 3,
+                Id = 4,
                 Name = "Groats",
                 Unit = UnitType.Kg,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -46,7 +46,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 4,
+                Id = 5,
                 Name = "Walnuts",
                 Unit = UnitType.Kg,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -55,7 +55,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 5,
+                Id = 6,
                 Name = "Delicacies",
                 Unit = UnitType.Kg,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -64,7 +64,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 6,
+                Id = 7,
                 Name = "Flour",
                 Unit = UnitType.Kg,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -73,7 +73,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 7,
+                Id = 8,
                 Name = "Water",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -82,7 +82,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 8,
+                Id = 9,
                 Name = "Milk",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -91,7 +91,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 9,
+                Id = 10,
                 Name = "Bubble bath",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -100,7 +100,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 10,
+                Id = 11,
                 Name = "Juice",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -109,7 +109,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 11,
+                Id = 12,
                 Name = "Energy drink",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -118,7 +118,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 12,
+                Id = 13,
                 Name = "Soup",
                 Unit = UnitType.L,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -127,7 +127,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 13,
+                Id = 14,
                 Name = "Canned food",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -136,7 +136,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 14,
+                Id = 15,
                 Name = "Toothbrushes",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -145,7 +145,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 15,
+                Id = 16,
                 Name = "Diapers",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -154,7 +154,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 16,
+                Id = 17,
                 Name = "Disinfectants",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -163,7 +163,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 17,
+                Id = 18,
                 Name = "Toilet paper",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -172,7 +172,7 @@ namespace Core.Database.Seeders
             });
             builder.Entity<Product>().HasData(new Product()
             {
-                Id = 18,
+                Id = 19,
                 Name = "Medicines",
                 Unit = UnitType.Pcs,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
