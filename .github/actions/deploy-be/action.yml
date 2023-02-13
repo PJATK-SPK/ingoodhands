@@ -30,12 +30,13 @@ runs:
         credentials_json: '${{ inputs.CICD_SA_GCP_JSON_KEY }}'
 
     - name: Run database migration
-      if: ${{ inputs.app }} == 'backend'
+      if: ${{ inputs.APP }} == 'backend'
       run: |
         dotnet tool install --global dotnet-ef
         dotnet ef database update --project Core.csproj --startup-project ../WebApi/WebApi.csproj
       shell: bash
       working-directory: src/backend/Core
+      shell: bash
       env:
         DB_HOST: ${{ inputs.DB_HOST }}
         DB_USER: ${{ inputs.DB_USER }}
