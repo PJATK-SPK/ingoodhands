@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
-ARG APP
-ENV APP=$APP
+
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS publish
-
+ARG APP
+ENV APP=$APP
 WORKDIR /app
 
 COPY ["src/backend/.", "."]
@@ -22,7 +22,8 @@ WORKDIR /app
 ENTRYPOINT ["dotnet", "test"]
 
 FROM  base AS final
-
+ARG APP
+ENV APP=$APP
 WORKDIR /app
 
 COPY --from=publish /app/publish .

@@ -20,4 +20,6 @@ runs:
     - name: Build, tag and push Docker image
       shell: bash
       run: |
-        ./infra/scripts/push_images.sh ${{ inputs.APP }} 
+        ./infra/scripts/push_images.sh ${{ inputs.APP }}
+      with:
+        credentials_json: '${{ inputs.CICD_SA_GCP_JSON_KEY }}'
