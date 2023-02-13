@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: src/backend/Dockerfile
       args:
-        app: WebApi
+        APP: WebApi
 
   worker:
     image: worker
@@ -17,4 +17,4 @@ services:
       context: .
       dockerfile: src/backend/Dockerfile
       args:
-        app: Worker
+        APP: Worker
