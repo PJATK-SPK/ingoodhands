@@ -1,49 +1,40 @@
-<div class="p-3 flex justify-content-between flex-wrap">
-
-    <div class="flex lg:flex-none align-items-center justify-content-center font-bold">
-        Start <br />
-        Is logged in: {{auth.isLoggedIn}}
-    </div>
-
-    <div class="flex lg:flex-none align-items-center justify-content-center">
-        <button pButton class="p-button-sm" *ngIf="!auth.isLoggedIn" (click)="login()" type="button"
-            label="Login"></button>
-        <button pButton class="p-button-sm" *ngIf="auth.isLoggedIn" (click)="logout()" type="button"
-            label="Logout"></button>
-    </div>
-
-</div>
-
 <div class="grid">
-    <div class="col-12 lg:col-3">
-        <div class="p-3">
-            <b>No auth check (weather) -></b>
-
-            <p-card>
-                {{noAuth | async | json}}
-            </p-card>
-        </div>
-    </div>
-
-    <div class="col-12 lg:col-9">
-        <div class="p-3">
-            <b>Auth check -></b>
-
-            <p-card>
-                <div class="max-w-20rem" style="word-wrap: break-word">
-                    {{userinfo | async | json}}
-                </div>
-            </p-card>
-        </div>
-    </div>
-
     <div class="col-12 lg:col-12">
         <div class="p-3">
-            <b>Db check -></b>
-
             <p-card>
-                <div class="max-w-20rem" style="word-wrap: break-word">
-                    {{dbCheck | async | json}}
+                <h1 class="text-2xl font-bold">Welcome to ingoodhands</h1>
+
+                <div class="p-1"></div>
+
+                <p>
+                    Welcome to ingoodhands, your go-to platform for delivering aid to those in need.
+                </p>
+
+                <p>
+                    As a user, you will find the menu with all the application's pages located on the left side of the
+                    screen. Our mission, as creators of this platform, is to spread kindness and charity by connecting
+                    donors with those who require essential supplies such as food, drink, and defensive equipment. The
+                    current war in Ukraine has made it imperative for Western countries to come together and offer their
+                    support.
+                </p>
+
+                <p>
+                    Whether you're a Donor, who wants to provide gifts through the web application, a Recipient who
+                    needs to place an order for specific items, a Warehouse Manager who takes care of storing and
+                    preparing the deliveries, or a Delivery Person who transports the packages, your role in this
+                    process is crucial. We believe that by working together, we can make a positive impact and bring
+                    hope to those in need.
+                </p>
+
+                <p>
+                    Join us in our mission to bring a brighter future to Ukraine. Thank you for being a part of
+                    ingoodhands.
+                </p>
+
+                <div class="p-3"></div>
+
+                <div class="flex align-items-center justify-content-center">
+                    <img src="assets/img/home.webp" alt="ingoodhands" width="66%" height="100%">
                 </div>
             </p-card>
         </div>
