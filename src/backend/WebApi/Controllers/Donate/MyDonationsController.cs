@@ -13,6 +13,7 @@ public class MyDonationsController : ControllerBase
 {
     public class DeleteMeMyDonationsResponseItem
     {
+        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!; // DNT...
         public int ProductsCount { get; set; } = default!;
         public DateTime CreationDate { get; set; } = default!;
@@ -25,6 +26,7 @@ public class MyDonationsController : ControllerBase
         {
             new DeleteMeMyDonationsResponseItem
             {
+                Id="vb1232fe",
                 Name = "DNT000123",
                 ProductsCount = 10,
                 CreationDate = DateTime.Now.AddDays(-10),
@@ -32,6 +34,7 @@ public class MyDonationsController : ControllerBase
             },
             new DeleteMeMyDonationsResponseItem
             {
+                Id="hn78232fe",
                 Name = "DNT000234",
                 ProductsCount = 3,
                 CreationDate = DateTime.Now.AddDays(-1),

@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 
 export interface MyDonationsRawItem {
+    id: string;
     name: string;
     productsCount: number;
     creationDate: string;
@@ -8,6 +9,7 @@ export interface MyDonationsRawItem {
 }
 
 export interface MyDonationsItem {
+    id: string;
     name: string;
     productsCount: number;
     creationDate: DateTime;
