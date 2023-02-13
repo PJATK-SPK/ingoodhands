@@ -34,3 +34,20 @@ resource "google_cloud_run_service" "worker" {
   }
   autogenerate_revision_name = true
 }
+
+resource "google_cloud_scheduler_job" "worker" {
+  name             = "worker"
+  description      = "job to trigger worker"
+  schedule         = "0 */1 * * *"
+  time_zone        = "Europe/Warsaw"
+  attempt_deadline = "320s"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://worker-ka7w7ys4tq-ew.a.run.app/donate-jobs/set-expired-donations"
+
+    oidc_token {
+      service_account_email = google_service_account.worker.email
+    }
+  }
+}
