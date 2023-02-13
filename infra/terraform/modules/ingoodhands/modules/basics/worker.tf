@@ -38,7 +38,7 @@ resource "google_cloud_run_service" "worker" {
 resource "google_cloud_scheduler_job" "worker" {
   name             = "worker"
   description      = "job to trigger worker"
-  schedule         = "0 */1 * * *"
+  schedule         = "0 1 * * *"
   time_zone        = "Europe/Warsaw"
   attempt_deadline = "320s"
 
