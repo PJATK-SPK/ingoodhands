@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
-
+ARG APP
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS publish
@@ -12,7 +12,7 @@ RUN dotnet restore
 
 COPY . .
 
-RUN dotnet publish "/app/WebApi/WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "/app/$APP/$APP.csproj" -c Release -o /app/publish
 
 FROM publish AS test
 
@@ -30,4 +30,4 @@ ENV ASPNETCORE_URLS=http://+:5000
 
 EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "$APP.dll"]

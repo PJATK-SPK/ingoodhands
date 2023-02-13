@@ -70,6 +70,20 @@ jobs:
       - uses: ./.github/actions/build-be
         with:
           CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
+          app: "WebApi"
+
+  build-worker:
+    name: "Build worker"
+    if: ${{ needs.check-changed-paths.outputs.backend == 'true'  || needs.check-changed-paths.outputs.workflow == 'true' }}
+    runs-on: ubuntu-latest
+    needs:
+      - check-changed-paths
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build-be
+        with:
+          CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
+          app: "Worker"
 
   test-be:
     name: "Backend tests"
