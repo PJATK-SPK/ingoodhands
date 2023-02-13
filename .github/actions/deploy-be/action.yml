@@ -56,8 +56,3 @@ runs:
           DB_DATABASE=${{ inputs.DB_DATABASE }}
           DB_PORT=5432
 
-    - name: sonar
-      uses: ./.github/actions/sonar
-      with:
-        SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
-        branch: main
