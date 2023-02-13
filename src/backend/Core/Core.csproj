@@ -12,18 +12,13 @@
 
 	<ItemGroup>
 		<SonarQubeSetting Include="sonar.coverage.exclusions">
-			<Value>CoreModule.cs</Value>
-			<Value>Configuration/**</Value>
-			<Value>Migrations/**</Value>
-			<Value>Database/**</Value>
-			<Value>Setup/**</Value>
+			<Value>CoreModule.cs,Configuration/**,Migrations/**,Database/**,Setup/**</Value>
 		</SonarQubeSetting>
 	</ItemGroup>
 
 	<ItemGroup>
 		<SonarQubeSetting Include="sonar.exclusions">
-			<Value>Configuration/**</Value>
-			<Value>Migrations/**</Value>
+			<Value>Configuration/**,Migrations/**</Value>
 		</SonarQubeSetting>
 	</ItemGroup>
 
