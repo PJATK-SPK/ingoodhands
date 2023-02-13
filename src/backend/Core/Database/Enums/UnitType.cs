@@ -1,6 +1,6 @@
 ﻿namespace Core.Database.Enums
 {
-    public enum Unit
+    public enum UnitType
     {
         Kg,
         L,

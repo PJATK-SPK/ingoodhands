@@ -3005,6 +3005,53 @@ namespace Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Core.Database.Models.Core.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)")
+                        .HasColumnName("unit");
+
+                    b.Property<long?>("UpdateUserId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
+                        .HasColumnName("update_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_products");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_products_name");
+
+                    b.HasIndex("UpdateUserId")
+                        .HasDatabaseName("ix_products_update_user_id");
+
+                    b.ToTable("products", "core");
+                });
+
             modelBuilder.Entity("Core.Database.Models.Core.Warehouse", b =>
                 {
                     b.Property<long>("Id")
@@ -3224,6 +3271,18 @@ namespace Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_countries_users_update_user_id");
+
+                    b.Navigation("UpdateUser");
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Core.Product", b =>
+                {
+                    b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_users_update_user_id");
 
                     b.Navigation("UpdateUser");
                 });

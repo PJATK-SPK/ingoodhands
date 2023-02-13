@@ -8,8 +8,8 @@ namespace Core.Database.Models.Core
 {
     public class Product : DbEntity, IEntityTypeConfiguration<Product>
     {
-        public string Name { get; set; }
-        public Unit Unit { get; set; }
+        public string Name { get; set; } = default!;
+        public UnitType Unit { get; set; }
 
         public void Configure(EntityTypeBuilder<Product> builder)
            => new ProductConfig<Product>().Configure(builder);
