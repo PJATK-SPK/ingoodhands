@@ -11,6 +11,10 @@ resource "google_cloud_run_service" "backend" {
           name  = "INSTANCE_CONNECTION_NAME"
           value = google_sql_database_instance.backend.connection_name
         }
+        env {
+          name  = "APP"
+          value = "WebApi"
+        }
         ports {
             container_port = 5000
           }

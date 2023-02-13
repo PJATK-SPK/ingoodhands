@@ -11,7 +11,10 @@ resource "google_cloud_run_service" "worker" {
           name  = "INSTANCE_CONNECTION_NAME"
           value = google_sql_database_instance.backend.connection_name
         }
-        args = "APP"
+        env {
+          name  = "APP"
+          value = "Worker"
+        }
         ports {
             container_port = 5000
           }
@@ -22,7 +25,6 @@ resource "google_cloud_run_service" "worker" {
   metadata {
     annotations = {
       "client.knative.dev/user-image"         = "europe-docker.pkg.dev/indagoodhandsdev/default-docker/worker"
-      "run.googleapis.com/cloudsql-instances" = google_sql_database_instance.backend.connection_name
       "run.googleapis.com/ingress"            = "all"
     }
   }
@@ -31,13 +33,4 @@ resource "google_cloud_run_service" "worker" {
     latest_revision = true
   }
   autogenerate_revision_name = true
-}
-
-
-resource "google_cloud_run_service_iam_policy" "worker-noauth" {
-  location    = google_cloud_run_service.worker.location
-  project     = google_cloud_run_service.worker.project
-  service     = google_cloud_run_service.worker.name
-
-  policy_data = data.google_iam_policy.backend-noauth.policy_data
 }
