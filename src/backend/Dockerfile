@@ -13,7 +13,7 @@ RUN dotnet restore
 
 COPY . .
 
-RUN dotnet publish "/app/${APP}/${APP}.csproj" -c Release -o /app/publish
+RUN dotnet publish "/app/$APP/$APP.csproj" -c Release -o /app/publish
 
 FROM publish AS test
 
@@ -32,4 +32,4 @@ ENV ASPNETCORE_URLS=http://+:5000
 
 EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "${APP}.dll"]
+ENTRYPOINT ["dotnet", "$APP.dll"]
