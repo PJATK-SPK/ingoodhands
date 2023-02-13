@@ -4,7 +4,7 @@ inputs:
   CICD_SA_GCP_JSON_KEY:
     description: 'Json key to GCP SA'
     required: true
-  app:
+  APP:
     description: 'Application to build'
     required: true
 runs:
@@ -20,4 +20,4 @@ runs:
     - name: Build, tag and push Docker image
       shell: bash
       run: |
-        ./infra/scripts/push_images.sh ${{ inputs.app }} 
+        ./infra/scripts/push_images.sh ${{ inputs.APP }} 

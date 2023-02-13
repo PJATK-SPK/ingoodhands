@@ -70,7 +70,7 @@ jobs:
       - uses: ./.github/actions/build-be
         with:
           CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
-          app: "backend"
+          APP: "backend"
 
   build-worker:
     name: "Build worker"
@@ -83,7 +83,7 @@ jobs:
       - uses: ./.github/actions/build-be
         with:
           CICD_SA_GCP_JSON_KEY: ${{ secrets.CICD_SA_GCP_JSON_KEY }}
-          app: "worker"
+          APP: "worker"
 
   test-be:
     name: "Backend tests"
