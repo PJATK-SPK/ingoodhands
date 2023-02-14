@@ -6,7 +6,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
 {
     public class SetExpiredDonationsJobFixture
     {
-        public Donation CreateDonation(string name = "DNT000001") => new()
+        public static Donation CreateDonation(string name = "DNT000001") => new()
         {
             CreationDate = DateTime.UtcNow.AddDays(-5),
             CreationUserId = UserSeeder.ServierUser.Id,

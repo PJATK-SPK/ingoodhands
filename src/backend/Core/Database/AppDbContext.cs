@@ -32,7 +32,7 @@ namespace Core.Database
 #endif
         }
 
-        private void ApplyConfigurations(ModelBuilder modelBuilder)
+        private static void ApplyConfigurations(ModelBuilder modelBuilder)
         {
             var assembly = AppDomain.CurrentDomain.GetAssemblies()
               .Where(c => c.GetName().Name!.Contains("Core"))
@@ -45,7 +45,7 @@ namespace Core.Database
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
         }
 
-        private void SeedInitalData(ModelBuilder modelBuilder)
+        private static void SeedInitalData(ModelBuilder modelBuilder)
         {
             UserSeeder.Execute(modelBuilder);
             RoleSeeder.Execute(modelBuilder);
