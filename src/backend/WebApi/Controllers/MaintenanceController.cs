@@ -22,7 +22,6 @@ namespace WebApi.Controllers
         [HttpGet]
         public ActionResult GetDocs()
         {
-            _context.Products.PageResult(1, 30);
             return new ContentResult
             {
                 Content = MaintenanceService.LoadHelloHtml(),
