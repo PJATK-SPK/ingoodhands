@@ -11,6 +11,7 @@ namespace Auth.Actions.AuthActions.PostLogin
         private readonly UserDataValidationService _userDataValidationService;
         private readonly PostLoginUserCreationService _userService;
         private readonly Hashids _hashids;
+
         public PostLoginAction(
             ICurrentUserService currentUserService,
             UserDataValidationService userDataValidationService,

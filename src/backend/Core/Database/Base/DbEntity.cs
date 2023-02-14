@@ -16,6 +16,16 @@ namespace Core.Database.Base
         public static void Configure(EntityTypeBuilder<DbEntity> builder)
             => new DbEntityConfig<DbEntity>().Configure(builder);
 
+        public void UpdateDbEntity(long? updateUserId = null)
+        {
+            if (updateUserId != null)
+            {
+                UpdateUserId = updateUserId;
+            }
+
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is DbEntity entity &&
