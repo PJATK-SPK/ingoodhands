@@ -4,7 +4,7 @@ using Core.Database.Seeders;
 
 namespace DonateTests.Jobs.SetExpiredDonations
 {
-    public class SetExpiredDonationsJobFixture
+    public static class SetExpiredDonationsJobFixture
     {
         public static Donation CreateDonation(string name = "DNT000001") => new()
         {

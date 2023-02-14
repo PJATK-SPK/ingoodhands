@@ -1,7 +1,5 @@
 ﻿using Core.Database.Enums;
-using Core.Database.Models.Auth;
 using Core.Database;
-using Core.Setup.Auth0;
 using Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
@@ -15,13 +13,6 @@ namespace DonateTests.Jobs.SetExpiredDonations
     [TestClass()]
     public class SetExpiredDonationsJobTests
     {
-        private readonly SetExpiredDonationsJobFixture _fixture;
-
-        public SetExpiredDonationsJobTests()
-        {
-            _fixture = new SetExpiredDonationsJobFixture();
-        }
-
         private readonly List<Module> _usedModules = new()
         {
             new CoreModule(WebApiUserProviderType.None),
@@ -36,11 +27,11 @@ namespace DonateTests.Jobs.SetExpiredDonations
             var job = toolkit.Resolve<SetExpiredDonationsJob>();
 
             // Arrange
-            var donation31DaysDelivered = _fixture.CreateDonation("DNT000001");
-            var donation5DaysDelivered = _fixture.CreateDonation("DNT000002");
-            var donation31DaysNotDelivered = _fixture.CreateDonation("DNT000003");
-            var donation5DaysNotDelivered = _fixture.CreateDonation("DNT000004");
-            var donation31DaysExpired = _fixture.CreateDonation("DNT000003");
+            var donation31DaysDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000001");
+            var donation5DaysDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000002");
+            var donation31DaysNotDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000003");
+            var donation5DaysNotDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000004");
+            var donation31DaysExpired = SetExpiredDonationsJobFixture.CreateDonation("DNT000003");
 
             donation31DaysDelivered.IsDelivered = true;
             donation5DaysDelivered.IsDelivered = true;
