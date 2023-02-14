@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Core.Setup;
+using Core.Setup.Enums;
 
 namespace Core
 {
@@ -7,9 +8,9 @@ namespace Core
     {
         private readonly SetupModule _setupModule;
 
-        public CoreModule(bool registerWebApiSerivces)
+        public CoreModule(WebApiUserProviderType userProviderType)
         {
-            _setupModule = new SetupModule(registerWebApiSerivces);
+            _setupModule = new SetupModule(userProviderType);
         }
 
         protected override void Load(ContainerBuilder builder)

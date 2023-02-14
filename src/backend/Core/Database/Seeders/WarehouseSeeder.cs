@@ -1,4 +1,5 @@
 ﻿using Core.Database.Enums;
+using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,89 +7,107 @@ namespace Core.Database.Seeders
 {
     public static class WarehouseSeeder
     {
+        public static readonly Warehouse Warehouse1PL = new()
+        {
+            Id = 1,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "PL001",
+            AddressId = AddressSeeder.Address1Poland.Id
+        };
+
+        public static readonly Warehouse Warehouse2PL = new()
+        {
+            Id = 2,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "PL002",
+            AddressId = AddressSeeder.Address2Poland.Id
+        };
+
+        public static readonly Warehouse Warehouse3PL = new()
+        {
+            Id = 3,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "PL003",
+            AddressId = AddressSeeder.Address3Poland.Id
+        };
+
+        public static readonly Warehouse Warehouse4DE = new()
+        {
+            Id = 4,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "DE001",
+            AddressId = AddressSeeder.Address4Germany.Id
+        };
+
+        public static readonly Warehouse Warehouse5DE = new()
+        {
+            Id = 5,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "DE002",
+            AddressId = AddressSeeder.Address5Germany.Id
+        };
+
+        public static readonly Warehouse Warehouse6HU = new()
+        {
+            Id = 6,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "HU001",
+            AddressId = AddressSeeder.Address6Hungary.Id
+        };
+
+        public static readonly Warehouse Warehouse7CZ = new()
+        {
+            Id = 7,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "CZ001",
+            AddressId = AddressSeeder.Address7Czech.Id
+        };
+
+        public static readonly Warehouse Warehouse8FR = new()
+        {
+            Id = 8,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "FR001",
+            AddressId = AddressSeeder.Address8France.Id
+        };
+
+        public static readonly Warehouse Warehouse9FR = new()
+        {
+            Id = 9,
+            Status = DbEntityStatus.Active,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServierUser.Id,
+            ShortName = "FR002",
+            AddressId = AddressSeeder.Address9France.Id
+        };
+
         public static void Execute(ModelBuilder builder)
         {
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 1,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "PL001",
-                AddressId = AddressSeeder.Address1Poland.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 2,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "PL002",
-                AddressId = AddressSeeder.Address2Poland.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 3,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "PL003",
-                AddressId = AddressSeeder.Address3Poland.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 4,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "DE001",
-                AddressId = AddressSeeder.Address4Germany.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 5,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "DE002",
-                AddressId = AddressSeeder.Address5Germany.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 6,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "HU001",
-                AddressId = AddressSeeder.Address6Hungary.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 7,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "CZ001",
-                AddressId = AddressSeeder.Address7Czech.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 8,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "FR001",
-                AddressId = AddressSeeder.Address8France.Id
-            });
-            builder.Entity<Warehouse>().HasData(new Warehouse()
-            {
-                Id = 9,
-                Status = DbEntityStatus.Active,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-                UpdateUserId = 1,
-                ShortName = "FR002",
-                AddressId = AddressSeeder.Address9France.Id
-            });
+            builder.Entity<Warehouse>().HasData(Warehouse1PL);
+            builder.Entity<Warehouse>().HasData(Warehouse2PL);
+            builder.Entity<Warehouse>().HasData(Warehouse3PL);
+            builder.Entity<Warehouse>().HasData(Warehouse4DE);
+            builder.Entity<Warehouse>().HasData(Warehouse5DE);
+            builder.Entity<Warehouse>().HasData(Warehouse6HU);
+            builder.Entity<Warehouse>().HasData(Warehouse7CZ);
+            builder.Entity<Warehouse>().HasData(Warehouse8FR);
+            builder.Entity<Warehouse>().HasData(Warehouse9FR);
         }
     }
 }

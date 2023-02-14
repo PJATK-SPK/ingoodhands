@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Donate.Jobs.SetExpiredDonations;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Worker.Controllers
@@ -8,10 +9,14 @@ namespace Worker.Controllers
     [Route("donate-jobs")]
     public class DonateJobs : ControllerBase
     {
-        [HttpPost("set-expired-donations")]
-        public async Task<ActionResult> SetExpiredDonations()
+        private readonly SetExpiredDonationsJob _setExpiredDonationsJob;
+
+        public DonateJobs(SetExpiredDonationsJob setExpiredDonationsJob)
         {
-            return await Task.FromResult(Ok());
+            _setExpiredDonationsJob = setExpiredDonationsJob;
         }
+
+        [HttpPost("set-expired-donations")]
+        public Task<ActionResult> SetExpiredDonations() => _setExpiredDonationsJob.Execute();
     }
 }

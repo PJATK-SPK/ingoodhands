@@ -19,19 +19,34 @@ namespace Core.Database
         public DbSet<Donation> Donations { get; set; } = default!;
         public DbSet<DonationProduct> DonationProducts { get; set; } = default!;
 
-        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ApplyConfigurations(modelBuilder);
+            SeedInitalData(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+#if DEBUG
+            optionsBuilder.EnableSensitiveDataLogging();
+#endif
+        }
+
+        private static void ApplyConfigurations(ModelBuilder modelBuilder)
+        {
             var assembly = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(c => c.GetName().Name!.Contains("Core"))
-                .Single(c => c.CustomAttributes
-                    .SelectMany(s => s.ConstructorArguments
-                        .Where(z => z.Value is string)
-                        .Select(z => (string)z.Value!)
-                    ).Contains("PJATK"));
+              .Where(c => c.GetName().Name!.Contains("Core"))
+              .Single(c => c.CustomAttributes
+                  .SelectMany(s => s.ConstructorArguments
+                      .Where(z => z.Value is string)
+                      .Select(z => (string)z.Value!)
+              ).Contains("PJATK"));
 
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+        }
 
+        private static void SeedInitalData(ModelBuilder modelBuilder)
+        {
             UserSeeder.Execute(modelBuilder);
             RoleSeeder.Execute(modelBuilder);
             CountrySeeder.Execute(modelBuilder);

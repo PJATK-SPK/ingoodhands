@@ -4,6 +4,8 @@ using HashidsNet;
 using Core.Setup.WebApi.Auth;
 using Core.Setup.Autofac;
 using Core.Setup.ConfigSetup;
+using Core.Setup.Enums;
+using Core.Setup.WebApi.Worker;
 
 namespace Core.Setup
 {
@@ -14,11 +16,11 @@ namespace Core.Setup
     /// </summary>
     public class SetupModule
     {
-        private readonly bool _registerWebApiServices;
+        private readonly WebApiUserProviderType _userProviderType;
 
-        public SetupModule(bool registerWebApiSerivces)
+        public SetupModule(WebApiUserProviderType userProviderType)
         {
-            _registerWebApiServices = registerWebApiSerivces;
+            _userProviderType = userProviderType;
         }
 
         public void RegisterAll(ContainerBuilder builder)
@@ -27,9 +29,13 @@ namespace Core.Setup
             AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().ConnectionStrings.Database);
             InjectHashids(builder, ConfigurationReader.Get().HashidsSalt);
 
-            if (_registerWebApiServices)
+            if (_userProviderType == WebApiUserProviderType.ProvideByLoggedAuth0User)
             {
-                RegisterWebApiServices(builder);
+                RegisterWebApiUserByAuth0Services(builder);
+            }
+            else if (_userProviderType == WebApiUserProviderType.ProvideServiceUser)
+            {
+                RegisterWebApiServiceUser(builder);
             }
         }
 
@@ -43,10 +49,15 @@ namespace Core.Setup
             builder.RegisterInstance(ConfigurationReader.Get()).SingleInstance();
         }
 
-        private static void RegisterWebApiServices(ContainerBuilder builder)
+        private static void RegisterWebApiUserByAuth0Services(ContainerBuilder builder)
         {
             builder.RegisterType<HttpContextAccessor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAsScoped<WebApiCurrentUserService>();
+        }
+
+        private static void RegisterWebApiServiceUser(ContainerBuilder builder)
+        {
+            builder.RegisterAsScoped<WorkerCurrentUserService>();
         }
     }
 }

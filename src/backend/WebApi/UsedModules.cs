@@ -1,6 +1,7 @@
 ﻿using Auth;
 using Autofac;
 using Core;
+using Core.Setup.Enums;
 using Donate;
 
 namespace WebApi
@@ -9,7 +10,7 @@ namespace WebApi
     {
         public static readonly IEnumerable<Module> List = new List<Module>()
         {
-            new CoreModule(true),
+            new CoreModule(WebApiUserProviderType.ProvideByLoggedAuth0User),
             new AuthModule(),
             new DonateModule(),
         };
