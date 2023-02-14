@@ -62,5 +62,20 @@ namespace DonateTests.Service.DonateNameBuilderTests
             var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.DonateNameBuilder(id));
             Assert.AreEqual(expectedErrorMessage, exception.Message);
         }
+
+        [TestMethod()]
+        public async Task DonateModuleTest_WithInvalidIdLowerThan1()
+        {
+            using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
+            var action = toolkit.Resolve<DonateNameBuilderService>();
+
+            // Arrange
+            long id = -1;
+            string expectedErrorMessage = "Donation id is out of range. Please, contact system administrator";
+
+            // Act and Assert
+            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.DonateNameBuilder(id));
+            Assert.AreEqual(expectedErrorMessage, exception.Message);
+        }
     }
 }
