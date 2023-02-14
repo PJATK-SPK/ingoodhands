@@ -1,5 +1,6 @@
 ﻿using Core.Database.Config.Models.Auth;
 using Core.Database.Enums;
+using Core.Database.Models.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +15,8 @@ namespace Core.Database.Models.Auth
         public string Email { get; set; } = default!;
         public List<Auth0User>? Auth0Users { get; set; }
         public List<UserRole>? Roles { get; set; }
-
+        public List<Donation>? Donations { get; set; }
+        
         public void Configure(EntityTypeBuilder<User> builder)
             => new UserConfig<User>().Configure(builder);
 

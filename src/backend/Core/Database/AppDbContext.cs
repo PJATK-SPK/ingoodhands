@@ -16,7 +16,10 @@ namespace Core.Database
         public DbSet<Address> Addresses { get; set; } = default!;
         public DbSet<Warehouse> Warehouses { get; set; } = default!;
         public DbSet<Product> Products { get; set; } = default!;
+        public DbSet<Donation> Donations { get; set; } = default!;
+        public DbSet<DonationProduct> DonationProducts { get; set; } = default!;
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var assembly = AppDomain.CurrentDomain.GetAssemblies()
