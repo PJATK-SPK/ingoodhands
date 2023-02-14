@@ -23,6 +23,7 @@ namespace Donate
         {
             builder.RegisterModule<SetExpiredDonationsModule>();
         }
+
         private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<DonateNameBuilderService>();
