@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Core.Services.StreetFullNameBuilder
 {
-    public static class StreetFullNameBuilderService
+    public class StreetFullNameBuilderService
     {
         public static string Build(Address address)
             => Build(address.Street, address.StreetNumber, address.Apartment);
