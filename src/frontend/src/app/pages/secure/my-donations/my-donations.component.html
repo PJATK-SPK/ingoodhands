@@ -1,0 +1,33 @@
+<div class="grid">
+    <div class="col-12 lg:col-12">
+        <div class="p-3">
+            <p-card>
+                <h1 class="text-2xl font-bold m-0">My donations</h1>
+
+                <ng-container *ngIf="pagedResult">
+
+                    <p-card class="p-2" *ngFor="let item of pagedResult.queryable">
+                        <div class="grid">
+                            <div class="col-12">
+                                <h2 class="text-xl font-bold m-0 text-primary" style="cursor:pointer"
+                                    [routerLink]="'/secure/my-donation/' + item.id">
+                                    {{item.name}}
+                                    <p-checkbox pTooltip="Is delivered?" [(ngModel)]="item.isDelivered"
+                                        [disabled]="true"></p-checkbox>
+                                </h2>
+
+                                <p>
+                                    {{item.creationDate.toLocaleString(DateTime.DATETIME_MED)}} -
+                                    <b> {{getProductsText(item.productsCount)}} </b>
+                                </p>
+                            </div>
+                        </div>
+                    </p-card>
+
+                    <p-paginator [rows]="pageSize" [totalRecords]="pagedResult.rowCount"
+                        (onPageChange)="paginate($event)"></p-paginator>
+                </ng-container>
+            </p-card>
+        </div>
+    </div>
+</div>
