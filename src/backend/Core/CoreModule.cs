@@ -1,7 +1,5 @@
 ﻿using Autofac;
-using Core.Services.StreetFullNameBuilder;
 using Core.Setup;
-using Core.Setup.Autofac;
 using Core.Setup.Enums;
 
 namespace Core
@@ -23,7 +21,7 @@ namespace Core
 
         private static void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterAsScoped<StreetFullNameBuilderService>();
+            // Will be used in future
         }
     }
 }
