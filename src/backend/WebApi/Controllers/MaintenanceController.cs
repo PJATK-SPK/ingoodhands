@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Core.Setup.WebApi;
+using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers
 {

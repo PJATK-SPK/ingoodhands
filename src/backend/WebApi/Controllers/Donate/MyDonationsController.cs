@@ -1,29 +1,55 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Donate;
 
 [EnableCors]
 [ApiController]
+[Authorize]
 [Route("my-donations")]
 public class MyDonationsController : ControllerBase
 {
-    public class DeleteMeMyDonationsResponse
+    public class DeleteMeMyDonationsResponseItem
     {
+        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!; // DNT...
         public int ProductsCount { get; set; } = default!;
         public DateTime CreationDate { get; set; } = default!;
         public bool IsDelivered { get; set; }
     }
     [HttpGet]
-    public async Task<ActionResult> GetList()
-        => await Task.FromResult(Ok(new DeleteMeMyDonationsResponse
+    public async Task<ActionResult> GetList(int page, int pageSize)
+    {
+        var appDbContextProducts = new List<DeleteMeMyDonationsResponseItem>
         {
-            Name = "DNT000123",
-            ProductsCount = 10,
-            CreationDate = DateTime.Now,
-            IsDelivered = false,
-        }));
+            new DeleteMeMyDonationsResponseItem
+            {
+                Id="vb1232fe",
+                Name = "DNT000123",
+                ProductsCount = 10,
+                CreationDate = DateTime.Now.AddDays(-10),
+                IsDelivered = false,
+            },
+            new DeleteMeMyDonationsResponseItem
+            {
+                Id="hn78232fe",
+                Name = "DNT000234",
+                ProductsCount = 3,
+                CreationDate = DateTime.Now.AddDays(-1),
+                IsDelivered = true,
+            }
+        }.AsQueryable();
+
+        var result = appDbContextProducts.PageResult(page, pageSize);
+
+        return await Task.FromResult(Ok(result));
+    }
+
+    [HttpGet("not-delivered-count")]
+    public async Task<ActionResult> GetCountOfNotDelivered()
+        => await Task.FromResult(Ok(new { Count = 3 }));
 
     public class DeleteMeMyDonationDetailsProductResponse
     {
@@ -47,6 +73,7 @@ public class MyDonationsController : ControllerBase
         public string Name { get; set; } = default!; // DNT...
         public DateTime CreationDate { get; set; } = default!;
         public bool IsDelivered { get; set; }
+        public bool IsExpired { get; set; }
         public DeleteMeMyDonationDetailsWarehouseResponse Warehouse { get; set; } = default!;
         public List<DeleteMeMyDonationDetailsProductResponse> Products { get; set; } = default!;
     }

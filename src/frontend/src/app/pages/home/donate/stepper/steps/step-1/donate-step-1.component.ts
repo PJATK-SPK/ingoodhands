@@ -40,7 +40,7 @@ export class DonateStep1Component implements OnInit {
   }
 
   public filterProduct(event: { originalEvent: PointerEvent, query: string }) {
-    const filtered = [];
+    const filtered: Product[] = [];
 
     const fa = this.service.form.get('items') as FormArray;
     const fgs = fa.controls.map(c => (c as FormGroup));
@@ -49,12 +49,11 @@ export class DonateStep1Component implements OnInit {
 
     const collectionToCheck = this.allProducts.filter(c => !names.includes(c.name));
 
-    for (let i = 0; i < collectionToCheck.length; i++) {
-      let item = collectionToCheck[i];
+    collectionToCheck.forEach(item => {
       if (item.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
         filtered.push(item);
       }
-    }
+    });
 
     this.filteredProducts = filtered;
   }
