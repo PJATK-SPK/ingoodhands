@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.Setup.Autofac;
 
 namespace Donate.Jobs.SetExpiredDonations
 {
@@ -6,7 +7,7 @@ namespace Donate.Jobs.SetExpiredDonations
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // Will be used in future
+            builder.RegisterAsScoped<SetExpiredDonationsJob>();
         }
     }
 }

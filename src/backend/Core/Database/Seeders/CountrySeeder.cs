@@ -6,7 +6,7 @@ namespace Core.Database.Seeders
 {
     public static class CountrySeeder
     {
-        private static readonly List<string> countryNames = new List<string>()
+        public static readonly List<string> CountryNames = new()
         {
             "Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda",
             "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
@@ -36,7 +36,7 @@ namespace Core.Database.Seeders
             "Viet Nam", "Virgin Islands, US", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"
         };
 
-        private static readonly List<string> countryNamesIso2 = new List<string>()
+        public static readonly List<string> CountryNamesIso2 = new()
         {
             "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ",
             "BM", "BT", "BO", "BA", "BW", "BV", "BR", "VG", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "HK", "MO",
@@ -51,7 +51,7 @@ namespace Core.Database.Seeders
             "VN", "VI", "WF", "EH", "YE", "ZM", "ZW"
         };
 
-        private static readonly List<string> countryNamesIso3 = new List<string>()
+        public static readonly List<string> CountryNamesIso3 = new()
         {
             "AFG", "ALA", "ALB", "DZA", "ASM", "AND", "AGO", "AIA", "ATA", "ATG", "ARG", "ARM", "ABW", "AUS", "AUT", "AZE", "BHS", "BHR", "BGD", "BRB", "BLR",
             "BEL", "BLZ", "BEN", "BMU", "BTN", "BOL", "BIH", "BWA", "BVT", "BRA", "VGB", "IOT", "BRN", "BGR", "BFA", "BDI", "KHM", "CMR", "CAN", "CPV", "CYM",
@@ -69,11 +69,11 @@ namespace Core.Database.Seeders
 
         public static void Execute(ModelBuilder builder)
         {
-            for (int i = 0; i < countryNames.Count; i++)
+            for (int i = 0; i < CountryNames.Count; i++)
             {
-                var countryName = countryNames[i];
-                var countryNameIso2 = countryNamesIso2[i];
-                var countryNameIso3 = countryNamesIso3[i];
+                var countryName = CountryNames[i];
+                var countryNameIso2 = CountryNamesIso2[i];
+                var countryNameIso3 = CountryNamesIso3[i];
 
                 builder.Entity<Country>().HasData(new Country
                 {
@@ -81,7 +81,7 @@ namespace Core.Database.Seeders
                     EnglishName = countryName,
                     Alpha2IsoCode = countryNameIso2,
                     Alpha3IsoCode = countryNameIso3,
-                    UpdateUserId = 1,
+                    UpdateUserId = UserSeeder.ServierUser.Id,
                     UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                     Status = DbEntityStatus.Active
                 });

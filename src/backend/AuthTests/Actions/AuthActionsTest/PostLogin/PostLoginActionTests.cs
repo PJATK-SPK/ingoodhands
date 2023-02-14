@@ -7,6 +7,7 @@ using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Core.Setup.Auth0;
+using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
@@ -18,7 +19,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
     {
         private readonly List<Module> _usedModules = new()
         {
-            new CoreModule(false),
+            new CoreModule(WebApiUserProviderType.None),
             new AuthModule(),
         };
 

@@ -10,6 +10,7 @@ using Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
+using Core.Setup.Enums;
 
 namespace AuthTests.Actions.UserSettingsTests.GetAuth0UsersByCurrentUser
 {
@@ -18,7 +19,7 @@ namespace AuthTests.Actions.UserSettingsTests.GetAuth0UsersByCurrentUser
     {
         private readonly List<Module> _usedModules = new()
         {
-            new CoreModule(false),
+            new CoreModule(WebApiUserProviderType.None),
             new AuthModule(),
         };
 

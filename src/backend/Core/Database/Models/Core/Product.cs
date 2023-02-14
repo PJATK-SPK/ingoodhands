@@ -10,7 +10,8 @@ namespace Core.Database.Models.Core
     {
         public string Name { get; set; } = default!;
         public UnitType Unit { get; set; }
-
+        public List<DonationProduct>? DonationProducts { get; set; }
+        
         public void Configure(EntityTypeBuilder<Product> builder)
            => new ProductConfig<Product>().Configure(builder);
 
