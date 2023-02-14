@@ -12,17 +12,17 @@ namespace Donate.Services.DonateNameBuilder
             _logger = logger;
         }
 
-        public async Task<string> DonateNameBuilder(long id)
+        public string Build(long id)
         {
             if (id >= 1000000 || id < 1)
             {
-                _logger.LogError("Id in DonateNameBuilder didn't pass valdiation");
+                _logger.LogError("Id in Build in DonateNameBuilderService didn't pass valdiation");
                 throw new HttpError500Exception("Donation id is out of range");
             }
 
             var donateName = "DNT" + id.ToString("D6");
 
-            return await Task.FromResult(donateName);
+            return donateName;
         }
     }
 }
