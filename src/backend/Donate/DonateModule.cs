@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Core.Setup.Autofac;
 using Donate.Jobs.SetExpiredDonations;
+using Donate.Services.DonateNameBuilder;
 
 namespace Donate
 {
@@ -9,6 +11,7 @@ namespace Donate
         {
             RegisterActions(builder);
             RegisterJobs(builder);
+            RegisterServices(builder);
         }
 
         private static void RegisterActions(ContainerBuilder builder)
@@ -19,6 +22,11 @@ namespace Donate
         private static void RegisterJobs(ContainerBuilder builder)
         {
             builder.RegisterModule<SetExpiredDonationsModule>();
+        }
+
+        private static void RegisterServices(ContainerBuilder builder)
+        {
+            builder.RegisterAsScoped<DonateNameBuilderService>();
         }
     }
 }
