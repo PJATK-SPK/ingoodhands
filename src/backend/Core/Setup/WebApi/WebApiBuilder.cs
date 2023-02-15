@@ -13,6 +13,8 @@ using Core.Setup.WebApi.Auth;
 using Core.Setup.Autofac;
 using Core.Setup.ConfigSetup.App;
 using Core.Setup.ConfigSetup;
+using FluentValidation;
+using System.Globalization;
 
 namespace Core.Setup.WebApi
 {
@@ -30,6 +32,8 @@ namespace Core.Setup.WebApi
 
             hostBuilder.UseSerilog((context, config) => config.ReadFrom.Configuration(serilogConfig));
             hostBuilder.SetupAutofac(usedModules);
+
+            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
 
             return hostBuilder;
         }
@@ -76,6 +80,7 @@ namespace Core.Setup.WebApi
             app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.ConfigureExceptionHandler();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             return config;
