@@ -59,7 +59,7 @@ namespace DonateTests.Service.DonateNameBuilderTests
             string expectedErrorMessage = "Donation id is out of range. Please, contact system administrator";
 
             // Act and Assert
-            var exception = Assert.ThrowsException<HttpError500Exception>(() => action.Build(id));
+            var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
             Assert.AreEqual(expectedErrorMessage, exception.Message);
         }
 
@@ -74,7 +74,7 @@ namespace DonateTests.Service.DonateNameBuilderTests
             string expectedErrorMessage = "Donation id is out of range. Please, contact system administrator";
 
             // Act and Assert
-            var exception = Assert.ThrowsException<HttpError500Exception>(() => action.Build(id));
+            var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
             Assert.AreEqual(expectedErrorMessage, exception.Message);
         }
     }

@@ -1,6 +1,9 @@
 ﻿using Auth.Services;
+using Core.Exceptions;
 using Core.Setup.Auth0;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser
 {
@@ -8,23 +11,23 @@ namespace Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly GetAuth0UsersByCurrentUserService _getAuth0UsersByCurrentUserService;
-        private readonly UserDataValidationService _userDataValidationService;
+        private readonly CurrentUserInfoValidator _validator;
 
         public GetAuth0UsersByCurrentUserAction(
             ICurrentUserService currentUserService,
             GetAuth0UsersByCurrentUserService getAuth0UsersByCurrentUserService,
-            UserDataValidationService userDataValidationService
+            CurrentUserInfoValidator validator
             )
         {
             _currentUserService = currentUserService;
             _getAuth0UsersByCurrentUserService = getAuth0UsersByCurrentUserService;
-            _userDataValidationService = userDataValidationService;
+            _validator = validator;
         }
 
         public async Task<OkObjectResult> Execute()
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
-            _userDataValidationService.Check(auth0UserInfo);
+            _validator.ValidateAndThrow(auth0UserInfo);
 
             var currentUserAuth0UsersList = await _getAuth0UsersByCurrentUserService.GetAllAuth0UsersFromUser(auth0UserInfo);
 

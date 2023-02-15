@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 using Core.Setup.Enums;
+using FluentValidation;
 
 namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
 {
@@ -141,10 +142,11 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
             var testPayload = new PatchUserDetailsPayload { };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(testingUser.Id)));
+            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(testingUser.Id)));
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
+            Assert.IsInstanceOfType(exception, typeof(ValidationException));
+            Assert.IsNotNull(exception.Message);
         }
 
         [TestMethod()]
@@ -162,10 +164,11 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
             };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError400Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
+            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(HttpError400Exception));
+            Assert.IsInstanceOfType(exception, typeof(ValidationException));
+            Assert.IsNotNull(exception.Message);
         }
 
         [TestMethod()]
@@ -183,10 +186,10 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
             };
 
             //Act
-            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
+            var exception = await Assert.ThrowsExceptionAsync<ApplicationErrorException>(() => action.Execute(testPayload, toolkit.Hashids.EncodeLong(5)));
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
+            Assert.IsInstanceOfType(exception, typeof(ApplicationErrorException));
             Assert.AreEqual("Sorry we couldn't find your user in database. Please, contact system administrator", exception.Message);
         }
     }

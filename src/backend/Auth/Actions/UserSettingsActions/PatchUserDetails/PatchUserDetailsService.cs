@@ -28,7 +28,7 @@ namespace Auth.Actions.UserSettingsActions.PatchUserDetails
             if (userFromDatabase == null)
             {
                 _logger.LogError("User with id {id} was not found in users table!", id);
-                throw new HttpError500Exception("Sorry we couldn't find your user in database");
+                throw new ApplicationErrorException("Sorry we couldn't find your user in database");
             }
 
             userFromDatabase.FirstName = userSettingsPayload.FirstName;

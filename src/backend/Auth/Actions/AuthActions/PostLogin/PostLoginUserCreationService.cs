@@ -29,7 +29,7 @@ namespace Auth.Actions.AuthActions.PostLogin
             if (serviceUser == null)
             {
                 _logger.LogError("Service user was not found in database!");
-                throw new HttpError500Exception("Sorry there seems to be a problem with our service. Please contact server administrator.");
+                throw new ApplicationErrorException("Sorry there seems to be a problem with our service. Please contact server administrator.");
             }
 
             if (user == null && auth0UserFromDatabase == null)

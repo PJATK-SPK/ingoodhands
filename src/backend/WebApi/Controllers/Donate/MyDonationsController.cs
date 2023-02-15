@@ -103,4 +103,8 @@ public class MyDonationsController : ControllerBase
                  }
             }
         }));
+
+    [HttpGet("score")]
+    public async Task<ActionResult> GetScore()
+        => await Task.FromResult(Ok(new { Score = 100 }));
 }
