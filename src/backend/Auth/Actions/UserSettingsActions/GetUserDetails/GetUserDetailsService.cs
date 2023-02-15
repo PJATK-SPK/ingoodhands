@@ -31,7 +31,7 @@ namespace Auth.Actions.UserSettingsActions.GetUserDetails
             {
 
                 _logger.LogError("User with email {email} was not found in table Auth0Users", auth0UserInfo.Email);
-                throw new HttpError500Exception("Sorry we couldn't find your user in database");
+                throw new ApplicationErrorException("Sorry we couldn't find your user in database");
             }
 
             return userFromDatabase!;

@@ -1,5 +1,7 @@
 ﻿using Auth.Services;
+using Core.Exceptions;
 using Core.Setup.Auth0;
+using FluentValidation;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +10,18 @@ namespace Auth.Actions.AuthActions.PostLogin
     public class PostLoginAction
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly UserDataValidationService _userDataValidationService;
+        private readonly CurrentUserInfoValidator _validator;
         private readonly PostLoginUserCreationService _userService;
         private readonly Hashids _hashids;
 
         public PostLoginAction(
             ICurrentUserService currentUserService,
-            UserDataValidationService userDataValidationService,
+            CurrentUserInfoValidator validator,
             PostLoginUserCreationService userService,
             Hashids hashids)
         {
             _currentUserService = currentUserService;
-            _userDataValidationService = userDataValidationService;
+            _validator = validator;
             _userService = userService;
             _hashids = hashids;
         }
@@ -27,7 +29,7 @@ namespace Auth.Actions.AuthActions.PostLogin
         public async Task<ActionResult> Execute()
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
-            _userDataValidationService.Check(auth0UserInfo);
+            _validator.ValidateAndThrow(auth0UserInfo);
 
             var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 

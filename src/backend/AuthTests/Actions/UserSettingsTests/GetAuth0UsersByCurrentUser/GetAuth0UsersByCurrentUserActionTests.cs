@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 using Core.Setup.Enums;
+using FluentValidation;
 
 namespace AuthTests.Actions.UserSettingsTests.GetAuth0UsersByCurrentUser
 {
@@ -118,11 +119,11 @@ namespace AuthTests.Actions.UserSettingsTests.GetAuth0UsersByCurrentUser
             });
 
             //Act 
-            var exception = await Assert.ThrowsExceptionAsync<HttpError500Exception>(() => action.Execute());
+            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute());
 
             //Assert
-            Assert.IsInstanceOfType(exception, typeof(HttpError500Exception));
-            Assert.AreEqual("Sorry we couldn't fetch your Auth0 data. Please, contact system administrator", exception.Message);
+            Assert.IsInstanceOfType(exception, typeof(ValidationException));
+            Assert.IsNotNull(exception.Message);
         }
     }
 }

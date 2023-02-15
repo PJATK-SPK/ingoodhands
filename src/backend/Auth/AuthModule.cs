@@ -26,7 +26,7 @@ namespace Auth
 
         private static void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterAsScoped<UserDataValidationService>();
+            builder.RegisterAsScoped<CurrentUserInfoValidator>();
         }
     }
 }

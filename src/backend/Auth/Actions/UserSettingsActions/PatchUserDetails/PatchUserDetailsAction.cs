@@ -1,5 +1,6 @@
 ﻿using Auth.Models;
 using Core.Exceptions;
+using FluentValidation;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,8 +25,7 @@ namespace Auth.Actions.UserSettingsActions.PatchUserDetails
         public async Task<OkObjectResult> Execute(PatchUserDetailsPayload userSettingsPayload, string hashid)
         {
             var id = _hashids.DecodeSingleLong(hashid);
-            var validation = _patchUserDetailsPayloadValidator.Validate(userSettingsPayload);
-            if (!validation.IsValid) throw new HttpError400Exception(validation.ToString());
+            _patchUserDetailsPayloadValidator.ValidateAndThrow(userSettingsPayload);
 
             var patchedUser = await _patchUserDetailsService.PatchUserFirstNameAndLastName(userSettingsPayload, id);
 
