@@ -13,7 +13,7 @@ export class MyDonationsService {
 
     public score$ = this.http.get<{ score: number }>(environment.api + '/my-donations/score').pipe(map(result => result.score));
 
-    getDonations(page: number, pageSize: number): Observable<PagedResult<MyDonationsItem<DateTime>>> {
+    public getDonations(page: number, pageSize: number): Observable<PagedResult<MyDonationsItem<DateTime>>> {
         return this.http.get<PagedResult<MyDonationsItem<string>>>(environment.api + '/my-donations', {
             params: {
                 page: page.toString(),

@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { getSidebarConfig } from './sidebar-config';
 import { HttpClient } from '@angular/common/http';
+import { Role } from 'src/app/enums/role';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,4 +27,7 @@ export class SidebarComponent {
     this.auth.logout().subscribe();
   }
 
+  public userHasRole(role: Role) {
+    return this.auth.dbUser.roles.includes(role);
+  }
 }

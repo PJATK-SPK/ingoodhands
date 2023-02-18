@@ -52,6 +52,7 @@
 
 	<ItemGroup>
 		<Folder Include="Migrations\" />
+		<Folder Include="Actions\" />
 		<Folder Include="Setup\Swagger\" />
 	</ItemGroup>
 

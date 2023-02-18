@@ -49,7 +49,9 @@ export class AppComponent implements OnInit {
           ? this.postlogin()
           : of({} as DbUser)),
         tap((postlogin) => {
-          this.auth.updateDbUser(postlogin);
+          if (postlogin) {
+            this.auth.updateDbUser(postlogin);
+          }
           this.authChecked = true;
         }),
         switchMap(() => this.loadGoogleMaps()),
@@ -59,10 +61,11 @@ export class AppComponent implements OnInit {
   }
 
   private postlogin(): Observable<DbUser> {
+    const authDbUserExists = this.auth.dbUser && this.auth.dbUser.id;
     const lastShotDate = sessionStorage.getItem('postloginDate');
     const now = DateTime.local();
 
-    if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
+    if (!authDbUserExists || !lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
       sessionStorage.setItem('postloginDate', now.toISO());
       return this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
     }
