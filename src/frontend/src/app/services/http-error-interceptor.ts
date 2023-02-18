@@ -51,13 +51,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             show = true;
             title = 'Unauthorized';
             texts = ['You are not authorized to access this page.'];
-            this.authService.logout(); // Logout, when we have 401 err and token in localStorage
+            this.authService.logout();
         }
         else if (err.status === 401) {
             show = true;
             title = 'Unauthenticated';
             texts = ['You are not authenticated to access this page.'];
-            this.authService.logout(); // Logout, when we have 401 err and token in localStorage
+            this.authService.logout();
             this.router.navigateByUrl('/');
         }
 
