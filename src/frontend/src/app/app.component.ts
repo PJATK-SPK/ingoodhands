@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
           this.auth.updateDbUser(postlogin);
           this.authChecked = true;
         }),
+        switchMap(() => this.loadGoogleMaps()),
         first()
       );
     return authCheck;
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
     const lastShotDate = sessionStorage.getItem('postloginDate');
     const now = DateTime.local();
 
-    if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate!).toSeconds() > 60) {
+    if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
       sessionStorage.setItem('postloginDate', now.toISO());
       return this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
     }
@@ -69,4 +70,16 @@ export class AppComponent implements OnInit {
     return of(this.auth.dbUser);
   }
 
+  private loadGoogleMaps(): Observable<any> {
+    return new Observable((observer) => {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsKey}&callback=nop`;
+      script.onload = () => {
+        observer.next();
+        observer.complete();
+      };
+      document.body.appendChild(script);
+    });
+  }
 }

@@ -62,9 +62,12 @@
                     <div class="col-12">
                         <h3 class="text-xl pb-3 font-bold m-0"> Products </h3>
 
-                        <p-card class="pt-2 pb-2">
+                        <p-card class="pt-2 pb-3">
                             <div *ngFor="let product of donation.products">
-                                <li class="pt-1">{{product.quantity}}{{product.unit}} of <b>{{product.name}}</b></li>
+                                <ul>
+                                    <li>{{product.quantity}}{{product.unit}} of <b>{{product.name}}</b>
+                                    </li>
+                                </ul>
                             </div>
                         </p-card>
                     </div>
