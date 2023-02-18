@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     RippleModule,
     StyleClassModule,
     InputTextModule,
+    TooltipModule,
   ],
   exports: [
     LayoutComponent

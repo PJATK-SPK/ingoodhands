@@ -2,6 +2,7 @@
 using Core.Setup.Autofac;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
+using Donate.Shared;
 
 namespace Donate
 {

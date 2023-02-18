@@ -29,17 +29,17 @@
 
         <div class="mt-auto border-top-1 surface-border p-3 flex justify-content-between">
             <div style="width:80px;height:40px"></div>
-            <a pRipple routerLink="/"
+            <a pRipple pTooltip="Landing page" tooltipPosition="bottom" routerLink="/"
                 class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
                 style="width:40px;height:40px">
                 <i class="pi pi-home text-xl"></i>
             </a>
-            <a pRipple routerLink="/secure/user-settings"
+            <a pRipple pTooltip="User settings" tooltipPosition="bottom" routerLink="/secure/user-settings"
                 class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
                 style="width:40px;height:40px">
                 <i class="pi pi-cog text-xl"></i>
             </a>
-            <a pRipple (click)="onLogoutClick()"
+            <a pRipple pTooltip="Logout" tooltipPosition="bottom" (click)="onLogoutClick()"
                 class="cursor-pointer inline-flex align-items-center justify-content-center bg-pink-500 text-white border-2 border-pink-600 hover:bg-pink-600 text-600 transition-colors transition-duration-150 border-circle"
                 style="width:40px;height:40px">
                 <i class="pi pi-sign-out text-xl"></i>

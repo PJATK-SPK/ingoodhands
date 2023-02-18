@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DbUser } from './interfaces/db-user';
+import { DateTime, Settings } from 'luxon';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,9 @@ export class AppComponent implements OnInit {
   public authChecked = false;
 
   public ngOnInit(): void {
+    Settings.defaultLocale = 'en-GB';
+    Settings.defaultZone = 'Europe/Warsaw';
+
     this.checkAuth().subscribe();
   }
 
@@ -42,15 +46,40 @@ export class AppComponent implements OnInit {
           }
         }),
         switchMap(c => c.isAuthenticated
-          ? this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
+          ? this.postlogin()
           : of({} as DbUser)),
         tap((postlogin) => {
           this.auth.updateDbUser(postlogin);
           this.authChecked = true;
         }),
+        switchMap(() => this.loadGoogleMaps()),
         first()
       );
     return authCheck;
   }
 
+  private postlogin(): Observable<DbUser> {
+    const lastShotDate = sessionStorage.getItem('postloginDate');
+    const now = DateTime.local();
+
+    if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
+      sessionStorage.setItem('postloginDate', now.toISO());
+      return this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
+    }
+
+    return of(this.auth.dbUser);
+  }
+
+  private loadGoogleMaps(): Observable<any> {
+    return new Observable((observer) => {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsKey}&callback=nop`;
+      script.onload = () => {
+        observer.next();
+        observer.complete();
+      };
+      document.body.appendChild(script);
+    });
+  }
 }

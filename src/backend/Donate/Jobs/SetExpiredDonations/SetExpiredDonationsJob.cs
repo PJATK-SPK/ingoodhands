@@ -1,6 +1,7 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Seeders;
+using Donate.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace Donate.Jobs.SetExpiredDonations
 
         public async Task<ActionResult> Execute()
         {
-            var expirationDate = DateTime.UtcNow.Date.AddDays(-30);
+            var expirationDate = ExpireDateService.GetExpiredDate4Today();
             var donationsToFix = await _context.Donations.Where(c => expirationDate > c.CreationDate && !c.IsExpired && !c.IsDelivered).ToListAsync();
 
             foreach (var toFix in donationsToFix)

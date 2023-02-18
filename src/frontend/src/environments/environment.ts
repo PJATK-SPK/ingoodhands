@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  url: `http://localhost:4200`,
-  api: `https://localhost:7148`,
+  url: 'http://localhost:4200',
+  api: 'https://localhost:7148',
+  googleMapsKey: 'GOOGLE_MAPS_KEY_HERE',
   auth: {
     authority: 'https://ingoodhands.eu.auth0.com',
     audience: 'ingoodhands',

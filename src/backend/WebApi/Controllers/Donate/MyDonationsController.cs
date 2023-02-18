@@ -1,7 +1,9 @@
+using Donate.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
+using System.Security.Cryptography;
 
 namespace WebApi.Controllers.Donate;
 
@@ -18,6 +20,7 @@ public class MyDonationsController : ControllerBase
         public int ProductsCount { get; set; } = default!;
         public DateTime CreationDate { get; set; } = default!;
         public bool IsDelivered { get; set; }
+        public bool IsExpired { get; set; }
     }
     [HttpGet]
     public async Task<ActionResult> GetList(int page, int pageSize)
@@ -31,6 +34,7 @@ public class MyDonationsController : ControllerBase
                 ProductsCount = 10,
                 CreationDate = DateTime.Now.AddDays(-10),
                 IsDelivered = false,
+                IsExpired = true,
             },
             new DeleteMeMyDonationsResponseItem
             {
@@ -39,6 +43,7 @@ public class MyDonationsController : ControllerBase
                 ProductsCount = 3,
                 CreationDate = DateTime.Now.AddDays(-1),
                 IsDelivered = true,
+                IsExpired = false,
             }
         }.AsQueryable();
 
@@ -70,8 +75,10 @@ public class MyDonationsController : ControllerBase
     }
     public class DeleteMeMyDonationDetailsResponse
     {
+        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!; // DNT...
         public DateTime CreationDate { get; set; } = default!;
+        public DateTime ExpireDate { get; set; } = default!;
         public bool IsDelivered { get; set; }
         public bool IsExpired { get; set; }
         public DeleteMeMyDonationDetailsWarehouseResponse Warehouse { get; set; } = default!;
@@ -81,7 +88,12 @@ public class MyDonationsController : ControllerBase
     public async Task<ActionResult> GetDetails(string id)
         => await Task.FromResult(Ok(new DeleteMeMyDonationDetailsResponse
         {
+            Id = "b743E4G",
             Name = "DNT000123",
+            CreationDate = DateTime.Now.AddDays(-5),
+            ExpireDate = ExpireDateService.GetExpiredDate4Donation(DateTime.Now.AddDays(-5)),
+            IsDelivered = RandomNumberGenerator.GetInt32(0, 2) != 0,
+            IsExpired = RandomNumberGenerator.GetInt32(0, 2) != 0,
             Warehouse = new DeleteMeMyDonationDetailsWarehouseResponse
             {
                 CountryName = "Poland",
@@ -97,9 +109,15 @@ public class MyDonationsController : ControllerBase
             {
                  new DeleteMeMyDonationDetailsProductResponse
                  {
-                      Name = "Apple",
+                      Name = "Rice",
                       Quantity = 1,
                       Unit = "kg",
+                 },
+                 new DeleteMeMyDonationDetailsProductResponse
+                 {
+                      Name = "Milk",
+                      Quantity = 15,
+                      Unit = "l",
                  }
             }
         }));
