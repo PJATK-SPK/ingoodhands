@@ -56,7 +56,7 @@ namespace TestsBase
             var appDbContext = _autofac.Resolve<AppDbContext>();
             var databaseName = appDbContext.Database.GetDbConnection().Database;
 
-            var connectionString = ConfigurationReader.Get().ConnectionStrings.Database;
+            var connectionString = ConfigurationReader.Get().DatabaseConnectionString;
             connectionString = connectionString.Replace("Database=in_good_hands", "Database=postgres");
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
@@ -79,7 +79,7 @@ namespace TestsBase
 
         private void InjectTestDatabase(ContainerBuilder builder)
         {
-            var connectionString = ConfigurationReader.Get().ConnectionStrings.Database;
+            var connectionString = ConfigurationReader.Get().DatabaseConnectionString;
             var yyyyMMddHHmmss = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             var randomNumber = RandomNumberGenerator.GetInt32(1000, 9999);
 

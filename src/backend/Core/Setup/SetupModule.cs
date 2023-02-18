@@ -26,7 +26,7 @@ namespace Core.Setup
         public void RegisterAll(ContainerBuilder builder)
         {
             InjectAppConfiguration(builder);
-            AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().ConnectionStrings.Database);
+            AutofacPostgresDbContextInjector.Inject(builder, ConfigurationReader.Get().DatabaseConnectionString);
             InjectHashids(builder, ConfigurationReader.Get().HashidsSalt);
 
             if (_userProviderType == WebApiUserProviderType.ProvideByLoggedAuth0User)
