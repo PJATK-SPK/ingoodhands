@@ -18,7 +18,7 @@ export class MyDonationsComponent implements OnInit {
   public pageSize = 10;
   public pagedResult: PagedResult<MyDonationsItem<DateTime>> | undefined;
 
-  constructor(private readonly service: MyDonationsService) { }
+  constructor(public readonly service: MyDonationsService) { }
 
   public getProductsText(count: number): string {
     return count > 1 ? `${count} products` : `${count} product`;

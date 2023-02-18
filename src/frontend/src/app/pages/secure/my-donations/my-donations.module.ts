@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
 import { TagModule } from 'primeng/tag';
+import { CountUpModule } from 'src/app/directives/count-up/count-up.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TagModule } from 'primeng/tag';
     TooltipModule,
     RouterModule,
     TagModule,
+    CountUpModule,
   ],
   exports: [
     MyDonationsComponent
