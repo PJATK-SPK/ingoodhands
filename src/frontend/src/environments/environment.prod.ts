@@ -2,8 +2,7 @@ export const environment = {
   production: true,
   url: 'https://indagoodhandsdev.web.app',
   api: 'https://backend-ka7w7ys4tq-ew.a.run.app',
-  googleMapsKey: 'AIzaSyA_VzFjbACVq7tV0arn0uVcgoRuukFs1fI',
-
+  googleMapsKey: 'GOOGLE_MAPS_KEY_HERE',
   auth: {
     authority: 'https://ingoodhands.eu.auth0.com',
     audience: 'ingoodhands',
