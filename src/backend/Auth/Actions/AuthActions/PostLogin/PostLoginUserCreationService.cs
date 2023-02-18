@@ -1,5 +1,4 @@
-﻿using Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
-using Core.Database;
+﻿using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
@@ -22,7 +21,7 @@ namespace Auth.Actions.AuthActions.PostLogin
 
         public async Task<User> CreateUserAndAddToDatabase(CurrentUserInfo auth0UserInfo)
         {
-            var user = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == auth0UserInfo.Email);
+            var user = await _appDbContext.Users.Include(c => c.Roles).SingleOrDefaultAsync(c => c.Email == auth0UserInfo.Email);
             var auth0UserFromDatabase = await _appDbContext.Auth0Users.SingleOrDefaultAsync(c => c.Identifier == auth0UserInfo.Identifier);
 
             var serviceUser = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == DbConstants.ServiceUserEmail);
@@ -64,7 +63,7 @@ namespace Auth.Actions.AuthActions.PostLogin
                 _appDbContext.SaveChanges();
             }
 
-            if (user!.Roles == null)
+            if (!user!.Roles!.Any())
             {
                 var userRole = CreateUserRole(user, serviceUser);
                 _appDbContext.Add(userRole);

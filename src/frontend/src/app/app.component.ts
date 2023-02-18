@@ -4,6 +4,7 @@ import { first, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { DbUser } from './interfaces/db-user';
 
 @Component({
   selector: 'app-root',
@@ -39,12 +40,14 @@ export class AppComponent implements OnInit {
           if (this.auth.isLoggedIn != c.isAuthenticated) {
             this.auth.isLoggedIn = c.isAuthenticated;
           }
-
-          this.authChecked = true;
         }),
         switchMap(c => c.isAuthenticated
-          ? this.httpClient.get(`${environment.api}/auth/postlogin`)
-          : of([])),
+          ? this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
+          : of({} as DbUser)),
+        tap((postlogin) => {
+          this.auth.updateDbUser(postlogin);
+          this.authChecked = true;
+        }),
         first()
       );
     return authCheck;
