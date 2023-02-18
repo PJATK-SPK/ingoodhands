@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { DONATE_FORM_DATA_KEY, DonateFormData } from '../../home/donate/stepper/services/stepper.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { DONATE_FORM_TEMP_LIST_KEY } from '../../home/donate/stepper/services/step-1.service';
 import { DonatePayload } from '../../home/donate/stepper/interfaces/donate-payload';
 import { DonateResponse } from '../../home/donate/stepper/interfaces/donate-response';
@@ -20,7 +19,6 @@ export class ConfirmDonationComponent implements OnInit {
     public readonly auth: AuthService,
     private readonly httpClient: HttpClient,
     private readonly msg: MessageService,
-    private readonly router: Router,
   ) { }
 
   public formData: DonateFormData | undefined;

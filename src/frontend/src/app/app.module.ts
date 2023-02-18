@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { AuthGuard } from './auth-guard';
+import { HttpErrorInterceptor } from './services/http-error-interceptor';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,12 @@ import { AuthGuard } from './auth-guard';
       useClass: AuthInterceptor,
       multi: true
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
+
     AuthGuard,
     MessageService,
   ],

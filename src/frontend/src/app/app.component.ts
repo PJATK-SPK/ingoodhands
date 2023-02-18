@@ -42,7 +42,9 @@ export class AppComponent implements OnInit {
 
           this.authChecked = true;
         }),
-        switchMap(c => c.isAuthenticated ? this.httpClient.get(`${environment.api}/auth/postlogin`) : of([])),
+        switchMap(c => c.isAuthenticated
+          ? this.httpClient.get(`${environment.api}/auth/postlogin`)
+          : of([])),
         first()
       );
     return authCheck;

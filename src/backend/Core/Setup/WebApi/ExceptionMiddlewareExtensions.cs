@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 
 namespace Core.Setup.WebApi
@@ -52,8 +53,28 @@ namespace Core.Setup.WebApi
                 case UnauthorizedException:
                     return (403, handler.Error.Message);
                 default:
+#if DEBUG
+                    return (500, handler.Error.ToFullBlownString());
+#else
                     return (500, "Unknown error");
+#endif
             }
+        }
+
+        private static string ToFullBlownString(this System.Exception e, int level = int.MaxValue)
+        {
+            var sb = new StringBuilder();
+            var exception = e;
+            var counter = 1;
+
+            while (exception != null && counter <= level)
+            {
+                sb.AppendLine(exception.Message);
+                exception = exception.InnerException;
+                counter++;
+            }
+
+            return sb.ToString();
         }
     }
 }
