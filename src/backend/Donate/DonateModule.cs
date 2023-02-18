@@ -2,6 +2,7 @@
 using Core.Setup.Autofac;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
+using Donate.Shared;
 
 namespace Donate
 {
@@ -27,6 +28,7 @@ namespace Donate
         private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<DonateNameBuilderService>();
+            builder.RegisterAsScoped<ExpireDateService>();
         }
     }
 }

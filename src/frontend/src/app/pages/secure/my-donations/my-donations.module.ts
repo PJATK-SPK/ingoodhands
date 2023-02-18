@@ -4,10 +4,10 @@ import { MyDonationsComponent } from './my-donations.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
-import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
   declarations: [
@@ -18,10 +18,10 @@ import { RouterModule } from '@angular/router';
     CardModule,
     ButtonModule,
     PaginatorModule,
-    CheckboxModule,
     FormsModule,
     TooltipModule,
-    RouterModule
+    RouterModule,
+    TagModule,
   ],
   exports: [
     MyDonationsComponent

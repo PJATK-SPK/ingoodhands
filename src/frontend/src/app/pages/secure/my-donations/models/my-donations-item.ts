@@ -1,17 +1,8 @@
-import { DateTime } from "luxon";
-
-export interface MyDonationsRawItem {
+export interface MyDonationsItem<DateType> {
     id: string;
     name: string;
     productsCount: number;
-    creationDate: string;
+    creationDate: DateType;
     isDelivered: boolean;
-}
-
-export interface MyDonationsItem {
-    id: string;
-    name: string;
-    productsCount: number;
-    creationDate: DateTime;
-    isDelivered: boolean;
+    isExpired: boolean;
 }

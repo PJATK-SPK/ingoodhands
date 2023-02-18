@@ -9,17 +9,28 @@
                     <p-card class="p-2" *ngFor="let item of pagedResult.queryable">
                         <div class="grid">
                             <div class="col-12">
-                                <h2 class="text-xl font-bold m-0 text-primary" style="cursor:pointer"
-                                    [routerLink]="'/secure/my-donation/' + item.id">
+                                <h2 class="text-xl font-bold m-0" [ngClass]="item.isExpired ? '' : 'text-primary'"
+                                    style="cursor:pointer" [routerLink]="'/secure/my-donation/' + item.id">
                                     {{item.name}}
-                                    <p-checkbox pTooltip="Is delivered?" [(ngModel)]="item.isDelivered"
-                                        [disabled]="true"></p-checkbox>
                                 </h2>
 
                                 <p>
                                     {{item.creationDate.toLocaleString(DateTime.DATETIME_MED)}} -
                                     <b> {{getProductsText(item.productsCount)}} </b>
+
+                                    <p-tag *ngIf="item.isExpired" styleClass="ml-2 mb-1" icon="pi pi-calendar"
+                                        severity="danger" value="EXPIRED">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="!item.isDelivered" styleClass="ml-2 mb-1" icon="pi pi-calendar"
+                                        severity="warning" value="Not delivered">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="item.isDelivered" styleClass="ml-2 mb-1" icon="pi pi-calendar"
+                                        severity="success" value="Delivered">
+                                    </p-tag>
                                 </p>
+
                             </div>
                         </div>
                     </p-card>

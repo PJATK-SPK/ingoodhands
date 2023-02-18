@@ -1,9 +1,80 @@
 <div class="grid">
     <div class="col-12 lg:col-12">
         <div class="p-3">
-            <p-card>
-                1234567
+            <p-card class="p-2" *ngIf="donation">
+                <div class="grid">
+                    <div class="col-12 lg:col-6">
+                        <h2 class="text-2xl font-bold m-0"> {{donation.name}} </h2>
+
+                        <div class="pt-3 pb-3">
+                            <div>
+                                Created at: <b>{{donation.creationDate.toLocaleString(DateTime.DATETIME_MED)}}</b>
+                            </div>
+
+                            <div>
+                                Expire date: <b>{{donation.expireDate.toLocaleString(DateTime.DATETIME_MED)}}</b>
+                            </div>
+
+                            <div class="pt-2">
+                                <p-tag *ngIf="!donation.isExpired" styleClass="mr-2 mb-1" icon="pi pi-calendar"
+                                    severity="success" value="Not expired">
+                                </p-tag>
+
+                                <p-tag *ngIf="donation.isExpired" styleClass="mr-2 mb-1" icon="pi pi-calendar"
+                                    severity="danger" value="EXPIRED">
+                                </p-tag>
+
+                                <p-tag *ngIf="!donation.isDelivered" styleClass="mr-2 mb-1" icon="pi pi-calendar"
+                                    severity="warning" value="Not delivered">
+                                </p-tag>
+
+                                <p-tag *ngIf="donation.isDelivered" styleClass="mr-2 mb-1" icon="pi pi-calendar"
+                                    severity="success" value="Delivered">
+                                </p-tag>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <h3 class="text-xl font-bold m-0"> Warehouse - {{donation.warehouse.name}} </h3>
+
+                        <div class="pt-3">
+                            <div>
+                                <div>
+                                    Country: <b>{{donation.warehouse.countryName}}</b>
+                                </div>
+
+                                <div>
+                                    City: <b>{{donation.warehouse.city}}</b>
+                                </div>
+
+                                <div>
+                                    Street: <b>{{donation.warehouse.street}}</b>
+                                </div>
+
+                                <div>
+                                    Postal code: <b>{{donation.warehouse.postalCode}}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <h3 class="text-xl pb-3 font-bold m-0"> Products </h3>
+
+                        <p-card class="pt-2 pb-2">
+                            <div *ngFor="let product of donation.products">
+                                <li class="pt-1">{{product.quantity}}{{product.unit}} of <b>{{product.name}}</b></li>
+                            </div>
+                        </p-card>
+                    </div>
+
+                    <div class="col-12">
+                        <google-map [center]="getMapCoords()" height="500px" width="100%"></google-map>
+                    </div>
+                </div>
             </p-card>
+
         </div>
     </div>
 </div>
