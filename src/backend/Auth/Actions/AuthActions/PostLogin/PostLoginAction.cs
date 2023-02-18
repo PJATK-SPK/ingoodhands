@@ -1,5 +1,5 @@
-﻿using Auth.Services;
-using Core.Exceptions;
+﻿using Auth.Actions.UserSettingsActions.GetUserDetails;
+using Auth.Services;
 using Core.Setup.Auth0;
 using FluentValidation;
 using HashidsNet;
@@ -13,17 +13,20 @@ namespace Auth.Actions.AuthActions.PostLogin
         private readonly CurrentUserInfoValidator _validator;
         private readonly PostLoginUserCreationService _userService;
         private readonly Hashids _hashids;
+        private readonly GetUserDetailsAction _getUserDetailsAction;
 
         public PostLoginAction(
             ICurrentUserService currentUserService,
             CurrentUserInfoValidator validator,
             PostLoginUserCreationService userService,
-            Hashids hashids)
+            Hashids hashids,
+            GetUserDetailsAction getUserDetailsAction)
         {
             _currentUserService = currentUserService;
             _validator = validator;
             _userService = userService;
             _hashids = hashids;
+            _getUserDetailsAction = getUserDetailsAction;
         }
 
         public async Task<ActionResult> Execute()
@@ -31,16 +34,9 @@ namespace Auth.Actions.AuthActions.PostLogin
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             _validator.ValidateAndThrow(auth0UserInfo);
 
-            var user = await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
+            await _userService.CreateUserAndAddToDatabase(auth0UserInfo);
 
-            var result = new PostLoginActionResponse
-            {
-                Id = _hashids.EncodeLong(user.Id),
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-            };
-
-            return new OkObjectResult(result);
+            return await _getUserDetailsAction.Execute();
         }
     }
 }
