@@ -2,7 +2,7 @@
 
 namespace Donate.Shared
 {
-    public class ExpireDateService
+    public static class ExpireDateService
     {
         public static readonly int ExpireDays = 30;
 

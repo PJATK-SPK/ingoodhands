@@ -28,7 +28,6 @@ namespace Donate
         private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<DonateNameBuilderService>();
-            builder.RegisterAsScoped<ExpireDateService>();
         }
     }
 }
