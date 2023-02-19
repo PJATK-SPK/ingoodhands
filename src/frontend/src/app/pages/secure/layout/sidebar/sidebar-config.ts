@@ -42,6 +42,12 @@ export const getSidebarConfig = (httpClient: HttpClient) => [
                 routerLink: '/secure/stocks',
                 role: Role.warehouseKeeper,
             },
+            {
+                label: 'Request help',
+                icon: 'pi pi-fw pi-map-marker',
+                routerLink: '/secure/request-help',
+                role: Role.needy,
+            },
         ]
     },
 ];

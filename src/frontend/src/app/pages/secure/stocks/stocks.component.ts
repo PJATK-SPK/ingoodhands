@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providers: [
   ]
 })
-export class StocksComponent {
+export class StocksComponent implements OnInit {
   public page = 1;
   public pageSize = 10;
 

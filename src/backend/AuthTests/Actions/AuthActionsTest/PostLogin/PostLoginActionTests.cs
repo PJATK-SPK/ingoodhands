@@ -5,7 +5,6 @@ using Core;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using FluentValidation;
@@ -72,10 +71,14 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == needyRoleId).Any());
         }
 
         [TestMethod()]
@@ -103,12 +106,16 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.User!.Email == newEmail)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == needyRoleId).Any());
         }
 
         [TestMethod()]
@@ -145,11 +152,15 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.AreEqual(context.Auth0Users.Single(x => x.Email == testingUser.Email)?.User, testingUser);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == needyRoleId).Any());
         }
 
         [TestMethod()]

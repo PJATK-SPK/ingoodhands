@@ -10,6 +10,7 @@ import { WorkComponent } from './work/work.component';
 import { ButtonModule } from 'primeng/button';
 import { SplashImgComponent } from './splash-img/splash-img.component';
 import { DonateStepperModule } from './donate/stepper/donate-stepper.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DonateStepperModule } from './donate/stepper/donate-stepper.module';
     StyleClassModule,
     TabViewModule,
     DonateStepperModule,
+    RouterModule,
   ],
   exports: [
     HomeComponent

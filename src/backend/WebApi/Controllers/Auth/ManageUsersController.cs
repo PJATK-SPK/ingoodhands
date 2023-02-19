@@ -15,6 +15,7 @@ public class ManageUsersController : ControllerBase
     {
         public string Id { get; set; } = default!; // User Id
         public string FullName { get; set; } = default!;
+        public string? WarehouseName { get; set; } // can be null
         public List<string> Roles { get; set; } = default!;
     }
     [HttpGet]
@@ -55,6 +56,7 @@ public class ManageUsersController : ControllerBase
     {
         public string Id { get; set; } = default!; // User Id
         public string FullName { get; set; } = default!;
+        public string? WarehouseName { get; set; } // can be null
         public List<string> Roles { get; set; } = default!;
     }
     [HttpGet("{id}")]
@@ -77,6 +79,7 @@ public class ManageUsersController : ControllerBase
 
     public class DeleteMeManageUserPayload
     {
+        public string WarehouseName { get; set; } = default!;
         public List<string> Roles { get; set; } = default!;
     }
     [HttpPatch("{id}")]

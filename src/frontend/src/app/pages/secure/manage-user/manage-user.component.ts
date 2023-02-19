@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Role } from 'src/app/enums/role';
 import { environment } from 'src/environments/environment';
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   providers: [
   ]
 })
-export class ManageUserComponent {
+export class ManageUserComponent implements OnInit {
 
   constructor(private readonly http: HttpClient) { }
 

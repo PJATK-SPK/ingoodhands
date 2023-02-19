@@ -36,12 +36,11 @@ namespace Auth.Actions.AuthActions.PostLogin
                 user = CreateUser(auth0UserInfo);
                 _appDbContext.Add(user);
 
-                var userRole = CreateUserRole(user, serviceUser);
-                _appDbContext.Add(userRole);
+                var userRoles = await CreateUserRoles(user, serviceUser);
+                _appDbContext.AddRange(userRoles);
 
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
                 _appDbContext.Add(newAuth0User);
-                _appDbContext.SaveChanges();
 
             }
             else if (user != null && auth0UserFromDatabase == null)
@@ -49,26 +48,25 @@ namespace Auth.Actions.AuthActions.PostLogin
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
                 _appDbContext.Add(newAuth0User);
 
-                var userRole = CreateUserRole(user, serviceUser);
-                _appDbContext.Add(userRole);
-
-                _appDbContext.SaveChanges();
+                var userRoles = await CreateUserRoles(user, serviceUser);
+                _appDbContext.AddRange(userRoles);
             }
             else if (user == null && auth0UserFromDatabase != null)
             {
                 user = CreateUser(auth0UserInfo);
                 _appDbContext.Add(user);
-                var userRole = CreateUserRole(user, serviceUser);
-                _appDbContext.Add(userRole);
-                _appDbContext.SaveChanges();
+
+                var userRoles = await CreateUserRoles(user, serviceUser);
+                _appDbContext.AddRange(userRoles);
             }
 
             if (!user!.Roles!.Any())
             {
-                var userRole = CreateUserRole(user, serviceUser);
-                _appDbContext.Add(userRole);
-                _appDbContext.SaveChanges();
+                var userRoles = await CreateUserRoles(user, serviceUser);
+                _appDbContext.AddRange(userRoles);
             }
+
+            _appDbContext.SaveChanges();
 
             return user!;
         }
@@ -100,11 +98,32 @@ namespace Auth.Actions.AuthActions.PostLogin
             };
         }
 
+        private async Task<List<UserRole>> CreateUserRoles(User user, User serviceUser)
+        {
+            var roles = await _appDbContext.Roles.ToListAsync();
+
+            var donorRole = roles.SingleOrDefault(c => c.Name == RoleName.Donor);
+            var needyRole = roles.SingleOrDefault(c => c.Name == RoleName.Needy);
+
+            if (donorRole == null || needyRole == null)
+            {
+                _logger.LogError("There is no needy and donor roles in database!");
+                throw new ApplicationErrorException("There is something wrong with the application");
+            }
+
+            var donor = CreateUserRole(user, serviceUser);
+            donor.RoleId = donorRole.Id;
+
+            var needy = CreateUserRole(user, serviceUser);
+            needy.RoleId = needyRole.Id;
+
+            return new List<UserRole> { donor, needy };
+        }
+
         private static UserRole CreateUserRole(User user, User serviceUser)
         {
             return new UserRole
             {
-                RoleId = 2,
                 User = user,
                 UserId = user.Id,
                 UpdateUser = serviceUser,

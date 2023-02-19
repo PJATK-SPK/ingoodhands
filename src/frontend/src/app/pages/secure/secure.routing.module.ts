@@ -9,6 +9,9 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
 import { PickUpDonationComponent } from './pick-up-donation/pick-up-donation.component';
 import { StocksComponent } from './stocks/stocks.component';
+import { WorkComponent } from './work/work.component';
+import { RequestHelpComponent } from './request-help/request-help.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
 
 const routes: Routes = [
     {
@@ -55,6 +58,21 @@ const routes: Routes = [
         path: 'stocks',
         loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule),
         component: StocksComponent
+    },
+    {
+        path: 'work',
+        loadChildren: () => import('./work/work.module').then(m => m.WorkModule),
+        component: WorkComponent
+    },
+    {
+        path: 'request-help',
+        loadChildren: () => import('./request-help/request-help.module').then(m => m.RequestHelpModule),
+        component: RequestHelpComponent
+    },
+    {
+        path: 'create-order',
+        loadChildren: () => import('./create-order/create-order.module').then(m => m.CreateOrderModule),
+        component: CreateOrderComponent
     },
 ];
 
