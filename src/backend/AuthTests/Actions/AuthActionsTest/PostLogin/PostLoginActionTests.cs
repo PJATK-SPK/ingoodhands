@@ -5,6 +5,7 @@ using Core;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using FluentValidation;
@@ -161,6 +162,78 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             Assert.AreEqual(1, context.Auth0Users.Count());
             Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == donorRoleId).Any());
             Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == needyRoleId).Any());
+        }
+
+        [TestMethod()]
+        public async Task PostLoginActionTest_NoRolesInDb()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var testingUser = new User()
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = "Normal",
+                LastName = "User",
+                Email = "test@testing.com"
+            };
+            context.Add(testingUser);
+            context.Roles.RemoveRange(context.Roles.ToList());
+            await context.SaveChangesAsync();
+
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = testingUser.Email,
+                EmailVerified = true,
+                Identifier = "google-oauth2|117638106834834546346",
+                GivenName = testingUser.FirstName,
+                FamilyName = testingUser.LastName,
+                Locale = "pl",
+                Name = testingUser.FirstName + testingUser.LastName,
+                Nickname = "test",
+                UpdatedAt = DateTime.UtcNow,
+            });
+
+            // Act
+            await Assert.ThrowsExceptionAsync<ApplicationErrorException>(() => action.Execute());
+        }
+
+        [TestMethod()]
+        public async Task PostLoginActionTest_NoServiceUserInDb()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var testingUser = new User()
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = "Normal",
+                LastName = "User",
+                Email = "test@testing.com"
+            };
+            context.Add(testingUser);
+            context.Users.RemoveRange(context.Users.ToList());
+            await context.SaveChangesAsync();
+
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = testingUser.Email,
+                EmailVerified = true,
+                Identifier = "google-oauth2|117638106834834546346",
+                GivenName = testingUser.FirstName,
+                FamilyName = testingUser.LastName,
+                Locale = "pl",
+                Name = testingUser.FirstName + testingUser.LastName,
+                Nickname = "test",
+                UpdatedAt = DateTime.UtcNow,
+            });
+
+            // Act
+            await Assert.ThrowsExceptionAsync<ApplicationErrorException>(() => action.Execute());
         }
 
         [TestMethod()]
