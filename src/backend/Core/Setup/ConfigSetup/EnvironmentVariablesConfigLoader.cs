@@ -45,11 +45,9 @@ namespace Core.Setup.ConfigSetup
             sb.Append($"User ID={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["User ID"])};");
             sb.Append($"Password={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["Password"])};");
             sb.Append($"Database={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["Database"])};");
-            sb.Append($"Host={AppConfigMap.DbToEnvNames["Host"]};");
+            sb.Append($"Host={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["Host"])};");
             sb.Append($"Port={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["Port"])};");
             sb.Append($"Connection Lifetime=0;Include Error Detail=true");
-
-            throw new ArgumentException(sb.ToString());
 
             return sb.ToString();
         }
