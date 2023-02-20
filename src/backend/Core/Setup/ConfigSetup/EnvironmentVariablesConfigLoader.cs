@@ -48,6 +48,9 @@ namespace Core.Setup.ConfigSetup
             sb.Append($"Host={AppConfigMap.DbToEnvNames["Host"]};");
             sb.Append($"Port={Environment.GetEnvironmentVariable(AppConfigMap.DbToEnvNames["Port"])};");
             sb.Append($"Connection Lifetime=0;Include Error Detail=true");
+
+            throw new ArgumentException(sb.ToString());
+
             return sb.ToString();
         }
     }
