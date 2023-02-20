@@ -1,4 +1,4 @@
-﻿using Core.Setup.ConfigSetup.App;
+﻿using Core.Setup.ConfigSetup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,8 +14,8 @@ namespace Core.Setup.WebApi.Auth
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = config.Authorization.Authority;
-                options.Audience = config.Authorization.Audience;
+                options.Authority = config.OAuth2Authority;
+                options.Audience = config.OAuth2Audience;
             });
         }
     }

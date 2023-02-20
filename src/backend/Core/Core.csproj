@@ -56,25 +56,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Configuration\environment.json">
+		<None Update="Configuration\Default\config.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Configuration\Local\config.json">
+		<None Update="Configuration\Default\serilog-api.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Configuration\Local\serilog-api.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Local\serilog-service.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\config.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\serilog-api.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\serilog-service.json">
+		<None Update="Configuration\Default\serilog-service.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="start.html">

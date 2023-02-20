@@ -21,7 +21,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
         };
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserAndAuth0UserPresent()
+        public async Task SetExpiredDonationsJobTest()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

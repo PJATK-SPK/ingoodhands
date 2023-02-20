@@ -1,4 +1,4 @@
-﻿using Core.Setup.ConfigSetup.App;
+﻿using Core.Setup.ConfigSetup;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -8,7 +8,6 @@ namespace Core.Setup.Swagger
     {
         public static void SetupSwagger(this IServiceCollection services, AppConfig config)
         {
-            var auth = config.Authorization;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API" });
@@ -23,8 +22,8 @@ namespace Core.Setup.Swagger
                     {
                         Implicit = new OpenApiOAuthFlow
                         {
-                            Scopes = auth.Scopes.Split(" ").ToDictionary(c => c, c => c),
-                            AuthorizationUrl = new Uri($"{auth.Authority}authorize?audience={auth.Audience}")
+                            Scopes = config.OAuth2Scopes.Split(" ").ToDictionary(c => c, c => c),
+                            AuthorizationUrl = new Uri($"{config.OAuth2Authority}authorize?audience={config.OAuth2Audience}")
                         }
                     }
                 };
