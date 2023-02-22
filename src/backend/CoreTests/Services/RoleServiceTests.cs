@@ -33,7 +33,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
@@ -59,7 +58,7 @@ namespace CoreTests.Services
             var testUserRole = new UserRole
             {
                 RoleId = roleId,
-                UserId = 2,
+                User = testingUser,
                 UpdateUserId = 1,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
@@ -101,7 +100,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
@@ -112,7 +110,7 @@ namespace CoreTests.Services
             var testUserRole = new UserRole
             {
                 RoleId = roleId,
-                UserId = 2,
+                User = testingUser,
                 UpdateUserId = 1,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
@@ -158,7 +156,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
@@ -169,7 +166,7 @@ namespace CoreTests.Services
             var testUserRole = new UserRole
             {
                 RoleId = roleId,
-                UserId = 2,
+                User = testingUser,
                 UpdateUserId = 1,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
@@ -196,7 +193,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
@@ -207,7 +203,7 @@ namespace CoreTests.Services
             var testUserRole = new UserRole
             {
                 RoleId = roleId,
-                UserId = 2,
+                User = testingUser,
                 UpdateUserId = 1,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
@@ -235,7 +231,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
@@ -264,7 +259,6 @@ namespace CoreTests.Services
 
             var testingUser = new User()
             {
-                Id = 2,
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",

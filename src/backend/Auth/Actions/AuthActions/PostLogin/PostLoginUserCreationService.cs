@@ -94,7 +94,7 @@ namespace Auth.Actions.AuthActions.PostLogin
                 UpdatedAt = DateTime.UtcNow,
                 Email = currentAuth0UserInfo.Email!,
                 Identifier = currentAuth0UserInfo.Identifier!,
-                UserId = user.Id
+                User = user
             };
         }
 
@@ -103,7 +103,7 @@ namespace Auth.Actions.AuthActions.PostLogin
             return new UserRole
             {
                 RoleId = 2,
-                UserId = user.Id,
+                User = user,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active

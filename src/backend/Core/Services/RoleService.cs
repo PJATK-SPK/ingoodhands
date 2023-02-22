@@ -125,7 +125,7 @@ namespace Core.Services
             var newUserRole = new UserRole
             {
                 RoleId = roleId,
-                UserId = currentUser.Id,
+                User = currentUser,
                 UpdateUserId = serviceUser!.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
