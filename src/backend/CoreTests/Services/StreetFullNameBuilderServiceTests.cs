@@ -1,7 +1,7 @@
-﻿using Core.Services.StreetFullNameBuilder;
+﻿using Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CoreTests.Services.StreetFullNameBuilder
+namespace CoreTests.Services
 {
     [TestClass()]
     public class StreetFullNameBuilderServiceTests
