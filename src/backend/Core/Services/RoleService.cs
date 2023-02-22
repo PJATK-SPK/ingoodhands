@@ -45,7 +45,7 @@ namespace Core.Services
             return userHasGivenRole;
         }
 
-        public async Task AssertRole(RoleName roleName, long? userId = null)
+        public async Task ThrowIfNoRole(RoleName roleName, long? userId = null)
         {
             if (userId == null)
             {
