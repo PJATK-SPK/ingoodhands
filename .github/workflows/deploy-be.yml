@@ -27,6 +27,10 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_PORT: 5432
+          OAUTH2_AUTHORITY: ${{ secrets.OAUTH2_AUTHORITY }}
+          OAUTH2_AUDIENCE: ${{ secrets.OAUTH2_AUDIENCE }}
+          OAUTH2_CLIENT_ID: ${{ secrets.OAUTH2_CLIENT_ID }}
+          HASHIDS_SALT: ${{ secrets.HASHIDS_SALT }}
 
   deploy-worker:
     runs-on: ubuntu-latest
@@ -42,6 +46,10 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_PORT: 5432
+          OAUTH2_AUTHORITY: ${{ secrets.OAUTH2_AUTHORITY }}
+          OAUTH2_AUDIENCE: ${{ secrets.OAUTH2_AUDIENCE }}
+          OAUTH2_CLIENT_ID: ${{ secrets.OAUTH2_CLIENT_ID }}
+          HASHIDS_SALT: ${{ secrets.HASHIDS_SALT }}
 
   sonar:
     runs-on: ubuntu-latest

@@ -7,6 +7,7 @@ using Autofac;
 using Donate;
 using Core.Setup.Enums;
 using Donate.Jobs.SetExpiredDonations;
+using Donate.Shared;
 
 namespace DonateTests.Jobs.SetExpiredDonations
 {
@@ -20,7 +21,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
         };
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserAndAuth0UserPresent()
+        public async Task SetExpiredDonationsJobTest()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -33,13 +34,18 @@ namespace DonateTests.Jobs.SetExpiredDonations
             var donation5DaysNotDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000004");
             var donation31DaysExpired = SetExpiredDonationsJobFixture.CreateDonation("DNT000003");
 
+            var offset = ExpireDateService.ExpireDays + 1;
+
             donation31DaysDelivered.IsDelivered = true;
             donation5DaysDelivered.IsDelivered = true;
-            donation31DaysDelivered.CreationDate = DateTime.UtcNow.AddDays(-31);
-            donation31DaysNotDelivered.CreationDate = DateTime.UtcNow.AddDays(-31);
-            donation31DaysExpired.CreationDate = DateTime.UtcNow.AddDays(-31);
+            donation31DaysDelivered.CreationDate = DateTime.UtcNow.AddDays(-offset);
+            donation31DaysNotDelivered.CreationDate = DateTime.UtcNow.AddDays(-offset);
+            donation31DaysExpired.CreationDate = DateTime.UtcNow.AddDays(-offset);
             donation31DaysExpired.IsExpired = true;
             donation31DaysExpired.Status = DbEntityStatus.Inactive;
+
+            Assert.IsTrue(ExpireDateService.GetExpiredDate4Donation(donation31DaysExpired) > donation31DaysExpired.CreationDate);
+            Assert.IsTrue(ExpireDateService.GetExpiredDate4Donation(donation31DaysExpired.CreationDate) > donation31DaysExpired.CreationDate);
 
             context.Add(donation31DaysDelivered);
             context.Add(donation5DaysDelivered);

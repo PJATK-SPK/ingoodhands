@@ -19,6 +19,12 @@ runs:
         echo "DB_PASSWORD=ingoodhands" >> $GITHUB_ENV
         echo "DB_DATABASE=in_good_hands" >> $GITHUB_ENV
         echo "DB_PORT=5432" >> $GITHUB_ENV
+        echo "OAUTH2_AUTHORITY=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_AUDIENCE=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_CLIENT_ID=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_SCOPES=dummy" = >> $GITHUB_ENV
+        echo "FRONTEND_URL=dummy" = >> $GITHUB_ENV
+        echo "HASHIDS_SALT=dummy" = >> $GITHUB_ENV
       shell: bash
 
     - name: Run backend and postgres for testing

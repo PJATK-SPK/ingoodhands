@@ -11,8 +11,9 @@ using System.Text.Json.Serialization;
 using Core.Setup.Swagger;
 using Core.Setup.WebApi.Auth;
 using Core.Setup.Autofac;
-using Core.Setup.ConfigSetup.App;
 using Core.Setup.ConfigSetup;
+using FluentValidation;
+using System.Globalization;
 
 namespace Core.Setup.WebApi
 {
@@ -20,7 +21,7 @@ namespace Core.Setup.WebApi
     {
         public static IHostBuilder Configure(this IHostBuilder hostBuilder, IEnumerable<Module> usedModules)
         {
-            var serilogConfigPath = ConfigurationReader.GetConfigFullPath("serilog-api.json");
+            var serilogConfigPath = DefaultFileConfigLoader.GetConfigFullPath($"serilog-api.json", true);
             var serilogConfig = new ConfigurationBuilder()
                   .AddJsonFile(
                       serilogConfigPath,
@@ -30,6 +31,8 @@ namespace Core.Setup.WebApi
 
             hostBuilder.UseSerilog((context, config) => config.ReadFrom.Configuration(serilogConfig));
             hostBuilder.SetupAutofac(usedModules);
+
+            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
 
             return hostBuilder;
         }
@@ -43,7 +46,7 @@ namespace Core.Setup.WebApi
                 c.AddDefaultPolicy(builder =>
                 {
                     builder.AllowAnyMethod();
-                    builder.WithOrigins(config.Urls.Frontend.Substring(0, config.Urls.Frontend.Length - 1));
+                    builder.WithOrigins(config.FrontendURL.Substring(0, config.FrontendURL.Length - 1));
                     builder.AllowAnyHeader();
                 })
             );
@@ -69,13 +72,14 @@ namespace Core.Setup.WebApi
                 config = ConfigurationReader.Get();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.OAuthClientId(config.Authorization.ClientId));
+            app.UseSwaggerUI(c => c.OAuthClientId(config.OAuth2ClientId));
             app.UsePathBase(new PathString(urlPrefix));
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.ConfigureExceptionHandler();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             return config;

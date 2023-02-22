@@ -1,9 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DonationDetails } from './models/donation-details.interface';
+import { MyDonationService } from './services/my-donation.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-my-donation',
   templateUrl: './my-donation.component.html',
   styleUrls: ['./my-donation.component.scss'],
-  providers: []
+  providers: [MyDonationService]
 })
-export class MyDonationComponent { }
+export class MyDonationComponent implements OnInit {
+  public DateTime = DateTime;
+  public id!: string;
+  public donation!: DonationDetails<DateTime>;
+
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly service: MyDonationService,
+  ) { }
+
+  public ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id')!;
+    this.service.getDonation(this.id).subscribe(donation => this.donation = donation);
+  }
+
+  public getMapCoords(): { lat: number, lng: number } {
+    return {
+      lat: this.donation.warehouse.gpsLatitude,
+      lng: this.donation.warehouse.gpsLongitude
+    }
+  }
+}

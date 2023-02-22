@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { first, Observable } from 'rxjs';
+import { DbUser } from '../interfaces/db-user';
 
 export const POST_LOGIN_ROUTE_KEY = 'postLoginRoute';
 export const WANTS_TO_BE_LOGGED_IN_KEY = 'wantsToBeLoggedIn';
@@ -9,6 +10,7 @@ export const WANTS_TO_BE_LOGGED_IN_KEY = 'wantsToBeLoggedIn';
 export class AuthService {
 
     public isLoggedIn = false;
+    public dbUser!: DbUser;
 
     constructor(public readonly oidc: OidcSecurityService) { }
 
@@ -33,5 +35,9 @@ export class AuthService {
     public logout(): Observable<unknown> {
         localStorage.removeItem(WANTS_TO_BE_LOGGED_IN_KEY);
         return this.oidc.logoff().pipe(first());
+    }
+
+    public updateDbUser(details: DbUser): void {
+        this.dbUser = details;
     }
 }

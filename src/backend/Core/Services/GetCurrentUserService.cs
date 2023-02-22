@@ -29,7 +29,6 @@ namespace Core.Services
 
             if (userFromDatabase == null)
             {
-
                 _logger.LogError("User with email {email} was not found in table Auth0Users", auth0UserInfo.Email);
                 throw new ApplicationErrorException("Sorry we couldn't find your user in database");
             }

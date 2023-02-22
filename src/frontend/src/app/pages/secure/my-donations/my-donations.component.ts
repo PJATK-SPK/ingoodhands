@@ -13,13 +13,12 @@ import { DateTime } from 'luxon';
   ]
 })
 export class MyDonationsComponent implements OnInit {
-
   public DateTime = DateTime;
   public page = 1;
   public pageSize = 10;
-  public pagedResult: PagedResult<MyDonationsItem> | undefined;
+  public pagedResult: PagedResult<MyDonationsItem<DateTime>> | undefined;
 
-  constructor(private readonly service: MyDonationsService) { }
+  constructor(public readonly service: MyDonationsService) { }
 
   public getProductsText(count: number): string {
     return count > 1 ? `${count} products` : `${count} product`;

@@ -1,5 +1,9 @@
 name: "Build frontend"
 description: "Build and upload frontend artifact"
+inputs:
+  GOOGLE_MAPS_KEY:
+    description: 'Key for google maps api access'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -7,11 +11,12 @@ runs:
 
     - name: Install dependencies, build
       shell: bash
+      env:
+        GOOGLE_MAPS_KEY: ${{ inputs.GOOGLE_MAPS_KEY }}
       run: |          
         npm i -g @angular/cli
-        
         npm ci
-
+        sed -i "s/GOOGLE_MAPS_KEY_HERE/$GOOGLE_MAPS_KEY/g" src/environments/environment.prod.ts
         ng build --configuration=production
       working-directory: src/frontend
 
