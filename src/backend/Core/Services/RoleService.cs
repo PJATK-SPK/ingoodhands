@@ -47,6 +47,28 @@ namespace Core.Services
 
         public async Task AssertRole(RoleName roleName, long? userId = null)
         {
+            if (userId == null)
+            {
+                var currentUser = await GetCurrentUser();
+
+                if (!await HasRole(roleName, currentUser.Id))
+                {
+                    _logger.LogError("User doesn't have required role");
+                    throw new UnauthorizedException("Your user doesn't have requier role");
+                }
+            }
+            else
+            {
+                if (!await HasRole(roleName, userId))
+                {
+                    _logger.LogError("User doesn't have required role");
+                    throw new UnauthorizedException("Your user doesn't have requier role");
+                }
+            }
+        }
+
+        public async Task AssertRoleToUser(RoleName roleName, long? userId = null)
+        {
             var serviceUser = await _appDbContext.Users.SingleOrDefaultAsync(c => c.Email == DbConstants.ServiceUserEmail);
 
             if (userId == null)
