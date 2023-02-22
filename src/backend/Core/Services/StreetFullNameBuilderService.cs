@@ -1,7 +1,7 @@
 ﻿using Core.Database.Models.Core;
 using System.Text;
 
-namespace Core.Services.StreetFullNameBuilder
+namespace Core.Services
 {
     public static class StreetFullNameBuilderService
     {

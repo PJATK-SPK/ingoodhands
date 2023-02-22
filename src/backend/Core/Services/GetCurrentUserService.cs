@@ -6,20 +6,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core;
 
-namespace Auth.Actions.UserSettingsActions.GetUserDetails
+namespace Core.Services
 {
-    public class GetUserDetailsService
+    public class GetCurrentUserService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetUserDetailsService> _logger;
+        private readonly ILogger<GetCurrentUserService> _logger;
 
-        public GetUserDetailsService(AppDbContext appDbContext, ILogger<GetUserDetailsService> logger)
+        public GetCurrentUserService(AppDbContext appDbContext, ILogger<GetCurrentUserService> logger)
         {
             _appDbContext = appDbContext;
             _logger = logger;
         }
 
-        public async Task<User> GetCurrentUser(CurrentUserInfo auth0UserInfo)
+        public async Task<User> Execute(CurrentUserInfo auth0UserInfo)
         {
             var userFromDatabase = await _appDbContext.Users
                 .Include(c => c.Auth0Users!)

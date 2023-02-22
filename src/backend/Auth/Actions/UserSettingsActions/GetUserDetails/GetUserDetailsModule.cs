@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Auth.Services;
+using Autofac;
 using Core.Setup.Autofac;
 
 namespace Auth.Actions.UserSettingsActions.GetUserDetails
@@ -8,7 +9,6 @@ namespace Auth.Actions.UserSettingsActions.GetUserDetails
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<GetUserDetailsAction>();
-            builder.RegisterAsScoped<GetUserDetailsService>();
         }
     }
 }
