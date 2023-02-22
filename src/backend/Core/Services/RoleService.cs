@@ -109,7 +109,7 @@ namespace Core.Services
 
             if (user == null)
             {
-                _logger.LogError("Failed to get roles for user, because user was not found");
+                _logger.LogError("Failed to get roles for user, because User was not found");
                 throw new ApplicationErrorException("Sorry we couldn't find your user in database");
             }
 
