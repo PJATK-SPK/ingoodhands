@@ -224,7 +224,7 @@ namespace CoreTests.Services
 
 
         [TestMethod()]
-        public async Task AssertRole_UserHasId()
+        public async Task AssertRole_UserHasId_AddsRoleToDb()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -253,7 +253,7 @@ namespace CoreTests.Services
         }
 
         [TestMethod()]
-        public async Task AssertRole_UserWithoutId()
+        public async Task AssertRole_UserWithoutId_AddsRoleToDb()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
