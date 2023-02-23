@@ -37,7 +37,7 @@ namespace DonateTests.Services.GetWarehousesTest
             var result = await action.Execute();
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Value != null);
         }
     }
 }
