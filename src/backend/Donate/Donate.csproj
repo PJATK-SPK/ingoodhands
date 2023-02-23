@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.18.5" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<SonarQubeSetting Include="sonar.coverage.exclusions">
 			<Value>DonateModule.cs</Value>
 		</SonarQubeSetting>
