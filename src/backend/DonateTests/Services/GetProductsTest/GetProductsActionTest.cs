@@ -3,7 +3,7 @@ using Autofac;
 using Core.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
-using Donate.Actions.DonateForm.GetWarehouses;
+using Donate.Actions.DonateForm.GetProducts;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Setup.Auth0;
@@ -14,12 +14,11 @@ using System.Net;
 using Donate;
 using Core;
 using Core.Setup.Enums;
-using Donate.Actions.DonateForm.GetProducts;
 
-namespace DonateTests.Services.GetWarehousesTest
+namespace DonateTests.Services.GetProductsTest
 {
     [TestClass()]
-    public class GetWarehousesActionTests
+    public class GetProductsActionTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -28,15 +27,15 @@ namespace DonateTests.Services.GetWarehousesTest
         };
 
         [TestMethod()]
-        public async Task GetWarehousesActionTest_GetWarehouses_ReturnsWareHouses()
+        public async Task GetProductsActionTest_GeProducts_ReturnsProducts()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetWarehousesAction>();
+            var action = toolkit.Resolve<GetProductsAction>();
 
             // Act
             var executed = await action.Execute();
-            var result = executed.Value as List<GetWarehousesResponse>;
+            var result = executed.Value as List<GetProductsResponse>;
 
             // Assert
             Assert.IsTrue(result!.Any());

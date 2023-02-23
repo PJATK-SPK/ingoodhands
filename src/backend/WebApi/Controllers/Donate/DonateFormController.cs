@@ -1,3 +1,4 @@
+using Donate.Actions.DonateForm.GetProducts;
 using Donate.Actions.DonateForm.GetWarehouses;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -10,59 +11,19 @@ namespace WebApi.Controllers.Donate;
 public class DonateFormController : ControllerBase
 {
     private readonly GetWarehousesAction _getWarehousesAction;
+    private readonly GetProductsAction _getProductsAction;
 
-    public DonateFormController(GetWarehousesAction getWarehousesAction)
+    public DonateFormController(GetWarehousesAction getWarehousesAction, GetProductsAction getProductsService)
     {
         _getWarehousesAction = getWarehousesAction;
+        _getProductsAction = getProductsService;
     }
 
     [HttpGet("warehouses")]
     public async Task<ActionResult> GetWarehouses() => await _getWarehousesAction.Execute();
 
-
-    internal class DeleteMeGetProductsResponse
-    {
-        public string Id { get; set; } = default!; // ProductId
-        public string Name { get; set; } = default!;
-        public string Unit { get; set; } = default!;
-    }
     [HttpGet("products")]
-    public async Task<ActionResult> GetProducts()
-    {
-        return await Task.FromResult(Ok(new List<DeleteMeGetProductsResponse>
-        {
-            new DeleteMeGetProductsResponse
-            {
-               Id = "b786543g",
-               Name = "Fruits",
-               Unit = "kg"
-            },
-            new DeleteMeGetProductsResponse
-            {
-               Id = "754654s",
-               Name = "Water",
-               Unit = "l"
-            },
-            new DeleteMeGetProductsResponse
-            {
-               Id = "127343g",
-               Name = "Rice",
-               Unit = "kg"
-            },
-            new DeleteMeGetProductsResponse
-            {
-               Id = "bi4543g",
-               Name = "Milk",
-               Unit = "l"
-            },
-            new DeleteMeGetProductsResponse
-            {
-               Id = "basg3g",
-               Name = "Meat",
-               Unit = "kg"
-            }
-        }));
-    }
+    public async Task<ActionResult> GetProducts() => await _getProductsAction.Execute();
 
     public class DeleteMePerformDonatePayloadProduct
     {
