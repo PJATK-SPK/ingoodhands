@@ -28,7 +28,7 @@ namespace Donate.Actions.DonateForm.GetWarehouses
                 .Include(c => c.Address).ThenInclude(c => c.Country)
                 .Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToDynamicListAsync();
 
-            if (listOfWarehouses.Count == 0)
+            if (listOfWarehouses == null)
             {
                 _logger.LogError("Coudln't find any active warehouses in database");
                 throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
