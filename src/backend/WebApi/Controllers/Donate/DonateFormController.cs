@@ -1,3 +1,4 @@
+using Donate.Actions.DonateForm.GetWarehouses;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,46 +9,16 @@ namespace WebApi.Controllers.Donate;
 [Route("donate-form")]
 public class DonateFormController : ControllerBase
 {
-    internal class DeleteMeGetWarehousesResponse
+    private readonly GetWarehousesAction _getWarehousesAction;
+
+    public DonateFormController(GetWarehousesAction getWarehousesAction)
     {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!;
-        public string CountryName { get; set; } = default!;
-        public double GpsLatitude { get; set; }
-        public double GpsLongitude { get; set; }
-        public string City { get; set; } = default!;
-        public string PostalCode { get; set; } = default!;
-        public string Street { get; set; } = default!;
+        _getWarehousesAction = getWarehousesAction;
     }
+
     [HttpGet("warehouses")]
-    public async Task<ActionResult> GetWarehouses()
-    {
-        return await Task.FromResult(Ok(new List<DeleteMeGetWarehousesResponse>
-        {
-            new DeleteMeGetWarehousesResponse
-            {
-                CountryName = "Poland",
-                Id="1nnn675aV",
-                Name="PL001",
-                GpsLatitude=52.403324,
-                GpsLongitude=16.917781,
-                City="Kwidzyn",
-                Street="Jaworowa 3/5",
-                PostalCode="82-500"
-            },
-             new DeleteMeGetWarehousesResponse
-            {
-                CountryName = "France",
-                Id="856nn675aV",
-                Name="FR001",
-                GpsLatitude=12.403324,
-                GpsLongitude=26.917781,
-                City="Paris",
-                Street="Bleble 21",
-                PostalCode="123-321"
-            }
-        }));
-    }
+    public async Task<ActionResult> GetWarehouses() => await _getWarehousesAction.Execute();
+
 
     internal class DeleteMeGetProductsResponse
     {

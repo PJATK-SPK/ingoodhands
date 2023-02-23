@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
+using Donate.Actions.DonateForm.GetWarehouses;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
 using Donate.Shared;
@@ -17,7 +18,7 @@ namespace Donate
 
         private static void RegisterActions(ContainerBuilder builder)
         {
-            // Will be used in future
+            builder.RegisterModule<GetWarehousesModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
