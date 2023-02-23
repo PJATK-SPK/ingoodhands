@@ -14,6 +14,7 @@ using System.Net;
 using Donate;
 using Core;
 using Core.Setup.Enums;
+using Donate.Actions.DonateForm.GetProducts;
 
 namespace DonateTests.Services.GetWarehousesTest
 {
@@ -34,10 +35,11 @@ namespace DonateTests.Services.GetWarehousesTest
             var action = toolkit.Resolve<GetWarehousesAction>();
 
             // Act
-            var result = await action.Execute();
+            var executed = await action.Execute();
+            var result = executed.Value as List<GetWarehousesResponse>;
 
             // Assert
-            Assert.IsTrue(result.Value != null);
+            Assert.IsTrue(result!.Any());
         }
     }
 }

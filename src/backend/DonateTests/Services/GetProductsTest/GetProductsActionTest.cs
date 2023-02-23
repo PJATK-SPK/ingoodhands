@@ -34,10 +34,11 @@ namespace DonateTests.Services.GetProductsTest
             var action = toolkit.Resolve<GetProductsAction>();
 
             // Act
-            var result = await action.Execute();
+            var executed = await action.Execute();
+            var result = executed.Value as List<GetProductsResponse>;
 
             // Assert
-            Assert.IsTrue(result.Value != null);
+            Assert.IsTrue(result!.Any());
         }
     }
 }
