@@ -28,9 +28,9 @@ namespace Donate.Actions.DonateForm.GetWarehouses
                 .Include(c => c.Address).ThenInclude(c => c!.Country)
                 .Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToDynamicListAsync();
 
-            if (listOfWarehouses.Count == 0)
+            if (!listOfWarehouses.Any())
             {
-                _logger.LogError("Coudln't find any active warehouses in database");
+                _logger.LogError("Couldn't find any active warehouses in database");
                 throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
             }
 
@@ -43,11 +43,7 @@ namespace Donate.Actions.DonateForm.GetWarehouses
                 GpsLongitude = c.Address.GpsLongitude,
                 City = c.Address.City,
                 PostalCode = c.Address.PostalCode,
-                Street = StreetFullNameBuilderService.Build(
-                    c.Address.Street,
-                    c.Address.StreetNumber,
-                    c.Address.Apartment
-                    )
+                Street = StreetFullNameBuilderService.Build(c.Address)
             }).ToList();
 
             return response;

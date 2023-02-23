@@ -18,7 +18,7 @@ namespace Donate
 
         private static void RegisterActions(ContainerBuilder builder)
         {
-            builder.RegisterModule<GetWarehousesModulecs>();
+            builder.RegisterModule<GetWarehousesModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
