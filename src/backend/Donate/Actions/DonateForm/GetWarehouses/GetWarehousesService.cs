@@ -24,9 +24,10 @@ namespace Donate.Actions.DonateForm.GetWarehouses
 
         public async Task<List<GetWarehousesResponse>> GetActiveWarehouses()
         {
-            var listOfWarehouses = _appDbContext.Warehouses
+            var listOfWarehouses = await _appDbContext.Warehouses
                 .Include(c => c.Address).ThenInclude(c => c.Country)
-                .Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToList();
+                .Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToDynamicListAsync();
+
             if (listOfWarehouses.Count == 0)
             {
                 _logger.LogError("Coudln't find any active warehouses in database");
