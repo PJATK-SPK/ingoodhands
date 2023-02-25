@@ -73,7 +73,8 @@ namespace Donate.Actions.DonateForm.PerformDonate
                 Status = DbEntityStatus.Active
             }).ToList();
 
-            var donateName = _donateNameBuilderService.Build(_counterService.GetAndUpdateNextCounter("Donations"));
+            var nextCounterId = _counterService.GetAndUpdateNextCounter("Donations");
+            var donateName = _donateNameBuilderService.Build(nextCounterId.Result);
 
             var newDonation = new Donation
             {
