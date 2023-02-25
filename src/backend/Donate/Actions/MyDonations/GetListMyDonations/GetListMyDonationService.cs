@@ -46,8 +46,7 @@ namespace Donate.Actions.MyDonations.GetList
 
             if (!listOfDonations.Any())
             {
-                _logger.LogError("Couldn't find any donations peformed by user in database");
-                throw new ApplicationErrorException("Sorry, you haven't done any donations yet");
+                return new List<GetListMyDonationsItemResponse>();
             }
 
             var response = listOfDonations.Select(c => new GetListMyDonationsItemResponse
