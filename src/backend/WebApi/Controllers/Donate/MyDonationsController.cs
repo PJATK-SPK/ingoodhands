@@ -1,3 +1,5 @@
+using Donate.Actions.DonateForm.GetWarehouses;
+using Donate.Actions.MyDonations.GetList;
 using Donate.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -13,44 +15,15 @@ namespace WebApi.Controllers.Donate;
 [Route("my-donations")]
 public class MyDonationsController : ControllerBase
 {
-    public class DeleteMeMyDonationsResponseItem
+    private readonly GetListMyDonationAction _getListMyDonationAction;
+
+    public MyDonationsController(GetListMyDonationAction getListMyDonationAction)
     {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!; // DNT...
-        public int ProductsCount { get; set; } = default!;
-        public DateTime CreationDate { get; set; } = default!;
-        public bool IsDelivered { get; set; }
-        public bool IsExpired { get; set; }
+        _getListMyDonationAction = getListMyDonationAction;
     }
+
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize)
-    {
-        var appDbContextProducts = new List<DeleteMeMyDonationsResponseItem>
-        {
-            new DeleteMeMyDonationsResponseItem
-            {
-                Id="vb1232fe",
-                Name = "DNT000123",
-                ProductsCount = 10,
-                CreationDate = DateTime.Now.AddDays(-10),
-                IsDelivered = false,
-                IsExpired = true,
-            },
-            new DeleteMeMyDonationsResponseItem
-            {
-                Id="hn78232fe",
-                Name = "DNT000234",
-                ProductsCount = 3,
-                CreationDate = DateTime.Now.AddDays(-1),
-                IsDelivered = true,
-                IsExpired = false,
-            }
-        }.AsQueryable();
-
-        var result = appDbContextProducts.PageResult(page, pageSize);
-
-        return await Task.FromResult(Ok(result));
-    }
+    public async Task<ActionResult> GetList(int page, int pageSize) => await _getListMyDonationAction.Execute();
 
     [HttpGet("not-delivered-count")]
     public async Task<ActionResult> GetCountOfNotDelivered()
