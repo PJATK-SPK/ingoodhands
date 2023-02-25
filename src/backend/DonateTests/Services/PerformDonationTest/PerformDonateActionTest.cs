@@ -83,24 +83,24 @@ namespace DonateTests.Services.PerformDonationTest
 
             var product1 = new PerformDonateProductPayload
             {
-                Id = "B3zn3",
+                Id = toolkit.Hashids.EncodeLong(1),
                 Quantity = 5
             };
             var product2 = new PerformDonateProductPayload
             {
-                Id = "X3Mzy",
+                Id = toolkit.Hashids.EncodeLong(2),
                 Quantity = 10
             };
             var product3 = new PerformDonateProductPayload
             {
-                Id = "k30Ey",
+                Id = toolkit.Hashids.EncodeLong(3),
                 Quantity = 2
             };
 
             // Sample PerformDonatePayload instance with the above products
             var donatePayload = new PerformDonatePayload
             {
-                WarehouseId = "YlAdy",
+                WarehouseId = toolkit.Hashids.EncodeLong(4),
                 Products = new List<PerformDonateProductPayload>
                 {
                     product1,
