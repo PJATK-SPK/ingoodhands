@@ -1,5 +1,7 @@
 using Donate.Actions.DonateForm.GetProducts;
 using Donate.Actions.DonateForm.GetWarehouses;
+using Donate.Actions.DonateForm.PerformDonate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +14,14 @@ public class DonateFormController : ControllerBase
 {
     private readonly GetWarehousesAction _getWarehousesAction;
     private readonly GetProductsAction _getProductsAction;
+    private readonly PerformDonateAction _performDonateAction;
 
-    public DonateFormController(GetWarehousesAction getWarehousesAction, GetProductsAction getProductsService)
+
+    public DonateFormController(GetWarehousesAction getWarehousesAction, GetProductsAction getProductsService, PerformDonateAction performDonateAction)
     {
         _getWarehousesAction = getWarehousesAction;
         _getProductsAction = getProductsService;
+        _performDonateAction = performDonateAction;
     }
 
     [HttpGet("warehouses")]
@@ -25,21 +30,8 @@ public class DonateFormController : ControllerBase
     [HttpGet("products")]
     public async Task<ActionResult> GetProducts() => await _getProductsAction.Execute();
 
-    public class DeleteMePerformDonatePayloadProduct
-    {
-        public string Id { get; set; } = default!;
-        public int Quantity { get; set; }
-    }
-    public class DeleteMePerformDonatePayload
-    {
-        public string WarehouseId { get; set; } = default!;
-        public List<DeleteMePerformDonatePayloadProduct> Products { get; set; } = default!;
-    }
-    public class DeleteMePerformDonateResponse
-    {
-        public string DonateNumber { get; set; } = default!;
-    }
     [HttpPost]
-    public async Task<ActionResult> Donate([FromBody] DeleteMePerformDonatePayload payload)
-        => await Task.FromResult(Ok(new DeleteMePerformDonateResponse { DonateNumber = "DNT000001" }));
+    [Authorize]
+    public async Task<ActionResult> Donate([FromBody] PerformDonatePayload payload)
+        => await _performDonateAction.Execute(payload);
 }

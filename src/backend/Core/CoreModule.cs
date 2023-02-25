@@ -25,6 +25,7 @@ namespace Core
         {
             builder.RegisterAsScoped<GetCurrentUserService>();
             builder.RegisterAsScoped<RoleService>();
+            builder.RegisterAsScoped<CounterService>();
         }
     }
 }

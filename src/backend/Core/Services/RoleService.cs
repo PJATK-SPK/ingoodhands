@@ -54,7 +54,7 @@ namespace Core.Services
                 if (!await HasRole(roleName, currentUser.Id))
                 {
                     _logger.LogError("User doesn't have required role");
-                    throw new UnauthorizedException("Your user doesn't have requier role");
+                    throw new UnauthorizedException("Your user doesn't have required role");
                 }
             }
             else
@@ -62,7 +62,7 @@ namespace Core.Services
                 if (!await HasRole(roleName, userId))
                 {
                     _logger.LogError("User doesn't have required role");
-                    throw new UnauthorizedException("Your user doesn't have requier role");
+                    throw new UnauthorizedException("Your user doesn't have required role");
                 }
             }
         }
