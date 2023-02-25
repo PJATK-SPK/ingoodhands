@@ -12,7 +12,6 @@ namespace Donate.Actions.MyDonations.GetList
     public class GetListMyDonationService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetWarehousesService> _logger;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
         private readonly RoleService _roleService;
@@ -20,7 +19,6 @@ namespace Donate.Actions.MyDonations.GetList
 
         public GetListMyDonationService(
             AppDbContext appDbContext,
-            ILogger<GetWarehousesService> logger,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
             RoleService roleService,
@@ -28,7 +26,6 @@ namespace Donate.Actions.MyDonations.GetList
             )
         {
             _appDbContext = appDbContext;
-            _logger = logger;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _roleService = roleService;
