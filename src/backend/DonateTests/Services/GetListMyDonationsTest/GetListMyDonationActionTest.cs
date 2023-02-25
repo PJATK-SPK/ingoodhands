@@ -127,7 +127,7 @@ namespace DonateTests.Services.GetListMyDonationsTest
 
             // Assert
             Assert.IsTrue(result!.Any());
-            Assert.AreEqual(2, result!.Count());
+            Assert.AreEqual(2, result!.Count);
         }
     }
 }
