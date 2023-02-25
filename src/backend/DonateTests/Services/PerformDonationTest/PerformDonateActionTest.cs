@@ -83,24 +83,24 @@ namespace DonateTests.Services.PerformDonationTest
 
             var product1 = new PerformDonateProductPayload
             {
-                Id = "1",
+                Id = "B3zn3",
                 Quantity = 5
             };
             var product2 = new PerformDonateProductPayload
             {
-                Id = "2",
+                Id = "X3Mzy",
                 Quantity = 10
             };
             var product3 = new PerformDonateProductPayload
             {
-                Id = "3",
+                Id = "k30Ey",
                 Quantity = 2
             };
 
             // Sample PerformDonatePayload instance with the above products
             var donatePayload = new PerformDonatePayload
             {
-                WarehouseId = "4",
+                WarehouseId = "YlAdy",
                 Products = new List<PerformDonateProductPayload>
                 {
                     product1,

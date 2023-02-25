@@ -24,6 +24,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
         private readonly DonateNameBuilderService _donateNameBuilderService;
         private readonly RoleService _roleService;
         private readonly CounterService _counterService;
+        private readonly Hashids _hashids;
 
         public PerformDonateService(
             AppDbContext appDbContext,
@@ -32,7 +33,8 @@ namespace Donate.Actions.DonateForm.PerformDonate
             GetCurrentUserService getCurrentUserService,
             DonateNameBuilderService donateNameBuilderService,
             RoleService roleService,
-            CounterService counterService
+            CounterService counterService,
+            Hashids hashids
             )
         {
             _appDbContext = appDbContext;
@@ -42,6 +44,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
             _donateNameBuilderService = donateNameBuilderService;
             _roleService = roleService;
             _counterService = counterService;
+            _hashids = hashids;
         }
 
         public async Task<PerformDonateResponse> PerformDonation(PerformDonatePayload payload)
@@ -60,7 +63,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
 
             var listOfDonationProducts = payload.Products.Select(c => new DonationProduct
             {
-                ProductId = long.Parse(c.Id),
+                ProductId = _hashids.DecodeSingleLong(c.Id),
                 Quantity = c.Quantity,
                 UpdateUserId = UserSeeder.ServierUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
@@ -74,7 +77,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
             {
                 CreationUser = currentUser,
                 CreationDate = DateTime.UtcNow,
-                WarehouseId = long.Parse(payload.WarehouseId),
+                WarehouseId = _hashids.DecodeSingleLong(payload.WarehouseId),
                 Name = donateName,
                 IsExpired = false,
                 IsDelivered = false,

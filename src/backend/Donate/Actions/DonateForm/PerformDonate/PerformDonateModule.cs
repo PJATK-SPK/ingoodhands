@@ -15,9 +15,6 @@ namespace Donate.Actions.DonateForm.PerformDonate
         {
             builder.RegisterAsScoped<PerformDonateAction>();
             builder.RegisterAsScoped<PerformDonateService>();
-            builder.RegisterAsScoped<PerformDonatePayload>();
-            builder.RegisterAsScoped<PerformDonateProductPayload>();
-            builder.RegisterAsScoped<PerformDonateResponse>();
         }
     }
 }
