@@ -8,19 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Database.Extensions;
+using Core.Database.Enums;
 
 namespace Core.Database.Config.Models.Core
 {
-    public class CountersConfig<TBase> : IEntityTypeConfiguration<TBase>
-    where TBase : Counters
+    public class CounterConfig<TBase> : IEntityTypeConfiguration<TBase>
+    where TBase : Counter
     {
         public virtual void Configure(EntityTypeBuilder<TBase> builder)
         {
             new DbEntityConfig<TBase>().Configure(builder);
             builder.ToTable("counters", "core");
 
-            builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
-            builder.Property(c => c.Value).IsRequired().HasMaxLength(10);
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(50).HasConversion(c => c.ToString(), c => Enum.Parse<TableName>(c!)); ;
+            builder.Property(c => c.Value).IsRequired();
 
             builder.HasUniqueConstraint(c => c.Name);
         }

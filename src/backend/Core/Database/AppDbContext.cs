@@ -13,7 +13,7 @@ namespace Core.Database
         public DbSet<Auth0User> Auth0Users { get; set; } = default!;
         public DbSet<UserRole> UserRoles { get; set; } = default!;
         public DbSet<Role> Roles { get; set; } = default!;
-        public DbSet<Counters> Counters { get; set; } = default!;
+        public DbSet<Counter> Counters { get; set; } = default!;
         public DbSet<Country> Countries { get; set; } = default!;
         public DbSet<Address> Addresses { get; set; } = default!;
         public DbSet<Warehouse> Warehouses { get; set; } = default!;
@@ -55,7 +55,7 @@ namespace Core.Database
             AddressSeeder.Execute(modelBuilder);
             WarehouseSeeder.Execute(modelBuilder);
             ProductSeeder.Execute(modelBuilder);
-            CountersSeeder.Execute(modelBuilder);
+            CounterSeeder.Execute(modelBuilder);
         }
     }
 }

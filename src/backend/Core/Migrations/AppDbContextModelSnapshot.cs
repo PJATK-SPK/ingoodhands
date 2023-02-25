@@ -476,7 +476,7 @@ namespace Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Core.Counters", b =>
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -505,7 +505,6 @@ namespace Core.Migrations
                         .HasColumnName("updated_at");
 
                     b.Property<long>("Value")
-                        .HasMaxLength(10)
                         .HasColumnType("bigint")
                         .HasColumnName("value");
 
@@ -3609,7 +3608,7 @@ namespace Core.Migrations
                     b.Navigation("UpdateUser");
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Core.Counters", b =>
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
                 {
                     b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
                         .WithMany()

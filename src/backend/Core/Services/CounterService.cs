@@ -1,4 +1,5 @@
 ﻿using Core.Database;
+using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace Core.Services
             _logger = logger;
         }
 
-        public async Task<Counters> GetCounter(string tableName)
+        public async Task<Counter> GetCounter(TableName tableName)
         {
             var counterOfSpecifiedTable = await _appDbContext.Counters.SingleOrDefaultAsync(c => c.Name == tableName);
             if (counterOfSpecifiedTable == null)
@@ -33,7 +34,7 @@ namespace Core.Services
             return counterOfSpecifiedTable;
         }
 
-        public async Task<long> GetAndUpdateNextCounter(string tableName)
+        public async Task<long> GetAndUpdateNextCounter(TableName tableName)
         {
             var nextCounterOfSpecifiedTable = GetCounter(tableName);
             nextCounterOfSpecifiedTable.Result.Value++;

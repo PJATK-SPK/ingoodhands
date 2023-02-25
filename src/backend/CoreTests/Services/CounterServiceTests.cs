@@ -32,7 +32,7 @@ namespace CoreTests.Services
             var action = toolkit.Resolve<CounterService>();
 
             // Arrange
-            var donationTableName = "Donations";
+            var donationTableName = TableName.Donations;
 
             // Act
             var result = await action.GetCounter(donationTableName);
@@ -49,7 +49,7 @@ namespace CoreTests.Services
             var action = toolkit.Resolve<CounterService>();
 
             // Arrange
-            var donationTableName = "Donations";
+            var donationTableName = TableName.Donations;
 
             // Act
             var result = await action.GetAndUpdateNextCounter(donationTableName);

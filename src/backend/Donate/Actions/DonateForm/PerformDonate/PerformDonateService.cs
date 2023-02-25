@@ -48,13 +48,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
-            var hasRoleDonor = _roleService.HasRole(RoleName.Donor, currentUser.Id);
-
-            if (!hasRoleDonor.Result)
-            {
-                _logger.LogError("User does not have Donor Role to perform that action");
-                throw new UnauthorizedException("Sorry you don't have permission to perform that action");
-            }
+            await _roleService.ThrowIfNoRole(RoleName.Donor, currentUser.Id);
 
             var listOfProducts = await _appDbContext.Products.Where(c => c.Status == DbEntityStatus.Active).FromCache().ToDynamicListAsync();
 
@@ -73,7 +67,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
                 Status = DbEntityStatus.Active
             }).ToList();
 
-            var nextCounterId = _counterService.GetAndUpdateNextCounter("Donations");
+            var nextCounterId = _counterService.GetAndUpdateNextCounter(TableName.Donations);
             var donateName = _donateNameBuilderService.Build(nextCounterId.Result);
 
             var newDonation = new Donation

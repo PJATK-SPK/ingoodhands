@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230225112233_AddCounters")]
-    partial class AddCounters
+    [Migration("20230225141324_AddCounter")]
+    partial class AddCounter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -479,7 +479,7 @@ namespace Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Core.Counters", b =>
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -508,7 +508,6 @@ namespace Core.Migrations
                         .HasColumnName("updated_at");
 
                     b.Property<long>("Value")
-                        .HasMaxLength(10)
                         .HasColumnType("bigint")
                         .HasColumnName("value");
 
@@ -3612,7 +3611,7 @@ namespace Core.Migrations
                     b.Navigation("UpdateUser");
                 });
 
-            modelBuilder.Entity("Core.Database.Models.Core.Counters", b =>
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
                 {
                     b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
                         .WithMany()
