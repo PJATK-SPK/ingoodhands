@@ -33,12 +33,12 @@ namespace Core.Services
             return counterOfSpecifiedTable;
         }
 
-        public long GetAndUpdateNextCounter(string tableName)
+        public async Task<long> GetAndUpdateNextCounter(string tableName)
         {
             var nextCounterOfSpecifiedTable = GetCounter(tableName);
             nextCounterOfSpecifiedTable.Result.Value++;
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
             return nextCounterOfSpecifiedTable.Result.Value;
         }

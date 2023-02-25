@@ -52,7 +52,7 @@ namespace CoreTests.Services
             var donationTableName = "Donations";
 
             // Act
-            var result = action.GetAndUpdateNextCounter(donationTableName);
+            var result = await action.GetAndUpdateNextCounter(donationTableName);
 
             // Assert
             Assert.AreEqual(1, result);
