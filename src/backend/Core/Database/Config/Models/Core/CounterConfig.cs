@@ -20,7 +20,7 @@ namespace Core.Database.Config.Models.Core
             new DbEntityConfig<TBase>().Configure(builder);
             builder.ToTable("counters", "core");
 
-            builder.Property(c => c.Name).IsRequired().HasMaxLength(50).HasConversion(c => c.ToString(), c => Enum.Parse<TableName>(c!)); ;
+            builder.Property(c => c.Name).IsRequired().HasMaxLength(50).HasConversion(c => c.ToString(), c => Enum.Parse<TableName>(c!));
             builder.Property(c => c.Value).IsRequired();
 
             builder.HasUniqueConstraint(c => c.Name);
