@@ -16,24 +16,18 @@ namespace Donate.Actions.MyDonations.GetDetails
     public class GetMyDonationDetailsService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly GetCurrentUserService _getCurrentUserService;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
         private readonly ILogger<GetWarehousesService> _logger;
 
         public GetMyDonationDetailsService(
             AppDbContext appDbContext,
-            ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService,
             RoleService roleService,
             Hashids hashids,
             ILogger<GetWarehousesService> logger
             )
         {
             _appDbContext = appDbContext;
-            _currentUserService = currentUserService;
-            _getCurrentUserService = getCurrentUserService;
             _roleService = roleService;
             _hashids = hashids;
             _logger = logger;
@@ -41,44 +35,36 @@ namespace Donate.Actions.MyDonations.GetDetails
 
         public async Task<GetMyDonationDetailsResponse> GetMyDonationDetails(string id)
         {
-            var auth0UserInfo = await _currentUserService.GetUserInfo();
-            var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
-            await _roleService.ThrowIfNoRole(RoleName.Donor, currentUser.Id);
+            await _roleService.ThrowIfNoRole(RoleName.Donor);
             var decodedDonationId = _hashids.DecodeSingleLong(id);
 
-
-            var donationById = _appDbContext.Donations.SingleOrDefaultAsync(c => c.Id == decodedDonationId
-               && c.Status == DbEntityStatus.Active || c.Status == DbEntityStatus.Inactive);
+            var donationById = await _appDbContext.Donations
+                .Include(c => c.Products)!
+                    .ThenInclude(c => c.Product)
+                .Include(c => c.Warehouse)
+                    .ThenInclude(c => c!.Address)
+                        .ThenInclude(c => c!.Country)
+                .SingleOrDefaultAsync(c => c.Id == decodedDonationId);
 
             if (donationById == null)
             {
                 _logger.LogError("Couldn't find donation in database");
-                throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
+                throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
             }
-
-            var listOfDonationProducts = await _appDbContext.DonationProducts
-                .Include(c => c.Product)
-                .Where(c => c.Donation == donationById.Result
-                && c.Status == DbEntityStatus.Active).ToListAsync();
-
-            if (!listOfDonationProducts.Any())
+            if (!donationById.Products!.Any())
             {
                 _logger.LogError("Couldn't find any active products in database");
-                throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
+                throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
             }
 
-            var productResponse = listOfDonationProducts.Select(c => new GetMyDonationDetailsProductResponse
+            var productResponse = donationById.Products!.Select(c => new GetMyDonationDetailsProductResponse
             {
                 Name = c.Product!.Name,
                 Quantity = c.Quantity,
-                Unit = c.Product.Unit.ToString()
+                Unit = c.Product.Unit.ToString().ToLower()
             }).ToList();
 
-            var warehouseById = await _appDbContext.Warehouses
-              .Include(c => c.Address).ThenInclude(c => c!.Country)
-              .SingleOrDefaultAsync(c => c.Id == donationById.Result!.WarehouseId);
-
-            if (warehouseById == null)
+            if (donationById.Warehouse == null)
             {
                 _logger.LogError("Couldn't find warehouse in database");
                 throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
@@ -87,21 +73,21 @@ namespace Donate.Actions.MyDonations.GetDetails
             var response = new GetMyDonationDetailsResponse
             {
                 Id = _hashids.EncodeLong(donationById.Id),
-                Name = donationById.Result!.Name,
-                CreationDate = donationById.Result.CreationDate,
-                ExpireDate = ExpireDateService.GetExpiredDate4Donation(donationById.Result.CreationDate),
-                IsDelivered = donationById.Result.IsDelivered,
-                IsExpired = donationById.Result.IsExpired,
+                Name = donationById.Name,
+                CreationDate = donationById.CreationDate,
+                ExpireDate = ExpireDateService.GetExpiredDate4Donation(donationById.CreationDate),
+                IsDelivered = donationById.IsDelivered,
+                IsExpired = donationById.IsExpired,
                 Warehouse = new GetMyDonationDetailsWarehouseResponse
                 {
-                    Id = _hashids.EncodeLong(warehouseById.Id),
-                    Name = warehouseById.ShortName,
-                    CountryName = warehouseById.Address!.Country!.EnglishName,
-                    GpsLatitude = warehouseById.Address.GpsLatitude,
-                    GpsLongitude = warehouseById.Address.GpsLongitude,
-                    City = warehouseById.Address.City,
-                    PostalCode = warehouseById.Address.PostalCode,
-                    Street = StreetFullNameBuilderService.Build(warehouseById.Address)
+                    Id = _hashids.EncodeLong(donationById.Warehouse.Id),
+                    Name = donationById.Warehouse.ShortName,
+                    CountryName = donationById.Warehouse.Address!.Country!.EnglishName,
+                    GpsLatitude = donationById.Warehouse.Address.GpsLatitude,
+                    GpsLongitude = donationById.Warehouse.Address.GpsLongitude,
+                    City = donationById.Warehouse.Address.City,
+                    PostalCode = donationById.Warehouse.Address.PostalCode,
+                    Street = StreetFullNameBuilderService.Build(donationById.Warehouse.Address)
                 },
                 Products = productResponse
             };

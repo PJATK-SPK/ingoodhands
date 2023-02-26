@@ -6,7 +6,7 @@ namespace Core.Database.Seeders
 {
     public static class UserSeeder
     {
-        public static readonly User ServierUser = new()
+        public static readonly User ServiceUser = new()
         {
             Id = 1,
             Status = DbEntityStatus.Active,
@@ -17,7 +17,7 @@ namespace Core.Database.Seeders
 
         public static void Execute(ModelBuilder builder)
         {
-            builder.Entity<User>().HasData(ServierUser);
+            builder.Entity<User>().HasData(ServiceUser);
         }
     }
 }

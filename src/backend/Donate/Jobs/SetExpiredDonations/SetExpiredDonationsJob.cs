@@ -22,7 +22,7 @@ namespace Donate.Jobs.SetExpiredDonations
 
             foreach (var toFix in donationsToFix)
             {
-                toFix.UpdateDbEntity(UserSeeder.ServierUser.Id);
+                toFix.UpdateDbEntity(UserSeeder.ServiceUser.Id);
                 toFix.IsExpired = true;
                 toFix.Status = DbEntityStatus.Inactive;
             }
