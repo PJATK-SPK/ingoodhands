@@ -133,7 +133,7 @@ namespace DonateTests.Services.GetMyDonationDetailsActionTest
             var result = executed.Value as GetMyDonationDetailsResponse;
 
             // Assert
-            Assert.AreEqual("DNT000001", result.Name);
+            Assert.AreEqual("DNT000001", result!.Name);
             Assert.AreEqual(2, result.Products.Count);
         }
     }
