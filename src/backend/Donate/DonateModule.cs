@@ -28,7 +28,7 @@ namespace Donate
             builder.RegisterModule<PerformDonateModule>();
             builder.RegisterModule<GetListMyDonationModule>();
             builder.RegisterModule<GetMyDonationDetailsModule>();
-            builder.RegisterAsScoped<GetNotDeliveredCountAction>();
+            builder.RegisterModule<GetNotDeliveredCountModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
