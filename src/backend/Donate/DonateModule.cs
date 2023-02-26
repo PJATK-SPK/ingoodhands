@@ -5,6 +5,7 @@ using Donate.Actions.DonateForm.GetWarehouses;
 using Donate.Actions.DonateForm.PerformDonate;
 using Donate.Actions.MyDonations.GetDetails;
 using Donate.Actions.MyDonations.GetListMyDonations;
+using Donate.Actions.MyDonations.GetNotDeliveredCount;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
 using Donate.Shared;
@@ -27,6 +28,7 @@ namespace Donate
             builder.RegisterModule<PerformDonateModule>();
             builder.RegisterModule<GetListMyDonationModule>();
             builder.RegisterModule<GetMyDonationDetailsModule>();
+            builder.RegisterAsScoped<GetNotDeliveredCountAction>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
