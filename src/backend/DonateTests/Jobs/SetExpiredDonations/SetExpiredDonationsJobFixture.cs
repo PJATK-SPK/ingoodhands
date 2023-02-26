@@ -1,6 +1,7 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
+using Donate.Shared;
 
 namespace DonateTests.Jobs.SetExpiredDonations
 {
@@ -11,6 +12,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
             CreationDate = DateTime.UtcNow.AddDays(-5),
             CreationUserId = UserSeeder.ServierUser.Id,
             IsDelivered = false,
+            ExpirationDate = ExpireDateService.GetExpiredDate4Donation(DateTime.UtcNow.AddDays(-5)),
             IsExpired = false,
             IsIncludedInStock = false,
             Name = name,

@@ -39,8 +39,11 @@ namespace DonateTests.Jobs.SetExpiredDonations
             donation31DaysDelivered.IsDelivered = true;
             donation5DaysDelivered.IsDelivered = true;
             donation31DaysDelivered.CreationDate = DateTime.UtcNow.AddDays(-offset);
+            donation31DaysDelivered.ExpirationDate = DateTime.UtcNow.AddDays(-1);
             donation31DaysNotDelivered.CreationDate = DateTime.UtcNow.AddDays(-offset);
+            donation31DaysNotDelivered.ExpirationDate = DateTime.UtcNow.AddDays(-1);
             donation31DaysExpired.CreationDate = DateTime.UtcNow.AddDays(-offset);
+            donation31DaysExpired.ExpirationDate = DateTime.UtcNow.AddDays(-1);
             donation31DaysExpired.IsExpired = true;
             donation31DaysExpired.Status = DbEntityStatus.Inactive;
 

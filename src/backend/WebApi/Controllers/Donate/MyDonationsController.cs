@@ -1,4 +1,5 @@
 using Donate.Actions.DonateForm.GetWarehouses;
+using Donate.Actions.MyDonations.GetDetails;
 using Donate.Actions.MyDonations.GetList;
 using Donate.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +17,12 @@ namespace WebApi.Controllers.Donate;
 public class MyDonationsController : ControllerBase
 {
     private readonly GetListMyDonationAction _getListMyDonationAction;
+    private readonly GetMyDonationDetailsAction _getMyDonationDetailsAction;
 
-    public MyDonationsController(GetListMyDonationAction getListMyDonationAction)
+    public MyDonationsController(GetListMyDonationAction getListMyDonationAction, GetMyDonationDetailsAction getMyDonationDetailsAction)
     {
         _getListMyDonationAction = getListMyDonationAction;
+        _getMyDonationDetailsAction = getMyDonationDetailsAction;
     }
 
     [HttpGet]
@@ -29,71 +32,44 @@ public class MyDonationsController : ControllerBase
     public async Task<ActionResult> GetCountOfNotDelivered()
         => await Task.FromResult(Ok(new { Count = 3 }));
 
-    public class DeleteMeMyDonationDetailsProductResponse
-    {
-        public string Name { get; set; } = default!; // Apple
-        public int Quantity { get; set; }
-        public string Unit { get; set; } = default!;
-    }
-    public class DeleteMeMyDonationDetailsWarehouseResponse
-    {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!;
-        public string CountryName { get; set; } = default!;
-        public double GpsLatitude { get; set; }
-        public double GpsLongitude { get; set; }
-        public string City { get; set; } = default!;
-        public string PostalCode { get; set; } = default!;
-        public string Street { get; set; } = default!;
-    }
-    public class DeleteMeMyDonationDetailsResponse
-    {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!; // DNT...
-        public DateTime CreationDate { get; set; } = default!;
-        public DateTime ExpireDate { get; set; } = default!;
-        public bool IsDelivered { get; set; }
-        public bool IsExpired { get; set; }
-        public DeleteMeMyDonationDetailsWarehouseResponse Warehouse { get; set; } = default!;
-        public List<DeleteMeMyDonationDetailsProductResponse> Products { get; set; } = default!;
-    }
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetDetails(string id)
-        => await Task.FromResult(Ok(new DeleteMeMyDonationDetailsResponse
-        {
-            Id = "b743E4G",
-            Name = "DNT000123",
-            CreationDate = DateTime.Now.AddDays(-5),
-            ExpireDate = ExpireDateService.GetExpiredDate4Donation(DateTime.Now.AddDays(-5)),
-            IsDelivered = RandomNumberGenerator.GetInt32(0, 2) != 0,
-            IsExpired = RandomNumberGenerator.GetInt32(0, 2) != 0,
-            Warehouse = new DeleteMeMyDonationDetailsWarehouseResponse
-            {
-                CountryName = "Poland",
-                Id = "asj65n87",
-                Name = "PL001",
-                GpsLatitude = 52.403324,
-                GpsLongitude = 16.917781,
-                City = "Kwidzyn",
-                Street = "Jaworowa 3/5",
-                PostalCode = "82-500"
-            },
-            Products = new List<DeleteMeMyDonationDetailsProductResponse>
-            {
-                 new DeleteMeMyDonationDetailsProductResponse
-                 {
-                      Name = "Rice",
-                      Quantity = 1,
-                      Unit = "kg",
-                 },
-                 new DeleteMeMyDonationDetailsProductResponse
-                 {
-                      Name = "Milk",
-                      Quantity = 15,
-                      Unit = "l",
-                 }
-            }
-        }));
+    public async Task<ActionResult> GetDetails(string id) => await _getMyDonationDetailsAction.Execute(id);
+
+    //Task.FromResult(Ok(new MyDonationDetailsResponse
+    //{
+    //    Id = "b743E4G",
+    //    Name = "DNT000123",
+    //    CreationDate = DateTime.Now.AddDays(-5),
+    //    ExpireDate = ExpireDateService.GetExpiredDate4Donation(DateTime.Now.AddDays(-5)),
+    //    IsDelivered = RandomNumberGenerator.GetInt32(0, 2) != 0,
+    //    IsExpired = RandomNumberGenerator.GetInt32(0, 2) != 0,
+    //    Warehouse = new MyDonationDetailsWarehouseResponse
+    //    {
+    //        CountryName = "Poland",
+    //        Id = "asj65n87",
+    //        Name = "PL001",
+    //        GpsLatitude = 52.403324,
+    //        GpsLongitude = 16.917781,
+    //        City = "Kwidzyn",
+    //        Street = "Jaworowa 3/5",
+    //        PostalCode = "82-500"
+    //    },
+    //    Products = new List<MyDonationDetailsProductResponse>
+    //    {
+    //         new MyDonationDetailsProductResponse
+    //         {
+    //              Name = "Rice",
+    //              Quantity = 1,
+    //              Unit = "kg",
+    //         },
+    //         new MyDonationDetailsProductResponse
+    //         {
+    //              Name = "Milk",
+    //              Quantity = 15,
+    //              Unit = "l",
+    //         }
+    //    }
+    //}));
 
     [HttpGet("score")]
     public async Task<ActionResult> GetScore()

@@ -18,8 +18,7 @@ namespace Donate.Jobs.SetExpiredDonations
 
         public async Task<ActionResult> Execute()
         {
-            var expirationDate = ExpireDateService.GetExpiredDate4Today();
-            var donationsToFix = await _context.Donations.Where(c => expirationDate > c.CreationDate && !c.IsExpired && !c.IsDelivered).ToListAsync();
+            var donationsToFix = await _context.Donations.Where(c => c.ExpirationDate < DateTime.UtcNow && !c.IsExpired && !c.IsDelivered).ToListAsync();
 
             foreach (var toFix in donationsToFix)
             {
