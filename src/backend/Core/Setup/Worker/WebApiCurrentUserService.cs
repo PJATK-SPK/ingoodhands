@@ -7,21 +7,21 @@ namespace Core.Setup.WebApi.Worker
     {
         private readonly CurrentUserInfo _currentUserInfo = new()
         {
-            Email = UserSeeder.ServierUser.Email,
+            Email = UserSeeder.ServiceUser.Email,
             EmailVerified = true,
-            FamilyName = UserSeeder.ServierUser.LastName,
-            GivenName = UserSeeder.ServierUser.FirstName,
+            FamilyName = UserSeeder.ServiceUser.LastName,
+            GivenName = UserSeeder.ServiceUser.FirstName,
             Locale = "pl-PL",
-            Name = UserSeeder.ServierUser.FirstName,
-            Nickname = UserSeeder.ServierUser.FirstName,
+            Name = UserSeeder.ServiceUser.FirstName,
+            Nickname = UserSeeder.ServiceUser.FirstName,
             PictureURL = "",
-            Identifier = UserSeeder.ServierUser.FirstName,
+            Identifier = UserSeeder.ServiceUser.FirstName,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
         };
 
         public string GetUserAuthIdentifier() => "Service";
 
-        public string GetUserEmail() => UserSeeder.ServierUser.Email;
+        public string GetUserEmail() => UserSeeder.ServiceUser.Email;
 
         public Task<CurrentUserInfo> GetUserInfo() => Task.FromResult(_currentUserInfo);
     }

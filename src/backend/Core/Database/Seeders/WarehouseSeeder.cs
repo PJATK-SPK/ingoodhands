@@ -12,7 +12,7 @@ namespace Core.Database.Seeders
             Id = 1,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "PL001",
             AddressId = AddressSeeder.Address1Poland.Id
         };
@@ -22,7 +22,7 @@ namespace Core.Database.Seeders
             Id = 2,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "PL002",
             AddressId = AddressSeeder.Address2Poland.Id
         };
@@ -32,7 +32,7 @@ namespace Core.Database.Seeders
             Id = 3,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "PL003",
             AddressId = AddressSeeder.Address3Poland.Id
         };
@@ -42,7 +42,7 @@ namespace Core.Database.Seeders
             Id = 4,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "DE001",
             AddressId = AddressSeeder.Address4Germany.Id
         };
@@ -52,7 +52,7 @@ namespace Core.Database.Seeders
             Id = 5,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "DE002",
             AddressId = AddressSeeder.Address5Germany.Id
         };
@@ -62,7 +62,7 @@ namespace Core.Database.Seeders
             Id = 6,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "HU001",
             AddressId = AddressSeeder.Address6Hungary.Id
         };
@@ -72,7 +72,7 @@ namespace Core.Database.Seeders
             Id = 7,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "CZ001",
             AddressId = AddressSeeder.Address7Czech.Id
         };
@@ -82,7 +82,7 @@ namespace Core.Database.Seeders
             Id = 8,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "FR001",
             AddressId = AddressSeeder.Address8France.Id
         };
@@ -92,7 +92,7 @@ namespace Core.Database.Seeders
             Id = 9,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "FR002",
             AddressId = AddressSeeder.Address9France.Id
         };

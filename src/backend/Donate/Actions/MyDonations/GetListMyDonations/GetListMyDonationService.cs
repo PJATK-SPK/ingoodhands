@@ -54,7 +54,7 @@ namespace Donate.Actions.MyDonations.GetList
                 CreationDate = DateTime.UtcNow,
                 IsDelivered = true,
                 IsExpired = false
-            }).ToList();
+            }).OrderByDescending(c => c.CreationDate).ToList();
 
             return response;
         }

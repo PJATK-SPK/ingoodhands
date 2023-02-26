@@ -14,6 +14,7 @@ namespace Core.Database.Models.Core
         public long WarehouseId { get; set; }
         public Warehouse? Warehouse { get; set; }
         public string Name { get; set; } = default!;
+        public DateTime ExpirationDate { get; set; }
         public bool IsExpired { get; set; }
         public bool IsDelivered { get; set; }
         public bool IsIncludedInStock { get; set; }

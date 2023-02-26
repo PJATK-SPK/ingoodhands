@@ -97,7 +97,7 @@ namespace DonateTests.Services.GetListMyDonationsTest
                 IsExpired = false,
                 IsDelivered = false,
                 IsIncludedInStock = false,
-                UpdateUserId = UserSeeder.ServierUser.Id,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 Status = DbEntityStatus.Active
             };
@@ -114,7 +114,7 @@ namespace DonateTests.Services.GetListMyDonationsTest
                 IsExpired = false,
                 IsDelivered = false,
                 IsIncludedInStock = false,
-                UpdateUserId = UserSeeder.ServierUser.Id,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 Status = DbEntityStatus.Active
             };

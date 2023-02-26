@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Z.EntityFramework.Plus;
 using System.Linq.Dynamic.Core;
 using Core.Database.Seeders;
+using Donate.Shared;
 
 namespace Donate.Actions.DonateForm.PerformDonate
 {
@@ -65,7 +66,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
             {
                 ProductId = _hashids.DecodeSingleLong(c.Id),
                 Quantity = c.Quantity,
-                UpdateUserId = UserSeeder.ServierUser.Id,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 Status = DbEntityStatus.Active
             }).ToList();
@@ -79,11 +80,12 @@ namespace Donate.Actions.DonateForm.PerformDonate
                 CreationDate = DateTime.UtcNow,
                 WarehouseId = _hashids.DecodeSingleLong(payload.WarehouseId),
                 Name = donateName,
+                ExpirationDate = ExpireDateService.GetExpiredDate4Donation(DateTime.UtcNow),
                 IsExpired = false,
                 IsDelivered = false,
                 IsIncludedInStock = true,
                 Products = listOfDonationProducts,
-                UpdateUserId = UserSeeder.ServierUser.Id,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
                 Status = DbEntityStatus.Active
             };

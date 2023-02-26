@@ -17,7 +17,7 @@ namespace Core.Database.Seeders
             Id = 1,
             Name = TableName.Donations,
             Value = 0,
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
             Status = DbEntityStatus.Active
         };
