@@ -75,7 +75,7 @@ namespace Donate.Actions.MyDonations.GetDetails
                 Id = _hashids.EncodeLong(donationById.Id),
                 Name = donationById.Name,
                 CreationDate = donationById.CreationDate,
-                ExpireDate = ExpireDateService.GetExpiredDate4Donation(donationById.CreationDate),
+                ExpireDate = donationById.ExpirationDate,
                 IsDelivered = donationById.IsDelivered,
                 IsExpired = donationById.IsExpired,
                 Warehouse = new GetMyDonationDetailsWarehouseResponse
