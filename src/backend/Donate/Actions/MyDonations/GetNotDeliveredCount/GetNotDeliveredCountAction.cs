@@ -21,7 +21,7 @@ namespace Donate.Actions.MyDonations.GetNotDeliveredCount
         public async Task<OkObjectResult> Execute()
         {
             var numberOfNotDeliveredDonations = await _appDbContext.Donations
-                .Where(c => c.IsDelivered == false && c.IsExpired == false)
+                .Where(c => !c.IsDelivered && !c.IsExpired)
                 .CountAsync();
 
             return new OkObjectResult(numberOfNotDeliveredDonations);
