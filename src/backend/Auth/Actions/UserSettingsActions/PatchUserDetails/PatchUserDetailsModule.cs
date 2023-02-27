@@ -8,7 +8,6 @@ namespace Auth.Actions.UserSettingsActions.PatchUserDetails
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<PatchUserDetailsAction>();
-            builder.RegisterAsScoped<PatchUserDetailsPayload>();
             builder.RegisterAsScoped<PatchUserDetailsService>();
             builder.RegisterAsScoped<PatchUserDetailsPayloadValidator>();
         }

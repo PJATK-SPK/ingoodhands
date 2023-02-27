@@ -5,7 +5,7 @@ using Donate.Services.DonateNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace DonateTests.Service.DonateNameBuilderTests
+namespace DonateTests.Services.DonateNameBuilder
 {
     [TestClass()]
     public class DonateNameBuilderServiceTest

@@ -17,7 +17,7 @@ namespace Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -473,6 +473,62 @@ namespace Core.Migrations
                             StreetNumber = "7",
                             UpdateUserId = 1L,
                             UpdatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<long?>("UpdateUserId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
+                        .HasColumnName("update_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("pk_counters");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_counters_name");
+
+                    b.HasIndex("UpdateUserId")
+                        .HasDatabaseName("ix_counters_update_user_id");
+
+                    b.ToTable("counters", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Donations",
+                            Status = 0,
+                            UpdateUserId = 1L,
+                            UpdatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Value = 0L
                         });
                 });
 
@@ -3022,6 +3078,10 @@ namespace Core.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("creation_user_id");
 
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expiration_date");
+
                     b.Property<bool>("IsDelivered")
                         .HasColumnType("boolean")
                         .HasColumnName("is_delivered");
@@ -3548,6 +3608,18 @@ namespace Core.Migrations
                         .HasConstraintName("fk_addresses_users_update_user_id");
 
                     b.Navigation("Country");
+
+                    b.Navigation("UpdateUser");
+                });
+
+            modelBuilder.Entity("Core.Database.Models.Core.Counter", b =>
+                {
+                    b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_counters_users_update_user_id");
 
                     b.Navigation("UpdateUser");
                 });

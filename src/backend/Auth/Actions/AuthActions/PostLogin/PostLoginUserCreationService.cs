@@ -28,7 +28,7 @@ namespace Auth.Actions.AuthActions.PostLogin
             if (serviceUser == null)
             {
                 _logger.LogError("Service user was not found in database!");
-                throw new ApplicationErrorException("Sorry there seems to be a problem with our service. Please contact server administrator.");
+                throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
             }
 
             if (user == null && auth0UserFromDatabase == null)
@@ -88,13 +88,11 @@ namespace Auth.Actions.AuthActions.PostLogin
                 FirstName = currentAuth0UserInfo.GivenName!,
                 LastName = currentAuth0UserInfo.FamilyName,
                 Nickname = currentAuth0UserInfo.Nickname!,
-                UpdateUser = serviceUser,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Email = currentAuth0UserInfo.Email!,
                 Identifier = currentAuth0UserInfo.Identifier!,
-                User = user,
-                UserId = user.Id
+                User = user
             };
         }
 
@@ -125,8 +123,6 @@ namespace Auth.Actions.AuthActions.PostLogin
             return new UserRole
             {
                 User = user,
-                UserId = user.Id,
-                UpdateUser = serviceUser,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active

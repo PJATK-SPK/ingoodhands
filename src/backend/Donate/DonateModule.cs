@@ -1,5 +1,12 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
+using Donate.Actions.DonateForm.GetProducts;
+using Donate.Actions.DonateForm.GetWarehouses;
+using Donate.Actions.DonateForm.PerformDonate;
+using Donate.Actions.MyDonations.GetDetails;
+using Donate.Actions.MyDonations.GetListMyDonations;
+using Donate.Actions.MyDonations.GetNotDeliveredCount;
+using Donate.Actions.MyDonations.GetScore;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
 using Donate.Shared;
@@ -17,7 +24,13 @@ namespace Donate
 
         private static void RegisterActions(ContainerBuilder builder)
         {
-            // Will be used in future
+            builder.RegisterModule<GetWarehousesModule>();
+            builder.RegisterModule<GetProductsModule>();
+            builder.RegisterModule<PerformDonateModule>();
+            builder.RegisterModule<GetListMyDonationModule>();
+            builder.RegisterModule<GetMyDonationDetailsModule>();
+            builder.RegisterModule<GetNotDeliveredCountModule>();
+            builder.RegisterModule<GetScoreModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)

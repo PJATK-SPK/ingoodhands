@@ -48,6 +48,7 @@
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.25" />
+		<PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.18.5" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -57,25 +58,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Configuration\environment.json">
+		<None Update="Configuration\Default\config.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Configuration\Local\config.json">
+		<None Update="Configuration\Default\serilog-api.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Configuration\Local\serilog-api.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Local\serilog-service.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\config.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\serilog-api.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Configuration\Prd\serilog-service.json">
+		<None Update="Configuration\Default\serilog-service.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="start.html">

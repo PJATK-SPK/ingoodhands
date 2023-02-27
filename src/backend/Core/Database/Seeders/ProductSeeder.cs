@@ -12,7 +12,7 @@ namespace Core.Database.Seeders
             Name = "Rice",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -22,7 +22,7 @@ namespace Core.Database.Seeders
             Name = "Pasta",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -32,7 +32,7 @@ namespace Core.Database.Seeders
             Name = "Cereals",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -42,7 +42,7 @@ namespace Core.Database.Seeders
             Name = "Groats",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -52,7 +52,7 @@ namespace Core.Database.Seeders
             Name = "Walnuts",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -62,7 +62,7 @@ namespace Core.Database.Seeders
             Name = "Delicacies",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -72,7 +72,7 @@ namespace Core.Database.Seeders
             Name = "Flour",
             Unit = UnitType.Kg,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -82,7 +82,7 @@ namespace Core.Database.Seeders
             Name = "Water",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -92,7 +92,7 @@ namespace Core.Database.Seeders
             Name = "Milk",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -102,7 +102,7 @@ namespace Core.Database.Seeders
             Name = "Bubble bath",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -112,7 +112,7 @@ namespace Core.Database.Seeders
             Name = "Juice",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -122,7 +122,7 @@ namespace Core.Database.Seeders
             Name = "Energy drink",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -132,7 +132,7 @@ namespace Core.Database.Seeders
             Name = "Soup",
             Unit = UnitType.L,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -142,7 +142,7 @@ namespace Core.Database.Seeders
             Name = "Canned food",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -152,7 +152,7 @@ namespace Core.Database.Seeders
             Name = "Toothbrushes",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -162,7 +162,7 @@ namespace Core.Database.Seeders
             Name = "Diapers",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -172,7 +172,7 @@ namespace Core.Database.Seeders
             Name = "Disinfectants",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -182,7 +182,7 @@ namespace Core.Database.Seeders
             Name = "Toilet paper",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
@@ -192,7 +192,7 @@ namespace Core.Database.Seeders
             Name = "Medicines",
             Unit = UnitType.Pcs,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServierUser.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             Status = DbEntityStatus.Active
         };
 
