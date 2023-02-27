@@ -2,6 +2,7 @@ using Donate.Actions.DonateForm.GetWarehouses;
 using Donate.Actions.MyDonations.GetDetails;
 using Donate.Actions.MyDonations.GetList;
 using Donate.Actions.MyDonations.GetNotDeliveredCount;
+using Donate.Actions.MyDonations.GetScore;
 using Donate.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -20,12 +21,14 @@ public class MyDonationsController : ControllerBase
     private readonly GetListMyDonationAction _getListMyDonationAction;
     private readonly GetMyDonationDetailsAction _getMyDonationDetailsAction;
     private readonly GetNotDeliveredCountAction _getNotDeliveredCountAction;
+    private readonly GetScoreAction _getScoreAction;
 
-    public MyDonationsController(GetListMyDonationAction getListMyDonationAction, GetMyDonationDetailsAction getMyDonationDetailsAction, GetNotDeliveredCountAction getNotDeliveredCountAction)
+    public MyDonationsController(GetListMyDonationAction getListMyDonationAction, GetMyDonationDetailsAction getMyDonationDetailsAction, GetNotDeliveredCountAction getNotDeliveredCountAction, GetScoreAction getScoreAction)
     {
         _getListMyDonationAction = getListMyDonationAction;
         _getMyDonationDetailsAction = getMyDonationDetailsAction;
         _getNotDeliveredCountAction = getNotDeliveredCountAction;
+        _getScoreAction = getScoreAction;
     }
 
     [HttpGet]
@@ -38,5 +41,5 @@ public class MyDonationsController : ControllerBase
     public async Task<ActionResult> GetDetails(string id) => await _getMyDonationDetailsAction.Execute(id);
 
     [HttpGet("score")]
-    public async Task<ActionResult> GetScore() => await Task.FromResult(Ok(new { Score = 1734 }));
+    public async Task<ActionResult> GetScore() => await _getScoreAction.Execute();
 }

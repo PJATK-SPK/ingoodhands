@@ -15,7 +15,7 @@ using Donate;
 using Core;
 using Core.Setup.Enums;
 
-namespace DonateTests.Services.GetProductsTest
+namespace DonateTests.Services.GetProductsActionTest
 {
     [TestClass()]
     public class GetProductsActionTest
