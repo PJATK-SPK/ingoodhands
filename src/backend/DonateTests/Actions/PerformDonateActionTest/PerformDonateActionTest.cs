@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TestsBase;
 
-namespace DonateTests.Services.PerformDonationTest
+namespace DonateTests.Services.PerformDonateActionTest
 {
     [TestClass()]
     public class PerformDonateActionTest
