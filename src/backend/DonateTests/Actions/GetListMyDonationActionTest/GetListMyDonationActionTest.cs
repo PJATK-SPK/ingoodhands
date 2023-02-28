@@ -17,6 +17,7 @@ using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Setup.Auth0;
 using Core.Database.Seeders;
+using System.Linq.Dynamic.Core;
 
 namespace DonateTests.Services.GetListMyDonationActionTest
 {
@@ -122,12 +123,12 @@ namespace DonateTests.Services.GetListMyDonationActionTest
             await context.SaveChangesAsync();
 
             // Act
-            var executed = await action.Execute();
-            var result = executed.Value as List<GetListMyDonationsItemResponse>;
+            var executed = await action.Execute(1, 100);
+            var result = executed.Value as PagedResult<GetListMyDonationsItemResponse>;
 
             // Assert
-            Assert.IsTrue(result!.Any());
-            Assert.AreEqual(2, result!.Count);
+            Assert.IsTrue(result!.Queryable.Any());
+            Assert.AreEqual(2, result!.Queryable.Count());
         }
     }
 }
