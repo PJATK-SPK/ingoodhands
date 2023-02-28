@@ -42,7 +42,7 @@ runs:
         credentials_json: '${{ inputs.CICD_SA_GCP_JSON_KEY }}'
 
     - name: Run database migration
-      if: ${{ inputs.APP }} == 'backend'
+      if: inputs.APP  == 'backend'
       run: |
         dotnet tool install --global dotnet-ef
         dotnet ef database update --project Core.csproj --startup-project ../WebApi/WebApi.csproj
@@ -54,6 +54,13 @@ runs:
         DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
         DB_DATABASE: ${{ inputs.DB_DATABASE }}
         DB_PORT: 5432
+        OAUTH2_AUTHORITY: ${{ inputs.OAUTH2_AUTHORITY }} 
+        OAUTH2_AUDIENCE: ${{ inputs.OAUTH2_AUDIENCE }} 
+        OAUTH2_CLIENT_ID: ${{ inputs.OAUTH2_CLIENT_ID }} 
+        OAUTH2_SCOPES: 'openid profile offline_access email api'
+        FRONTEND_URL: 'https://indagoodhandsdev.web.app/'
+        HASHIDS_SALT: ${{ inputs.HASHIDS_SALT }}   
+
 
     - name: Deploy to Cloud Run
       uses: 'google-github-actions/deploy-cloudrun@v1'
