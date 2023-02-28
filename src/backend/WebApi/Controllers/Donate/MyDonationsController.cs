@@ -32,7 +32,7 @@ public class MyDonationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize) => await _getListMyDonationAction.Execute();
+    public async Task<ActionResult> GetList(int page, int pageSize) => await _getListMyDonationAction.Execute(page, pageSize);
 
     [HttpGet("not-delivered-count")]
     public async Task<ActionResult> GetCountOfNotDelivered() => await _getNotDeliveredCountAction.Execute();

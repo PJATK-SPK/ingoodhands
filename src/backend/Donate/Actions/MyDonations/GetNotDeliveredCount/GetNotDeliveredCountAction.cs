@@ -24,7 +24,7 @@ namespace Donate.Actions.MyDonations.GetNotDeliveredCount
                 .Where(c => !c.IsDelivered && !c.IsExpired)
                 .CountAsync();
 
-            return new OkObjectResult(numberOfNotDeliveredDonations);
+            return new OkObjectResult(new { Count = numberOfNotDeliveredDonations });
         }
     }
 }

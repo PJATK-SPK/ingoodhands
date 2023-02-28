@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { DONATE_FORM_TEMP_LIST_KEY } from '../../home/donate/stepper/services/step-1.service';
 import { DonatePayload } from '../../home/donate/stepper/interfaces/donate-payload';
 import { DonateResponse } from '../../home/donate/stepper/interfaces/donate-response';
+import { FORCE_REFRESH_SIDEBAR } from '../layout/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-confirm-donation',
@@ -22,7 +23,7 @@ export class ConfirmDonationComponent implements OnInit {
   ) { }
 
   public formData: DonateFormData | undefined;
-  public donateNumber = '';
+  public donateName = '';
 
   public ngOnInit(): void {
     this.formData = this.load();
@@ -51,7 +52,9 @@ export class ConfirmDonationComponent implements OnInit {
         sessionStorage.removeItem(DONATE_FORM_TEMP_LIST_KEY);
         localStorage.removeItem(DONATE_FORM_DATA_KEY);
 
-        this.donateNumber = res.donateNumber;
+        this.donateName = res.donateName;
+
+        FORCE_REFRESH_SIDEBAR.next();
       },
       error: (err) => {
         this.msg.add({ severity: 'error', summary: 'Error', detail: 'We cant process your donation!' });

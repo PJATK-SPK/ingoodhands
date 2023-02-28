@@ -39,7 +39,7 @@ namespace Donate.Actions.MyDonations.GetScore
                 .Select(d => scorePerDonation + (d.Products!.Sum(dp => dp.Quantity) * scorePerProduct))
                 .SumAsync();
 
-            return new OkObjectResult(totalScore);
+            return new OkObjectResult(new { Score = totalScore });
         }
     }
 }

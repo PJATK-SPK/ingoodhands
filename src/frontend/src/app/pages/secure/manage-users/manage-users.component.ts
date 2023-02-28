@@ -15,7 +15,7 @@ export class ManageUsersComponent implements OnInit {
   constructor(private readonly http: HttpClient) { }
 
   public ngOnInit(): void {
-    this.getUsers(1, 10, 'test').subscribe(result => console.log(result));
+    this.getUsers(1, 10, 'test').subscribe();
   }
 
   // to service

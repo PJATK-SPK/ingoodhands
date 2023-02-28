@@ -18,7 +18,7 @@ export const getSidebarConfig = (httpClient: HttpClient) => [
                 icon: 'pi pi-fw pi-file-import',
                 routerLink: '/secure/my-donations',
                 role: Role.donor,
-                alerts: timer(0, 60 * 1000)
+                alerts: timer(0, 15 * 1000)
                     .pipe(
                         mergeMap(() => httpClient.get<{ count: number }>(`${environment.api}/my-donations/not-delivered-count`)),
                         map(data => data.count)

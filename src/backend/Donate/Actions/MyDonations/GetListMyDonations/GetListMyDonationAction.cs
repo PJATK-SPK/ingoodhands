@@ -25,9 +25,9 @@ namespace Donate.Actions.MyDonations.GetList
             _getListMyDonationService = getListMyDonationService;
         }
 
-        public async Task<OkObjectResult> Execute()
+        public async Task<OkObjectResult> Execute(int page, int pageSize)
         {
-            var listOfMyDonations = await _getListMyDonationService.GetListMyDonations();
+            var listOfMyDonations = await _getListMyDonationService.GetListMyDonations(page, pageSize);
 
             return new OkObjectResult(listOfMyDonations);
         }
