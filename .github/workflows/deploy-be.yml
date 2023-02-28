@@ -26,7 +26,6 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_PORT: 5432
           OAUTH2_AUTHORITY: ${{ secrets.OAUTH2_AUTHORITY }}
           OAUTH2_AUDIENCE: ${{ secrets.OAUTH2_AUDIENCE }}
           OAUTH2_CLIENT_ID: ${{ secrets.OAUTH2_CLIENT_ID }}
@@ -45,7 +44,6 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_PORT: 5432
           OAUTH2_AUTHORITY: ${{ secrets.OAUTH2_AUTHORITY }}
           OAUTH2_AUDIENCE: ${{ secrets.OAUTH2_AUDIENCE }}
           OAUTH2_CLIENT_ID: ${{ secrets.OAUTH2_CLIENT_ID }}
