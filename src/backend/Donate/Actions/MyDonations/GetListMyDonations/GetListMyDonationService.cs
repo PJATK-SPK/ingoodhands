@@ -51,7 +51,7 @@ namespace Donate.Actions.MyDonations.GetList
             {
                 Id = _hashids.EncodeLong(c.Id),
                 Name = c.Name,
-                ProductsCount = c.Products!.Count(),
+                ProductsCount = c.Products!.Count,
                 CreationDate = c.CreationDate,
                 IsDelivered = c.IsDelivered,
                 IsExpired = c.IsExpired
