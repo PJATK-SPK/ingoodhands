@@ -83,7 +83,7 @@ namespace Donate.Actions.DonateForm.PerformDonate
                 ExpirationDate = ExpireDateService.GetExpiredDate4Donation(DateTime.UtcNow),
                 IsExpired = false,
                 IsDelivered = false,
-                IsIncludedInStock = true,
+                IsIncludedInStock = false,
                 Products = listOfDonationProducts,
                 UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),

@@ -3,9 +3,9 @@ using Core.Database.Enums;
 using Core.Exceptions;
 using Core.Services;
 using Core.Setup.Auth0;
-using Donate.Actions.DonateForm.GetWarehouses;
 using HashidsNet;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace Donate.Actions.MyDonations.GetList
 {
@@ -32,31 +32,41 @@ namespace Donate.Actions.MyDonations.GetList
             _hashids = hashids;
         }
 
-        public async Task<List<GetListMyDonationsItemResponse>> GetListMyDonations()
+        public async Task<PagedResult<GetListMyDonationsItemResponse>> GetListMyDonations(int page, int pageSize)
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
+
             await _roleService.ThrowIfNoRole(RoleName.Donor, currentUser.Id);
 
-            var listOfDonations = _appDbContext.Donations.Where(c => c.CreationUserId == currentUser.Id
-            && c.Status == DbEntityStatus.Active || c.Status == DbEntityStatus.Inactive).ToList();
+            var dbResult = _appDbContext.Donations
+                .Include(c => c.Products)
+                .Where(c =>
+                    c.CreationUserId == currentUser.Id &&
+                    c.Status == DbEntityStatus.Active || c.Status == DbEntityStatus.Inactive)
+                .OrderByDescending(c => c.CreationDate)
+                .PageResult(page, pageSize);
 
-            if (!listOfDonations.Any())
-            {
-                return new List<GetListMyDonationsItemResponse>();
-            }
-
-            var response = listOfDonations.Select(c => new GetListMyDonationsItemResponse
+            var mapped = dbResult.Queryable.Select(c => new GetListMyDonationsItemResponse
             {
                 Id = _hashids.EncodeLong(c.Id),
                 Name = c.Name,
-                ProductsCount = 5,
-                CreationDate = DateTime.UtcNow,
-                IsDelivered = true,
-                IsExpired = false
-            }).OrderByDescending(c => c.CreationDate).ToList();
+                ProductsCount = c.Products!.Count,
+                CreationDate = c.CreationDate,
+                IsDelivered = c.IsDelivered,
+                IsExpired = c.IsExpired
+            });
 
-            return response;
+            var result = new PagedResult<GetListMyDonationsItemResponse>()
+            {
+                CurrentPage = dbResult.CurrentPage,
+                PageCount = dbResult.PageCount,
+                PageSize = dbResult.PageSize,
+                Queryable = mapped,
+                RowCount = dbResult.RowCount
+            };
+
+            return result;
         }
     }
 }

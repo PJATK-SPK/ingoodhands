@@ -1,15 +1,8 @@
 ﻿using Core.Database;
-using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
 using Core.Services;
 using Core.Setup.Auth0;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Donate.Actions.MyDonations.GetScore
 {
@@ -39,7 +32,7 @@ namespace Donate.Actions.MyDonations.GetScore
                 .Select(d => scorePerDonation + (d.Products!.Sum(dp => dp.Quantity) * scorePerProduct))
                 .SumAsync();
 
-            return new OkObjectResult(totalScore);
+            return new OkObjectResult(new GetScoreResponse { Score = totalScore });
         }
     }
 }

@@ -17,6 +17,7 @@ using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DonateTests.Actions.GetNotDeliveredCountActionTest
 {
@@ -125,8 +126,10 @@ namespace DonateTests.Actions.GetNotDeliveredCountActionTest
             // Act
             var result = await action.Execute();
 
+            var output = result.Value as GetNotDeliveredCountResponse;
+
             // Assert
-            Assert.AreEqual(2, result.Value);
+            Assert.AreEqual(2, output!.Count);
         }
     }
 }

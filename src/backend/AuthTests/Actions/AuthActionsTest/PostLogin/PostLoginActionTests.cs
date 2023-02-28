@@ -72,10 +72,14 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == needyRoleId).Any());
         }
 
         [TestMethod()]
@@ -103,12 +107,16 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.User!.Email == newEmail)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == needyRoleId).Any());
         }
 
         [TestMethod()]
@@ -145,11 +153,87 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
             // Act
             var result = await action.Execute();
 
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
             // Assert
             Assert.AreEqual(context.Auth0Users.Single(x => x.Email == testingUser.Email)?.User, testingUser);
             Assert.AreEqual(2, context.Users.Count());
             Assert.AreEqual(1, context.Auth0Users.Count());
-            Assert.AreEqual(2, context.UserRoles.FirstOrDefault(c => c.UserId == testingUser.Id)!.RoleId);
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.UserId == testingUser.Id && c.RoleId == needyRoleId).Any());
+        }
+
+        [TestMethod()]
+        public async Task PostLoginActionTest_NoRolesInDb()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var testingUser = new User()
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = "Normal",
+                LastName = "User",
+                Email = "test@testing.com"
+            };
+            context.Add(testingUser);
+            context.Roles.RemoveRange(context.Roles.ToList());
+            await context.SaveChangesAsync();
+
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = testingUser.Email,
+                EmailVerified = true,
+                Identifier = "google-oauth2|117638106834834546346",
+                GivenName = testingUser.FirstName,
+                FamilyName = testingUser.LastName,
+                Locale = "pl",
+                Name = testingUser.FirstName + testingUser.LastName,
+                Nickname = "test",
+                UpdatedAt = DateTime.UtcNow,
+            });
+
+            // Act
+            await Assert.ThrowsExceptionAsync<ApplicationErrorException>(() => action.Execute());
+        }
+
+        [TestMethod()]
+        public async Task PostLoginActionTest_NoServiceUserInDb()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var testingUser = new User()
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = "Normal",
+                LastName = "User",
+                Email = "test@testing.com"
+            };
+            context.Add(testingUser);
+            context.Users.RemoveRange(context.Users.ToList());
+            await context.SaveChangesAsync();
+
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = testingUser.Email,
+                EmailVerified = true,
+                Identifier = "google-oauth2|117638106834834546346",
+                GivenName = testingUser.FirstName,
+                FamilyName = testingUser.LastName,
+                Locale = "pl",
+                Name = testingUser.FirstName + testingUser.LastName,
+                Nickname = "test",
+                UpdatedAt = DateTime.UtcNow,
+            });
+
+            // Act
+            await Assert.ThrowsExceptionAsync<ApplicationErrorException>(() => action.Execute());
         }
 
         [TestMethod()]

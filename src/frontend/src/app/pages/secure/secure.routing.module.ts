@@ -5,6 +5,13 @@ import { ConfirmDonationComponent } from './confirm-donation/confirm-donation.co
 import { MyDonationsComponent } from './my-donations/my-donations.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { MyDonationComponent } from './my-donation/my-donation.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
+import { PickUpDonationComponent } from './pick-up-donation/pick-up-donation.component';
+import { StocksComponent } from './stocks/stocks.component';
+import { WorkComponent } from './work/work.component';
+import { RequestHelpComponent } from './request-help/request-help.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
 
 const routes: Routes = [
     {
@@ -31,6 +38,41 @@ const routes: Routes = [
         path: 'user-settings',
         loadChildren: () => import('./user-settings/user-settings.module').then(m => m.UserSettingsModule),
         component: UserSettingsComponent
+    },
+    {
+        path: 'manage-users',
+        loadChildren: () => import('./manage-users/manage-users.module').then(m => m.ManageUsersModule),
+        component: ManageUsersComponent
+    },
+    {
+        path: 'manage-user/:id',
+        loadChildren: () => import('./manage-user/manage-user.module').then(m => m.ManageUserModule),
+        component: ManageUserComponent
+    },
+    {
+        path: 'pick-up-donation',
+        loadChildren: () => import('./pick-up-donation/pick-up-donation.module').then(m => m.PickUpDonationModule),
+        component: PickUpDonationComponent
+    },
+    {
+        path: 'stocks',
+        loadChildren: () => import('./stocks/stocks.module').then(m => m.StocksModule),
+        component: StocksComponent
+    },
+    {
+        path: 'work',
+        loadChildren: () => import('./work/work.module').then(m => m.WorkModule),
+        component: WorkComponent
+    },
+    {
+        path: 'request-help',
+        loadChildren: () => import('./request-help/request-help.module').then(m => m.RequestHelpModule),
+        component: RequestHelpComponent
+    },
+    {
+        path: 'create-order',
+        loadChildren: () => import('./create-order/create-order.module').then(m => m.CreateOrderModule),
+        component: CreateOrderComponent
     },
 ];
 
