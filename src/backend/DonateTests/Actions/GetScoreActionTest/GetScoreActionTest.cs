@@ -1,14 +1,8 @@
 ﻿using Core.Database;
 using Core.Setup.Enums;
 using Core;
-using Donate.Actions.DonateForm.GetProducts;
 using Donate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestsBase;
 using Autofac;
 using Core.Database.Enums;
@@ -16,7 +10,6 @@ using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
-using Donate.Actions.DonateForm.PerformDonate;
 using Donate.Actions.MyDonations.GetScore;
 
 namespace DonateTests.Actions.GetScoreActionTest
@@ -141,8 +134,10 @@ namespace DonateTests.Actions.GetScoreActionTest
             // Act
             var result = await action.Execute();
 
+            var output = result.Value as GetScoreResponse;
+
             // Assert
-            Assert.AreEqual(1300, result.Value);
+            Assert.AreEqual(1300, output!.Score);
         }
 
         [TestMethod()]
@@ -262,8 +257,10 @@ namespace DonateTests.Actions.GetScoreActionTest
             // Act
             var result = await action.Execute();
 
+            var output = result.Value as GetScoreResponse;
+
             // Assert
-            Assert.AreEqual(2500, result.Value);
+            Assert.AreEqual(2500, output!.Score);
         }
 
         [TestMethod()]
@@ -355,8 +352,10 @@ namespace DonateTests.Actions.GetScoreActionTest
             // Act
             var result = await action.Execute();
 
+            var output = result.Value as GetScoreResponse;
+
             // Assert
-            Assert.AreEqual(0, result.Value);
+            Assert.AreEqual(0, output!.Score);
         }
     }
 }
