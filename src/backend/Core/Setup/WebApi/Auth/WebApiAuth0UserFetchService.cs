@@ -31,7 +31,7 @@ namespace Core.Setup.WebApi.Auth
             return _memoryCache.GetOrCreateAsync(identifier, factory)!;
         }
 
-        private Task<CurrentUserInfo> Fetch(KeyValuePair<string, StringValues> bearer, Claim userInfoURL)
+        private static Task<CurrentUserInfo> Fetch(KeyValuePair<string, StringValues> bearer, Claim userInfoURL)
         {
             var client = new RestClient();
             var request = new RestRequest(userInfoURL.Value);
