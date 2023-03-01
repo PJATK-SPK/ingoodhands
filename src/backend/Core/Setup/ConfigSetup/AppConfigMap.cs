@@ -1,6 +1,6 @@
 ﻿namespace Core.Setup.ConfigSetup
 {
-    public class AppConfigMap
+    public static class AppConfigMap
     {
         public static readonly IReadOnlyDictionary<string, string> AppToEnvNames = new Dictionary<string, string>
         {
