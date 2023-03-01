@@ -38,7 +38,8 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 
@@ -105,7 +106,8 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 
