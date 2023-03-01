@@ -80,7 +80,7 @@ namespace Core.Setup.WebApi
             app.UseAuthentication();
             app.UseAuthorization();
             app.ConfigureExceptionHandler();
-            app.UseEndpoints(endpoints => endpoints.MapControllers().DisableRateLimiting());
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 
             return config;
