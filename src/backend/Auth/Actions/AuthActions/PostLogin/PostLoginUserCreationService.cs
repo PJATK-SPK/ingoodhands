@@ -77,7 +77,8 @@ namespace Auth.Actions.AuthActions.PostLogin
                 Status = DbEntityStatus.Active,
                 FirstName = currentAuth0UserInfo.GivenName!,
                 LastName = currentAuth0UserInfo.FamilyName,
-                Email = currentAuth0UserInfo.Email!
+                Email = currentAuth0UserInfo.Email!,
+                WarehouseId = null
             };
         }
 

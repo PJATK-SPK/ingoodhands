@@ -47,6 +47,7 @@ namespace DonateTests.Services.GetMyDonationDetailsActionTest
                 FirstName = "Normal",
                 LastName = "User",
                 Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 
@@ -155,6 +156,7 @@ namespace DonateTests.Services.GetMyDonationDetailsActionTest
                 FirstName = "Normal",
                 LastName = "User",
                 Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 
@@ -223,6 +225,7 @@ namespace DonateTests.Services.GetMyDonationDetailsActionTest
                 FirstName = "Normal",
                 LastName = "User",
                 Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 

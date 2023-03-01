@@ -37,7 +37,8 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
 
@@ -132,7 +133,8 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
             await context.SaveChangesAsync();
@@ -177,7 +179,8 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
             context.Roles.RemoveRange(context.Roles.ToList());
@@ -213,7 +216,8 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Status = DbEntityStatus.Active,
                 FirstName = "Normal",
                 LastName = "User",
-                Email = "test@testing.com"
+                Email = "test@testing.com",
+                WarehouseId = null
             };
             context.Add(testingUser);
             context.Users.RemoveRange(context.Users.ToList());

@@ -13,10 +13,12 @@ namespace Core.Database.Models.Auth
         public string FirstName { get; set; } = default!;
         public string? LastName { get; set; }
         public string Email { get; set; } = default!;
+        public long? WarehouseId { get; set; }
+        public Warehouse? Warehouse { get; set; }
         public List<Auth0User>? Auth0Users { get; set; }
         public List<UserRole>? Roles { get; set; }
         public List<Donation>? Donations { get; set; }
-        
+
         public void Configure(EntityTypeBuilder<User> builder)
             => new UserConfig<User>().Configure(builder);
 

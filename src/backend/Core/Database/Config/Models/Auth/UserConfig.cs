@@ -18,6 +18,8 @@ namespace Core.Database.Config.Models.Auth
             builder.Property(c => c.LastName).HasMaxLength(50);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(254);
             builder.HasIndex(c => c.Email).IsUnique().HasDatabaseName("users_email_idx");
+
+            builder.HasOne(c => c.Warehouse).WithMany(c => (IEnumerable<TBase>?)c.Users).HasForeignKey(c => c.WarehouseId).HasConstraintName("warehouse_users_id_fkey");
         }
     }
 }
