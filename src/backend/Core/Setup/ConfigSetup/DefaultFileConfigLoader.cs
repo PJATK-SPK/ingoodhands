@@ -5,7 +5,7 @@ namespace Core.Setup.ConfigSetup
 {
     internal static class DefaultFileConfigLoader
     {
-        public static string GetRelativePathPrefix = "Configuration/Default/";
+        public static readonly string GetRelativePathPrefix = "Configuration/Default/";
 
         private static readonly JsonSerializerOptions _options = new()
         {
