@@ -1,10 +1,63 @@
 <div class="grid">
+
+    <div class="col-12">
+        <div class="pt-3 flex align-items-center justify-content-center">
+
+            <div class="pt-3">
+                <span class="p-float-label">
+                    <input id="search" class="input-field" type="text" pInputText
+                        (ngModelChange)="onFilterChange.next($event)" [(ngModel)]="filter">
+                    <label for="search">Search</label>
+                </span>
+            </div>
+
+        </div>
+    </div>
+
     <div class="col-12">
         <div class="p-3">
             <p-card>
-                - Search field<br />
-                - Tabela z listą użytkowników i ich rolami. Przejscie do manage-user<br />
-                - Paginacja<br />
+                <h1 class="text-2xl font-bold m-0">Manage users</h1>
+
+                <ng-container *ngIf="pagedResult">
+
+                    <p-card class="p-2" *ngFor="let item of pagedResult.queryable">
+                        <div class="grid">
+                            <div class="col-12">
+                                <h2 class="text-xl font-bold m-0 text-primary" style="cursor:pointer"
+                                    [routerLink]="'/secure/manage-user/' + item.id">
+                                    {{item.fullName}} <b *ngIf="item.warehouseName"> ({{item.warehouseName}}) </b>
+                                </h2>
+
+                                <p>
+                                    <p-tag *ngIf="item.roles.includes(Role.administrator)" styleClass="ml-2 mb-1"
+                                        icon="pi pi-calendar" severity="danger" value="Admin">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="item.roles.includes(Role.donor)" styleClass="ml-2 mb-1"
+                                        icon="pi pi-calendar" severity="success" value="Donor">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="item.roles.includes(Role.needy)" styleClass="ml-2 mb-1"
+                                        icon="pi pi-calendar" severity="success" value="Needy">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="item.roles.includes(Role.warehouseKeeper)" styleClass="ml-2 mb-1"
+                                        icon="pi pi-calendar" severity="warning" value="Warehouse keeper">
+                                    </p-tag>
+
+                                    <p-tag *ngIf="item.roles.includes(Role.deliverer)" styleClass="ml-2 mb-1"
+                                        icon="pi pi-calendar" severity="warning" value="Deliverer">
+                                    </p-tag>
+                                </p>
+
+                            </div>
+                        </div>
+                    </p-card>
+
+                    <p-paginator [rows]="pageSize" [totalRecords]="pagedResult.rowCount"
+                        (onPageChange)="paginate($event)"></p-paginator>
+                </ng-container>
             </p-card>
         </div>
     </div>
