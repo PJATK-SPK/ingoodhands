@@ -60,9 +60,9 @@ namespace Core.Setup.WebApi
                     options.JsonSerializerOptions.Converters.Add(new JsonDateTimeNullConverter());
                 });
             services.AddEndpointsApiExplorer();
+            services.AddMemoryCache();
             services.SetupSwagger(config);
             services.SetupAuth(config);
-
             return config;
         }
 
@@ -80,7 +80,8 @@ namespace Core.Setup.WebApi
             app.UseAuthentication();
             app.UseAuthorization();
             app.ConfigureExceptionHandler();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints => endpoints.MapControllers().DisableRateLimiting());
+
 
             return config;
         }
