@@ -53,6 +53,7 @@ namespace Core.Setup
         {
             builder.RegisterType<HttpContextAccessor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAsScoped<WebApiCurrentUserService>();
+            builder.RegisterType<WebApiAuth0UserFetchService>().SingleInstance();
         }
 
         private static void RegisterWebApiServiceUser(ContainerBuilder builder)
