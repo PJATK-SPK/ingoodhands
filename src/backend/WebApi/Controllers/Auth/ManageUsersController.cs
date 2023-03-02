@@ -1,3 +1,4 @@
+using Auth.Actions.AuthActions.ManageUsersActions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,46 +12,15 @@ namespace WebApi.Controllers.Auth;
 [Route("manage-users")]
 public class ManageUsersController : ControllerBase
 {
-    public class DeleteMeManageUsersResponseItem
+    private readonly ManageUsersAction _manageUsersAction;
+
+    public ManageUsersController(ManageUsersAction manageUsersAction)
     {
-        public string Id { get; set; } = default!; // User Id
-        public string FullName { get; set; } = default!;
-        public string? WarehouseName { get; set; } // can be null
-        public List<string> Roles { get; set; } = default!;
+        _manageUsersAction = manageUsersAction;
     }
+
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize, string? filter)
-    {
-        var appDbContextUsers = new List<DeleteMeManageUsersResponseItem>
-        {
-            new DeleteMeManageUsersResponseItem
-            {
-                Id="vb1232fe",
-                FullName = "Adam Kowalski",
-                Roles= new List<string>
-                {
-                    "Administrator",
-                    "Donor",
-                    "Needy",
-                }
-            },
-            new DeleteMeManageUsersResponseItem
-            {
-                Id="hn78232fe",
-                FullName = "Marcin Kowalski",
-                Roles= new List<string>
-                {
-                    "Administrator",
-                    "WarehouseKeeper",
-                    "Deliverer",
-                }
-            }
-        }.AsQueryable();
-
-        var result = appDbContextUsers.PageResult(page, pageSize);
-
-        return await Task.FromResult(Ok(result));
-    }
+    public async Task<ActionResult> GetList(int page, int pageSize, string? filter) => await _manageUsersAction.Execute(page, pageSize, filter);
 
     public class DeleteMeManageUserResponse
     {
@@ -62,7 +32,7 @@ public class ManageUsersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetSingle(string id)
     {
-        var result = new DeleteMeManageUsersResponseItem
+        var result = new ManageUsersResponseItem
         {
             Id = "vb1232fe",
             FullName = "Adam Kowalski",
@@ -85,7 +55,7 @@ public class ManageUsersController : ControllerBase
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchSingle(string id, [FromBody] DeleteMeManageUserPayload payload)
     {
-        var result = new DeleteMeManageUsersResponseItem
+        var result = new ManageUsersResponseItem
         {
             Id = "vb1232fe",
             FullName = "Adam Kowalski",
