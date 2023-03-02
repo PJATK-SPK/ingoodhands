@@ -40,95 +40,25 @@ namespace AuthTests.Actions.AuthActionsTest.ManageUsersActionsTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = new User()
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = "Normal",
-                LastName = "User",
-                Email = "test@testing.com",
-                WarehouseId = null
-            };
+            var testingUser1 = ManageUsersActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = ManageUsersActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = ManageUsersActionFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = ManageUsersActionFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = ManageUsersActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+
             context.Add(testingUser1);
-
-            var testingAuth0User1 = new Auth0User()
-            {
-                FirstName = "Auth",
-                LastName = "Auth0User",
-                Nickname = "Auth0",
-                UpdateUser = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Email = testingUser1.Email,
-                Identifier = "testingIdentifier",
-                User = testingUser1,
-                UserId = testingUser1.Id
-            };
             context.Add(testingAuth0User1);
-
-            var testUser1Role = new UserRole
-            {
-                RoleId = roleDonorId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role);
-
-            var testUser1Role2 = new UserRole
-            {
-                RoleId = roleAdminId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role2);
-
-            var testUser1Role3 = new UserRole
-            {
-                RoleId = roleDelivererId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role3);
 
-            //Second User
-            var testingUser2 = new User()
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = "Normal",
-                LastName = "User2",
-                Email = "test2@testing.com",
-                WarehouseId = null
-            };
+            // Second User
+            var testingUser2 = ManageUsersActionFixture.CreateUser("Normal", "User2");
+            var testingAuth0User2 = ManageUsersActionFixture.CreateAuth0User(testingUser2, 2);
+            var testUser2Role = ManageUsersActionFixture.CreateUserRole(testingUser2, roleDonorId);
+
             context.Add(testingUser2);
-
-            var testingAuth0User2 = new Auth0User()
-            {
-                FirstName = "Auth",
-                LastName = "Auth0User2",
-                Nickname = "Auth02",
-                UpdateUser = testingUser2,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Email = testingUser2.Email,
-                Identifier = "testingIdentifier",
-                User = testingUser2,
-                UserId = testingUser2.Id
-            };
-            context.Add(testingAuth0User1);
-
-            var testUser2Role = new UserRole
-            {
-                RoleId = roleDonorId,
-                User = testingUser2,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
+            context.Add(testingAuth0User2);
             context.Add(testUser2Role);
             await context.SaveChangesAsync();
 
@@ -166,95 +96,25 @@ namespace AuthTests.Actions.AuthActionsTest.ManageUsersActionsTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = new User()
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = "Normal",
-                LastName = "User",
-                Email = "test@testing.com",
-                WarehouseId = null
-            };
+            var testingUser1 = ManageUsersActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = ManageUsersActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = ManageUsersActionFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = ManageUsersActionFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = ManageUsersActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+
             context.Add(testingUser1);
-
-            var testingAuth0User1 = new Auth0User()
-            {
-                FirstName = "Auth",
-                LastName = "Auth0User",
-                Nickname = "Auth0",
-                UpdateUser = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Email = testingUser1.Email,
-                Identifier = "testingIdentifier",
-                User = testingUser1,
-                UserId = testingUser1.Id
-            };
             context.Add(testingAuth0User1);
-
-            var testUser1Role = new UserRole
-            {
-                RoleId = roleDonorId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role);
-
-            var testUser1Role2 = new UserRole
-            {
-                RoleId = roleAdminId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role2);
-
-            var testUser1Role3 = new UserRole
-            {
-                RoleId = roleDelivererId,
-                User = testingUser1,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
             context.Add(testUser1Role3);
 
-            //Second User
-            var testingUser2 = new User()
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = "Normal",
-                LastName = "User2",
-                Email = "test2@testing.com",
-                WarehouseId = null
-            };
+            // Second User
+            var testingUser2 = ManageUsersActionFixture.CreateUser("Normal", "User2");
+            var testingAuth0User2 = ManageUsersActionFixture.CreateAuth0User(testingUser2, 2);
+            var testUser2Role = ManageUsersActionFixture.CreateUserRole(testingUser2, roleDonorId);
+
             context.Add(testingUser2);
-
-            var testingAuth0User2 = new Auth0User()
-            {
-                FirstName = "Auth",
-                LastName = "Auth0User2",
-                Nickname = "Auth02",
-                UpdateUser = testingUser2,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Email = testingUser2.Email,
-                Identifier = "testingIdentifier",
-                User = testingUser2,
-                UserId = testingUser2.Id
-            };
-            context.Add(testingAuth0User1);
-
-            var testUser2Role = new UserRole
-            {
-                RoleId = roleDonorId,
-                User = testingUser2,
-                UpdateUserId = 1,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
+            context.Add(testingAuth0User2);
             context.Add(testUser2Role);
             await context.SaveChangesAsync();
 

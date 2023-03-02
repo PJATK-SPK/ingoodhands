@@ -31,7 +31,6 @@ namespace Auth.Actions.AuthActions.ManageUsersActions
         {
             await _roleService.ThrowIfNoRole(RoleName.Administrator);
 
-
             IQueryable<User> dbResult = _appDbContext.Users
                  .Include(c => c.Roles)!
                      .ThenInclude(c => c.Role)
