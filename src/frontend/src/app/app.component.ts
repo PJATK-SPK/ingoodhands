@@ -61,6 +61,13 @@ export class AppComponent implements OnInit {
   }
 
   private postlogin(): Observable<DbUser> {
+    if (!this.auth.dbUser) {
+      const savedAuthDbUser = sessionStorage.getItem('authDbUser');
+      if (savedAuthDbUser) {
+        this.auth.dbUser = JSON.parse(savedAuthDbUser);
+      }
+    }
+
     const authDbUserExists = this.auth.dbUser && this.auth.dbUser.id;
     const lastShotDate = sessionStorage.getItem('postloginDate');
     const now = DateTime.local();
@@ -68,6 +75,7 @@ export class AppComponent implements OnInit {
     if (!authDbUserExists || !lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
       sessionStorage.setItem('postloginDate', now.toISO());
       return this.httpClient.get<DbUser>(`${environment.api}/auth/postlogin`)
+        .pipe(tap(dbUser => sessionStorage.setItem('authDbUser', JSON.stringify(dbUser))))
     }
 
     return of(this.auth.dbUser);
