@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 
-namespace Auth.Actions.ManageUsersActions.GetList
+namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
 {
-    public class GetListAction
+    public class ManageUsersGetListAction
     {
         private readonly AppDbContext _appDbContext;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
 
-        public GetListAction(
+        public ManageUsersGetListAction(
             AppDbContext appDbContext,
             RoleService roleService,
             Hashids hashids
@@ -42,7 +42,7 @@ namespace Auth.Actions.ManageUsersActions.GetList
 
             var result = dbResult.PageResult(page, pageSize);
 
-            var mapped = result.Queryable.Select(c => new GetListResponseItem
+            var mapped = result.Queryable.Select(c => new ManageUsersGetListResponseItem
             {
                 Id = _hashids.EncodeLong(c.Id),
                 FullName = c.FirstName + " " + c.LastName,
@@ -50,7 +50,7 @@ namespace Auth.Actions.ManageUsersActions.GetList
                 Roles = c.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             }).ToList();
 
-            var response = new PagedResult<GetListResponseItem>()
+            var response = new PagedResult<ManageUsersGetListResponseItem>()
             {
                 CurrentPage = result.CurrentPage,
                 PageCount = result.PageCount,

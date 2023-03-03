@@ -1,5 +1,4 @@
-﻿using Auth.Actions.ManageUsersActions.GetList;
-using Core.Database;
+﻿using Core.Database;
 using Core.Database.Enums;
 using Core.Exceptions;
 using Core.Services;
@@ -8,20 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Auth.Actions.ManageUsersActions.GetSingle
+namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
 {
-    public class GetSingleAction
+    public class ManageUsersGetSingleAction
     {
         private readonly AppDbContext _appDbContext;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
-        private readonly ILogger<GetSingleAction> _logger;
+        private readonly ILogger<ManageUsersGetSingleAction> _logger;
 
-        public GetSingleAction(
+        public ManageUsersGetSingleAction(
             AppDbContext appDbContext,
             RoleService roleService,
             Hashids hashids,
-            ILogger<GetSingleAction> logger
+            ILogger<ManageUsersGetSingleAction> logger
             )
         {
             _appDbContext = appDbContext;

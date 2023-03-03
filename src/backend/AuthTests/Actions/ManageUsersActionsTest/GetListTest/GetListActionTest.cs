@@ -1,5 +1,5 @@
 ﻿using Auth;
-using Auth.Actions.ManageUsersActions.GetList;
+using Auth.Actions.ManageUsersActions.ManageUsersGetList;
 using Autofac;
 using Core;
 using Core.Database;
@@ -26,7 +26,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetListAction>();
+            var action = toolkit.Resolve<ManageUsersGetListAction>();
 
             // Arrange
             var roleDonorId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
@@ -70,7 +70,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
 
             // Act
             var executed = await action.Execute(1, 100);
-            var result = executed.Value as PagedResult<GetListResponseItem>;
+            var result = executed.Value as PagedResult<ManageUsersGetListResponseItem>;
 
             // Assert
             Assert.IsTrue(result!.Queryable.Any());
@@ -82,7 +82,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetListAction>();
+            var action = toolkit.Resolve<ManageUsersGetListAction>();
 
             // Arrange
             var roleDonorId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
@@ -126,7 +126,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
 
             // Act
             var executed = await action.Execute(1, 100, "Normal User");
-            var result = executed.Value as PagedResult<GetListResponseItem>;
+            var result = executed.Value as PagedResult<ManageUsersGetListResponseItem>;
 
             // Assert
             Assert.IsTrue(result!.Queryable.Any());

@@ -1,4 +1,4 @@
-﻿namespace Auth.Actions.ManageUsersActions.GetList
+﻿namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
 {
     public class GetSingleResponseItem
     {

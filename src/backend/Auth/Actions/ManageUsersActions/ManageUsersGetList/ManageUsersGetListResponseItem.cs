@@ -1,6 +1,6 @@
-﻿namespace Auth.Actions.ManageUsersActions.GetList
+﻿namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
 {
-    public class GetListResponseItem
+    public class ManageUsersGetListResponseItem
     {
         public string Id { get; set; } = default!;
         public string FullName { get; set; } = default!;

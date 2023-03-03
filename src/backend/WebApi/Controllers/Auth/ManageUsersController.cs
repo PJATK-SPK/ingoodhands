@@ -1,5 +1,5 @@
-using Auth.Actions.ManageUsersActions.GetList;
-using Auth.Actions.ManageUsersActions.GetSingle;
+using Auth.Actions.ManageUsersActions.ManageUsersGetList;
+using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +12,10 @@ namespace WebApi.Controllers.Auth;
 [Route("manage-users")]
 public class ManageUsersController : ControllerBase
 {
-    private readonly GetListAction _getListAction;
-    private readonly GetSingleAction _getSingleAction;
+    private readonly ManageUsersGetListAction _getListAction;
+    private readonly ManageUsersGetSingleAction _getSingleAction;
 
-    public ManageUsersController(GetListAction getListAction, GetSingleAction getSingleAction)
+    public ManageUsersController(ManageUsersGetListAction getListAction, ManageUsersGetSingleAction getSingleAction)
     {
         _getListAction = getListAction;
         _getSingleAction = getSingleAction;
@@ -35,7 +35,7 @@ public class ManageUsersController : ControllerBase
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchSingle(string id, [FromBody] DeleteMeManageUserPayload payload)
     {
-        var result = new GetListResponseItem
+        var result = new ManageUsersGetListResponseItem
         {
             Id = "vb1232fe",
             FullName = "Adam Kowalski",

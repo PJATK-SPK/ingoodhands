@@ -1,6 +1,5 @@
 ﻿using Auth;
-using Auth.Actions.ManageUsersActions.GetList;
-using Auth.Actions.ManageUsersActions.GetSingle;
+using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 using AuthTests.Actions.ManageUsersActionsTest.GetListTest;
 using Autofac;
 using Core;
@@ -30,7 +29,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetSingleAction>();
+            var action = toolkit.Resolve<ManageUsersGetSingleAction>();
 
             // Arrange
             var roleDonorId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
@@ -80,7 +79,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
 
             // Assert
             Assert.IsTrue(result!.Roles.Any());
-            Assert.AreEqual(3, result!.Roles.Count());
+            Assert.AreEqual(3, result!.Roles.Count);
             Assert.AreEqual(testingUser1.FirstName + " " + testingUser1.LastName, result!.FullName);
         }
 
@@ -89,7 +88,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetSingleAction>();
+            var action = toolkit.Resolve<ManageUsersGetSingleAction>();
 
             // Arrange
             var roleDonorId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
@@ -109,7 +108,6 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
             context.Add(testUser1Role2);
             context.Add(testUser1Role3);
 
-            // Second User
             await context.SaveChangesAsync();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
