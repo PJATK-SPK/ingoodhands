@@ -5,18 +5,17 @@ using Core.Services;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Dynamic.Core;
 
-namespace Auth.Actions.AuthActions.ManageUsersActions
+namespace Auth.Actions.ManageUsersActions.GetList
 {
-    public class ManageUsersAction
+    public class GetListAction
     {
         private readonly AppDbContext _appDbContext;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
 
-        public ManageUsersAction(
+        public GetListAction(
             AppDbContext appDbContext,
             RoleService roleService,
             Hashids hashids
@@ -43,7 +42,7 @@ namespace Auth.Actions.AuthActions.ManageUsersActions
 
             var result = dbResult.PageResult(page, pageSize);
 
-            var mapped = result.Queryable.Select(c => new ManageUsersResponseItem
+            var mapped = result.Queryable.Select(c => new GetListResponseItem
             {
                 Id = _hashids.EncodeLong(c.Id),
                 FullName = c.FirstName + " " + c.LastName,
@@ -51,7 +50,7 @@ namespace Auth.Actions.AuthActions.ManageUsersActions
                 Roles = c.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             }).ToList();
 
-            var response = new PagedResult<ManageUsersResponseItem>()
+            var response = new PagedResult<GetListResponseItem>()
             {
                 CurrentPage = result.CurrentPage,
                 PageCount = result.PageCount,
