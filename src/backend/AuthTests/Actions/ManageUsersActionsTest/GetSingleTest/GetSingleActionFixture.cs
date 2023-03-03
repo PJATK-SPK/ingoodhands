@@ -1,14 +1,9 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AuthTests.Actions.AuthActionsTest.ManageUsersActionsTest
+namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
 {
-    public static class ManageUsersActionFixture
+    public static class GetSingleActionFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {

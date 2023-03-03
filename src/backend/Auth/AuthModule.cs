@@ -5,7 +5,8 @@ using Auth.Actions.UserSettingsActions.PatchUserDetails;
 using Auth.Actions.UserSettingsActions.GetAuth0UsersByCurrentUser;
 using Auth.Actions.UserSettingsActions.GetUserDetails;
 using Core.Setup.Autofac;
-using Auth.Actions.AuthActions.ManageUsersActions;
+using Auth.Actions.ManageUsersActions.ManageUsersGetList;
+using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 
 namespace Auth
 {
@@ -23,7 +24,8 @@ namespace Auth
             builder.RegisterModule<GetAuth0UsersByCurrentUserModule>();
             builder.RegisterModule<GetUserDetailsModule>();
             builder.RegisterModule<PatchUserDetailsModule>();
-            builder.RegisterModule<ManageUsersModule>();
+            builder.RegisterModule<ManageUsersGetListModule>();
+            builder.RegisterModule<ManageUsersGetSingleModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)

@@ -1,8 +1,8 @@
-using Auth.Actions.AuthActions.ManageUsersActions;
+using Auth.Actions.ManageUsersActions.ManageUsersGetList;
+using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Auth;
 
@@ -12,40 +12,20 @@ namespace WebApi.Controllers.Auth;
 [Route("manage-users")]
 public class ManageUsersController : ControllerBase
 {
-    private readonly ManageUsersAction _manageUsersAction;
+    private readonly ManageUsersGetListAction _getListAction;
+    private readonly ManageUsersGetSingleAction _getSingleAction;
 
-    public ManageUsersController(ManageUsersAction manageUsersAction)
+    public ManageUsersController(ManageUsersGetListAction getListAction, ManageUsersGetSingleAction getSingleAction)
     {
-        _manageUsersAction = manageUsersAction;
+        _getListAction = getListAction;
+        _getSingleAction = getSingleAction;
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize, string? filter) => await _manageUsersAction.Execute(page, pageSize, filter);
+    public async Task<ActionResult> GetList(int page, int pageSize, string? filter) => await _getListAction.Execute(page, pageSize, filter);
 
-    public class DeleteMeManageUserResponse
-    {
-        public string Id { get; set; } = default!; // User Id
-        public string FullName { get; set; } = default!;
-        public string? WarehouseName { get; set; } // can be null
-        public List<string> Roles { get; set; } = default!;
-    }
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetSingle(string id)
-    {
-        var result = new ManageUsersResponseItem
-        {
-            Id = "vb1232fe",
-            FullName = "Adam Kowalski",
-            Roles = new List<string>
-                {
-                    "Administrator",
-                    "Donor",
-                    "Needy",
-                }
-        };
-
-        return await Task.FromResult(Ok(result));
-    }
+    public async Task<ActionResult> GetSingle(string id) => await _getSingleAction.Execute(id);
 
     public class DeleteMeManageUserPayload
     {
@@ -55,7 +35,7 @@ public class ManageUsersController : ControllerBase
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchSingle(string id, [FromBody] DeleteMeManageUserPayload payload)
     {
-        var result = new ManageUsersResponseItem
+        var result = new ManageUsersGetListResponseItem
         {
             Id = "vb1232fe",
             FullName = "Adam Kowalski",
