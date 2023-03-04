@@ -51,14 +51,6 @@ namespace Auth.Actions.AuthActions.PostLogin
                 var userRoles = await CreateUserRoles(user, serviceUser);
                 _appDbContext.AddRange(userRoles);
             }
-            else if (user == null && auth0UserFromDatabase != null)
-            {
-                user = CreateUser(auth0UserInfo);
-                _appDbContext.Add(user);
-
-                var userRoles = await CreateUserRoles(user, serviceUser);
-                _appDbContext.AddRange(userRoles);
-            }
 
             if (!user!.Roles!.Any())
             {
