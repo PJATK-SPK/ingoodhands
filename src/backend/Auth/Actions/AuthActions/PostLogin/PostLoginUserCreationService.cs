@@ -72,11 +72,12 @@ namespace Auth.Actions.AuthActions.PostLogin
         }
         private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {
-            var firstName = string.IsNullOrWhiteSpace(currentAuth0UserInfo.GivenName)
-                ? string.IsNullOrWhiteSpace(currentAuth0UserInfo.Name!)
-                    ? "User"
-                    : currentAuth0UserInfo.Name!
-                : currentAuth0UserInfo.GivenName!;
+            var firstName = "User";
+
+            if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.GivenName))
+                firstName = currentAuth0UserInfo.GivenName!.Trim();
+            else if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.Name!))
+                firstName = currentAuth0UserInfo.Name!.Trim();
 
             return new User
             {
