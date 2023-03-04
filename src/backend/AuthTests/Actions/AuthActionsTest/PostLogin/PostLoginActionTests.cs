@@ -269,6 +269,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Identifier = testingAuth0User.Identifier,
                 FamilyName = testingAuth0User.LastName,
                 Locale = "pl",
+                Name = testingAuth0User.FirstName + testingAuth0User.LastName,
                 Nickname = testingAuth0User.Nickname,
                 UpdatedAt = DateTime.UtcNow,
             });
