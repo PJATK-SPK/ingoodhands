@@ -228,7 +228,6 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Email = testingUser.Email,
                 EmailVerified = true,
                 Identifier = "google-oauth2|117638106834834546346",
-                GivenName = testingUser.FirstName,
                 FamilyName = testingUser.LastName,
                 Locale = "pl",
                 Name = testingUser.FirstName + testingUser.LastName,
@@ -268,10 +267,8 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
                 Email = testingAuth0User.Email,
                 EmailVerified = true,
                 Identifier = testingAuth0User.Identifier,
-                GivenName = testingAuth0User.FirstName,
                 FamilyName = testingAuth0User.LastName,
                 Locale = "pl",
-                Name = testingAuth0User.FirstName + testingAuth0User.LastName,
                 Nickname = testingAuth0User.Nickname,
                 UpdatedAt = DateTime.UtcNow,
             });
