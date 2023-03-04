@@ -13,9 +13,10 @@ namespace Core.Database.Config.Models.Auth
         {
             new DbEntityConfig<TBase>().Configure(builder);
             builder.ToTable("auth0_users", "auth");
-            builder.Property(c => c.FirstName).IsRequired().HasMaxLength(50);
+            builder.Property(c => c.FirstName).HasMaxLength(50);
             builder.Property(c => c.LastName).HasMaxLength(50);
-            builder.Property(c => c.Nickname).IsRequired().HasMaxLength(50);
+            builder.Property(c => c.Nickname).HasMaxLength(50);
+            builder.Property(c => c.Name).HasMaxLength(50);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(254);
             builder.Property(c => c.Identifier).IsRequired().HasMaxLength(80);
             builder.HasUniqueConstraint(c => c.Identifier);

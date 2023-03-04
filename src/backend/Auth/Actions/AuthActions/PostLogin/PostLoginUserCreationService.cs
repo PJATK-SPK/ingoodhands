@@ -72,10 +72,16 @@ namespace Auth.Actions.AuthActions.PostLogin
         }
         private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {
+            var firstName = string.IsNullOrWhiteSpace(currentAuth0UserInfo.GivenName)
+                ? string.IsNullOrWhiteSpace(currentAuth0UserInfo.Name!)
+                    ? "User"
+                    : currentAuth0UserInfo.Name!
+                : currentAuth0UserInfo.GivenName!;
+
             return new User
             {
                 Status = DbEntityStatus.Active,
-                FirstName = currentAuth0UserInfo.GivenName!,
+                FirstName = firstName,
                 LastName = currentAuth0UserInfo.FamilyName,
                 Email = currentAuth0UserInfo.Email!,
                 WarehouseId = null
@@ -86,9 +92,10 @@ namespace Auth.Actions.AuthActions.PostLogin
         {
             return new Auth0User
             {
-                FirstName = currentAuth0UserInfo.GivenName!,
+                FirstName = currentAuth0UserInfo.GivenName,
                 LastName = currentAuth0UserInfo.FamilyName,
-                Nickname = currentAuth0UserInfo.Nickname!,
+                Nickname = currentAuth0UserInfo.Nickname,
+                Name = currentAuth0UserInfo.Name,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Email = currentAuth0UserInfo.Email!,

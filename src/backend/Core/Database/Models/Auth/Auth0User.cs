@@ -7,9 +7,10 @@ namespace Core.Database.Models.Auth
 {
     public class Auth0User : DbEntity, IEntityTypeConfiguration<Auth0User>
     {
-        public string FirstName { get; set; } = default!;
+        public string? FirstName { get; set; } = default!;
         public string? LastName { get; set; }
-        public string Nickname { get; set; } = default!;
+        public string? Nickname { get; set; } = default!;
+        public string? Name { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string Identifier { get; set; } = default!;
         public User? User { get; set; }
