@@ -37,7 +37,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
 
             if (filter != null)
             {
-                dbResult = dbResult.Where(u => (u.FirstName + " " + u.LastName).Contains(filter));
+                dbResult = dbResult.Where(u => (u.FirstName + " " + u.LastName).ToLower().Contains(filter.ToLower()));
             }
 
             var result = dbResult.PageResult(page, pageSize);

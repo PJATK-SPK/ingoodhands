@@ -14,8 +14,11 @@ export class ManageUsersService {
         let params: { page: string, pageSize: string, filter?: string } = {
             page: page.toString(),
             pageSize: pageSize.toString(),
-            filter
         };
+
+        if (filter) {
+            params.filter = filter;
+        }
 
         return this.http.get<PagedResult<ManageUsersItem>>(environment.api + '/manage-users', { params });
     }

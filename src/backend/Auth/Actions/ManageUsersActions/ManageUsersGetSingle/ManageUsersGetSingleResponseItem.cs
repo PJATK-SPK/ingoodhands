@@ -4,7 +4,7 @@
     {
         public string Id { get; set; } = default!;
         public string FullName { get; set; } = default!;
-        public string? WarehouseName { get; set; }
+        public string? WarehouseId { get; set; }
         public List<string> Roles { get; set; } = default!;
     }
 }

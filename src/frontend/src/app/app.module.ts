@@ -13,6 +13,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { AuthGuard } from './auth-guard';
 import { HttpErrorInterceptor } from './services/http-error-interceptor';
+import { WarehouseService } from './services/warehouse.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { HttpErrorInterceptor } from './services/http-error-interceptor';
 
     AuthGuard,
     MessageService,
+    WarehouseService,
   ],
   bootstrap: [AppComponent]
 })
