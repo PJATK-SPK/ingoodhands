@@ -51,14 +51,6 @@ namespace Auth.Actions.AuthActions.PostLogin
                 var userRoles = await CreateUserRoles(user, serviceUser);
                 _appDbContext.AddRange(userRoles);
             }
-            else if (user == null && auth0UserFromDatabase != null)
-            {
-                user = CreateUser(auth0UserInfo);
-                _appDbContext.Add(user);
-
-                var userRoles = await CreateUserRoles(user, serviceUser);
-                _appDbContext.AddRange(userRoles);
-            }
 
             if (!user!.Roles!.Any())
             {
@@ -72,10 +64,17 @@ namespace Auth.Actions.AuthActions.PostLogin
         }
         private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {
+            var firstName = "User";
+
+            if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.GivenName))
+                firstName = currentAuth0UserInfo.GivenName!.Trim();
+            else if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.Name!))
+                firstName = currentAuth0UserInfo.Name!.Trim();
+
             return new User
             {
                 Status = DbEntityStatus.Active,
-                FirstName = currentAuth0UserInfo.GivenName!,
+                FirstName = firstName,
                 LastName = currentAuth0UserInfo.FamilyName,
                 Email = currentAuth0UserInfo.Email!,
                 WarehouseId = null
@@ -86,9 +85,10 @@ namespace Auth.Actions.AuthActions.PostLogin
         {
             return new Auth0User
             {
-                FirstName = currentAuth0UserInfo.GivenName!,
+                FirstName = currentAuth0UserInfo.GivenName,
                 LastName = currentAuth0UserInfo.FamilyName,
-                Nickname = currentAuth0UserInfo.Nickname!,
+                Nickname = currentAuth0UserInfo.Nickname,
+                Name = currentAuth0UserInfo.Name,
                 UpdateUserId = serviceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Email = currentAuth0UserInfo.Email!,
