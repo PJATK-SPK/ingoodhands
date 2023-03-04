@@ -50,7 +50,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
             {
                 Id = _hashids.EncodeLong(userId),
                 FullName = dbResult.FirstName + " " + dbResult.LastName,
-                WarehouseName = dbResult.Warehouse == null ? null : dbResult.Warehouse.ShortName,
+                WarehouseId = dbResult.WarehouseId != null ? _hashids.EncodeLong(dbResult.WarehouseId!.Value) : null,
                 Roles = dbResult.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             };
 

@@ -1,8 +1,42 @@
 <div class="grid">
     <div class="col-12">
         <div class="p-3">
-            <p-card>
-                - Wszystkie role z checkboxami + save<br />
+            <p-card class="p-2" *ngIf="userFullName && warehouses">
+                <form [formGroup]="form" (submit)="onSubmit($event)">
+                    <div class="col-12">
+                        <h2 class="text-2xl font-bold m-0"> {{userFullName}} </h2>
+
+                        <div class="pt-5 pb-3">
+                            <div>
+                                Warehouse:
+                                <p-autoComplete [style]="{'width':'100%'}" formControlName="warehouseId"
+                                    [inputStyle]="{'width':'100%'}" [suggestions]="filteredWarehouses"
+                                    (completeMethod)="filterWarehouse($event)" field="name" [forceSelection]="true"
+                                    [dropdown]="true">
+                                    <ng-template let-listItem pTemplate="item">
+                                        <div>{{listItem.name}}</div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+
+                            <div class="pt-3">
+                                <div class="role-container" *ngFor="let item of formRoles">
+                                    <div>
+                                        <b>{{item.name}}:</b>
+                                    </div>
+                                    <div>
+                                        <p-inputSwitch [formControlName]="item.ctrl" binary="true"></p-inputSwitch>
+                                    </div>
+                                </div>
+
+                                <div class="pr-5 pt-5 flex align-items-center justify-content-end">
+                                    <button pButton [loading]="isSaving" type="submit" label="Save"
+                                        class="p-button-outlined p-button-primary"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </p-card>
         </div>
     </div>
