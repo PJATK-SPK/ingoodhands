@@ -34,18 +34,6 @@ public class ManageUsersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetSingle(string id) => await _manageUsersGetSingleAction.Execute(id);
 
-    public class DeleteMeManageUserPayload
-    {
-        public string? WarehouseId { get; set; }
-        public List<string> Roles { get; set; } = default!;
-    }
-    public class DeleteMeManageUserResponse
-    {
-        public string Id { get; set; } = default!;
-        public string FullName { get; set; } = default!;
-        public string? WarehouseId { get; set; }
-        public List<string> Roles { get; set; } = default!;
-    }
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchSingle(string id, [FromBody] ManageUsersPatchSinglePayload payload)
         => await _manageUsersPatchSingleAction.Execute(id, payload);
