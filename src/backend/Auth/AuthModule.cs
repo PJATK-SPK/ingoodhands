@@ -7,6 +7,7 @@ using Auth.Actions.UserSettingsActions.GetUserDetails;
 using Core.Setup.Autofac;
 using Auth.Actions.ManageUsersActions.ManageUsersGetList;
 using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
+using Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle;
 
 namespace Auth
 {
@@ -21,11 +22,12 @@ namespace Auth
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<PostLoginModule>();
-            builder.RegisterModule<GetAuth0UsersByCurrentUserModule>();
             builder.RegisterModule<GetUserDetailsModule>();
             builder.RegisterModule<PatchUserDetailsModule>();
             builder.RegisterModule<ManageUsersGetListModule>();
             builder.RegisterModule<ManageUsersGetSingleModule>();
+            builder.RegisterModule<ManageUsersPatchSingleModule>();
+            builder.RegisterModule<GetAuth0UsersByCurrentUserModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)

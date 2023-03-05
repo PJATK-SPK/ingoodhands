@@ -1,6 +1,6 @@
-﻿namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
+﻿namespace Auth.Actions.ManageUsersActions.ManageUsersPatchSingle
 {
-    public class ManageUsersGetListResponseItem
+    public class ManageUsersPatchSingleResponseItem
     {
         public string Id { get; set; } = default!;
         public string FullName { get; set; } = default!;

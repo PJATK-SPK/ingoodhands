@@ -46,7 +46,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
             {
                 Id = _hashids.EncodeLong(c.Id),
                 FullName = c.FirstName + " " + c.LastName,
-                WarehouseName = c.Warehouse == null ? null : c.Warehouse.ShortName,
+                WarehouseId = c.WarehouseId == null ? null : c.WarehouseId.ToString(),
                 Roles = c.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             }).ToList();
 
