@@ -20,6 +20,7 @@ namespace Core.Database
         public DbSet<Product> Products { get; set; } = default!;
         public DbSet<Donation> Donations { get; set; } = default!;
         public DbSet<DonationProduct> DonationProducts { get; set; } = default!;
+        public DbSet<Notification> Notifications { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

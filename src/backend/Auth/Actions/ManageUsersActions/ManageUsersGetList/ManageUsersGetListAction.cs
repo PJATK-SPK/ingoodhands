@@ -1,6 +1,7 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Seeders;
 using Core.Services;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,10 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
             await _roleService.ThrowIfNoRole(RoleName.Administrator);
 
             IQueryable<User> dbResult = _appDbContext.Users
-                 .Include(c => c.Roles)!
-                     .ThenInclude(c => c.Role)
-                 .Include(c => c.Warehouse);
+                .Include(c => c.Roles)!
+                    .ThenInclude(c => c.Role)
+                .Include(c => c.Warehouse)
+                .Where(c => c.Id != UserSeeder.ServiceUser.Id);
 
             if (filter != null)
             {
@@ -46,6 +48,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
             {
                 Id = _hashids.EncodeLong(c.Id),
                 FullName = c.FirstName + " " + c.LastName,
+                Email = c.Email,
                 WarehouseId = c.WarehouseId == null ? null : c.WarehouseId.ToString(),
                 Roles = c.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             }).ToList();
