@@ -67,11 +67,12 @@ namespace Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle
             }
 
             var rolesToAdd = await _appDbContext.Roles
-                .ToListAsync(); // materialize the query
+                .ToListAsync();
 
             rolesToAdd = rolesToAdd
-                .Where(r => roleNamesToAdd.Contains(r.Name.ToString())) // perform the Contains locally
+                .Where(r => roleNamesToAdd.Contains(r.Name.ToString()))
                 .ToList();
+
             foreach (var role in rolesToAdd)
             {
                 if (role != null)

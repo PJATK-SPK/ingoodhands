@@ -1,54 +1,46 @@
-﻿using Core.Exceptions;
-using Autofac;
-using Core.Database;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestsBase;
-using Donate.Actions.DonateForm.GetWarehouses;
-using Core.Database.Enums;
-using Core.Database.Models.Auth;
-using Core.Setup.Auth0;
-using Microsoft.AspNetCore.Mvc;
-using Core.Database.Models.Core;
-using System.Diagnostics.Metrics;
-using System.Net;
-using Donate;
+﻿using Autofac;
 using Core;
+using Core.Database;
+using Core.Exceptions;
 using Core.Setup.Enums;
-using Donate.Actions.DonateForm.GetProducts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Order;
+using Order.Actions.WarehousesActions.GetWarehouses;
+using Order.Actions.WarehousesActions.GetWarehousesList;
+using TestsBase;
 
-namespace DonateTests.Services.GetWarehousesActionTests
+namespace OrderTests.Actions.WarehousesActionTest
 {
     [TestClass()]
-    public class GetWarehousesActionTests
+    public class WarehousesGetListActionTest
     {
         private readonly List<Module> _usedModules = new()
         {
             new CoreModule(WebApiUserProviderType.None),
-            new DonateModule(),
+            new OrderModule(),
         };
 
         [TestMethod()]
-        public async Task GetWarehousesActionTest_GetWarehouses_ReturnsWareHouses()
+        public async Task WarehousesGetListActionTest_GetWarehouseList_ReturnsResponse()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetWarehousesAction>();
+            var action = toolkit.Resolve<WarehousesGetListAction>();
 
             // Act
-            var executed = await action.Execute();
-            var result = executed.Value as List<GetWarehousesResponse>;
+            var result = await action.Execute();
 
             // Assert
             Assert.IsTrue(result!.Any());
         }
 
         [TestMethod()]
-        public async Task GetWarehousesActionTest_RemoveAllWarehousesFromDb_ThrowException()
+        public async Task WarehousesGetListActionTest_RemoveAllWarehousesFromDb_ThrowException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetWarehousesAction>();
+            var action = toolkit.Resolve<WarehousesGetListAction>();
 
             // Act
             var activeWarehouses = await context.Warehouses
