@@ -15,6 +15,7 @@ using Donate;
 using Core;
 using Core.Setup.Enums;
 using Donate.Actions.DonateForm.GetProducts;
+using Microsoft.EntityFrameworkCore;
 
 namespace DonateTests.Services.GetWarehousesActionTests
 {
@@ -40,6 +41,31 @@ namespace DonateTests.Services.GetWarehousesActionTests
 
             // Assert
             Assert.IsTrue(result!.Any());
+        }
+
+        [TestMethod()]
+        public async Task GetWarehousesActionTest_RemoveAllWarehousesFromDb_ThrowException()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<GetWarehousesAction>();
+
+            // Act
+            var activeWarehouses = await context.Warehouses
+                .Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active)
+                .ToListAsync();
+
+            foreach (var warehouse in activeWarehouses)
+            {
+                warehouse.Status = Core.Database.Enums.DbEntityStatus.Inactive;
+            }
+
+            await context.SaveChangesAsync();
+            var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute());
+
+            // Assert
+            Assert.IsInstanceOfType(exception, typeof(ItemNotFoundException));
+            Assert.IsNotNull(exception.Message);
         }
     }
 }

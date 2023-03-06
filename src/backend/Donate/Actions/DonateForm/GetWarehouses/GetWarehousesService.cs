@@ -31,7 +31,7 @@ namespace Donate.Actions.DonateForm.GetWarehouses
             if (!listOfWarehouses.Any())
             {
                 _logger.LogError("Couldn't find any active warehouses in database");
-                throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
+                throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
             }
 
             var response = listOfWarehouses.Select(c => new GetWarehousesResponse
