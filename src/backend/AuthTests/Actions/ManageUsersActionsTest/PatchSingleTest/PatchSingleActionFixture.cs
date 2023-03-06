@@ -22,7 +22,6 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             FirstName = "Auth",
             LastName = "Auth0User" + id,
             Nickname = "Auth0",
-            UpdateUser = user,
             UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,
             Email = user.Email,
