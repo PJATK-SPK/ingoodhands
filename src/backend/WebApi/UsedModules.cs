@@ -3,6 +3,7 @@ using Autofac;
 using Core;
 using Core.Setup.Enums;
 using Donate;
+using Order;
 
 namespace WebApi
 {
@@ -13,6 +14,7 @@ namespace WebApi
             new CoreModule(WebApiUserProviderType.ProvideByLoggedAuth0User),
             new AuthModule(),
             new DonateModule(),
+            new OrderModule(),
         };
     }
 }

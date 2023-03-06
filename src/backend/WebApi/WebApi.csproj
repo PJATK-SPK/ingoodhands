@@ -20,6 +20,7 @@
 		<ProjectReference Include="..\Auth\Auth.csproj" />
 		<ProjectReference Include="..\Core\Core.csproj" />
 		<ProjectReference Include="..\Donate\Donate.csproj" />
+		<ProjectReference Include="..\Order\Order.csproj" />
 	</ItemGroup>
 
 </Project>
