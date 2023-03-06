@@ -1,5 +1,6 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Seeders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             FirstName = "Auth",
             LastName = "Auth0User" + id,
             Nickname = "Auth0",
-            UpdateUser = user,
-            UpdateUserId = 1,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,
             Email = user.Email,
             Identifier = user.FirstName + user.LastName + "GoogleId",
@@ -36,7 +36,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
         {
             RoleId = roleId,
             User = user,
-            UpdateUserId = 1,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,
             Status = DbEntityStatus.Active
         };

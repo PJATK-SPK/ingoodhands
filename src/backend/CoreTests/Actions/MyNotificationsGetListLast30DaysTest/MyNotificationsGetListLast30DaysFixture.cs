@@ -1,10 +1,11 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Models.Core;
 using Core.Database.Seeders;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
+namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
 {
-    public static class GetSingleActionFixture
+    public static class MyNotificationsGetListLast30DaysFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -27,13 +28,14 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
             UserId = user.Id
         };
 
-        public static UserRole CreateUserRole(User user, long roleId) => new()
+        public static Notification CreateNotifaction(User user, long daysPastFromToday, string partMessage) => new()
         {
-            RoleId = roleId,
+            UserId = user.Id,
             User = user,
+            CreationDate = DateTime.UtcNow.AddDays(-daysPastFromToday),
+            Message = "You've reached level 10 donor! " + partMessage,
             UpdateUserId = UserSeeder.ServiceUser.Id,
-            UpdatedAt = DateTime.UtcNow,
-            Status = DbEntityStatus.Active
+            UpdatedAt = DateTime.UtcNow
         };
     }
 }

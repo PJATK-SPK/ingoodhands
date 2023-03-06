@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.Actions.MyNotifications;
 using Core.Services;
 using Core.Setup;
 using Core.Setup.Autofac;
@@ -18,7 +19,13 @@ namespace Core
         protected override void Load(ContainerBuilder builder)
         {
             _setupModule.RegisterAll(builder);
+            RegisterActions(builder);
             RegisterServices(builder);
+        }
+
+        private static void RegisterActions(ContainerBuilder builder)
+        {
+            builder.RegisterModule<MyNotificationsGetListLast30DaysModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)
