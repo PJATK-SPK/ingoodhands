@@ -1,6 +1,6 @@
 ﻿namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
 {
-    public class GetSingleResponseItem
+    public class ManageUsersGetSingleResponseItem
     {
         public string Id { get; set; } = default!;
         public string FullName { get; set; } = default!;

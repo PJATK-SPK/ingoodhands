@@ -43,10 +43,10 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
             if (dbResult == null)
             {
                 _logger.LogError("Couldn't find user by id in database");
-                throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
+                throw new ItemNotFoundException("Sorry we are unable to find this user in database");
             }
 
-            var response = new GetSingleResponseItem
+            var response = new ManageUsersGetSingleResponseItem
             {
                 Id = _hashids.EncodeLong(userId),
                 FullName = dbResult.FirstName + " " + dbResult.LastName,
