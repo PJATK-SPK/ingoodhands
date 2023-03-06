@@ -10,7 +10,7 @@ namespace Core.Database.Models.Core
     {
         public long UserId { get; set; }
         public User? User { get; set; }
-        public string? Message { get; set; }
+        public string Message { get; set; } = default!;
 
         public void Configure(EntityTypeBuilder<Notification> builder)
              => new NotificationConfig<Notification>().Configure(builder);

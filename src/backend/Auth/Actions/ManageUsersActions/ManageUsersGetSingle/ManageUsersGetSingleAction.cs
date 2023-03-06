@@ -39,7 +39,6 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
                  .Include(c => c.Roles)!
                      .ThenInclude(c => c.Role)
                  .Include(c => c.Warehouse)
-                 .Where(c => c.Id != UserSeeder.ServiceUser.Id)
                  .SingleOrDefaultAsync(c => c.Id == userId);
 
             if (dbResult == null)
