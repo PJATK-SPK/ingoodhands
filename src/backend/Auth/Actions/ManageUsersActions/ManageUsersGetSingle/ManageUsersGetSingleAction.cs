@@ -1,5 +1,6 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
+using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Services;
 using HashidsNet;
@@ -38,6 +39,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
                  .Include(c => c.Roles)!
                      .ThenInclude(c => c.Role)
                  .Include(c => c.Warehouse)
+                 .Where(c => c.Id != UserSeeder.ServiceUser.Id)
                  .SingleOrDefaultAsync(c => c.Id == userId);
 
             if (dbResult == null)
@@ -50,6 +52,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
             {
                 Id = _hashids.EncodeLong(userId),
                 FullName = dbResult.FirstName + " " + dbResult.LastName,
+                Email = dbResult.Email,
                 WarehouseId = dbResult.WarehouseId != null ? _hashids.EncodeLong(dbResult.WarehouseId!.Value) : null,
                 Roles = dbResult.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             };

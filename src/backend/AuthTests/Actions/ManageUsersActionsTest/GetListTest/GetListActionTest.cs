@@ -53,6 +53,14 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             context.Add(testingUser2);
             context.Add(testingAuth0User2);
             context.Add(testUser2Role);
+
+            var testingUser3 = GetListActionFixture.CreateUser("Normal", "User3");
+            var testingAuth0User3 = GetListActionFixture.CreateAuth0User(testingUser3, 3);
+            var testUser3Role = GetListActionFixture.CreateUserRole(testingUser3, roleDonorId);
+
+            context.Add(testingUser3);
+            context.Add(testingAuth0User3);
+            context.Add(testUser3Role);
             await context.SaveChangesAsync();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
@@ -102,7 +110,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             context.Add(testUser1Role3);
 
             // Second User
-            var testingUser2 = GetListActionFixture.CreateUser("Normal", "User2");
+            var testingUser2 = GetListActionFixture.CreateUser("Herman", "Dziad");
             var testingAuth0User2 = GetListActionFixture.CreateAuth0User(testingUser2, 2);
             var testUser2Role = GetListActionFixture.CreateUserRole(testingUser2, roleDonorId);
 
@@ -130,7 +138,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
 
             // Assert
             Assert.IsTrue(result!.Queryable.Any());
-            Assert.AreEqual(2, result!.Queryable.Count());
+            Assert.AreEqual(1, result!.Queryable.Count());
         }
     }
 }
