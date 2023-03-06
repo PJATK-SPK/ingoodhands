@@ -32,12 +32,16 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
             var notification5daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 5, "I will work");
             var notification29daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 29, "I will work too");
             var notification50daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 50, "I won't work too");
+            var notification2daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 2, "I will work three");
+            var notification1dayAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 1, "I will work four");
 
             context.Add(user1);
             context.Add(notification35daysAgo);
             context.Add(notification5daysAgo);
             context.Add(notification29daysAgo);
             context.Add(notification50daysAgo);
+            context.Add(notification2daysAgo);
+            context.Add(notification1dayAgo);
 
             await context.SaveChangesAsync();
             // Act
@@ -45,9 +49,9 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
             var result = executed.Value as List<MyNotificationsGetListLast30DaysResponseItem>;
 
             // Assert
-            //Assert.AreEqual(2, result.);
-            Assert.AreEqual(2, context.Notifications.Count(c => c.CreationDate > DateTime.UtcNow.AddDays(-30)));
-            Assert.AreEqual(4, context.Notifications.Count());
+            Assert.AreEqual(4, result!.Count);
+            Assert.AreEqual(4, context.Notifications.Count(c => c.CreationDate > DateTime.UtcNow.AddDays(-30)));
+            Assert.AreEqual(6, context.Notifications.Count());
         }
     }
 }

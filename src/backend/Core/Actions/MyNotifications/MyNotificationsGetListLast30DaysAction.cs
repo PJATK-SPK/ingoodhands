@@ -20,13 +20,16 @@ namespace Core.Actions.MyNotifications
 
         public async Task<OkObjectResult> Execute()
         {
-            var dbResult = await _appDbContext.Notifications.Where(c => c.CreationDate > (DateTime.UtcNow.AddDays(-30))).ToListAsync();
+            var dbResult = await _appDbContext.Notifications
+                .Where(c => c.CreationDate > (DateTime.UtcNow.AddDays(-30)))
+                .OrderByDescending(c => c.CreationDate)
+                .ToListAsync();
 
             var response = dbResult.Select(c => new MyNotificationsGetListLast30DaysResponseItem()
             {
                 CreationDate = c.CreationDate,
                 Message = c.Message
-            });
+            }).ToList();
 
             return new OkObjectResult(response);
         }
