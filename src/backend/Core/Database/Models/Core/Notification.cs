@@ -10,6 +10,7 @@ namespace Core.Database.Models.Core
     {
         public long UserId { get; set; }
         public User? User { get; set; }
+        public DateTime CreationDate { get; set; }
         public string Message { get; set; } = default!;
 
         public void Configure(EntityTypeBuilder<Notification> builder)
@@ -18,6 +19,6 @@ namespace Core.Database.Models.Core
         public override bool Equals(object? obj) => ReferenceEquals(obj, this);
 
         public override int GetHashCode()
-            => HashCode.Combine(base.GetHashCode(), UserId, Message);
+            => HashCode.Combine(base.GetHashCode(), UserId, CreationDate, Message);
     }
 }
