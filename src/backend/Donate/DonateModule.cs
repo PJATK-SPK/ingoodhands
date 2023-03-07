@@ -7,6 +7,7 @@ using Donate.Actions.MyDonations.GetDetails;
 using Donate.Actions.MyDonations.GetListMyDonations;
 using Donate.Actions.MyDonations.GetNotDeliveredCount;
 using Donate.Actions.MyDonations.GetScore;
+using Donate.Actions.PickUpDonation.PostPickUpDonation;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
 using Donate.Shared;
@@ -24,13 +25,14 @@ namespace Donate
 
         private static void RegisterActions(ContainerBuilder builder)
         {
-            builder.RegisterModule<GetWarehousesModule>();
+            builder.RegisterModule<GetScoreModule>();
             builder.RegisterModule<GetProductsModule>();
             builder.RegisterModule<PerformDonateModule>();
+            builder.RegisterModule<GetWarehousesModule>();
             builder.RegisterModule<GetListMyDonationModule>();
+            builder.RegisterModule<PostPickupDonationModule>();
             builder.RegisterModule<GetMyDonationDetailsModule>();
             builder.RegisterModule<GetNotDeliveredCountModule>();
-            builder.RegisterModule<GetScoreModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
