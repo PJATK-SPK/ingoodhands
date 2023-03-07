@@ -38,6 +38,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             UpdatedAt = DateTime.UtcNow,
             Status = DbEntityStatus.Active
         };
+
         public static ManageUsersPatchSinglePayload CreatePatchingPayload(RoleName roleName, string? warehouseId = null) => new()
         {
             WarehouseId = warehouseId,
