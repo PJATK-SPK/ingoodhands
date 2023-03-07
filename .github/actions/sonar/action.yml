@@ -25,12 +25,11 @@ runs:
         dotnet tool install --global dotnet-sonarscanner
       shell: bash
 
-    - name: Download coverage report
+    - name: Run tests
       if: ${{ inputs.branch == 'feature' }}
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage
-        path: .
+      run: |
+        dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+      shell: bash
 
     - name: Download coverage report
       if: ${{ inputs.branch != 'feature' }}
