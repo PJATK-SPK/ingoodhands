@@ -64,7 +64,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
                 throw new ItemNotFoundException("Donation not found");
             }
 
-            if (donation.Result!.IsDelivered == true)
+            if (donation.Result!.IsDelivered)
             {
                 _logger.LogError("Donation found by ID is already delivered");
                 throw new ClientInputErrorException("We are sorry, but this donation has been already delievered");
