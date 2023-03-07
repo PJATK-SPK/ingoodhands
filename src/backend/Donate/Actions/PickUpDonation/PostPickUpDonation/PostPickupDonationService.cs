@@ -47,13 +47,12 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 
             var userHasAssignedWarehouseId = await _appDbContext.Users
                 .Where(u => u.Id == currentUser.Id && u.WarehouseId != null)
-                .Select(u => u.WarehouseId)
-                .FirstOrDefaultAsync();
+                .AnyAsync();
 
-            if (userHasAssignedWarehouseId == null)
+            if (!userHasAssignedWarehouseId)
             {
                 _logger.LogError("User doesn't have warehouse assigned, warehouseId is empty");
-                throw new ApplicationErrorException("User doesn't have warehouse assigned. Contact Administrator to assign warhouse to a User");
+                throw new ApplicationErrorException("User doesn't have warehouse assigned. Contact Administrator toto assign warhouse to you");
             }
 
             var donation = _appDbContext.Donations.SingleOrDefaultAsync(c => c.Name == donationName);
@@ -74,7 +73,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             {
                 UserId = donation.Result!.CreationUserId,
                 CreationDate = DateTime.UtcNow,
-                Message = "Your donation has arrived at the warhouse!",
+                Message = $"Your donation {donationName} has arrived at the warehouse!",
                 UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active

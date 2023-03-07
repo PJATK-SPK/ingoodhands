@@ -19,5 +19,5 @@ public class PickUpDonationController : ControllerBase
     }
 
     [HttpPost("{donationNumber}")]
-    public async Task<ActionResult> PickUp(string donationNumber) => await _postPickupDonationAction.Execute(donationNumber);
+    public async Task<ActionResult> PickUp(string donationName) => await _postPickupDonationAction.Execute(donationName);
 }
