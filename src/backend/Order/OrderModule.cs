@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
 using Order.Actions.WarehousesActions.GetWarehousesList;
+using Order.Services.OrderNameBuilder;
 
 namespace Order
 {
@@ -25,7 +26,7 @@ namespace Order
 
         private static void RegisterServices(ContainerBuilder builder)
         {
-            // Will be used in future
+            builder.RegisterAsScoped<OrderNameBuilderService>();
         }
     }
 }
