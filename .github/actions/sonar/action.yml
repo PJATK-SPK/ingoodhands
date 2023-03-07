@@ -25,12 +25,34 @@ runs:
         dotnet tool install --global dotnet-sonarscanner
       shell: bash
 
-    - name: Download coverage report
+    - name: Set variables for testing
       if: ${{ inputs.branch == 'feature' }}
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage
-        path: .
+      run: |
+        echo "DB_HOST=localhost" >> $GITHUB_ENV
+        echo "DB_USER=postgres" >> $GITHUB_ENV
+        echo "DB_PASSWORD=ingoodhands" >> $GITHUB_ENV
+        echo "DB_DATABASE=in_good_hands" >> $GITHUB_ENV
+        echo "DB_PORT=5432" >> $GITHUB_ENV
+        echo "OAUTH2_AUTHORITY=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_AUDIENCE=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_CLIENT_ID=dummy" = >> $GITHUB_ENV
+        echo "OAUTH2_SCOPES=dummy" = >> $GITHUB_ENV
+        echo "FRONTEND_URL=dummy" = >> $GITHUB_ENV
+        echo "HASHIDS_SALT=dummy" = >> $GITHUB_ENV
+      shell: bash
+
+    - name: Run backend and postgres for testing
+      if: ${{ inputs.branch == 'feature' }}
+      run: |
+        docker-compose -f docker-compose.ci.yml up -d
+      shell: bash
+
+    - name: Run tests
+      if: ${{ inputs.branch == 'feature' }}
+      run: |
+        dotnet test --collect:"XPlat Code Coverage" --results-directory ./coverage -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+      shell: bash
+      working-directory: src/backend
 
     - name: Download coverage report
       if: ${{ inputs.branch != 'feature' }}
@@ -41,6 +63,7 @@ runs:
         workflow: build-test-all.yml
 
     - name: Move coverage report
+      if: ${{ inputs.branch != 'feature' }}
       shell: bash
       run: |
         find . -name "coverage.opencover.xml" -exec sh -c 'for f; do d=${f%/*}; mv -- "$f" "./src/backend/${d#./}${f##*/}"; done' findsh {} +
