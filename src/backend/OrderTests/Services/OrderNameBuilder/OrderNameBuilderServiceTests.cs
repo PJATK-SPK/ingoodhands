@@ -5,7 +5,7 @@ using Order.Services.OrderNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace OrderTests.Service.OrderNameBuilderTests
+namespace OrderTests.Services.OrderNameBuilder
 {
     [TestClass()]
     public class OrderNameBuilderServiceTest
@@ -59,7 +59,7 @@ namespace OrderTests.Service.OrderNameBuilderTests
             string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
 
             // Act and Assert
-            var exception = Assert.ThrowsException<HttpError500Exception>(() => action.Build(id));
+            var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
             Assert.AreEqual(expectedErrorMessage, exception.Message);
         }
 
@@ -74,7 +74,7 @@ namespace OrderTests.Service.OrderNameBuilderTests
             string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
 
             // Act and Assert
-            var exception = Assert.ThrowsException<HttpError500Exception>(() => action.Build(id));
+            var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
             Assert.AreEqual(expectedErrorMessage, exception.Message);
         }
     }
