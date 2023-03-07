@@ -15,6 +15,8 @@ namespace Core.Database.Config.Models.Core
 
             builder.Property(c => c.ProductId).IsRequired();
             builder.Property(c => c.Quantity).IsRequired();
+
+            builder.HasOne(c => c.Product).WithMany(c => (IEnumerable<TBase>?)c.Stocks).HasForeignKey(c => c.ProductId).HasConstraintName("stocks_product_id_fkey");
         }
     }
 }
