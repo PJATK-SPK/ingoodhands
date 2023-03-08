@@ -23,7 +23,7 @@ namespace Donate.Jobs.IncludeToStock
 
         public async Task<ActionResult> Execute()
         {
-            var deliveredNotIncludedInStockDonations = await _appDbContext.Donations.Where(c => c.IsDelivered & !c.IsIncludedInStock).ToListAsync();
+            var deliveredNotIncludedInStockDonations = await _appDbContext.Donations.Where(c => c.IsDelivered && !c.IsIncludedInStock).ToListAsync();
             var allStock = await _appDbContext.Stocks.ToDictionaryAsync(c => c.ProductId);
 
             foreach (var donation in deliveredNotIncludedInStockDonations)
@@ -33,6 +33,7 @@ namespace Donate.Jobs.IncludeToStock
                     if (allStock.TryGetValue(product.ProductId, out var stockItem))
                     {
                         stockItem.Quantity += product.Quantity;
+                        donation.IsIncludedInStock = true;
                     }
                     else
                     {
@@ -44,6 +45,7 @@ namespace Donate.Jobs.IncludeToStock
                             UpdatedAt = DateTime.UtcNow,
                             UpdateUserId = UserSeeder.ServiceUser.Id
                         };
+                        donation.IsIncludedInStock = true;
                         _appDbContext.Stocks.Add(newStockItem);
                         allStock.Add(newStockItem.ProductId, newStockItem);
                     }
