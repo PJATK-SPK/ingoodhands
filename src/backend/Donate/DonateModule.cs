@@ -8,6 +8,7 @@ using Donate.Actions.MyDonations.GetListMyDonations;
 using Donate.Actions.MyDonations.GetNotDeliveredCount;
 using Donate.Actions.MyDonations.GetScore;
 using Donate.Actions.PickUpDonation.PostPickUpDonation;
+using Donate.Jobs.IncludeToStock;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Services.DonateNameBuilder;
 using Donate.Shared;
@@ -38,6 +39,7 @@ namespace Donate
         private static void RegisterJobs(ContainerBuilder builder)
         {
             builder.RegisterModule<SetExpiredDonationsModule>();
+            builder.RegisterModule<IncludeToStockModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)
