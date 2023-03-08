@@ -67,11 +67,13 @@ namespace DonateTests.Jobs.IncludeToStock
             // Act
             var result = await job.Execute();
             var allStock = await context.Stocks.ToListAsync();
+            var allDonations = await context.Donations.ToListAsync();
 
             // Assert
             Assert.IsNotNull(allStock);
             Assert.AreEqual(10, allStock.SingleOrDefault(c => c.ProductId == ProductSeeder.Product5Walnuts.Id)!.Quantity);
             Assert.IsNull(allStock.SingleOrDefault(c => c.ProductId == ProductSeeder.Product13Soup.Id));
+            Assert.AreEqual(1, allDonations.Where(c => c.IsDelivered && c.IsIncludedInStock).Count());
         }
 
         [TestMethod()]
@@ -109,10 +111,12 @@ namespace DonateTests.Jobs.IncludeToStock
             // Act
             var result = await job.Execute();
             var allStock = await context.Stocks.ToListAsync();
+            var allDonations = await context.Donations.ToListAsync();
 
             // Assert
             Assert.IsNotNull(allStock);
             Assert.AreEqual(100, allStock.SingleOrDefault(c => c.ProductId == ProductSeeder.Product5Walnuts.Id)!.Quantity);
+            Assert.AreEqual(2, allDonations.Where(c => c.IsDelivered && c.IsIncludedInStock).Count());
         }
 
         [TestMethod()]
@@ -154,12 +158,14 @@ namespace DonateTests.Jobs.IncludeToStock
             var result = await job.Execute();
             var stock = await context.Stocks.FirstOrDefaultAsync(s => s.ProductId == ProductSeeder.Product2Pasta.Id);
             var stock2 = await context.Stocks.FirstOrDefaultAsync(s => s.ProductId == ProductSeeder.Product12EnergyDrink.Id);
+            var allDonations = await context.Donations.ToListAsync();
 
             // Assert
             Assert.IsNotNull(stock);
             Assert.IsNotNull(stock2);
             Assert.AreEqual(70, stock.Quantity);
             Assert.AreEqual(35, stock2.Quantity);
+            Assert.AreEqual(2, allDonations.Where(c => c.IsDelivered && c.IsIncludedInStock).Count());
         }
     }
 }
