@@ -65,7 +65,7 @@ runs:
     - name: Move coverage report
       shell: bash
       run: |
-        find . -name "coverage.opencover.xml" -exec sh -c 'for f; do d=${f%/*}; mv -- "$f" "./${d#./}${f##*/}"; done' findsh {} +
+        find . -name "coverage.opencover.xml" -exec sh -c 'for f; do d=${f%/*}; mv -- "$f" "./src/backend/${d#./}${f##*/}"; done' findsh {} +
 
     - name: Build and analyze
       run: |
