@@ -22,6 +22,10 @@ namespace Core.Database
         public DbSet<DonationProduct> DonationProducts { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
         public DbSet<Stock> Stocks { get; set; } = default!;
+        public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<OrderProduct> OrderProducts { get; set; } = default!;
+        public DbSet<Delivery> Deliveries { get; set; } = default!;
+        public DbSet<DeliveryProduct> DeliveryProducts { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

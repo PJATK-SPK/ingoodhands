@@ -16,9 +16,10 @@ namespace Core.Database.Models.Core
         public string? Apartment { get; set; }
         public double GpsLatitude { get; set; } = default!;
         public double GpsLongitude { get; set; } = default!;
-        
+
         public List<Warehouse>? Warehouses { get; set; }
-            
+        public List<Order>? Orders { get; set; }
+
         public void Configure(EntityTypeBuilder<Address> builder)
             => new AddressConfig<Address>().Configure(builder);
 
