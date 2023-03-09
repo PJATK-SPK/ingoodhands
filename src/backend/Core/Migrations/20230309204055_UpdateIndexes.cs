@@ -16,7 +16,7 @@ namespace Core.Migrations
                 table: "orders");
 
             migrationBuilder.CreateIndex(
-                name: "name_idx",
+                name: "order_name_idx",
                 schema: "core",
                 table: "orders",
                 column: "name",
@@ -29,7 +29,7 @@ namespace Core.Migrations
                 column: "percentage");
 
             migrationBuilder.CreateIndex(
-                name: "name_idx",
+                name: "delivery_name_idx",
                 schema: "core",
                 table: "deliveries",
                 column: "name",
@@ -40,7 +40,7 @@ namespace Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "name_idx",
+                name: "order_name_idx",
                 schema: "core",
                 table: "orders");
 
@@ -50,7 +50,7 @@ namespace Core.Migrations
                 table: "orders");
 
             migrationBuilder.DropIndex(
-                name: "name_idx",
+                name: "delivery_name_idx",
                 schema: "core",
                 table: "deliveries");
 

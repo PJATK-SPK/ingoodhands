@@ -3135,7 +3135,7 @@ namespace Core.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("name_idx");
+                        .HasDatabaseName("delivery_name_idx");
 
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_deliveries_order_id");
@@ -3421,7 +3421,7 @@ namespace Core.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("name_idx");
+                        .HasDatabaseName("order_name_idx");
 
                     b.HasIndex("OwnerUserId")
                         .HasDatabaseName("ix_orders_owner_user_id");
