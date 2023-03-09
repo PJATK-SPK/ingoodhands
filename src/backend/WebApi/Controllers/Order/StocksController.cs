@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Dynamic.Core;
+using Order.Actions.StocksActions.StocksGetList;
 
 namespace WebApi.Controllers.Order;
 
@@ -9,36 +9,13 @@ namespace WebApi.Controllers.Order;
 [Route("stocks")]
 public class StocksController : ControllerBase
 {
-    internal class DeleteMeGetStocksItemResponse
+    private readonly StocksGetListAction _stocksGetListAction;
+
+    public StocksController(StocksGetListAction stocksGetListAction)
     {
-        public string ProductId { get; set; } = default!;
-        public string ProductName { get; set; } = default!;
-        public int Quantity { get; set; } = default!;
-        public string Unit { get; set; } = default!;
+        _stocksGetListAction = stocksGetListAction;
     }
+
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize)
-    {
-        var appDbContextProducts = new List<DeleteMeGetStocksItemResponse>
-        {
-            new DeleteMeGetStocksItemResponse
-            {
-                ProductId="vb1232fe",
-                ProductName = "Milk",
-                Quantity = 112,
-                Unit="l",
-            },
-            new DeleteMeGetStocksItemResponse
-            {
-                ProductId="12ujh5643",
-                ProductName = "Rice",
-                Quantity = 150,
-                Unit="kg",
-            }
-        }.AsQueryable();
-
-        var result = appDbContextProducts.PageResult(page, pageSize);
-
-        return await Task.FromResult(Ok(result));
-    }
+    public async Task<ActionResult> GetList(int page, int pageSize) => await _stocksGetListAction.Execute(page, pageSize);
 }

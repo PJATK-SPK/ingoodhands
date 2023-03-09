@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
+using Order.Actions.StocksActions.StocksGetList;
 using Order.Actions.WarehousesActions.GetWarehousesList;
 using Order.Services.OrderNameBuilder;
 
@@ -17,6 +18,7 @@ namespace Order
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<WarehousesGetListModule>();
+            builder.RegisterModule<StocksGetListModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
