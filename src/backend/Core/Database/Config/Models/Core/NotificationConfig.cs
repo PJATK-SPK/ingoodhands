@@ -1,5 +1,4 @@
 ﻿using Core.Database.Config.Base;
-
 using Core.Database.Models.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

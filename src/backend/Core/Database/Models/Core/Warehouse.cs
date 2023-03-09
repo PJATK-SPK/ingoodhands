@@ -14,6 +14,7 @@ namespace Core.Database.Models.Core
         public string ShortName { get; set; } = default!;
         public List<User>? Users { get; set; }
         public List<Donation>? Donations { get; set; }
+        public List<Delivery>? Deliveries { get; set; }
 
         public void Configure(EntityTypeBuilder<Warehouse> builder)
             => new WarehouseConfig<Warehouse>().Configure(builder);

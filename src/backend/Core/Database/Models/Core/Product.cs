@@ -12,6 +12,8 @@ namespace Core.Database.Models.Core
         public UnitType Unit { get; set; }
         public List<DonationProduct>? DonationProducts { get; set; }
         public List<Stock>? Stocks { get; set; }
+        public List<OrderProduct>? OrderProducts { get; set; }
+        public List<DeliveryProduct>? DeliveryProducts { get; set; }
 
         public void Configure(EntityTypeBuilder<Product> builder)
            => new ProductConfig<Product>().Configure(builder);
