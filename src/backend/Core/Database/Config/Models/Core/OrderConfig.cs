@@ -19,7 +19,7 @@ namespace Core.Database.Config.Models.Core
             builder.Property(c => c.OwnerUserId).IsRequired();
             builder.Property(c => c.CreationDate).IsRequired();
             builder.Property(c => c.IsCanceledByUser).IsRequired();
-            builder.HasIndex(c => c.Percentage).IsUnique().HasDatabaseName("percentage_idx");
+            builder.HasIndex(c => c.Percentage).HasDatabaseName("percentage_idx");
 
             builder.HasOne(c => c.Address).WithMany(c => (IEnumerable<TBase>?)c.Orders).HasForeignKey(c => c.AddressId).HasConstraintName("address_orders_id_fkey");
             builder.HasOne(c => c.OwnerUser).WithMany(c => (IEnumerable<TBase>?)c.Orders).HasForeignKey(c => c.OwnerUserId).HasConstraintName("orders_owner_users_id_fkey");
