@@ -1,14 +1,14 @@
 using Core.Exceptions;
 using Autofac;
 using Order;
-using Order.Services.OrderNameBuilder;
+using Order.Services.DeliveryNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace OrderTests.Services.OrderNameBuilder
+namespace OrderTests.Services.DeliveryNameBuilder
 {
     [TestClass()]
-    public class OrderNameBuilderServiceTest
+    public class DeliveryNameBuilderServiceTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -16,13 +16,13 @@ namespace OrderTests.Services.OrderNameBuilder
         };
 
         [TestMethod()]
-        public void OrderModuleTest_OrderIdWithing6DigitsInRange()
+        public void OrderModuleTest_DeliveryIdWithing6DigitsInRange()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
-            var action = toolkit.Resolve<OrderNameBuilderService>();
+            var action = toolkit.Resolve<DeliveryNameBuilderService>();
 
             long id = 123456;
-            string expected = "ORD123456";
+            string expected = "DEL123456";
 
             // Act
             string actual = action.Build(id);
@@ -32,14 +32,14 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithLessThanSixDigitId()
+        public void OrderModuleTest_DeliveryWithLessThanSixDigitId()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
-            var action = toolkit.Resolve<OrderNameBuilderService>();
+            var action = toolkit.Resolve<DeliveryNameBuilderService>();
 
             // Arrange
             long id = 55;
-            string expected = "ORD000055";
+            string expected = "DEL000055";
 
             // Act
             string actual = action.Build(id);
@@ -49,14 +49,14 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithInvalidId()
+        public void OrderModuleTest_DeliveryWithInvalidId()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
-            var action = toolkit.Resolve<OrderNameBuilderService>();
+            var action = toolkit.Resolve<DeliveryNameBuilderService>();
 
             // Arrange
             long id = 1000000;
-            string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
+            string expectedErrorMessage = "Delivery id is out of range. Please, contact system administrator";
 
             // Act and Assert
             var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
@@ -64,14 +64,14 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithInvalidIdLowerThan1()
+        public void OrderModuleTest_DeliveryWithInvalidIdLowerThan1()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
-            var action = toolkit.Resolve<OrderNameBuilderService>();
+            var action = toolkit.Resolve<DeliveryNameBuilderService>();
 
             // Arrange
             long id = -1;
-            string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
+            string expectedErrorMessage = "Delivery id is out of range. Please, contact system administrator";
 
             // Act and Assert
             var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
