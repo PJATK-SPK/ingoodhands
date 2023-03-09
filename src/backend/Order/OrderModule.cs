@@ -3,6 +3,7 @@ using Core.Setup.Autofac;
 using Order.Actions.StocksActions.StocksGetList;
 using Order.Actions.WarehousesActions.GetWarehousesList;
 using Order.Services.OrderNameBuilder;
+using Order.Services.DeliveryNameBuilder;
 
 namespace Order
 {
@@ -29,6 +30,7 @@ namespace Order
         private static void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<OrderNameBuilderService>();
+            builder.RegisterAsScoped<DeliveryNameBuilderService>();
         }
     }
 }
