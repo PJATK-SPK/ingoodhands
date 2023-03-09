@@ -32,33 +32,33 @@ namespace Order.Actions.StocksActions.StocksGetList
         public async Task<OkObjectResult> Execute(int page, int pageSize)
         {
             await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper);
-            IQueryable<Stock> listOfActiveStock = _appDbContext.Stocks
-                .Include(c => c.Product)
-                .Where(c => c.Status == DbEntityStatus.Active);
 
-            if (!listOfActiveStock.Any())
+            var listOfActiveStock = _appDbContext.Stocks
+               .Include(c => c.Product)
+               .Where(c => c.Status == DbEntityStatus.Active)
+               .PageResult(page, pageSize);
+
+            if (!listOfActiveStock.Queryable.Any())
             {
                 _logger.LogError("Couldn't find any active Stock in database");
                 throw new ItemNotFoundException("Couldn't find active stock in database");
             }
 
-            var result = listOfActiveStock.PageResult(page, pageSize);
-
-            var mapped = result.Queryable.Select(c => new StocksGetListItemResponse
+            var mapped = listOfActiveStock.Queryable.Select(c => new StocksGetListItemResponse
             {
                 ProductId = _hashids.EncodeLong(c.ProductId),
                 ProductName = c.Product!.Name,
                 Quantity = c.Quantity,
-                Unit = c.Product!.Unit.ToString()
+                Unit = c.Product!.Unit.ToString().ToLower()
             }).ToList();
 
             var response = new PagedResult<StocksGetListItemResponse>()
             {
-                CurrentPage = result.CurrentPage,
-                PageCount = result.PageCount,
-                PageSize = result.PageSize,
+                CurrentPage = listOfActiveStock.CurrentPage,
+                PageCount = listOfActiveStock.PageCount,
+                PageSize = listOfActiveStock.PageSize,
                 Queryable = mapped.AsQueryable(),
-                RowCount = result.RowCount
+                RowCount = listOfActiveStock.RowCount
             };
 
             return new OkObjectResult(response);
