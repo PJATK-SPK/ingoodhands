@@ -35,9 +35,9 @@ resource "google_cloud_run_service" "worker" {
   autogenerate_revision_name = true
 }
 
-resource "google_cloud_scheduler_job" "worker" {
-  name             = "worker"
-  description      = "job to trigger worker"
+resource "google_cloud_scheduler_job" "set_expired_donations" {
+  name             = "set-expired-donations"
+  description      = "job to trigger set-expired-donations"
   schedule         = "0 1 * * *"
   time_zone        = "Europe/Warsaw"
   attempt_deadline = "320s"
@@ -45,6 +45,23 @@ resource "google_cloud_scheduler_job" "worker" {
   http_target {
     http_method = "POST"
     uri         = "https://worker-ka7w7ys4tq-ew.a.run.app/donate-jobs/set-expired-donations"
+
+    oidc_token {
+      service_account_email = google_service_account.worker.email
+    }
+  }
+}
+
+resource "google_cloud_scheduler_job" "include_to_stock" {
+  name             = "include-to-stock"
+  description      = "job to trigger include-to-stock"
+  schedule         = "0 1 * * *"
+  time_zone        = "Europe/Warsaw"
+  attempt_deadline = "320s"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://worker-ka7w7ys4tq-ew.a.run.app/donate-jobs/include-to-stock"
 
     oidc_token {
       service_account_email = google_service_account.worker.email
