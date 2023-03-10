@@ -3,7 +3,7 @@ using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 
-namespace OrderTests.Actions.StockActoinTest
+namespace OrdersTests.Actions.StockActionTest
 {
     public static class StocksGetListActionFixture
     {

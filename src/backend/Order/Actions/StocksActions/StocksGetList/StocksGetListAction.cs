@@ -7,11 +7,11 @@ using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Order.Actions.WarehousesActions.GetWarehousesList;
+using Orders.Actions.WarehousesActions.GetWarehousesList;
 using System.Linq.Dynamic.Core;
 using Z.EntityFramework.Plus;
 
-namespace Order.Actions.StocksActions.StocksGetList
+namespace Orders.Actions.StocksActions.StocksGetList
 {
     public class StocksGetListAction
     {

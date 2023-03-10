@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Order.Actions.WarehousesActions.GetWarehousesList;
+using Orders.Actions.WarehousesActions.GetWarehousesList;
 
 namespace WebApi.Controllers.Order;
 

@@ -1,4 +1,4 @@
-﻿namespace Order
+﻿namespace Orders
 {
     public static class DeleteMe
     {

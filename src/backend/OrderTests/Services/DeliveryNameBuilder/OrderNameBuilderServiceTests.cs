@@ -1,18 +1,18 @@
 using Core.Exceptions;
 using Autofac;
-using Order;
-using Order.Services.DeliveryNameBuilder;
+using Orders;
+using Orders.Services.DeliveryNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace OrderTests.Services.DeliveryNameBuilder
+namespace OrdersTests.Services.DeliveryNameBuilder
 {
     [TestClass()]
     public class DeliveryNameBuilderServiceTest
     {
         private readonly List<Module> _usedModules = new()
         {
-            new OrderModule(),
+            new OrdersModule(),
         };
 
         [TestMethod()]

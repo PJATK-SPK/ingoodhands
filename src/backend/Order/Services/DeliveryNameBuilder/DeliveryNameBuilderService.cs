@@ -1,7 +1,7 @@
 ﻿using Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
-namespace Order.Services.DeliveryNameBuilder
+namespace Orders.Services.DeliveryNameBuilder
 {
     public class DeliveryNameBuilderService
     {

@@ -1,4 +1,4 @@
-﻿namespace Order.Actions.WarehousesActions.GetWarehouses
+﻿namespace Orders.Actions.WarehousesActions.GetWarehouses
 {
     public class WarehousesGetListResponse
     {

@@ -5,12 +5,12 @@ using Core.Exceptions;
 using Core.Setup.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Order;
-using Order.Actions.WarehousesActions.GetWarehouses;
-using Order.Actions.WarehousesActions.GetWarehousesList;
+using Orders;
+using Orders.Actions.WarehousesActions.GetWarehouses;
+using Orders.Actions.WarehousesActions.GetWarehousesList;
 using TestsBase;
 
-namespace OrderTests.Actions.WarehousesActionTest
+namespace OrdersTests.Actions.WarehousesActionTest
 {
     [TestClass()]
     public class WarehousesGetListActionTest
@@ -18,7 +18,7 @@ namespace OrderTests.Actions.WarehousesActionTest
         private readonly List<Module> _usedModules = new()
         {
             new CoreModule(WebApiUserProviderType.None),
-            new OrderModule(),
+            new OrdersModule(),
         };
 
         [TestMethod()]
