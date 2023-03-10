@@ -34,7 +34,7 @@ namespace OrdersTests.Actions.RequestHelpActionTest
             //Arrange
             var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = RequestHelpGetMapActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role2Donor.Id);
+            var testUser1Role1 = RequestHelpGetMapActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             var order1 = RequestHelpGetMapActionFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
             var orderProduct1 = RequestHelpGetMapActionFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
@@ -85,7 +85,7 @@ namespace OrdersTests.Actions.RequestHelpActionTest
             //Arrange
             var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = RequestHelpGetMapActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role2Donor.Id);
+            var testUser1Role1 = RequestHelpGetMapActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);

@@ -28,7 +28,7 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
 
         public async Task<RequestHelpGetMapResponse> Execute()
         {
-            await _roleService.ThrowIfNoRole(RoleName.Donor);
+            await _roleService.ThrowIfNoRole(RoleName.Needy);
 
             var listOfWarehouses = await _appDbContext.Warehouses
                 .Include(c => c.Address)
