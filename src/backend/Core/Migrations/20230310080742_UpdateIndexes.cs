@@ -29,6 +29,13 @@ namespace Core.Migrations
                 column: "percentage");
 
             migrationBuilder.CreateIndex(
+                name: "donation_name_idx",
+                schema: "core",
+                table: "donations",
+                column: "name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "delivery_name_idx",
                 schema: "core",
                 table: "deliveries",
@@ -48,6 +55,11 @@ namespace Core.Migrations
                 name: "percentage_idx",
                 schema: "core",
                 table: "orders");
+
+            migrationBuilder.DropIndex(
+                name: "donation_name_idx",
+                schema: "core",
+                table: "donations");
 
             migrationBuilder.DropIndex(
                 name: "delivery_name_idx",

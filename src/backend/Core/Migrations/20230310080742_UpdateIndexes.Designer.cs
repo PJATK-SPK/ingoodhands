@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230309204055_UpdateIndexes")]
+    [Migration("20230310080742_UpdateIndexes")]
     partial class UpdateIndexes
     {
         /// <inheritdoc />
@@ -3262,6 +3262,10 @@ namespace Core.Migrations
 
                     b.HasIndex("CreationUserId")
                         .HasDatabaseName("ix_donations_creation_user_id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("donation_name_idx");
 
                     b.HasIndex("UpdateUserId")
                         .HasDatabaseName("ix_donations_update_user_id");

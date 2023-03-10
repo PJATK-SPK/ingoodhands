@@ -3260,6 +3260,10 @@ namespace Core.Migrations
                     b.HasIndex("CreationUserId")
                         .HasDatabaseName("ix_donations_creation_user_id");
 
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("donation_name_idx");
+
                     b.HasIndex("UpdateUserId")
                         .HasDatabaseName("ix_donations_update_user_id");
 
