@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Order;
+using Orders;
 
-namespace OrderTests.Services.StreetFullNameBuilder
+namespace OrdersTests.Services.StreetFullNameBuilder
 {
     [TestClass()]
     public class DeleteMeTests

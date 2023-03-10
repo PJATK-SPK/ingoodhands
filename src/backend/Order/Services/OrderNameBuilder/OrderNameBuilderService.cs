@@ -1,7 +1,7 @@
 using Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
-namespace Order.Services.OrderNameBuilder
+namespace Orders.Services.OrderNameBuilder
 {
     public class OrderNameBuilderService
     {
@@ -17,7 +17,8 @@ namespace Order.Services.OrderNameBuilder
             if (id >= 1000000 || id < 1)
             {
                 _logger.LogError("Id in Build in OrderNameBuilderService did not pass valdiation");
-                throw new ApplicationErrorException("Order id is out of range");            }
+                throw new ApplicationErrorException("Order id is out of range");
+            }
 
             var orderName = "ORD" + id.ToString("D6");
 

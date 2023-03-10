@@ -1,22 +1,22 @@
 using Core.Exceptions;
 using Autofac;
-using Order;
-using Order.Services.OrderNameBuilder;
+using Orders;
+using Orders.Services.OrderNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace OrderTests.Services.OrderNameBuilder
+namespace OrdersTests.Services.OrderNameBuilder
 {
     [TestClass()]
     public class OrderNameBuilderServiceTest
     {
         private readonly List<Module> _usedModules = new()
         {
-            new OrderModule(),
+            new OrdersModule(),
         };
 
         [TestMethod()]
-        public void OrderModuleTest_OrderIdWithing6DigitsInRange()
+        public void OrderModuleTest_IdWithing6DigitsInRange()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
             var action = toolkit.Resolve<OrderNameBuilderService>();
@@ -32,7 +32,7 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithLessThanSixDigitId()
+        public void OrderModuleTest_WithLessThanSixDigitId()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
             var action = toolkit.Resolve<OrderNameBuilderService>();
@@ -49,7 +49,7 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithInvalidId()
+        public void OrderModuleTest_WithInvalidId()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
             var action = toolkit.Resolve<OrderNameBuilderService>();
@@ -64,7 +64,7 @@ namespace OrderTests.Services.OrderNameBuilder
         }
 
         [TestMethod()]
-        public void OrderModuleTest_OrderWithInvalidIdLowerThan1()
+        public void OrderModuleTest_WithInvalidIdLowerThan1()
         {
             using var toolkit = new TestsToolkit(_usedModules, TestType.Unit);
             var action = toolkit.Resolve<OrderNameBuilderService>();

@@ -6,12 +6,12 @@ using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Order;
-using Order.Actions.StocksActions.StocksGetList;
+using Orders;
+using Orders.Actions.StocksActions.StocksGetList;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace OrderTests.Actions.StockActoinTest
+namespace OrdersTests.Actions.StockActionTest
 {
     [TestClass()]
     public class StocksGetListActionTest
@@ -19,7 +19,7 @@ namespace OrderTests.Actions.StockActoinTest
         private readonly List<Module> _usedModules = new()
         {
             new CoreModule(WebApiUserProviderType.None),
-            new OrderModule(),
+            new OrdersModule(),
         };
 
         [TestMethod()]

@@ -1,13 +1,14 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
-using Order.Actions.StocksActions.StocksGetList;
-using Order.Actions.WarehousesActions.GetWarehousesList;
-using Order.Services.OrderNameBuilder;
-using Order.Services.DeliveryNameBuilder;
+using Orders.Actions.StocksActions.StocksGetList;
+using Orders.Actions.WarehousesActions.GetWarehousesList;
+using Orders.Services.OrderNameBuilder;
+using Orders.Services.DeliveryNameBuilder;
+using Orders.Actions.RequestHelpActions.RequestHelpGetMap;
 
-namespace Order
+namespace Orders
 {
-    public class OrderModule : Module
+    public class OrdersModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -20,6 +21,7 @@ namespace Order
         {
             builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<StocksGetListModule>();
+            builder.RegisterModule<RequestHelpGetMapModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)

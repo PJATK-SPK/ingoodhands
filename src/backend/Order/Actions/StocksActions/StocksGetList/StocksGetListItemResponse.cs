@@ -1,4 +1,4 @@
-﻿namespace Order.Actions.StocksActions.StocksGetList
+﻿namespace Orders.Actions.StocksActions.StocksGetList
 {
     public class StocksGetListItemResponse
     {

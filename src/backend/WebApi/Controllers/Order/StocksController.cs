@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Order.Actions.StocksActions.StocksGetList;
+using Orders.Actions.StocksActions.StocksGetList;
 
 namespace WebApi.Controllers.Order;
 

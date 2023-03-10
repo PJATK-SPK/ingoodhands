@@ -3,9 +3,9 @@ using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 
-namespace OrderTests.Actions.StockActoinTest
+namespace OrdersTests.Actions.RequestHelpActionTest
 {
-    public static class StocksGetListActionFixture
+    public static class RequestHelpGetMapActionFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -37,9 +37,23 @@ namespace OrderTests.Actions.StockActoinTest
             Status = DbEntityStatus.Active
         };
 
-        public static Stock CreateStock(Product product, int quantity) => new()
+        public static Order CreateOrder(User user, Address address, string orderName = "ORD000001") => new()
         {
-            ProductId = product.Id,
+            Name = orderName,
+            Percentage = 50,
+            AddressId = address.Id,
+            OwnerUser = user,
+            CreationDate = DateTime.UtcNow,
+            IsCanceledByUser = false,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active
+        };
+
+        public static OrderProduct CreateOrderProduct(Order order, long productId, int quantity) => new()
+        {
+            Order = order,
+            ProductId = productId,
             Quantity = quantity,
             UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,

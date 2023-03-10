@@ -23,6 +23,8 @@ namespace Core.Database.Config.Models.Core
             builder.Property(c => c.IsPacked).IsRequired();
             builder.Property(c => c.WarehouseId).IsRequired();
 
+            builder.HasIndex(c => c.Name).IsUnique().HasDatabaseName("delivery_name_idx");
+
             builder.HasOne(c => c.Warehouse).WithMany(c => (IEnumerable<TBase>?)c.Deliveries).HasForeignKey(c => c.WarehouseId).HasConstraintName("deliveries_warehouses_id_fkey");
             builder.HasOne(c => c.DelivererUser).WithMany(c => (IEnumerable<TBase>?)c.Deliveries).HasForeignKey(c => c.DelivererUserId).HasConstraintName("deliveries_deliverer_users_id_fkey");
         }

@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
 
-namespace Order.Actions.WarehousesActions.GetWarehousesList
+namespace Orders.Actions.WarehousesActions.GetWarehousesList
 {
     public class WarehousesGetListModule : Module
     {

@@ -3,11 +3,11 @@ using Core.Database.Enums;
 using Core.Exceptions;
 using HashidsNet;
 using Microsoft.Extensions.Logging;
-using Order.Actions.WarehousesActions.GetWarehouses;
+using Orders.Actions.WarehousesActions.GetWarehouses;
 using System.Linq.Dynamic.Core;
 using Z.EntityFramework.Plus;
 
-namespace Order.Actions.WarehousesActions.GetWarehousesList
+namespace Orders.Actions.WarehousesActions.GetWarehousesList
 {
     public class WarehousesGetListAction
     {
