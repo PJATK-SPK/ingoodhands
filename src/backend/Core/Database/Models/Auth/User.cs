@@ -21,6 +21,7 @@ namespace Core.Database.Models.Auth
         public List<Notification>? Notifications { get; set; }
         public List<Delivery>? Deliveries { get; set; }
         public List<Order>? Orders { get; set; }
+        public List<UserAddress>? UserAddresses { get; set; }
 
         public void Configure(EntityTypeBuilder<User> builder)
             => new UserConfig<User>().Configure(builder);
