@@ -2,6 +2,7 @@
 using Core.Database.Enums;
 using Core.Exceptions;
 using Core.Services;
+using Core.Setup.Auth0;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,17 +17,29 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
         private readonly AppDbContext _appDbContext;
         private readonly ILogger<RequestHelpGetMapService> _logger;
         private readonly RoleService _roleService;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
 
-        public RequestHelpGetMapService(AppDbContext appDbContext, ILogger<RequestHelpGetMapService> logger, RoleService roleService)
+        public RequestHelpGetMapService(
+            AppDbContext appDbContext,
+            ILogger<RequestHelpGetMapService> logger,
+            RoleService roleService,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService
+            )
         {
             _appDbContext = appDbContext;
             _logger = logger;
             _roleService = roleService;
+            _currentUserService = currentUserService;
+            _getCurrentUserService = getCurrentUserService;
         }
 
         public async Task<RequestHelpGetMapResponse> Execute()
         {
-            await _roleService.ThrowIfNoRole(RoleName.Needy);
+            var auth0UserInfo = await _currentUserService.GetUserInfo();
+            var currentUserId = _getCurrentUserService.Execute(auth0UserInfo).Result.Id;
+            await _roleService.ThrowIfNoRole(RoleName.Needy, currentUserId);
 
             var listOfWarehouses = await _appDbContext.Warehouses
                 .Include(c => c.Address)
@@ -34,7 +47,8 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
 
             var listOfOrders = await _appDbContext.Orders
                 .Include(c => c.Address)
-                .Where(c => c.Status == DbEntityStatus.Active).ToListAsync();
+                .Where(c => c.Status == DbEntityStatus.Active && c.OwnerUserId == currentUserId)
+                .ToListAsync();
 
             if (!listOfWarehouses.Any())
             {
