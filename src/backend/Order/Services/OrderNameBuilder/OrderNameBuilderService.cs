@@ -17,7 +17,8 @@ namespace Orders.Services.OrderNameBuilder
             if (id >= 1000000 || id < 1)
             {
                 _logger.LogError("Id in Build in OrderNameBuilderService did not pass valdiation");
-                throw new ApplicationErrorException("Orders id is out of range");            }
+                throw new ApplicationErrorException("Order id is out of range");
+            }
 
             var orderName = "ORD" + id.ToString("D6");
 

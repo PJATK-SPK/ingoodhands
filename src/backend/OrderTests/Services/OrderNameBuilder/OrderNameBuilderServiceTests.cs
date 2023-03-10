@@ -56,7 +56,7 @@ namespace OrdersTests.Services.OrderNameBuilder
 
             // Arrange
             long id = 1000000;
-            string expectedErrorMessage = "Orders id is out of range. Please, contact system administrator";
+            string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
 
             // Act and Assert
             var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
@@ -71,7 +71,7 @@ namespace OrdersTests.Services.OrderNameBuilder
 
             // Arrange
             long id = -1;
-            string expectedErrorMessage = "Orders id is out of range. Please, contact system administrator";
+            string expectedErrorMessage = "Order id is out of range. Please, contact system administrator";
 
             // Act and Assert
             var exception = Assert.ThrowsException<ApplicationErrorException>(() => action.Build(id));
