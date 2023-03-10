@@ -71,8 +71,8 @@ namespace OrdersTests.Actions.RequestHelpActionTest
             Assert.IsNotNull(result);
             Assert.IsTrue(result!.Warehouses.Any());
             Assert.IsTrue(result!.Orders.Any());
-            Assert.AreEqual(1, result!.Orders.Count());
-            Assert.AreEqual(9, result!.Warehouses.Count());
+            Assert.AreEqual(1, result!.Orders.Count);
+            Assert.AreEqual(9, result!.Warehouses.Count);
         }
 
         [TestMethod()]

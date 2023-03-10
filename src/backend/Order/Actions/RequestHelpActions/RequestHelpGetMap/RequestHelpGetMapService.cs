@@ -15,14 +15,12 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
     {
         private readonly AppDbContext _appDbContext;
         private readonly ILogger<RequestHelpGetMapService> _logger;
-        private readonly Hashids _hashids;
         private readonly RoleService _roleService;
 
-        public RequestHelpGetMapService(AppDbContext appDbContext, ILogger<RequestHelpGetMapService> logger, Hashids hashids, RoleService roleService)
+        public RequestHelpGetMapService(AppDbContext appDbContext, ILogger<RequestHelpGetMapService> logger, RoleService roleService)
         {
             _appDbContext = appDbContext;
             _logger = logger;
-            _hashids = hashids;
             _roleService = roleService;
         }
 
