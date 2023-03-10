@@ -42,12 +42,6 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
                 throw new ItemNotFoundException("Couldn't find active warehouses in database");
             }
 
-            if (!listOfOrders.Any())
-            {
-                _logger.LogError("Couldn't find any active orders in database");
-                throw new ItemNotFoundException("Couldn't find active orders in database");
-            }
-
             var mappedWarehouses = listOfWarehouses.Select(c => new RequestHelpGetMapWarehouseItemResponse
             {
                 Name = c.ShortName,
