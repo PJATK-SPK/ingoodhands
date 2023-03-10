@@ -34,7 +34,7 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
 
             var listOfOrders = await _appDbContext.Orders
                 .Include(c => c.Address)
-                .Where(c => c.Status == DbEntityStatus.Active).FromCache().ToDynamicListAsync();
+                .Where(c => c.Status == DbEntityStatus.Active).ToListAsync();
 
             if (!listOfWarehouses.Any())
             {
@@ -58,8 +58,8 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
             var mappedOrders = listOfOrders.Select(c => new RequestHelpGetMapOrderItemResponse
             {
                 Name = c.Name,
-                GpsLatitude = c.Address.GpsLatitude,
-                GpsLongitude = c.Address.GpsLongitude
+                GpsLatitude = c.Address!.GpsLatitude,
+                GpsLongitude = c.Address!.GpsLongitude
             }).ToList();
 
             var response = new RequestHelpGetMapResponse
