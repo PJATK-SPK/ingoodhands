@@ -32,7 +32,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
             var donation5DaysDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000002");
             var donation31DaysNotDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000003");
             var donation5DaysNotDelivered = SetExpiredDonationsJobFixture.CreateDonation("DNT000004");
-            var donation31DaysExpired = SetExpiredDonationsJobFixture.CreateDonation("DNT000003");
+            var donation31DaysExpired = SetExpiredDonationsJobFixture.CreateDonation("DNT000005");
 
             var offset = ExpireDateService.ExpireDays + 1;
 

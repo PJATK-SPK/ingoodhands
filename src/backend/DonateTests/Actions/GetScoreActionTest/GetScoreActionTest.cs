@@ -233,7 +233,7 @@ namespace DonateTests.Actions.GetScoreActionTest
                 CreationUser = testingUser,
                 CreationDate = DateTime.UtcNow,
                 WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-                Name = "DNT000001",
+                Name = "DNT000002",
                 IsExpired = false,
                 IsDelivered = true,
                 IsIncludedInStock = false,
