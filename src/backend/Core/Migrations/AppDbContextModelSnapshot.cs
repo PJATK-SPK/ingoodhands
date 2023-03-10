@@ -3401,6 +3401,7 @@ namespace Core.Migrations
                         .HasColumnName("owner_user_id");
 
                     b.Property<int>("Percentage")
+                        .HasMaxLength(3)
                         .HasColumnType("integer")
                         .HasColumnName("percentage");
 

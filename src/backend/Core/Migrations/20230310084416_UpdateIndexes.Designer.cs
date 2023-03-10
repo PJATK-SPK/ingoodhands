@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230310080742_UpdateIndexes")]
+    [Migration("20230310084416_UpdateIndexes")]
     partial class UpdateIndexes
     {
         /// <inheritdoc />
@@ -3404,6 +3404,7 @@ namespace Core.Migrations
                         .HasColumnName("owner_user_id");
 
                     b.Property<int>("Percentage")
+                        .HasMaxLength(3)
                         .HasColumnType("integer")
                         .HasColumnName("percentage");
 

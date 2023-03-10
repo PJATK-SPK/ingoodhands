@@ -15,7 +15,7 @@ namespace Core.Database.Config.Models.Core
             builder.ToTable("orders", "core");
             builder.Property(c => c.AddressId).IsRequired();
             builder.Property(c => c.Name).IsRequired().HasMaxLength(9);
-            builder.Property(c => c.Percentage).IsRequired();
+            builder.Property(c => c.Percentage).IsRequired().HasMaxLength(3);
             builder.Property(c => c.OwnerUserId).IsRequired();
             builder.Property(c => c.CreationDate).IsRequired();
             builder.Property(c => c.IsCanceledByUser).IsRequired();
