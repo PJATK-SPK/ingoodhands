@@ -56,7 +56,7 @@ namespace Core.Services
             }
         }
 
-        private Notification CreateNotificationModel(long userId, string text, bool createdByService)
+        private static Notification CreateNotificationModel(long userId, string text, bool createdByService)
         {
             return new Notification
             {

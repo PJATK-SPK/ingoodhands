@@ -1,6 +1,5 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
 
@@ -27,16 +26,6 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
             Identifier = user.FirstName + user.LastName + "GoogleId",
             User = user,
             UserId = user.Id
-        };
-
-        public static UserWebPush CreateUserWebPush(User user, string endpoint) => new()
-        {
-            UserId = user.Id,
-            User = user,
-            Endpoint = endpoint,
-            UpdateUserId = UserSeeder.ServiceUser.Id,
-            UpdatedAt = DateTime.UtcNow,
-            Status = DbEntityStatus.Active,
         };
 
         public static CurrentUserInfo GetCurrentUserInfo(Auth0User auth0User) => new()
