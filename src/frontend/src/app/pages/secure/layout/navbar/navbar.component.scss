@@ -1,0 +1,65 @@
+.notifications-icon {
+    position: absolute;
+    margin-left: 7px;
+    margin-top: 15px;
+    font-size: 10px;
+
+    span {
+        min-width: .9rem;
+        height: .9rem;
+    }
+}
+
+.no-notifications-text {
+    font-size: 18px;
+    text-align: center;
+}
+
+.notifications-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.notification-container {
+    min-width: 100px;
+    display: grid;
+    grid-template-columns: auto 1rem;
+}
+
+.date-text {
+    font-size: 10px;
+    color: #9e9e9e;
+}
+
+.notification-btn {
+    width: 1rem;
+    height: 1rem !important;
+}
+
+@media (min-width: 768px) {
+    .notifications-icon {
+        position: absolute;
+        margin-left: 7px;
+        margin-top: 15px;
+        font-size: 10px;
+
+        span {
+            min-width: .9rem;
+            height: .9rem;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .notifications-icon {
+        position: absolute;
+        margin-left: 12px;
+        margin-top: 15px;
+        font-size: 11px;
+
+        span {
+            min-width: 1.3rem;
+            height: 1.3rem;
+        }
+    }
+}
