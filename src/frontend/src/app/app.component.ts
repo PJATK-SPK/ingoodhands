@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, filter, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';

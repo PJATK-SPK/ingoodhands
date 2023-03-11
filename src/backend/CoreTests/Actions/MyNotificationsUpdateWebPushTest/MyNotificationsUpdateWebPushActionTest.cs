@@ -35,9 +35,11 @@ namespace CoreTests.Actions.MyNotificationsUpdateWebPushTest
             toolkit.UpdateUserInfo(MyNotificationsUpdateWebPushFixture.GetCurrentUserInfo(auth0User));
 
             var endpointName = "endpoint1";
+            var authName = "auth";
+            var p256dhName = "p256";
 
             // Act
-            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName });
+            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName, Auth = authName, P256dh = p256dhName });
 
             var entry = context.UsersWebPush.Single();
 
@@ -65,13 +67,15 @@ namespace CoreTests.Actions.MyNotificationsUpdateWebPushTest
             await context.SaveChangesAsync();
 
             var endpointName = "endpoint1";
+            var authName = "auth";
+            var p256dhName = "p256";
 
             // Act
-            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName });
+            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName, Auth = authName, P256dh = p256dhName });
 
             endpointName = "endpoint2";
 
-            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName });
+            await action.Execute(new MyNotificationsUpdateWebPushPayload { Endpoint = endpointName, Auth = authName, P256dh = p256dhName });
 
             var entry = context.UsersWebPush.Single();
 
