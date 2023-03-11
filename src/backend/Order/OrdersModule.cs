@@ -5,6 +5,7 @@ using Orders.Actions.WarehousesActions.GetWarehousesList;
 using Orders.Services.OrderNameBuilder;
 using Orders.Services.DeliveryNameBuilder;
 using Orders.Actions.RequestHelpActions.RequestHelpGetMap;
+using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace Orders
 {
@@ -19,9 +20,10 @@ namespace Orders
 
         private static void RegisterActions(ContainerBuilder builder)
         {
-            builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<StocksGetListModule>();
+            builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<RequestHelpGetMapModule>();
+            builder.RegisterModule<CreateOrderGetCountriesModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
