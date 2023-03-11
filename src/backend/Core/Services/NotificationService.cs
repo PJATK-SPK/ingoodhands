@@ -50,7 +50,7 @@ namespace Core.Services
                 var webPushClient = new WebPushClient();
                 await webPushClient.SendNotificationAsync(subscription, payload, vapidDetails);
             }
-            catch (WebPushException exception)
+            catch (Exception exception)
             {
                 _logger.LogError("Failed to send notification to user {id}. Exception: {ex}", userId, exception.Message);
             }

@@ -42,7 +42,6 @@ namespace DonateTests.Actions.PostPickUpDonationActionTest
 
         public static UserWebPush CreateUserWebPush(User user, string endpoint, string p256dh, string auth) => new()
         {
-            UserId = user.Id,
             User = user,
             Endpoint = endpoint,
             P256dh = p256dh,

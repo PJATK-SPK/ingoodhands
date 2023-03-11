@@ -40,7 +40,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             _notificationService = notificationService;
         }
 
-        public async Task PostDonation(string donationName)
+        public async Task Pickup(string donationName)
         {
             var auth0UserInfo = _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo.Result);
@@ -73,7 +73,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 
             donation.Result.IsDelivered = true;
             await _appDbContext.SaveChangesAsync();
-            await _notificationService.AddAsync(donation.Result!.CreationUserId, $"Your donation {donationName} has arrived at the warehouse!");
+            await _notificationService.AddAsync(currentUser.Id, $"Your donation {donationName} has arrived at the warehouse!");
         }
     }
 }
