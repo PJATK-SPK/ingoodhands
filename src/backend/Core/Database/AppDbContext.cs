@@ -26,6 +26,7 @@ namespace Core.Database
         public DbSet<OrderProduct> OrderProducts { get; set; } = default!;
         public DbSet<Delivery> Deliveries { get; set; } = default!;
         public DbSet<DeliveryProduct> DeliveryProducts { get; set; } = default!;
+        public DbSet<UserWebPush> UsersWebPush { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

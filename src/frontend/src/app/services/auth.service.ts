@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { first, Observable } from 'rxjs';
+import { BehaviorSubject, first, Observable } from 'rxjs';
 import { DbUser } from '../interfaces/db-user';
 
 export const POST_LOGIN_ROUTE_KEY = 'postLoginRoute';

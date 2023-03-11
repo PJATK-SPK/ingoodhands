@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using Core;
-using Core.Actions.MyNotifications;
+using Core.Actions.MyNotifications.GetList;
 using Core.Database;
 using Core.Setup.Enums;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 

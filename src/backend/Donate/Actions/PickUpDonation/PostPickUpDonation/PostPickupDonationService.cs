@@ -22,20 +22,22 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
         private readonly ILogger<PostPickupDonationService> _logger;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly NotificationService _notificationService;
 
         public PostPickupDonationService(
             AppDbContext appDbContext,
             RoleService roleService,
             ILogger<PostPickupDonationService> logger,
             ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService
-            )
+            GetCurrentUserService getCurrentUserService,
+            NotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _roleService = roleService;
             _logger = logger;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
+            _notificationService = notificationService;
         }
 
         public async Task PostDonation(string donationName)
@@ -69,19 +71,9 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
                 throw new ClientInputErrorException("We are sorry, but this donation has been already delievered");
             }
 
-            var notificationForDonor = new Notification
-            {
-                UserId = donation.Result!.CreationUserId,
-                CreationDate = DateTime.UtcNow,
-                Message = $"Your donation {donationName} has arrived at the warehouse!",
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
-            };
-
             donation.Result.IsDelivered = true;
-            _appDbContext.Add(notificationForDonor);
             await _appDbContext.SaveChangesAsync();
+            await _notificationService.AddAsync(donation.Result!.CreationUserId, $"Your donation {donationName} has arrived at the warehouse!");
         }
     }
 }

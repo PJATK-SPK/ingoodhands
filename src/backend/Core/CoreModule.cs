@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using Core.Actions.MyNotifications;
+using Core.Actions.MyNotifications.GetList;
+using Core.Actions.MyNotifications.UpdateWebPush;
 using Core.Services;
 using Core.Setup;
 using Core.Setup.Autofac;
@@ -26,6 +27,7 @@ namespace Core
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<MyNotificationsGetListLast30DaysModule>();
+            builder.RegisterModule<MyNotificationsUpdateWebPushModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)
@@ -33,6 +35,7 @@ namespace Core
             builder.RegisterAsScoped<GetCurrentUserService>();
             builder.RegisterAsScoped<RoleService>();
             builder.RegisterAsScoped<CounterService>();
+            builder.RegisterAsScoped<NotificationService>();
         }
     }
 }

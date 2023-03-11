@@ -1,13 +1,8 @@
 ﻿using Core.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Core.Actions.MyNotifications
+namespace Core.Actions.MyNotifications.GetList
 {
     public class MyNotificationsGetListLast30DaysAction
     {
@@ -21,7 +16,7 @@ namespace Core.Actions.MyNotifications
         public async Task<OkObjectResult> Execute()
         {
             var dbResult = await _appDbContext.Notifications
-                .Where(c => c.CreationDate > (DateTime.UtcNow.AddDays(-30)))
+                .Where(c => c.CreationDate > DateTime.UtcNow.AddDays(-30))
                 .OrderByDescending(c => c.CreationDate)
                 .ToListAsync();
 

@@ -6,7 +6,7 @@ using Core.Setup.Auth0;
 
 namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
 {
-    public static class MyNotificationsGetListLast30DaysFixture
+    public static class MyNotificationsUpdateWebPushFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -29,14 +29,27 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
             UserId = user.Id
         };
 
-        public static Notification CreateNotifaction(User user, long daysPastFromToday, string partMessage) => new()
+        public static UserWebPush CreateUserWebPush(User user, string endpoint) => new()
         {
             UserId = user.Id,
             User = user,
-            CreationDate = DateTime.UtcNow.AddDays(-daysPastFromToday),
-            Message = "You've reached level 10 donor! " + partMessage,
+            Endpoint = endpoint,
             UpdateUserId = UserSeeder.ServiceUser.Id,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active,
+        };
+
+        public static CurrentUserInfo GetCurrentUserInfo(Auth0User auth0User) => new()
+        {
+            Email = auth0User.Email,
+            EmailVerified = true,
+            Identifier = auth0User.Identifier,
+            GivenName = auth0User.FirstName,
+            FamilyName = auth0User.LastName,
+            Locale = "pl",
+            Name = auth0User.FirstName + auth0User.LastName,
+            Nickname = auth0User.Nickname,
+            UpdatedAt = DateTime.UtcNow,
         };
     }
 }

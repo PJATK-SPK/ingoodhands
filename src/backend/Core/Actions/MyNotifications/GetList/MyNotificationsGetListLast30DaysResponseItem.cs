@@ -1,4 +1,4 @@
-﻿namespace Core.Actions.MyNotifications
+﻿namespace Core.Actions.MyNotifications.GetList
 {
     public class MyNotificationsGetListLast30DaysResponseItem
     {
