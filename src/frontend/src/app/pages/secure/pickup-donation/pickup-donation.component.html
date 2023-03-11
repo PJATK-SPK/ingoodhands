@@ -1,0 +1,34 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="p-3">
+            <p-card>
+                <h1 class="text-2xl font-bold m-0">Pickup donation</h1>
+
+                <form [formGroup]="form" (submit)="onSubmitClick($event)">
+                    <div class="col-12">
+                        <div class="pt-5 pb-3">
+                            <div class="flex align-items-center justify-content-center">
+                                <div>
+                                    <label for="donationName" class="block">Donation name</label>
+                                    <input id="donationName" class="input-field" type="text" pInputText
+                                        aria-describedby="donationName-help" formControlName="donationName">
+                                    <small *ngIf="form.touched && form.controls['donationName'].errors"
+                                        id="donationName-help" class="p-error block">Donation name is invalid.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+
+                            <div class="pr-5 pt-5 flex align-items-center justify-content-end">
+                                <button pButton [loading]="isSaving" type="submit" label="Save"
+                                    class="p-button-outlined p-button-primary"></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
+</div>

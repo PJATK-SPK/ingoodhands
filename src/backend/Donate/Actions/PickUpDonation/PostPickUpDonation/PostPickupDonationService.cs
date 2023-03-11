@@ -1,17 +1,10 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
-using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
-using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Services;
 using Core.Setup.Auth0;
-using HashidsNet;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RestSharp;
-using System.Net.Mail;
 
 namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 {
@@ -53,25 +46,25 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 
             if (!userHasAssignedWarehouseId)
             {
-                _logger.LogError("User doesn't have warehouse assigned, warehouseId is empty");
-                throw new ApplicationErrorException("User doesn't have warehouse assigned. Contact Administrator toto assign warhouse to you");
+                _logger.LogError("User {id} doesn't have warehouse assigned, warehouseId is empty", currentUser.Id);
+                throw new ApplicationErrorException("You do not have an assigned warehouse. Contact Administrator to assign warehouse to you");
             }
 
-            var donation = _appDbContext.Donations.SingleOrDefaultAsync(c => c.Name == donationName);
+            var donation = await _appDbContext.Donations.SingleOrDefaultAsync(c => c.Name == donationName);
 
-            if (donation.Result == null)
+            if (donation == null)
             {
-                _logger.LogError("Donation by it's DNT number has not been found");
+                _logger.LogError("Donation by it's DNT \"{name}\" number has not been found", donationName);
                 throw new ItemNotFoundException("Donation not found");
             }
 
-            if (donation.Result!.IsDelivered)
+            if (donation!.IsDelivered)
             {
-                _logger.LogError("Donation found by ID is already delivered");
+                _logger.LogError("Donation found by id:{id} is already delivered", donation.Id);
                 throw new ClientInputErrorException("We are sorry, but this donation has been already delievered");
             }
 
-            donation.Result.IsDelivered = true;
+            donation.IsDelivered = true;
             await _appDbContext.SaveChangesAsync();
             await _notificationService.AddAsync(currentUser.Id, $"Your donation {donationName} has arrived at the warehouse!");
         }

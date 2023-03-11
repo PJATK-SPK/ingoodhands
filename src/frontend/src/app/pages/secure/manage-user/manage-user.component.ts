@@ -9,6 +9,7 @@ import { Role } from 'src/app/enums/role';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-manage-user',
@@ -102,11 +103,17 @@ export class ManageUserComponent implements OnInit {
 
     this.isSaving = true;
 
-    this.http.patch<ManageUserDetails>(`${environment.api}/manage-users/${this.id}`, payload).subscribe(res => {
-      setTimeout(() => {
-        this.isSaving = false;
-        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Done!' });
-      }, 500);
-    });
+    this.http.patch<ManageUserDetails>(`${environment.api}/manage-users/${this.id}`, payload)
+      .pipe(
+        catchError(err => {
+          this.isSaving = false;
+          return throwError(() => err);
+        }))
+      .subscribe(res => {
+        setTimeout(() => {
+          this.isSaving = false;
+          this.msg.add({ severity: 'success', summary: 'Success', detail: 'Done!' });
+        }, 500);
+      });
   }
 }

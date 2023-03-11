@@ -7,7 +7,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { MyDonationComponent } from './my-donation/my-donation.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
-import { PickUpDonationComponent } from './pick-up-donation/pick-up-donation.component';
+import { PickupDonationComponent } from './pickup-donation/pickup-donation.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { WorkComponent } from './work/work.component';
 import { RequestHelpComponent } from './request-help/request-help.component';
@@ -50,9 +50,9 @@ const routes: Routes = [
         component: ManageUserComponent
     },
     {
-        path: 'pick-up-donation',
-        loadChildren: () => import('./pick-up-donation/pick-up-donation.module').then(m => m.PickUpDonationModule),
-        component: PickUpDonationComponent
+        path: 'pickup-donation',
+        loadChildren: () => import('./pickup-donation/pickup-donation.module').then(m => m.PickUpDonationModule),
+        component: PickupDonationComponent
     },
     {
         path: 'stocks',

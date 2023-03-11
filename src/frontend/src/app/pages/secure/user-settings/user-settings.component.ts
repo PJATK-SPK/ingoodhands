@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { catchError, throwError } from 'rxjs';
 import { DbUser } from 'src/app/interfaces/db-user';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
@@ -39,13 +40,19 @@ export class UserSettingsComponent {
     }
 
     this.isSaving = true;
-    this.http.patch<DbUser>(`${environment.api}/user-settings/${this.auth.dbUser.id}`, payload).subscribe(res => {
-      setTimeout(() => {
-        this.auth.updateDbUser(res);
-        this.isSaving = false;
-        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Your data have been updated.' });
-      }, 500);
-    });
+    this.http.patch<DbUser>(`${environment.api}/user-settings/${this.auth.dbUser.id}`, payload)
+      .pipe(
+        catchError(err => {
+          this.isSaving = false;
+          return throwError(() => err);
+        }))
+      .subscribe(res => {
+        setTimeout(() => {
+          this.auth.updateDbUser(res);
+          this.isSaving = false;
+          this.msg.add({ severity: 'success', summary: 'Success', detail: 'Your data have been updated.' });
+        }, 500);
+      });
   }
 
 }
