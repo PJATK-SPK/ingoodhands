@@ -2,7 +2,32 @@
     <div class="col-12">
         <div class="p-3">
             <p-card>
-                - Lista ze stockami<br />
+                <h1 class="text-2xl font-bold m-0">Stocks</h1>
+
+                <ng-container *ngIf="pagedResult">
+
+                    <div *ngIf="pagedResult.queryable.length === 0"
+                        class="flex align-items-center justify-content-center">
+                        <h3>No stock!</h3>
+                    </div>
+
+                    <p-card class="p-2" *ngFor="let item of pagedResult.queryable">
+                        <div class="grid">
+                            <div class="col-12">
+                                <h2 class="text-xl font-bold m-0">
+                                    {{item.productName}}
+                                </h2>
+
+                                <div class="mt-2">
+                                    {{item.quantity}}{{item.unit}}
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+
+                    <p-paginator [rows]="pageSize" [totalRecords]="pagedResult.rowCount"
+                        (onPageChange)="paginate($event)"></p-paginator>
+                </ng-container>
             </p-card>
         </div>
     </div>

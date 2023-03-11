@@ -13,7 +13,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 
         public async Task<ActionResult> Execute(string donationName)
         {
-            await _postPickupDonationService.PostDonation(donationName);
+            await _postPickupDonationService.Pickup(donationName);
 
             return new OkObjectResult(new { Status = "OK" });
         }

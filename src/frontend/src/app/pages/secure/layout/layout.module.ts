@@ -9,6 +9,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { TooltipModule } from 'primeng/tooltip';
     StyleClassModule,
     InputTextModule,
     TooltipModule,
+    DialogModule,
+    ButtonModule,
   ],
   exports: [
     LayoutComponent

@@ -34,11 +34,13 @@ namespace DonateTests.Actions.PostPickUpDonationActionTest
             var auth0User1 = PostPickupDonationActionFixture.CreateAuth0User(user1, 1);
             var userRole1 = PostPickupDonationActionFixture.CreateUserRole(user1, RoleSeeder.Role4WarehouseKeeper.Id);
             var donation1 = PostPickupDonationActionFixture.CreateDonation(false, donationNumber);
+            var webPush = PostPickupDonationActionFixture.CreateUserWebPush(user1, "a", "b", "c");
 
             context.Add(user1);
             context.Add(auth0User1);
             context.Add(userRole1);
             context.Add(donation1);
+            context.Add(webPush);
 
             await context.SaveChangesAsync();
 

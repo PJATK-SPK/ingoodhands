@@ -40,6 +40,17 @@ namespace DonateTests.Actions.PostPickUpDonationActionTest
             Status = DbEntityStatus.Active
         };
 
+        public static UserWebPush CreateUserWebPush(User user, string endpoint, string p256dh, string auth) => new()
+        {
+            User = user,
+            Endpoint = endpoint,
+            P256dh = p256dh,
+            Auth = auth,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active,
+        };
+
         public static Donation CreateDonation(bool isDelivered, string name = "DNT000001") => new()
         {
             CreationDate = DateTime.UtcNow.AddDays(-5),

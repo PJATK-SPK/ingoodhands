@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { first, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DbUser } from './interfaces/db-user';
 import { DateTime, Settings } from 'luxon';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,11 @@ import { DateTime, Settings } from 'luxon';
 })
 export class AppComponent implements OnInit {
 
+  private readonly VAPID_PUBLIC_KEY = 'BL4zflzV0yTIsPYdfwQf_0JEVjnDGg3iS37pqJqHishDblnMa6UcMr2EgVnWNS4MOBRwzruWRiWFt6WDMURK6tE';
+  private readonly REMOVE_PRIVATE = 'pSA9iLL4Ah1B3drgRF2ifI6dpKgfUIJBaka98ytUwIE';
+
   constructor(
+    private readonly push: SwPush,
     private readonly auth: AuthService,
     private readonly router: Router,
     private readonly httpClient: HttpClient,
@@ -54,7 +59,7 @@ export class AppComponent implements OnInit {
           }
           this.authChecked = true;
         }),
-        switchMap(() => this.loadGoogleMaps()),
+        switchMap(() => forkJoin([this.loadGoogleMaps(), this.subscribeNotifications()])),
         first()
       );
     return authCheck;
@@ -79,6 +84,35 @@ export class AppComponent implements OnInit {
     }
 
     return of(this.auth.dbUser);
+  }
+
+  private subscribeNotifications(): Observable<any> {
+    if (!environment.production || !this.auth.isLoggedIn) {
+      return of({});
+    }
+
+    const result = from(this.push.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY }));
+    const updateReq = (sub: PushSubscription) => {
+      const keys = sub.toJSON().keys!;
+      const payload = { endpoint: sub.endpoint, auth: keys['auth'], p256dh: keys['p256dh'] }
+      return this.httpClient.post<DbUser>(`${environment.api}/my-notifications/update-web-push`, payload);
+    }
+
+    const lastShotDate = sessionStorage.getItem('notificationsDate');
+    const now = DateTime.local();
+
+    if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
+      return result.pipe(
+        catchError(err => {
+          console.error("Could not subscribe to notifications", err);
+          return EMPTY;
+        }),
+        switchMap(c => updateReq(c)),
+        tap(() => sessionStorage.setItem('notificationsDate', now.toISO()))
+      );
+    } else {
+      return of({});
+    }
   }
 
   private loadGoogleMaps(): Observable<any> {

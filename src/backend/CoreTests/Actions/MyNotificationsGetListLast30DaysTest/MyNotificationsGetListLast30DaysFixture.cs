@@ -2,6 +2,7 @@
 using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
+using Core.Setup.Auth0;
 
 namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
 {

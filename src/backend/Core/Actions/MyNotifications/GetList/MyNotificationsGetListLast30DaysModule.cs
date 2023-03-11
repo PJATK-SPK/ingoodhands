@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
 
-namespace Core.Actions.MyNotifications
+namespace Core.Actions.MyNotifications.GetList
 {
     public class MyNotificationsGetListLast30DaysModule : Module
     {

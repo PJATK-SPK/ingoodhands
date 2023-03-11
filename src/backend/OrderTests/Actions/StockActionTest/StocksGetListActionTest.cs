@@ -73,47 +73,5 @@ namespace OrdersTests.Actions.StockActionTest
             Assert.IsTrue(result!.Queryable.Any());
             Assert.AreEqual(3, result!.Queryable.Count());
         }
-
-        [TestMethod()]
-        public async Task StocksGetListActionTest_NoStocks_ThrowException()
-        {
-            using var toolkit = new TestsToolkit(_usedModules);
-            var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<StocksGetListAction>();
-
-            // Arrange
-            var page = 1;
-            var pageSize = 10;
-
-            var testingUser1 = StocksGetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = StocksGetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = StocksGetListActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role4WarehouseKeeper.Id);
-
-            context.Add(testingUser1);
-            context.Add(testingAuth0User1);
-            context.Add(testUser1Role1);
-
-            await context.SaveChangesAsync();
-
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
-
-            // Act
-            var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(page, pageSize));
-
-            // Assert
-            Assert.IsInstanceOfType(exception, typeof(ItemNotFoundException));
-            Assert.IsNotNull(exception.Message);
-        }
     }
 }

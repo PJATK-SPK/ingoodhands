@@ -1,3 +1,24 @@
+<p-dialog header="Title" [(visible)]="displayNotifications" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+    [style]="{width: '50vw', height: '70vh'}" title="Notifications">
+
+    <ng-template pTemplate="header">
+        <span class="notifications-header">Notifications</span>
+    </ng-template>
+    <div class="no-notifications-text" *ngIf="service.notificationsToRender.length === 0">
+        There are no new notifications! 🧨
+    </div>
+    <div class="notification-container m-1 p-2 shadow-1" *ngFor="let item of service.notificationsToRender">
+        <div>
+            {{item.message}}
+            <span class="date-text"> ({{item.creationDate.toLocaleString(DateTime.DATETIME_MED)}})</span>
+        </div>
+        <div>
+            <button pButton pRipple type="button" icon="pi pi-times" (click)="service.markAsRead(item)"
+                class="p-button-rounded p-button-danger p-button-text notification-btn"></button>
+        </div>
+    </div>
+</p-dialog>
+
 <div class="surface-overlay py-3 px-6 flex align-items-center justify-content-between relative lg:static">
     <a pRipple class="cursor-pointer inline-flex align-items-center justify-content-center lg:hidden text-700"
         pStyleClass="#app-sidebar-12" enterClass="hidden" enterActiveClass="fadeinleft" leaveToClass="hidden"
@@ -13,11 +34,20 @@
     <ul
         class="list-none p-3 lg:p-0 m-0 lg:align-items-center select-none flex-column lg:flex-row absolute hidden lg:flex lg:static surface-overlay right-0 top-100 z-1 shadow-2 lg:shadow-none">
         <li class="lg:mr-1">
-            <a pRipple
+            <a pRipple (click)="displayNotifications = true"
                 class="flex p-3 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-colors transition-duration-150 lg:border-circle">
+
                 <i class="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0" pBadge severity="danger"></i>
+
                 <span pTooltip="Notifications" tooltipPosition="bottom"
                     class="block lg:hidden font-medium">Notifications</span>
+
+                <div class="notifications-icon" *ngIf="service.notificationsCount > 0">
+                    <span
+                        class="inline-flex align-items-center justify-content-center ml-auto bg-purple-500 text-0 border-circle transition-duration-150">
+                        {{service.notificationsCount > 9 ? 9 : service.notificationsCount}}
+                    </span>
+                </div>
             </a>
         </li>
         <li class="border-top-1 surface-border lg:border-top-none lg:mt-0 mt-2 lg:pt-0 pt-2">

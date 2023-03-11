@@ -3799,6 +3799,63 @@ namespace Core.Migrations
                     b.ToTable("user_addresses", "core");
                 });
 
+            modelBuilder.Entity("Core.Database.Models.Core.UserWebPush", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Auth")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("auth");
+
+                    b.Property<string>("Endpoint")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("character varying(350)")
+                        .HasColumnName("endpoint");
+
+                    b.Property<string>("P256dh")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("p256dh");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<long?>("UpdateUserId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
+                        .HasColumnName("update_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users_webpush");
+
+                    b.HasIndex("UpdateUserId")
+                        .HasDatabaseName("ix_users_webpush_update_user_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_webpush_user_id");
+
+                    b.ToTable("users_webpush", "core");
+                });
+
             modelBuilder.Entity("Core.Database.Models.Core.Warehouse", b =>
                 {
                     b.Property<long>("Id")
@@ -4317,6 +4374,27 @@ namespace Core.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Database.Models.Core.UserWebPush", b =>
+                {
+                    b.HasOne("Core.Database.Models.Auth.User", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_users_webpush_users_update_user_id");
+
+                    b.HasOne("Core.Database.Models.Auth.User", "User")
+                        .WithOne("UserWebPush")
+                        .HasForeignKey("Core.Database.Models.Core.UserWebPush", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("users_webpush_user_id_fkey");
+
+                    b.Navigation("UpdateUser");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Database.Models.Core.Warehouse", b =>
                 {
                     b.HasOne("Core.Database.Models.Core.Address", "Address")
@@ -4358,6 +4436,8 @@ namespace Core.Migrations
                     b.Navigation("Roles");
 
                     b.Navigation("UserAddresses");
+
+                    b.Navigation("UserWebPush");
                 });
 
             modelBuilder.Entity("Core.Database.Models.Core.Address", b =>

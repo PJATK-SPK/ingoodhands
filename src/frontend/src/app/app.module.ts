@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { AuthGuard } from './auth-guard';
 import { HttpErrorInterceptor } from './services/http-error-interceptor';
 import { WarehouseService } from './services/warehouse.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,12 @@ import { WarehouseService } from './services/warehouse.service';
         secureRoutes: [environment.api]
       },
     }),
-
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     {
