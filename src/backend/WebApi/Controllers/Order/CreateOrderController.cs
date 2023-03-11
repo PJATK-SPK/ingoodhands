@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace WebApi.Controllers.Order;
 
@@ -8,17 +9,15 @@ namespace WebApi.Controllers.Order;
 [Route("create-order")]
 public class CreateOrderController : ControllerBase
 {
-    [HttpGet("countries")]
-    public async Task<ActionResult> GetCountries() // wszystkie active 
-    {
-        var appDbContextCountries = new List<string>
-        {
-            "Poland",
-            "France",
-        };
+    private readonly CreateOrderGetCountriesAction _createOrderGetCountriesAction;
 
-        return await Task.FromResult(Ok(appDbContextCountries));
+    public CreateOrderController(CreateOrderGetCountriesAction createOrderGetCountriesAction)
+    {
+        _createOrderGetCountriesAction = createOrderGetCountriesAction;
     }
+
+    [HttpGet("countries")]
+    public async Task<ActionResult> GetCountries() => await _createOrderGetCountriesAction.Execute();
 
     public class DeleteMeAddressDto
     {
