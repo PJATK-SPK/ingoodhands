@@ -8,12 +8,12 @@ namespace WebApi.Controllers.Donate;
 [EnableCors]
 [ApiController]
 [Authorize]
-[Route("pick-up-donation")]
-public class PickUpDonationController : ControllerBase
+[Route("pickup-donation")]
+public class PickupDonationController : ControllerBase
 {
     private readonly PostPickupDonationAction _postPickupDonationAction;
 
-    public PickUpDonationController(PostPickupDonationAction postPickupDonationAction)
+    public PickupDonationController(PostPickupDonationAction postPickupDonationAction)
     {
         _postPickupDonationAction = postPickupDonationAction;
     }

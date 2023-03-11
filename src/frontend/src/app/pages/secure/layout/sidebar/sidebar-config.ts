@@ -31,9 +31,9 @@ export const getSidebarConfig = (httpClient: HttpClient) => [
                 role: Role.administrator,
             },
             {
-                label: 'Pick up donation',
+                label: 'Pickup donation',
                 icon: 'pi pi-fw pi-arrow-circle-up',
-                routerLink: '/secure/pick-up-donation',
+                routerLink: '/secure/pickup-donation',
                 role: Role.warehouseKeeper,
             },
             {
