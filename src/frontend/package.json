@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "update-3rd-party": "npm update primeng angular-auth-oidc-client lodash luxon @angular/google-maps"
+    "update-3rd-party": "npm update primeng angular-auth-oidc-client lodash luxon"
   },
   "private": true,
   "dependencies": {
