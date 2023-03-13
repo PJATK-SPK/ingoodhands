@@ -25,6 +25,7 @@ export class ManageUserComponent implements OnInit {
   public filteredWarehouses: Warehouse[] = [];
   public isSaving = false;
   public userFullName?: string;
+  public email?: string;
 
   public form = new FormGroup({
     warehouseId: new FormControl<{ id: string, name: string } | null>(null),
@@ -59,6 +60,7 @@ export class ManageUserComponent implements OnInit {
 
       this.service.getUser(this.id).subscribe(user => {
         this.userFullName = user.fullName;
+        this.email = user.email;
         this.patchForm(user);
       });
     });
