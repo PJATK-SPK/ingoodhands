@@ -4,7 +4,10 @@
             <p-card class="p-2" *ngIf="userFullName && warehouses">
                 <form [formGroup]="form" (submit)="onSubmit($event)">
                     <div class="col-12">
-                        <h2 class="text-2xl font-bold m-0"> {{userFullName}} </h2>
+                        <h2 class="text-2xl font-bold m-0">
+                            {{userFullName}}
+                            <span class="email-text">({{email}})</span>
+                        </h2>
 
                         <div class="pt-5 pb-3">
                             <div>

@@ -4,5 +4,6 @@ export interface ManageUsersItem {
     id: string;
     fullName: string;
     warehouseName: string;
+    email: string;
     roles: Role[];
 }

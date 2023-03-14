@@ -23,7 +23,11 @@ namespace Donate.Jobs.IncludeToStock
 
         public async Task<ActionResult> Execute()
         {
-            var deliveredNotIncludedInStockDonations = await _appDbContext.Donations.Where(c => c.IsDelivered && !c.IsIncludedInStock).ToListAsync();
+            var deliveredNotIncludedInStockDonations = await _appDbContext.Donations
+                .Include(c => c.Products)
+                .Where(c => c.IsDelivered && !c.IsIncludedInStock)
+                .ToListAsync();
+            
             var allStock = await _appDbContext.Stocks.ToDictionaryAsync(c => c.ProductId);
 
             foreach (var donation in deliveredNotIncludedInStockDonations)
