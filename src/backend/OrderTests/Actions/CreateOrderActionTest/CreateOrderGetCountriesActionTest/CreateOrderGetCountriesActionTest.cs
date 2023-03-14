@@ -8,7 +8,7 @@ using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 using TestsBase;
 
-namespace OrderTests.Actions.CreateOrderActionTest
+namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetCountriesActionTest
 {
     [TestClass()]
     public class CreateOrderGetCountriesActionTest
