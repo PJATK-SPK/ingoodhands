@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Actions.CreateOrderActions.CreateOrderAddAddresses;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace WebApi.Controllers.Order;
@@ -10,10 +11,15 @@ namespace WebApi.Controllers.Order;
 public class CreateOrderController : ControllerBase
 {
     private readonly CreateOrderGetCountriesAction _createOrderGetCountriesAction;
+    private readonly CreateOrderAddAddressAction _createOrderAddAddressesAction;
 
-    public CreateOrderController(CreateOrderGetCountriesAction createOrderGetCountriesAction)
+    public CreateOrderController(
+        CreateOrderGetCountriesAction createOrderGetCountriesAction,
+        CreateOrderAddAddressAction createOrderAddAddressesAction
+        )
     {
         _createOrderGetCountriesAction = createOrderGetCountriesAction;
+        _createOrderAddAddressesAction = createOrderAddAddressesAction;
     }
 
     [HttpGet("countries")]
@@ -58,26 +64,8 @@ public class CreateOrderController : ControllerBase
     }
 
     [HttpPost("addresses")]
-    public async Task<ActionResult> AddAddress([FromBody] DeleteMeAddAddressPayload payload) // wszystkie active 
-    {
-        var createdAddress = new List<DeleteMeAddAddressResponse>
-        {
-           new DeleteMeAddAddressResponse
-           {
-                Id = "b654wv",
-                CountryName = "Ukraine",
-                PostalCode = "82-420",
-                City = "Bachmut",
-                Street = "Papieska",
-                StreetNumber= "21",
-                Apartment= "37",
-                GpsLatitude=1.111,
-                GpsLongitude=2.222
-           }
-        };
+    public async Task<ActionResult> AddAddress([FromBody] CreateOrderAddAddressPayload payload) => await _createOrderAddAddressesAction.Execute(payload);
 
-        return await Task.FromResult(Ok(createdAddress));
-    }
 
     [HttpDelete("addresses/{id}")]
     public async Task<ActionResult> DeleteAddress(string id)

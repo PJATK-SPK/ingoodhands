@@ -16,6 +16,7 @@ namespace Core.Database
         public DbSet<Counter> Counters { get; set; } = default!;
         public DbSet<Country> Countries { get; set; } = default!;
         public DbSet<Address> Addresses { get; set; } = default!;
+        public DbSet<UserAddress> UserAddresses { get; set; } = default!;
         public DbSet<Warehouse> Warehouses { get; set; } = default!;
         public DbSet<Product> Products { get; set; } = default!;
         public DbSet<Donation> Donations { get; set; } = default!;
