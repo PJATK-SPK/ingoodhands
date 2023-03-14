@@ -52,6 +52,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress
             dbResult!.UpdateUserId = currentUser.Id;
             dbResult.Status = DbEntityStatus.Inactive;
             dbResult.IsDeletedByUser = true;
+            dbResult.Address!.Status = DbEntityStatus.Inactive;
 
             await _appDbContext.SaveChangesAsync();
 
