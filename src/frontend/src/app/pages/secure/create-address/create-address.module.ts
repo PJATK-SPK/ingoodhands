@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
-import { CreateOrderComponent } from './create-order.component';
+import { CreateAddressComponent } from './create-address.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ButtonModule } from 'primeng/button';
@@ -10,7 +10,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [
-    CreateOrderComponent
+    CreateAddressComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +22,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ButtonModule,
   ],
   exports: [
-    CreateOrderComponent
+    CreateAddressComponent
   ]
 })
-export class CreateOrderModule { }
+export class CreateAddressModule { }

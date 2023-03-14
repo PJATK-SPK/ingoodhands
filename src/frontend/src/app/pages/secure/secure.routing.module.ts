@@ -13,6 +13,7 @@ import { WorkComponent } from './work/work.component';
 import { RequestHelpComponent } from './request-help/request-help.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { OrderComponent } from './order/order.component';
+import { CreateAddressComponent } from './create-address/create-address.component';
 
 const routes: Routes = [
     {
@@ -74,6 +75,11 @@ const routes: Routes = [
         path: 'create-order',
         loadChildren: () => import('./create-order/create-order.module').then(m => m.CreateOrderModule),
         component: CreateOrderComponent
+    },
+    {
+        path: 'create-address',
+        loadChildren: () => import('./create-address/create-address.module').then(m => m.CreateAddressModule),
+        component: CreateAddressComponent
     },
     {
         path: 'order/:id',

@@ -2,16 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-create-order',
-  templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.scss'],
+  selector: 'app-create-address',
+  templateUrl: './create-address.component.html',
+  styleUrls: ['./create-address.component.scss'],
   providers: [
   ]
 })
-export class CreateOrderComponent {
+export class CreateAddressComponent {
 
   public form = new FormGroup({
     firstName: new FormControl(null, [Validators.min(1), Validators.max(50), Validators.required]),
