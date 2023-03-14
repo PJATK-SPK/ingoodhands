@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { RequestHelpService } from './services/request-help.service';
 import { MapWarehouse } from './interfaces/map-warehouse.interface';
 import { MapOrder } from './interfaces/map-order.interface';

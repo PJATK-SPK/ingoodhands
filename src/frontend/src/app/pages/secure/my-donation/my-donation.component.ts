@@ -16,7 +16,7 @@ export class MyDonationComponent implements OnInit {
   public donation!: DonationDetails<DateTime>;
   public location = {
     lat: 0,
-    lng: 0,
+    lng: 0
   };
 
   constructor(
@@ -27,9 +27,9 @@ export class MyDonationComponent implements OnInit {
   public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')!;
     this.service.getDonation(this.id).subscribe(donation => {
-      this.location.lat = donation.warehouse.gpsLatitude,
-        this.location.lng = donation.warehouse.gpsLongitude,
-        this.donation = donation
+      this.location.lat = donation.warehouse.gpsLatitude;
+      this.location.lng = donation.warehouse.gpsLongitude;
+      this.donation = donation;
     });
   }
 }
