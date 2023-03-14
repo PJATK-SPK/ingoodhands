@@ -8,30 +8,6 @@ namespace WebApi.Controllers.Order;
 [Route("orders")]
 public class OrdersController : ControllerBase
 {
-    internal class DeleteMeMyOrdersResponseItem
-    {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!;
-        public DateTime CreationDate { get; set; } = default!;
-        public int Percentage { get; set; } = default!;
-    }
-    [HttpGet]
-    public async Task<ActionResult> GetList() // zwracamy wszystkie ordery usera
-    {
-        var appDbContextProducts = new List<DeleteMeMyOrdersResponseItem>
-        {
-           new DeleteMeMyOrdersResponseItem
-           {
-               Id="b654wv",
-               Name = "ORD000001",
-               Percentage = 25,
-               CreationDate = DateTime.UtcNow.AddDays(-5),
-           }
-        };
-
-        return await Task.FromResult(Ok(appDbContextProducts));
-    }
-
     internal class DeleteMeOrderDeliveryResponse
     {
         public string Name { get; set; } = default!;

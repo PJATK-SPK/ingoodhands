@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   public authChecked = false;
+  public loaded = false;
 
   public ngOnInit(): void {
     Settings.defaultLocale = 'en-GB';
@@ -60,6 +61,7 @@ export class AppComponent implements OnInit {
           this.authChecked = true;
         }),
         switchMap(() => forkJoin([this.loadGoogleMaps(), this.subscribeNotifications()])),
+        tap(() => this.loaded = true),
         first()
       );
     return authCheck;
