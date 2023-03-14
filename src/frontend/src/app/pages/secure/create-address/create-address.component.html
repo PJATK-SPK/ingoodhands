@@ -10,11 +10,14 @@
                             <form [formGroup]="form" (submit)="onSubmitClick($event)">
                                 <div class="grid">
                                     <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="firstName" class="block">First name</label>
-                                        <input id="firstName" class="input-field" type="text" pInputText
-                                            aria-describedby="firstName-help" formControlName="firstName">
-                                        <small *ngIf="form.controls['firstName'].errors" id="firstName-help"
-                                            class="p-error block">First name is invalid.</small>
+                                        <p-autoComplete [style]="{'width':'100%'}" formControlName="countryName"
+                                            [inputStyle]="{'width':'100%'}" [suggestions]="filteredCountries"
+                                            (completeMethod)="filterCountry($event)" [forceSelection]="true"
+                                            [dropdown]="true">
+                                            <ng-template let-listItem pTemplate="item">
+                                                <div>{{listItem}}</div>
+                                            </ng-template>
+                                        </p-autoComplete>
                                     </div>
 
                                     <div class="col-12 md:col-6 lg:col-4">
