@@ -8,6 +8,7 @@ using Orders.Actions.RequestHelpActions.RequestHelpGetMap;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
+using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
 
 namespace Orders
 {
@@ -26,6 +27,7 @@ namespace Orders
             builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<RequestHelpGetMapModule>();
             builder.RegisterModule<CreateOrderAddAddressModule>();
+            builder.RegisterModule<CreateOrderDeleteAddressModule>();
             builder.RegisterModule<CreateOrderGetCountriesModule>();
             builder.RegisterModule<CreateOrderGetAddressesModule>();
         }
