@@ -45,7 +45,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress
 
             if (dbResult == null)
             {
-                _logger.LogError("Couldn't find address with given addressId in database");
+                _logger.LogError("Address with id:{addressId} couldn't be found in database", decodedAddressId);
                 throw new ItemNotFoundException("Cannot find address you'd like to delete in database. Please try again or contact service administrator.");
             }
 

@@ -46,7 +46,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
             var country = _appDbContext.Countries.SingleOrDefaultAsync(c => c.EnglishName == payload.CountryName);
             if (country.Result == null)
             {
-                _logger.LogError("Couldn't find country by it's EnglishName");
+                _logger.LogError("Couldn't find country by with name: {countryName}", payload.CountryName);
                 throw new ItemNotFoundException("Cannot find given country name in database. Please provide valid country name.");
             }
 
