@@ -1,7 +1,7 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Database.Seeders;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddresses;
+using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 
 namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest
 {

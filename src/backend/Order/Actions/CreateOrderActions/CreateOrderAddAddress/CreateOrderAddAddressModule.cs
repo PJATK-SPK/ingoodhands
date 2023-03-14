@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddresses;
 
 namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
 {
@@ -10,6 +9,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
         {
             builder.RegisterAsScoped<CreateOrderAddAddressAction>();
             builder.RegisterAsScoped<CreateOrderAddAddressService>();
+            builder.RegisterAsScoped<CreateOrderAddAddressPayloadValidator>();
         }
     }
 }

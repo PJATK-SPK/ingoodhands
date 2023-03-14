@@ -1,16 +1,15 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Core;
-using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Services;
 using Core.Setup.Auth0;
+using FluentValidation;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 
-namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
+namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
 {
     public class CreateOrderAddAddressService
     {
@@ -19,13 +18,15 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
         private readonly Hashids _hashids;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly CreateOrderAddAddressPayloadValidator _ceateOrderAddAddressPayloadValidator;
 
         public CreateOrderAddAddressService(
             AppDbContext appDbContext,
             ILogger<CreateOrderAddAddressService> logger,
             Hashids hashids,
             ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService
+            GetCurrentUserService getCurrentUserService,
+            CreateOrderAddAddressPayloadValidator ceateOrderAddAddressPayloadValidator
             )
         {
             _appDbContext = appDbContext;
@@ -33,15 +34,12 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
             _hashids = hashids;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
+            _ceateOrderAddAddressPayloadValidator = ceateOrderAddAddressPayloadValidator;
         }
 
         public async Task<CreateOrderAddAddressResponse> AddAddress(CreateOrderAddAddressPayload payload)
         {
-            if (!ValidatePayload(payload))
-            {
-                _logger.LogError("Invalid payload");
-                throw new ClientInputErrorException("Sorry, we couldn't fetch your new address. Please contact service administrator.");
-            }
+            _ceateOrderAddAddressPayloadValidator.ValidateAndThrow(payload);
 
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
@@ -63,7 +61,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
                 Apartment = payload.Apartment,
                 GpsLatitude = payload.GpsLatitude,
                 GpsLongitude = payload.GpsLongitude,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdateUserId = currentUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             };
@@ -74,7 +72,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
                 User = currentUser,
                 Address = newAddress,
                 IsDeletedByUser = false,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdateUserId = currentUser.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             };
@@ -96,17 +94,6 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
             };
 
             return response;
-        }
-
-        private static bool ValidatePayload(CreateOrderAddAddressPayload payload)
-        {
-            if (string.IsNullOrWhiteSpace(payload.CountryName)) return false;
-            if (string.IsNullOrWhiteSpace(payload.PostalCode)) return false;
-            if (string.IsNullOrWhiteSpace(payload.City)) return false;
-            if (payload.GpsLatitude == default(double)) return false;
-            if (payload.GpsLongitude == default(double)) return false;
-
-            return true;
         }
     }
 }

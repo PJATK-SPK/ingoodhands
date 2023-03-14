@@ -4,10 +4,10 @@ using Core.Database;
 using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
+using FluentValidation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddresses;
 using OrdersTests.Actions.RequestHelpActionTest;
 using TestsBase;
 
@@ -136,10 +136,10 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             });
 
             // Act
-            var exception = await Assert.ThrowsExceptionAsync<ClientInputErrorException>(() => action.Execute(emptyPayload));
+            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute(emptyPayload));
 
             // Assert
-            Assert.IsInstanceOfType(exception, typeof(ClientInputErrorException));
+            Assert.IsInstanceOfType(exception, typeof(ValidationException));
             Assert.IsNotNull(exception.Message);
         }
 

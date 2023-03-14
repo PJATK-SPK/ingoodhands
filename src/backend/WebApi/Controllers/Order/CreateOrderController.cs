@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddresses;
+using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace WebApi.Controllers.Order;

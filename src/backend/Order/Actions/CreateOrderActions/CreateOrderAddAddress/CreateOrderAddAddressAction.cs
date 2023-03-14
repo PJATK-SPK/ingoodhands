@@ -1,13 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Orders.Actions.CreateOrderActions.Shared;
-using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
+namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
 {
     public class CreateOrderAddAddressAction
     {
