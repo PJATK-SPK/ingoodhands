@@ -98,7 +98,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddresses
             return response;
         }
 
-        private bool ValidatePayload(CreateOrderAddAddressPayload payload)
+        private static bool ValidatePayload(CreateOrderAddAddressPayload payload)
         {
             if (string.IsNullOrWhiteSpace(payload.CountryName)) return false;
             if (string.IsNullOrWhiteSpace(payload.PostalCode)) return false;
