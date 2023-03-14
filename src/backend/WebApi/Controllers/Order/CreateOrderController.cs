@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
+using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace WebApi.Controllers.Order;
@@ -12,14 +13,16 @@ public class CreateOrderController : ControllerBase
 {
     private readonly CreateOrderGetCountriesAction _createOrderGetCountriesAction;
     private readonly CreateOrderAddAddressAction _createOrderAddAddressesAction;
+    private readonly CreateOrderGetAddressesAction _createOrderGetAddressesAction;
 
     public CreateOrderController(
         CreateOrderGetCountriesAction createOrderGetCountriesAction,
-        CreateOrderAddAddressAction createOrderAddAddressesAction
-        )
+        CreateOrderAddAddressAction createOrderAddAddressesAction,
+        CreateOrderGetAddressesAction createOrderGetAddressesAction)
     {
         _createOrderGetCountriesAction = createOrderGetCountriesAction;
         _createOrderAddAddressesAction = createOrderAddAddressesAction;
+        _createOrderGetAddressesAction = createOrderGetAddressesAction;
     }
 
     [HttpGet("countries")]
@@ -42,26 +45,7 @@ public class CreateOrderController : ControllerBase
     public class DeleteMeAddAddressResponse : DeleteMeAddressDto { }
 
     [HttpGet("addresses")]
-    public async Task<ActionResult> GetAddresses() // wszystkie active 
-    {
-        var appDbContextAddresses = new List<DeleteMeGetAddressesItem>
-        {
-           new DeleteMeGetAddressesItem
-           {
-                Id = "b654wv",
-                CountryName = "Ukraine",
-                PostalCode = "82-420",
-                City = "Bachmut",
-                Street = "Papieska",
-                StreetNumber= "21",
-                Apartment= "37",
-                GpsLatitude=1.111,
-                GpsLongitude=2.222
-           }
-        };
-
-        return await Task.FromResult(Ok(appDbContextAddresses));
-    }
+    public async Task<ActionResult> GetAddresses() => await _createOrderGetAddressesAction.Execute();
 
     [HttpPost("addresses")]
     public async Task<ActionResult> AddAddress([FromBody] CreateOrderAddAddressPayload payload) => await _createOrderAddAddressesAction.Execute(payload);
