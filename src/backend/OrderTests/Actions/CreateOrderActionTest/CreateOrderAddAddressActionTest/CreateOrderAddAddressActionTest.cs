@@ -32,8 +32,8 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             // Arrange 
             var country = "Ukraine";
 
-            var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
+            var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
             var newPayload = CreateOrderAddAddressActionFixture.CreatePayload(country);
 
             context.Add(testingUser1);
@@ -73,8 +73,8 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
 
             // Arrange 
             var country = "Poland";
-            var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
+            var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
             var newPayload = CreateOrderAddAddressActionFixture.CreatePayloadNullStreetValues(country);
 
             context.Add(testingUser1);
@@ -115,8 +115,8 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             // Arrange 
             var emptyPayload = new CreateOrderAddAddressPayload();
 
-            var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
+            var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
 
@@ -154,8 +154,8 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             // Arrange 
             var newPayload = CreateOrderAddAddressActionFixture.CreatePayload("HeheLand");
 
-            var testingUser1 = RequestHelpGetMapActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = RequestHelpGetMapActionFixture.CreateAuth0User(testingUser1, 1);
+            var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
 
