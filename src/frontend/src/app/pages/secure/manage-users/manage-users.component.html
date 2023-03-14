@@ -27,6 +27,7 @@
                                 <h2 class="text-xl font-bold m-0 text-primary" style="cursor:pointer"
                                     [routerLink]="'/secure/manage-user/' + item.id">
                                     {{item.fullName}} <b *ngIf="item.warehouseName"> ({{item.warehouseName}}) </b>
+                                    <span class="email-text">({{item.email}})</span>
                                 </h2>
 
                                 <p>
