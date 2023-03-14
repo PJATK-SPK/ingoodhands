@@ -29,7 +29,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderGetAddresses
 
             var listOfActiveUserAddresses = await _appDbContext.UserAddresses
                 .Include(c => c.Address)
-                    .ThenInclude(c => c.Country)
+                    .ThenInclude(c => c!.Country)
                 .Where(c => c.Status == DbEntityStatus.Active && c.UserId == currentUser.Id)
                 .ToListAsync();
 
