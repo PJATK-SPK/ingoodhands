@@ -19,20 +19,22 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
         private readonly RoleService _roleService;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly Hashids _hashids;
 
         public RequestHelpGetMapService(
             AppDbContext appDbContext,
             ILogger<RequestHelpGetMapService> logger,
             RoleService roleService,
             ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService
-            )
+            GetCurrentUserService getCurrentUserService,
+            Hashids hashids)
         {
             _appDbContext = appDbContext;
             _logger = logger;
             _roleService = roleService;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
+            _hashids = hashids;
         }
 
         public async Task<RequestHelpGetMapResponse> Execute()
@@ -65,6 +67,7 @@ namespace Orders.Actions.RequestHelpActions.RequestHelpGetMap
 
             var mappedOrders = listOfOrders.Select(c => new RequestHelpGetMapOrderItemResponse
             {
+                Id = _hashids.EncodeLong(c.Id),
                 Name = c.Name,
                 GpsLatitude = c.Address!.GpsLatitude,
                 GpsLongitude = c.Address!.GpsLongitude
