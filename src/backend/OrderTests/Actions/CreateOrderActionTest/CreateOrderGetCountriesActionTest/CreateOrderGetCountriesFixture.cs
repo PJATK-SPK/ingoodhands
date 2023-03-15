@@ -2,11 +2,10 @@
 using Core.Database.Models.Auth;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 
-namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest
+namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetCountriesActionTest
 {
-    public static class CreateOrderAddAddressActionFixture
+    public static class CreateOrderGetCountriesFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -50,32 +49,6 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             Name = auth0User.FirstName + auth0User.LastName,
             Nickname = auth0User.Nickname,
             UpdatedAt = DateTime.UtcNow,
-        };
-
-        public static CreateOrderAddAddressPayload CreatePayload(string countryName) => new()
-        {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = "Papieska",
-            StreetNumber = "21",
-            Apartment = "37",
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
-        };
-
-        public static CreateOrderAddAddressPayload CreatePayloadNullStreetValues(string countryName) => new()
-        {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = null,
-            StreetNumber = null,
-            Apartment = null,
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
         };
     }
 }

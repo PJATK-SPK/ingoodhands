@@ -21,7 +21,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionT
         };
 
         [TestMethod()]
-        public async Task PerformDonateActionTest_PerformDonation_ReturnDonationName()
+        public async Task CreateOrderCreateOrderActionTest_CreateOrder_ReturnOrderName()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -38,18 +38,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionT
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderCreateOrderActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var product1 = new CreateOrderCreateOrderProductPayload
             {

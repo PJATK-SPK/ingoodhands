@@ -8,6 +8,7 @@ using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
+using OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesActionTest;
 using TestsBase;
 
 namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActionTest
@@ -31,6 +32,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
             // Arrange 
             var testingUser1 = CreateOrderDeleteAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderDeleteAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderDeleteAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             var newAddress1 = CreateOrderDeleteAddressActionFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
             var newAddress2 = CreateOrderDeleteAddressActionFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
@@ -40,6 +42,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
             context.Add(newAddress1);
             context.Add(newAddress2);
             context.Add(newUserAddress1);
@@ -47,18 +50,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderDeleteAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var encodedAddress2Id = toolkit.Hashids.EncodeLong(newUserAddress2.Address!.Id);
             // Act
@@ -81,24 +73,15 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
             // Arrange 
             var testingUser1 = CreateOrderDeleteAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderDeleteAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderDeleteAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderDeleteAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var encodedAddress2Id = toolkit.Hashids.EncodeLong(1500);
             // Act

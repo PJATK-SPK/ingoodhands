@@ -1,14 +1,11 @@
 ﻿using Autofac;
 using Core;
 using Core.Database;
-using Core.Database.Models.Core;
 using Core.Database.Seeders;
-using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
-using OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest;
 using TestsBase;
 
 namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesActionTest
@@ -30,8 +27,9 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesAction
             var action = toolkit.Resolve<CreateOrderGetAddressesAction>();
 
             // Arrange 
-            var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testingUser1 = CreateOrderGetAddressesActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderGetAddressesActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderGetAddressesActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             var newAddress1 = CreateOrderGetAddressesActionFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
             var newAddress2 = CreateOrderGetAddressesActionFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
@@ -41,6 +39,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesAction
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
             context.Add(newAddress1);
             context.Add(newAddress2);
             context.Add(newUserAddress1);
@@ -48,18 +47,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesAction
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderGetAddressesActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute();
