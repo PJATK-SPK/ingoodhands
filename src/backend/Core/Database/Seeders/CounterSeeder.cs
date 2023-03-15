@@ -1,12 +1,6 @@
 ﻿using Core.Database.Enums;
-using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Database.Seeders
 {
@@ -22,9 +16,31 @@ namespace Core.Database.Seeders
             Status = DbEntityStatus.Active
         };
 
+        public static readonly Counter OrderCounter = new()
+        {
+            Id = 2,
+            Name = TableName.Orders,
+            Value = 0,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Counter DeliveryCounter = new()
+        {
+            Id = 3,
+            Name = TableName.Deliveries,
+            Value = 0,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            Status = DbEntityStatus.Active
+        };
+
         public static void Execute(ModelBuilder builder)
         {
             builder.Entity<Counter>().HasData(DonationCounter);
+            builder.Entity<Counter>().HasData(OrderCounter);
+            builder.Entity<Counter>().HasData(DeliveryCounter);
         }
     }
 }
