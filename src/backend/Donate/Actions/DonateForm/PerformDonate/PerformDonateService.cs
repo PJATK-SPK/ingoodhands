@@ -66,8 +66,8 @@ namespace Donate.Actions.DonateForm.PerformDonate
             {
                 ProductId = _hashids.DecodeSingleLong(c.Id),
                 Quantity = c.Quantity,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+                UpdateUserId = currentUser.Id,
+                UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             }).ToList();
 
@@ -85,13 +85,13 @@ namespace Donate.Actions.DonateForm.PerformDonate
                 IsDelivered = false,
                 IsIncludedInStock = false,
                 Products = listOfDonationProducts,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+                UpdateUserId = currentUser.Id,
+                UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             };
 
-            _appDbContext.Add(newDonation);
-            _appDbContext.SaveChanges();
+            await _appDbContext.AddAsync(newDonation);
+            await _appDbContext.SaveChangesAsync();
 
             var response = new PerformDonateResponse
             {
