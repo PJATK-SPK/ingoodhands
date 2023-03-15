@@ -22,7 +22,6 @@ public class CreateOrderController : ControllerBase
     private readonly CreateOrderDeleteAddressAction _createOrderDeleteAddressAction;
     private readonly CreateOrderCreateOrderAction _createOrderCreateOrderAction;
     private readonly GetProductsAction _getProductsAction;
-    private readonly RoleService _roleService;
 
     public CreateOrderController(
         CreateOrderGetCountriesAction createOrderGetCountriesAction,
@@ -30,8 +29,7 @@ public class CreateOrderController : ControllerBase
         CreateOrderGetAddressesAction createOrderGetAddressesAction,
         CreateOrderDeleteAddressAction createOrderDeleteAddressAction,
         CreateOrderCreateOrderAction createOrderCreateOrderAction,
-        GetProductsAction getProductsAction,
-        RoleService roleService)
+        GetProductsAction getProductsAction)
     {
         _createOrderGetCountriesAction = createOrderGetCountriesAction;
         _createOrderAddAddressesAction = createOrderAddAddressesAction;
@@ -39,7 +37,7 @@ public class CreateOrderController : ControllerBase
         _createOrderDeleteAddressAction = createOrderDeleteAddressAction;
         _createOrderCreateOrderAction = createOrderCreateOrderAction;
         _getProductsAction = getProductsAction;
-        _roleService = roleService;
+
     }
 
     [HttpGet("countries")]
