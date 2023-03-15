@@ -1,30 +1,36 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { environment } from 'src/environments/environment';
+import { CreateOrderService } from './services/create-address.service';
 
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
   styleUrls: ['./create-order.component.scss'],
   providers: [
+    CreateOrderService
   ]
 })
-export class CreateOrderComponent {
+export class CreateOrderComponent implements OnInit {
 
   public form = new FormGroup({
-    firstName: new FormControl(null, [Validators.min(1), Validators.max(50), Validators.required]),
-    lastName: new FormControl(null, [Validators.min(1), Validators.max(50), Validators.required]),
+    firstName: new FormControl(null, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
+    lastName: new FormControl(null, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
     email: new FormControl(null, [Validators.required]),
   });
 
   constructor(
     private readonly msg: MessageService,
-    private readonly http: HttpClient,
+    private readonly service: CreateOrderService
   ) { }
 
   public isSaving = false;
+
+  public ngOnInit(): void {
+    this.service.getAddresses().subscribe(res => {
+      console.log(res);
+    });
+  }
 
   public onSubmitClick(event: SubmitEvent): void {
     if (!this.form.valid) {

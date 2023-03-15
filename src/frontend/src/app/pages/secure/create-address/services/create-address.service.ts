@@ -14,6 +14,6 @@ export class CreateAddressService {
     }
 
     public addAddress(payload: Address): Observable<Address> {
-        return this.http.post<Address>(`${environment.api}/create-order`, payload);
+        return this.http.post<Address>(`${environment.api}/create-order/addresses`, payload);
     }
 }

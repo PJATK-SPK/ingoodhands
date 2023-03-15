@@ -7,6 +7,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     StyleClassModule,
     InputTextModule,
     AutoCompleteModule,
+    GoogleMapsModule,
     ButtonModule,
   ],
   exports: [

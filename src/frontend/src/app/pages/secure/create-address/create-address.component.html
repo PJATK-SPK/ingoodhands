@@ -9,32 +9,73 @@
                         <p-card class="p-2">
                             <form [formGroup]="form" (submit)="onSubmitClick($event)">
                                 <div class="grid">
+
                                     <div class="col-12 md:col-6 lg:col-4">
+                                        <label for="countryName" class="block">Country name</label>
                                         <p-autoComplete [style]="{'width':'100%'}" formControlName="countryName"
                                             [inputStyle]="{'width':'100%'}" [suggestions]="filteredCountries"
-                                            (completeMethod)="filterCountry($event)" [forceSelection]="true"
-                                            [dropdown]="true">
+                                            (completeMethod)="filterCountry($event)" aria-describedby="countryName-help"
+                                            [forceSelection]="true" [dropdown]="true">
                                             <ng-template let-listItem pTemplate="item">
                                                 <div>{{listItem}}</div>
                                             </ng-template>
                                         </p-autoComplete>
+                                        <small *ngIf="form.touched && form.controls['countryName'].errors"
+                                            id="countryName-help" class="p-error block">Country name is invalid.</small>
                                     </div>
 
                                     <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="lastName" class="block">Last name</label>
-                                        <input id="lastName" class="input-field" type="text" pInputText
-                                            aria-describedby="lastName-help" formControlName="lastName">
-                                        <small *ngIf="form.controls['lastName'].errors" id="lastName-help"
-                                            class="p-error block">Last name is invalid.</small>
+                                        <label for="postalCode" class="block">Postal code</label>
+                                        <input id="postalCode" class="input-field" type="text" pInputText
+                                            aria-describedby="postalCode-help" formControlName="postalCode">
+                                        <small *ngIf="form.touched && form.controls['postalCode'].errors"
+                                            id="postalCode-help" class="p-error block">Postal code is invalid.</small>
                                     </div>
 
                                     <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="email" class="block">Email</label>
-                                        <input id="email" class="input-field" type="text" pInputText
-                                            aria-describedby="email-help" formControlName="email">
-                                        <small *ngIf="form.controls['email'].errors" id="email-help"
-                                            class="p-error block">Email
+                                        <label for="city" class="block">City</label>
+                                        <input id="city" class="input-field" type="text" pInputText
+                                            aria-describedby="city-help" formControlName="city">
+                                        <small *ngIf="form.touched && form.controls['city'].errors" id="city-help"
+                                            class="p-error block">City
                                             is invalid.</small>
+                                    </div>
+
+                                    <div class="col-12 md:col-6 lg:col-4">
+                                        <label for="street" class="block">Street</label>
+                                        <input id="street" class="input-field" type="text" pInputText
+                                            aria-describedby="street-help" formControlName="street">
+                                        <small *ngIf="form.touched && form.controls['street'].errors" id="street-help"
+                                            class="p-error block">Street
+                                            is invalid.</small>
+                                    </div>
+
+                                    <div class="col-12 md:col-6 lg:col-4">
+                                        <label for="streetNumber" class="block">Street number</label>
+                                        <input id="streetNumber" class="input-field" type="text" pInputText
+                                            aria-describedby="streetNumber-help" formControlName="streetNumber">
+                                        <small *ngIf="form.touched && form.controls['streetNumber'].errors"
+                                            id="streetNumber-help" class="p-error block">Street number
+                                            is invalid.</small>
+                                    </div>
+
+                                    <div class="col-12 md:col-6 lg:col-4">
+                                        <label for="apartment" class="block">Apartment</label>
+                                        <input id="apartment" class="input-field" type="text" pInputText
+                                            aria-describedby="apartment-help" formControlName="apartment">
+                                        <small *ngIf="form.touched && form.controls['apartment'].errors"
+                                            id="apartment-help" class="p-error block">Apartment
+                                            is invalid.</small>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <google-map [center]="location" (mapClick)="onMapClick($event)" [zoom]="5"
+                                            height="500px" width="100%">
+                                            <map-marker *ngIf="marker" (mapClick)="onMarkerClick()"
+                                                [options]="marker.options"></map-marker>
+                                        </google-map>
+                                        <input hidden type="number" formControlName="gpsLatitude">
+                                        <input hidden type="number" formControlName="gpsLongitude">
                                     </div>
 
                                     <div class="col-12">

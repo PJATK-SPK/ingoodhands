@@ -108,6 +108,7 @@ export class ManageUserComponent implements OnInit {
     this.http.patch<ManageUserDetails>(`${environment.api}/manage-users/${this.id}`, payload)
       .pipe(
         catchError(err => {
+          this.msg.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong.' });
           this.isSaving = false;
           return throwError(() => err);
         }))
