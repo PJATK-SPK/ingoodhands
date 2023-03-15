@@ -2,6 +2,6 @@
 {
     public class CreateOrderCreateOrderResponse
     {
-        public string OrdereName { get; set; } = default!;
+        public string OrderName { get; set; } = default!;
     }
 }

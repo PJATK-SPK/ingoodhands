@@ -3,13 +3,11 @@ using Core;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Donate;
 using Donate.Actions.DonateForm.PerformDonate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestsBase;
 
 namespace DonateTests.Services.PerformDonateActionTest

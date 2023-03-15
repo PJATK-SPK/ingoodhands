@@ -72,7 +72,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionT
             var result = executed.Value as CreateOrderCreateOrderResponse;
 
             // Assert
-            Assert.AreEqual("ORD000001", result!.OrdereName);
+            Assert.AreEqual("ORD000001", result!.OrderName);
         }
     }
 }

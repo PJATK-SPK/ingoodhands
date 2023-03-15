@@ -55,13 +55,6 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
             await _createOrderCreateOrderPayloadValidator.ValidateAndThrowAsync(payload);
 
-            var listOfProducts = await _appDbContext.Products.Where(c => c.Status == DbEntityStatus.Active).FromCache().ToDynamicListAsync();
-            if (!listOfProducts.Any())
-            {
-                _logger.LogError("Couldn't find any active products in database");
-                throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
-            }
-
             var listOfOrderProduct = payload.Products.Select(c => new OrderProduct
             {
                 ProductId = _hashids.DecodeSingleLong(c.Id),
@@ -71,8 +64,8 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
                 Status = DbEntityStatus.Active
             }).ToList();
 
-            var nextOrderId = _counterService.GetAndUpdateNextCounter(TableName.Orders);
-            var orderName = _orderNameBuilderService.Build(nextOrderId.Result);
+            var nextOrderId = await _counterService.GetAndUpdateNextCounter(TableName.Orders);
+            var orderName = _orderNameBuilderService.Build(nextOrderId);
 
             var newOrder = new Order
             {
@@ -94,7 +87,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
 
             var response = new CreateOrderCreateOrderResponse
             {
-                OrdereName = orderName,
+                OrderName = orderName,
             };
 
             return response;
