@@ -34,7 +34,6 @@ export class PickupDonationComponent {
     this.pickUp(donationName)
       .pipe(
         catchError(err => {
-          this.msg.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong.' });
           this.isSaving = false;
           return throwError(() => err);
         }))

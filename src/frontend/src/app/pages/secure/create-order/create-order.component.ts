@@ -119,7 +119,6 @@ export class CreateOrderComponent implements OnInit {
       },
       error: (err) => {
         this.isSaving = false;
-        this.msg.add({ severity: 'error', summary: 'Error', detail: `We cant create your order! ${err.error.message}` });
       }
     });
   }
@@ -128,7 +127,6 @@ export class CreateOrderComponent implements OnInit {
     this.service.deleteAddress(address.id)
       .pipe(
         catchError(err => {
-          this.msg.add({ severity: 'error', summary: 'Error', detail: err.error.message ?? 'Something went wrong.' });
           return throwError(() => err);
         })
       )
