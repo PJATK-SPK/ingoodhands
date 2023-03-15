@@ -57,7 +57,6 @@ export class ConfirmDonationComponent implements OnInit {
         FORCE_REFRESH_SIDEBAR.next();
       },
       error: (err) => {
-        this.msg.add({ severity: 'error', summary: 'Error', detail: 'We cant process your donation!' });
         localStorage.removeItem(DONATE_FORM_DATA_KEY);
         this.formData = undefined;
       }

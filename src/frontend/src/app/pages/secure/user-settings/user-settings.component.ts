@@ -15,8 +15,8 @@ import { environment } from 'src/environments/environment';
 export class UserSettingsComponent {
 
   public form = new FormGroup({
-    firstName: new FormControl(this.auth.dbUser.firstName, [Validators.min(1), Validators.max(50), Validators.required]),
-    lastName: new FormControl(this.auth.dbUser.lastName, [Validators.min(1), Validators.max(50), Validators.required]),
+    firstName: new FormControl(this.auth.dbUser.firstName, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
+    lastName: new FormControl(this.auth.dbUser.lastName, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
     email: new FormControl({ value: this.auth.dbUser.email, disabled: true }, [Validators.required]),
   });
 

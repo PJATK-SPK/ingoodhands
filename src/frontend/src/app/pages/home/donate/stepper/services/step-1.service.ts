@@ -91,7 +91,7 @@ export class Step1Service {
 
     private idNotZeroValidator(control: AbstractControl): ValidationErrors | null {
         const value = control.value as Product;
-        if (value.id === '') {
+        if (!value || value.id === '') {
             return { idNotZero: true };
         }
 

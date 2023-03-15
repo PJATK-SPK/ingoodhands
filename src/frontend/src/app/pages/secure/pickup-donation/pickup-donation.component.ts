@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class PickupDonationComponent {
 
   public form = new FormGroup({
-    donationName: new FormControl<string | null>(null, [Validators.min(1), Validators.max(10), Validators.required]),
+    donationName: new FormControl<string | null>(null, [Validators.minLength(1), Validators.maxLength(10), Validators.required]),
   });
 
   public isSaving = false;

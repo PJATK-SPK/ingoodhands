@@ -1,32 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
-import { CreateOrderComponent } from './create-order.component';
+import { CreateAddressComponent } from './create-address.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { RouterModule } from '@angular/router';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
-    CreateOrderComponent
+    CreateAddressComponent
   ],
   imports: [
     CommonModule,
     CardModule,
-    RouterModule,
     ReactiveFormsModule,
     StyleClassModule,
     InputTextModule,
     AutoCompleteModule,
-    RadioButtonModule,
+    GoogleMapsModule,
     ButtonModule,
   ],
   exports: [
-    CreateOrderComponent
+    CreateAddressComponent
   ]
 })
-export class CreateOrderModule { }
+export class CreateAddressModule { }
