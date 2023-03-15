@@ -2,24 +2,24 @@
 using Core.Database.Models.Auth;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 
-namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest
+namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionTest
 {
-    public static class CreateOrderAddAddressActionFixture
+    public static class CreateOrderCreateOrderActionFixture
     {
-        public static User CreateUser(string firstName, string lastName) => new()
+        public static User CreateUser(string firstName, string lastName, long? warehouseId = null) => new()
         {
             Status = DbEntityStatus.Active,
             FirstName = firstName,
             LastName = lastName,
             Email = firstName + "@" + lastName + ".com",
+            WarehouseId = warehouseId
         };
 
         public static Auth0User CreateAuth0User(User user, int id) => new()
         {
-            FirstName = "Auth",
-            LastName = "Auth0User" + id,
+            FirstName = user.FirstName,
+            LastName = user.LastName + id,
             Nickname = "Auth0",
             UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,
@@ -38,7 +38,6 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             UpdatedAt = DateTime.UtcNow,
             Status = DbEntityStatus.Active
         };
-
         public static CurrentUserInfo GetCurrentUserInfo(Auth0User auth0User) => new()
         {
             Email = auth0User.Email,
@@ -50,32 +49,6 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             Name = auth0User.FirstName + auth0User.LastName,
             Nickname = auth0User.Nickname,
             UpdatedAt = DateTime.UtcNow,
-        };
-
-        public static CreateOrderAddAddressPayload CreatePayload(string countryName) => new()
-        {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = "Papieska",
-            StreetNumber = "21",
-            Apartment = "37",
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
-        };
-
-        public static CreateOrderAddAddressPayload CreatePayloadNullStreetValues(string countryName) => new()
-        {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = null,
-            StreetNumber = null,
-            Apartment = null,
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
         };
     }
 }

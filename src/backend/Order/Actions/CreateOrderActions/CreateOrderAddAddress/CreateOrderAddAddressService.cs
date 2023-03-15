@@ -18,6 +18,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
         private readonly Hashids _hashids;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly RoleService _roleService;
         private readonly CreateOrderAddAddressPayloadValidator _createOrderAddAddressPayloadValidator;
 
         public CreateOrderAddAddressService(
@@ -26,7 +27,8 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
             Hashids hashids,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
-            CreateOrderAddAddressPayloadValidator ceateOrderAddAddressPayloadValidator)
+            CreateOrderAddAddressPayloadValidator ceateOrderAddAddressPayloadValidator,
+            RoleService roleService)
         {
             _appDbContext = appDbContext;
             _logger = logger;
@@ -34,11 +36,13 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _createOrderAddAddressPayloadValidator = ceateOrderAddAddressPayloadValidator;
+            _roleService = roleService;
         }
 
         public async Task<CreateOrderAddAddressResponse> AddAddress(CreateOrderAddAddressPayload payload)
         {
-            _createOrderAddAddressPayloadValidator.ValidateAndThrow(payload);
+            await _roleService.ThrowIfNoRole(RoleName.Needy);
+            await _createOrderAddAddressPayloadValidator.ValidateAndThrowAsync(payload);
 
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);

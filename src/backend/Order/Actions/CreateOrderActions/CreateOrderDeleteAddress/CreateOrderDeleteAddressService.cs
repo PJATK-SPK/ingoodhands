@@ -17,25 +17,29 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
         private readonly ILogger<CreateOrderDeleteAddressService> _logger;
+        private readonly RoleService _roleService;
 
         public CreateOrderDeleteAddressService(
             AppDbContext appDbContext,
             Hashids hashids,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
-            ILogger<CreateOrderDeleteAddressService> logger)
+            ILogger<CreateOrderDeleteAddressService> logger,
+            RoleService roleService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _logger = logger;
+            _roleService = roleService;
         }
 
         public async Task<CreateOrderDeleteAddressResponse> DeleteAddressById(string encodedAddressId)
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
+            await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
             var decodedAddressId = _hashids.DecodeSingle(encodedAddressId);
 
             var dbResult = await _appDbContext.UserAddresses
