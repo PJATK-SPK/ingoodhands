@@ -1,3 +1,6 @@
+using Core.Actions.DonateForm.GetProducts;
+using Core.Services;
+using Core.Database.Enums;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
@@ -18,19 +21,25 @@ public class CreateOrderController : ControllerBase
     private readonly CreateOrderGetAddressesAction _createOrderGetAddressesAction;
     private readonly CreateOrderDeleteAddressAction _createOrderDeleteAddressAction;
     private readonly CreateOrderCreateOrderAction _createOrderCreateOrderAction;
+    private readonly GetProductsAction _getProductsAction;
+    private readonly RoleService _roleService;
 
     public CreateOrderController(
         CreateOrderGetCountriesAction createOrderGetCountriesAction,
         CreateOrderAddAddressAction createOrderAddAddressesAction,
         CreateOrderGetAddressesAction createOrderGetAddressesAction,
         CreateOrderDeleteAddressAction createOrderDeleteAddressAction,
-        CreateOrderCreateOrderAction createOrderCreateOrderAction)
+        CreateOrderCreateOrderAction createOrderCreateOrderAction,
+        GetProductsAction getProductsAction,
+        RoleService roleService)
     {
         _createOrderGetCountriesAction = createOrderGetCountriesAction;
         _createOrderAddAddressesAction = createOrderAddAddressesAction;
         _createOrderGetAddressesAction = createOrderGetAddressesAction;
         _createOrderDeleteAddressAction = createOrderDeleteAddressAction;
         _createOrderCreateOrderAction = createOrderCreateOrderAction;
+        _getProductsAction = getProductsAction;
+        _roleService = roleService;
     }
 
     [HttpGet("countries")]
@@ -38,6 +47,9 @@ public class CreateOrderController : ControllerBase
 
     [HttpGet("addresses")]
     public async Task<ActionResult> GetAddresses() => await _createOrderGetAddressesAction.Execute();
+
+    [HttpGet("products")]
+    public async Task<ActionResult> GetProducts() => await _getProductsAction.Execute();
 
     [HttpPost("addresses")]
     public async Task<ActionResult> AddAddress([FromBody] CreateOrderAddAddressPayload payload) => await _createOrderAddAddressesAction.Execute(payload);

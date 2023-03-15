@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.Actions.DonateForm.GetProducts;
 using Core.Actions.MyNotifications.GetList;
 using Core.Actions.MyNotifications.UpdateWebPush;
 using Core.Services;
@@ -28,6 +29,7 @@ namespace Core
         {
             builder.RegisterModule<MyNotificationsGetListLast30DaysModule>();
             builder.RegisterModule<MyNotificationsUpdateWebPushModule>();
+            builder.RegisterModule<GetProductsModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)

@@ -1,20 +1,19 @@
 ﻿using Core.Database;
 using Core.Exceptions;
-using Donate.Actions.DonateForm.GetWarehouses;
 using HashidsNet;
 using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core;
 using Z.EntityFramework.Plus;
 
-namespace Donate.Actions.DonateForm.GetProducts
+namespace Core.Actions.DonateForm.GetProducts
 {
     public class GetProductsService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetWarehousesService> _logger;
+        private readonly ILogger<GetProductsService> _logger;
         private readonly Hashids _hashids;
 
-        public GetProductsService(AppDbContext appDbContext, ILogger<GetWarehousesService> logger, Hashids hashids)
+        public GetProductsService(AppDbContext appDbContext, ILogger<GetProductsService> logger, Hashids hashids)
         {
             _appDbContext = appDbContext;
             _logger = logger;

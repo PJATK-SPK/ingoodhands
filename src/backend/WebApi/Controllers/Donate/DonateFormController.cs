@@ -1,4 +1,4 @@
-using Donate.Actions.DonateForm.GetProducts;
+using Core.Actions.DonateForm.GetProducts;
 using Donate.Actions.DonateForm.GetWarehouses;
 using Donate.Actions.DonateForm.PerformDonate;
 using Microsoft.AspNetCore.Authorization;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Donate.Actions.DonateForm.GetProducts
+namespace Core.Actions.DonateForm.GetProducts
 {
     public class GetProductsAction
     {
