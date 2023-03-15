@@ -38,7 +38,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderAddAddress
 
         public async Task<CreateOrderAddAddressResponse> AddAddress(CreateOrderAddAddressPayload payload)
         {
-            _createOrderAddAddressPayloadValidator.ValidateAndThrow(payload);
+            await _createOrderAddAddressPayloadValidator.ValidateAndThrowAsync(payload);
 
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
