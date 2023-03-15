@@ -7,6 +7,8 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
   imports: [
     CommonModule,
     CardModule,
+    RouterModule,
     ReactiveFormsModule,
     StyleClassModule,
     InputTextModule,
     AutoCompleteModule,
+    RadioButtonModule,
     ButtonModule,
   ],
   exports: [

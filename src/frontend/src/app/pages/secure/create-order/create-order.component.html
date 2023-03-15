@@ -2,56 +2,98 @@
     <div class="col-12">
         <div class="p-3">
             <p-card>
-                <div class="grid">
-                    <div class="col-12">
-                        <h2 class="text-2xl font-bold m-0"> Create order </h2>
+                <form [formGroup]="form" (submit)="onSubmitClick($event)">
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="header-container">
+                                <div class="header-text">
+                                    <h2 class="text-2xl font-bold m-0"> Create order </h2>
+                                </div>
+                                <div class="header-btn">
+                                    <button routerLink="/secure/create-address" pButton pRipple type="button"
+                                        label="ADD ADDRESS" class="p-button-outlined"></button>
+                                </div>
+                            </div>
 
-                        TODO: <br />
-                        - Select address <br />
-                        - Remove address <br />
-                        - Add products <br />
-                        - Finalize <br />
+                            <div class="grid">
+                                <div class="col-12 md:col-6" *ngFor="let address of addresses">
+                                    <p-card class="p-2">
+                                        <div class="address-container">
+                                            <div class="address-text">
+                                                <div class="pr-2">
+                                                    <p-radioButton [value]="address.id"
+                                                        formControlName="addressId"></p-radioButton>
+                                                </div>
+                                                {{address.countryName}}, {{address.postalCode}} {{address.city}}
+                                                {{address.fullStreet}}
+                                            </div>
+                                            <div class="address-btn">
+                                                <button pButton pRipple type="button" icon="pi pi-times"
+                                                    (click)="onRemoveAddressClick(address)"
+                                                    class="p-button-rounded p-button-danger p-button-text"></button>
+                                            </div>
+                                        </div>
+                                    </p-card>
+                                </div>
 
-                        <p-card class="p-2">
-                            <form [formGroup]="form" (submit)="onSubmitClick($event)">
-                                <div class="grid">
-                                    <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="firstName" class="block">First name</label>
-                                        <input id="firstName" class="input-field" type="text" pInputText
-                                            aria-describedby="firstName-help" formControlName="firstName">
-                                        <small *ngIf="form.controls['firstName'].errors" id="firstName-help"
-                                            class="p-error block">First name is invalid.</small>
-                                    </div>
+                            </div>
 
-                                    <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="lastName" class="block">Last name</label>
-                                        <input id="lastName" class="input-field" type="text" pInputText
-                                            aria-describedby="lastName-help" formControlName="lastName">
-                                        <small *ngIf="form.controls['lastName'].errors" id="lastName-help"
-                                            class="p-error block">Last name is invalid.</small>
-                                    </div>
+                            <div class="grid">
+                                <div class="col-12 flex align-items-center justify-content-end">
+                                    <button (click)="onAddClick()" pButton pRipple type="button" label="ADD PRODUCT"
+                                        class="p-button-outlined"></button>
+                                </div>
+                            </div>
 
-                                    <div class="col-12 md:col-6 lg:col-4">
-                                        <label for="email" class="block">Email</label>
-                                        <input id="email" class="input-field" type="text" pInputText
-                                            aria-describedby="email-help" formControlName="email">
-                                        <small *ngIf="form.controls['email'].errors" id="email-help"
-                                            class="p-error block">Email
-                                            is invalid.</small>
-                                    </div>
+                            <p-card class="p-2">
 
-                                    <div class="col-12">
-                                        <div class="pr-5 flex align-items-center justify-content-end">
-                                            <button pButton [loading]="isSaving" type="submit" label="Save"
-                                                class="p-button-outlined p-button-primary"></button>
+                                <ng-container formArrayName="items">
+                                    <div *ngFor="let item of formItems.controls; let i=index">
+                                        <div class="product-box" [formGroupName]="i">
+                                            <div class="grid">
+
+                                                <div class="col-12 lg:col-5">
+                                                    <p-autoComplete [style]="{'width':'100%'}" formControlName="product"
+                                                        [inputStyle]="{'width':'100%'}" [suggestions]="filteredProducts"
+                                                        (completeMethod)="filterProduct($event)" field="name"
+                                                        [forceSelection]="true" [dropdown]="true">
+                                                        <ng-template let-listItem pTemplate="item">
+                                                            <div>{{listItem.name}}</div>
+                                                        </ng-template>
+                                                    </p-autoComplete>
+                                                </div>
+
+                                                <div class="col-8 lg:col-4">
+                                                    <div class="p-inputgroup input-field">
+                                                        <input type="text" pInputText formControlName="quantity">
+                                                        <span class="p-inputgroup-addon">
+                                                            {{item.get('product')?.value?.unit}} </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 lg:col-3">
+                                                    <div class="remove-btn-container">
+                                                        <button pButton type="button" label="Remove"
+                                                            (click)="onRemoveClick(i)"
+                                                            class="p-button-outlined p-button-warning"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                </ng-container>
 
+                            </p-card>
+
+                            <div class="grid">
+                                <div class="col-12 flex align-items-center justify-content-end">
+                                    <button type="submit" pButton pRipple [loading]="isSaving" label="CREATE ORDER"
+                                        class="p-button-outlined"></button>
                                 </div>
-                            </form>
-                        </p-card>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </p-card>
         </div>
     </div>

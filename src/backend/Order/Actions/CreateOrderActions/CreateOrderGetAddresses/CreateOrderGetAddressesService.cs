@@ -35,15 +35,11 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderGetAddresses
 
             var response = listOfActiveUserAddresses.Select(c => new CreateOrderGetAddressesItemResponse
             {
-                Id = _hashids.EncodeLong(c.Id),
+                Id = _hashids.EncodeLong(c.AddressId),
                 CountryName = c.Address!.Country!.EnglishName,
                 PostalCode = c.Address.PostalCode,
                 City = c.Address.City,
-                Street = c.Address.Street,
-                StreetNumber = c.Address.StreetNumber,
-                Apartment = c.Address.Apartment,
-                GpsLatitude = c.Address.GpsLatitude,
-                GpsLongitude = c.Address.GpsLongitude
+                FullStreet = StreetFullNameBuilderService.Build(c.Address),
             }).ToList();
 
             return response;

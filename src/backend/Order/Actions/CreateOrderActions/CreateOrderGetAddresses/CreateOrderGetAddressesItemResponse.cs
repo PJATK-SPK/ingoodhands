@@ -1,8 +1,11 @@
-﻿using Orders.Actions.CreateOrderActions.Shared;
-
-namespace Orders.Actions.CreateOrderActions.CreateOrderGetAddresses
+﻿namespace Orders.Actions.CreateOrderActions.CreateOrderGetAddresses
 {
-    public class CreateOrderGetAddressesItemResponse : AddressDto
+    public class CreateOrderGetAddressesItemResponse
     {
+        public string Id { get; set; } = default!;
+        public string CountryName { get; set; } = default!;
+        public string PostalCode { get; set; } = default!;
+        public string City { get; set; } = default!;
+        public string? FullStreet { get; set; }
     }
 }

@@ -44,7 +44,7 @@ export class DonateStep1Component implements OnInit {
 
     const fa = this.service.form.get('items') as FormArray;
     const fgs = fa.controls.map(c => (c as FormGroup));
-    const selectedProducts = fgs.map(c => c.get('product')!.value) as Product[];
+    const selectedProducts = fgs.filter(c => c.get('product')?.value).map(c => c.get('product')!.value) as Product[];
     const names = selectedProducts.map(c => c.name);
 
     const collectionToCheck = this.allProducts.filter(c => !names.includes(c.name));

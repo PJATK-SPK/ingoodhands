@@ -1,7 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CreateOrderService } from './services/create-address.service';
+import { ListAddress } from './interfaces/list-address';
+import { Product } from './interfaces/product';
+import { catchError, throwError } from 'rxjs';
+
+interface CreateOrderPayloadProduct {
+  id: string;
+  quantity: number;
+}
+
+interface CreateOrderPayload {
+  warehouseId: string;
+  products: CreateOrderPayloadProduct[];
+}
 
 @Component({
   selector: 'app-create-order',
@@ -14,9 +27,8 @@ import { CreateOrderService } from './services/create-address.service';
 export class CreateOrderComponent implements OnInit {
 
   public form = new FormGroup({
-    firstName: new FormControl(null, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
-    lastName: new FormControl(null, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
-    email: new FormControl(null, [Validators.required]),
+    addressId: new FormControl(null, [Validators.required]),
+    items: new FormArray([this.createNewFormItemFormGroup()]),
   });
 
   constructor(
@@ -25,38 +37,142 @@ export class CreateOrderComponent implements OnInit {
   ) { }
 
   public isSaving = false;
+  public addresses: ListAddress[] = [];
+  public allProducts: Product[] = [];
+  public filteredProducts = this.allProducts;
+
+
+  public get formItems() {
+    return this.form.get('items') as FormArray;
+  }
 
   public ngOnInit(): void {
-    this.service.getAddresses().subscribe(res => {
-      console.log(res);
+    this.fetchAddresses();
+    this.service.fetchProducts$.subscribe(data => this.allProducts = data);
+  }
+
+  public filterProduct(event: { originalEvent: PointerEvent, query: string }) {
+    const filtered: Product[] = [];
+
+    const fa = this.form.get('items') as FormArray;
+    const fgs = fa.controls.map(c => (c as FormGroup));
+    const selectedProducts = fgs.filter(c => c.get('product')?.value).map(c => c.get('product')!.value) as Product[];
+    const names = selectedProducts.map(c => c.name);
+
+    const collectionToCheck = this.allProducts.filter(c => !names.includes(c.name));
+
+    collectionToCheck.forEach(item => {
+      if (item.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+        filtered.push(item);
+      }
     });
+
+    this.filteredProducts = filtered;
+  }
+
+  public onAddClick() {
+    const fa = this.form.get('items') as FormArray;
+    fa.push(this.createNewFormItemFormGroup());
+  }
+
+  public onRemoveClick(index: number) {
+    const fa = this.form.get('items') as FormArray;
+    fa.removeAt(index);
   }
 
   public onSubmitClick(event: SubmitEvent): void {
     if (!this.form.valid) {
+
+      if (this.form.controls.addressId.errors) {
+        this.msg.add({ severity: 'error', summary: 'Error', detail: 'Please select an address.' });
+        return;
+      }
+
+      const fa = this.form.get('items') as FormArray;
+      const atLeast1 = fa.controls.length > 0;
+
+      if (!atLeast1) {
+        this.msg.add({ severity: 'error', summary: 'Error', detail: 'At least one product is required' });
+        return;
+      }
+
+      if (fa.controls.some(c => c.get('product')?.errors?.['idNotZero'])) {
+        this.msg.add({ severity: 'error', summary: 'Error', detail: 'Please select a product' });
+        return;
+      }
+
       this.msg.add({ severity: 'error', summary: 'Error', detail: 'Please fill out all required fields.' });
+
       return;
     }
 
     const payload = {
-      firstName: this.form.get('firstName')?.value,
-      lastName: this.form.get('lastName')?.value,
+      addressId: this.form.controls.addressId.value,
+      products: this.form.controls.items.value.map((item) => ({
+        id: item.product.id,
+        quantity: item.quantity,
+      })),
+    } as CreateOrderPayload;
+
+    this.httpClient.post<DonateResponse>(`${environment.api}/donate-form`, payload).subscribe({
+      next: (res) => {
+        this.msg.add({ severity: 'success', summary: 'Success', detail: 'We accepted your donation!' });
+
+        sessionStorage.removeItem(DONATE_FORM_TEMP_LIST_KEY);
+        localStorage.removeItem(DONATE_FORM_DATA_KEY);
+
+        this.donateName = res.donateName;
+
+        FORCE_REFRESH_SIDEBAR.next();
+      },
+      error: (err) => {
+        this.msg.add({ severity: 'error', summary: 'Error', detail: 'We cant process your donation!' });
+        localStorage.removeItem(DONATE_FORM_DATA_KEY);
+        this.formData = undefined;
+      }
+    });
+  }
+
+  public onRemoveAddressClick(address: ListAddress): void {
+    this.service.deleteAddress(address.id)
+      .pipe(
+        catchError(err => {
+          this.msg.add({ severity: 'error', summary: 'Error', detail: err.error.message ?? 'Something went wrong.' });
+          return throwError(() => err);
+        })
+      )
+      .subscribe(res => {
+        this.form.controls.addressId.setValue(null);
+        this.fetchAddresses();
+        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Address has been removed.' });
+      });
+  }
+
+  private fetchAddresses(): void {
+    this.service.getAddresses().subscribe(res => {
+      this.addresses = res;
+    });
+  }
+
+  private createNewFormItemFormGroup(product?: Product, quantity?: number): FormGroup {
+    const result = new FormGroup({
+      product: new FormControl(product ?? { id: '', name: '', unit: 'kg' } as Product, [
+        Validators.required,
+        this.idNotZeroValidator,
+      ]),
+      quantity: new FormControl(quantity ?? 10, [Validators.min(1), Validators.max(100000), Validators.required]),
+    });
+
+    return result;
+  }
+
+  private idNotZeroValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as Product;
+    if (!value || value.id === '') {
+      return { idNotZero: true };
     }
 
-    this.isSaving = true;
-    // this.http.patch<DbUser>(`${environment.api}/user-settings/${this.auth.dbUser.id}`, payload)
-    //   .pipe(
-    //     catchError(err => {
-    //       this.isSaving = false;
-    //       return throwError(() => err);
-    //     }))
-    //   .subscribe(res => {
-    //     setTimeout(() => {
-    //       this.auth.updateDbUser(res);
-    //       this.isSaving = false;
-    //       this.msg.add({ severity: 'success', summary: 'Success', detail: 'Your data have been updated.' });
-    //     }, 500);
-    //   });
+    return null;
   }
 
 }
