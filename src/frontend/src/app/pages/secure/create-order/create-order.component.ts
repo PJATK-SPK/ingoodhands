@@ -117,7 +117,7 @@ export class CreateOrderComponent implements OnInit {
           this.router.navigateByUrl('/secure/request-help');
         }, 1500);
       },
-      error: (err) => {
+      error: () => {
         this.isSaving = false;
       }
     });
@@ -130,7 +130,7 @@ export class CreateOrderComponent implements OnInit {
           return throwError(() => err);
         })
       )
-      .subscribe(res => {
+      .subscribe(() => {
         this.form.controls.addressId.setValue(null);
         this.fetchAddresses();
         this.msg.add({ severity: 'success', summary: 'Success', detail: 'Address has been removed.' });
