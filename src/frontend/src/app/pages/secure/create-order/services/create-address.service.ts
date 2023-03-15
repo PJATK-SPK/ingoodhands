@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { Address } from "src/app/interfaces/address";
-import { CreateOrder } from "../interfaces/create-order.interface";
+import { CreateOrderPayload } from "../interfaces/create-order-payload.interface";
 import { Product } from "../interfaces/product";
 import { ListAddress } from "../interfaces/list-address";
 
@@ -27,7 +27,7 @@ export class CreateOrderService {
         return this.http.delete<Address>(`${environment.api}/create-order/addresses/${id}`);
     }
 
-    public createOrder(payload: CreateOrder): Observable<CreateOrder> {
-        return this.http.post<CreateOrder>(`${environment.api}/create-order`, payload);
+    public createOrder(payload: CreateOrderPayload): Observable<CreateOrderPayload> {
+        return this.http.post<CreateOrderPayload>(`${environment.api}/create-order`, payload);
     }
 }

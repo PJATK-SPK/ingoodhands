@@ -1,6 +1,6 @@
 import { CreateOrderProduct } from "./create-order-product.interface";
 
-export interface CreateOrder {
+export interface CreateOrderPayload {
     addressId: string;
     products: CreateOrderProduct[];
 }

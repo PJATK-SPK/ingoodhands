@@ -5,16 +5,8 @@ import { CreateOrderService } from './services/create-address.service';
 import { ListAddress } from './interfaces/list-address';
 import { Product } from './interfaces/product';
 import { catchError, throwError } from 'rxjs';
-
-interface CreateOrderPayloadProduct {
-  id: string;
-  quantity: number;
-}
-
-interface CreateOrderPayload {
-  warehouseId: string;
-  products: CreateOrderPayloadProduct[];
-}
+import { CreateOrderPayload } from './interfaces/create-order-payload.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-order',
@@ -33,7 +25,8 @@ export class CreateOrderComponent implements OnInit {
 
   constructor(
     private readonly msg: MessageService,
-    private readonly service: CreateOrderService
+    private readonly service: CreateOrderService,
+    private readonly router: Router,
   ) { }
 
   public isSaving = false;
@@ -107,28 +100,26 @@ export class CreateOrderComponent implements OnInit {
     }
 
     const payload = {
-      addressId: this.form.controls.addressId.value,
+      addressId: this.form.controls.addressId.value!,
       products: this.form.controls.items.value.map((item) => ({
         id: item.product.id,
         quantity: item.quantity,
       })),
     } as CreateOrderPayload;
 
-    this.httpClient.post<DonateResponse>(`${environment.api}/donate-form`, payload).subscribe({
+    this.isSaving = true;
+
+    this.service.createOrder(payload).subscribe({
       next: (res) => {
-        this.msg.add({ severity: 'success', summary: 'Success', detail: 'We accepted your donation!' });
-
-        sessionStorage.removeItem(DONATE_FORM_TEMP_LIST_KEY);
-        localStorage.removeItem(DONATE_FORM_DATA_KEY);
-
-        this.donateName = res.donateName;
-
-        FORCE_REFRESH_SIDEBAR.next();
+        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Order created!' });
+        this.isSaving = false;
+        setTimeout(() => {
+          this.router.navigateByUrl('/secure/request-help');
+        }, 1500);
       },
       error: (err) => {
-        this.msg.add({ severity: 'error', summary: 'Error', detail: 'We cant process your donation!' });
-        localStorage.removeItem(DONATE_FORM_DATA_KEY);
-        this.formData = undefined;
+        this.isSaving = false;
+        this.msg.add({ severity: 'error', summary: 'Error', detail: `We cant create your order! ${err.error.message}` });
       }
     });
   }
