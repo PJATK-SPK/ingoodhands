@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Core;
 using Core.Database;
+using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
@@ -9,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 using OrdersTests.Actions.RequestHelpActionTest;
+using OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActionTest;
 using TestsBase;
 
 namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest
@@ -34,25 +36,16 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
 
             var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderAddAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
             var newPayload = CreateOrderAddAddressActionFixture.CreatePayload(country);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderAddAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute(newPayload);
@@ -75,25 +68,16 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             var country = "Poland";
             var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderAddAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
             var newPayload = CreateOrderAddAddressActionFixture.CreatePayloadNullStreetValues(country);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderAddAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute(newPayload);
@@ -117,23 +101,15 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
 
             var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderAddAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderAddAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute(emptyPayload));
@@ -156,23 +132,15 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
 
             var testingUser1 = CreateOrderAddAddressActionFixture.CreateUser("Normal", "User");
             var testingAuth0User1 = CreateOrderAddAddressActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderDeleteAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
+            context.Add(testUserRole1);
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(CreateOrderAddAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(newPayload));

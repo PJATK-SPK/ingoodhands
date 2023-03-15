@@ -4,11 +4,6 @@ using Core.Database.Models.Core;
 using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Services
 {
@@ -28,7 +23,7 @@ namespace Core.Services
             var counterOfSpecifiedTable = await _appDbContext.Counters.SingleOrDefaultAsync(c => c.Name == tableName);
             if (counterOfSpecifiedTable == null)
             {
-                _logger.LogError("Cannot find specified tableName in Counters table");
+                _logger.LogError("Cannot find specified tableName:{tableName} in Counters table", tableName.ToString());
                 throw new ApplicationErrorException("Sorry there seems to be problem with our service");
             }
             return counterOfSpecifiedTable;

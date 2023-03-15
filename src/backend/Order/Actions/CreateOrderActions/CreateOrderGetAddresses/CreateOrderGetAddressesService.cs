@@ -13,19 +13,27 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderGetAddresses
         private readonly Hashids _hashids;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
+        private readonly RoleService _roleService;
 
-        public CreateOrderGetAddressesService(AppDbContext appDbContext, Hashids hashids, ICurrentUserService currentUserService, GetCurrentUserService getCurrentUserService)
+        public CreateOrderGetAddressesService(
+            AppDbContext appDbContext,
+            Hashids hashids,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService,
+            RoleService roleService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
+            _roleService = roleService;
         }
 
         public async Task<List<CreateOrderGetAddressesItemResponse>> GetActiveAddresses()
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
+            await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
 
             var listOfActiveUserAddresses = await _appDbContext.UserAddresses
                 .Include(c => c.Address)

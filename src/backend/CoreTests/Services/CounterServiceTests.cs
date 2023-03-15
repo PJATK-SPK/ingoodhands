@@ -1,18 +1,11 @@
-﻿using Core.Setup.Enums;
+﻿using Autofac;
 using Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Database.Enums;
-using Core.Database.Models.Auth;
 using Core.Database;
+using Core.Database.Enums;
 using Core.Services;
-using Core.Setup.Auth0;
+using Core.Setup.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
-using Autofac;
 
 namespace CoreTests.Services
 {
@@ -42,7 +35,7 @@ namespace CoreTests.Services
         }
 
         [TestMethod()]
-        public async Task CounterServiceTests_UpdateCounter_ReturnUpdatedCounterOfDonationTable()
+        public async Task CounterServiceTests_UpdateDonationCounter_ReturnUpdatedCounterOfDonationTable()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -53,6 +46,74 @@ namespace CoreTests.Services
 
             // Act
             var result = await action.GetAndUpdateNextCounter(donationTableName);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod()]
+        public async Task CounterServiceTests_OrderTest_ReturnCounterOfOrderTable()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<CounterService>();
+
+            // Arrange
+            var orderTableName = TableName.Orders;
+
+            // Act
+            var result = await action.GetCounter(orderTableName);
+
+            // Assert
+            Assert.AreEqual(0, result.Value);
+        }
+
+        [TestMethod()]
+        public async Task CounterServiceTests_UpdateOrderCounter_ReturnUpdatedCounterOfOrderTable()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<CounterService>();
+
+            // Arrange
+            var orderTableName = TableName.Donations;
+
+            // Act
+            var result = await action.GetAndUpdateNextCounter(orderTableName);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod()]
+        public async Task CounterServiceTests_DeliveryTest_ReturnCounterOfDeliveryTable()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<CounterService>();
+
+            // Arrange
+            var deliveryTableName = TableName.Deliveries;
+
+            // Act
+            var result = await action.GetCounter(deliveryTableName);
+
+            // Assert
+            Assert.AreEqual(0, result.Value);
+        }
+
+        [TestMethod()]
+        public async Task CounterServiceTests_UpdateDeliveryCounter_ReturnUpdatedCounterOfDeliveryTable()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<CounterService>();
+
+            // Arrange
+            var deliveryTableName = TableName.Deliveries;
+
+            // Act
+            var result = await action.GetAndUpdateNextCounter(deliveryTableName);
 
             // Assert
             Assert.AreEqual(1, result);
