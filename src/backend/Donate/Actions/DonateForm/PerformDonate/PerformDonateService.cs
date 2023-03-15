@@ -15,7 +15,6 @@ namespace Donate.Actions.DonateForm.PerformDonate
     public class PerformDonateService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<GetWarehousesService> _logger;
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
         private readonly DonateNameBuilderService _donateNameBuilderService;
@@ -25,7 +24,6 @@ namespace Donate.Actions.DonateForm.PerformDonate
 
         public PerformDonateService(
             AppDbContext appDbContext,
-            ILogger<GetWarehousesService> logger,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
             DonateNameBuilderService donateNameBuilderService,
@@ -34,7 +32,6 @@ namespace Donate.Actions.DonateForm.PerformDonate
             Hashids hashids)
         {
             _appDbContext = appDbContext;
-            _logger = logger;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _donateNameBuilderService = donateNameBuilderService;

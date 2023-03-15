@@ -20,7 +20,6 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
         private readonly ICurrentUserService _currentUserService;
         private readonly GetCurrentUserService _getCurrentUserService;
         private readonly RoleService _roleService;
-        private readonly ILogger<CreateOrderCreateOrderService> _logger;
         private readonly OrderNameBuilderService _orderNameBuilderService;
         private readonly CounterService _counterService;
         private readonly CreateOrderCreateOrderPayloadValidator _createOrderCreateOrderPayloadValidator;
@@ -30,7 +29,6 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             Hashids hashids,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
-            ILogger<CreateOrderCreateOrderService> logger,
             RoleService roleService,
             CreateOrderCreateOrderPayloadValidator createOrderCreateOrderPayloadValidator,
             OrderNameBuilderService orderNameBuilderService,
@@ -40,7 +38,6 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             _hashids = hashids;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
-            _logger = logger;
             _roleService = roleService;
             _createOrderCreateOrderPayloadValidator = createOrderCreateOrderPayloadValidator;
             _orderNameBuilderService = orderNameBuilderService;
