@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.OrdersActions.OrdersCancel;
-using Orders.Actions.OrdersActions.OrdersGetSingle;
 using TestsBase;
 
 namespace OrderTests.Actions.OrdersActionTest
@@ -78,7 +77,7 @@ namespace OrderTests.Actions.OrdersActionTest
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<OrdersGetSingleAction>();
+            var action = toolkit.Resolve<OrdersCancelAction>();
 
             //Arrange
             var testingUser1 = OrdersCancelActionFixture.CreateUser("Normal", "User");
@@ -95,6 +94,37 @@ namespace OrderTests.Actions.OrdersActionTest
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(toolkit.Hashids.EncodeLong(1500)));
+
+            // Assert
+            Assert.IsInstanceOfType(exception, typeof(ItemNotFoundException));
+            Assert.IsNotNull(exception.Message);
+        }
+
+        [TestMethod()]
+        public async Task OrdersCancelActionTest_CancelActionNoOrderProducts_ThrowsException()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<OrdersCancelAction>();
+
+            //Arrange
+            var testingUser1 = OrdersCancelActionFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersCancelActionFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersCancelActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+
+            var order1 = OrdersCancelActionFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
+
+            context.Add(testingUser1);
+            context.Add(testingAuth0User1);
+            context.Add(testUser1Role1);
+            context.Add(order1);
+
+            await context.SaveChangesAsync();
+
+            toolkit.UpdateUserInfo(OrdersCancelActionFixture.GetCurrentUserInfo(testingAuth0User1));
+
+            // Act
+            var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(toolkit.Hashids.EncodeLong(order1.Id)));
 
             // Assert
             Assert.IsInstanceOfType(exception, typeof(ItemNotFoundException));

@@ -4,7 +4,6 @@ using Core.Exceptions;
 using Core.Services;
 using Core.Setup.Auth0;
 using HashidsNet;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -44,10 +43,7 @@ namespace Orders.Actions.OrdersActions.OrdersCancel
             var decodedOrderId = _hashids.DecodeSingleLong(id);
 
             var dbOrderResult = await _appDbContext.Orders
-                .Include(c => c.Address)
-                    .ThenInclude(c => c!.Country)
                 .Include(c => c.OrderProducts)!
-                    .ThenInclude(c => c.Product)
                 .SingleOrDefaultAsync(c => c.OwnerUserId == currentUser.Id && c.Id == decodedOrderId);
 
             if (dbOrderResult == null)
@@ -58,6 +54,17 @@ namespace Orders.Actions.OrdersActions.OrdersCancel
 
             dbOrderResult.IsCanceledByUser = true;
             dbOrderResult.Status = DbEntityStatus.Inactive;
+
+            if (!dbOrderResult.OrderProducts!.Any())
+            {
+                _logger.LogError("Couldn't find OrderProducts for Order with id:{decodedOrderId} in database", decodedOrderId);
+                throw new ItemNotFoundException("Sorry we coudln't find related Products with your order in database");
+            }
+
+            foreach (var orderProduct in dbOrderResult.OrderProducts!)
+            {
+                orderProduct.Status = DbEntityStatus.Inactive;
+            }
 
             await _appDbContext.SaveChangesAsync();
         }
