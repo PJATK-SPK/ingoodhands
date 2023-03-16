@@ -2,7 +2,54 @@
     <div class="col-12">
         <div class="p-3">
             <p-card>
-                - TODO<br />
+                <div *ngIf="order" class="grid">
+                    <div class="col-12">
+                        <div style="display:grid; grid-template-columns: auto 200px">
+                            <div class="flex align-items-center justify-content-start">
+                                <h2>{{ order.name }}</h2>
+                            </div>
+                            <div class="flex align-items-center justify-content-end">
+                                <p-confirmPopup></p-confirmPopup>
+                                <button pButton icon="pi pi-times" class="p-button-danger" label="CANCEL ORDER"
+                                    (click)="confirm($event)"></button>
+                            </div>
+                        </div>
+
+
+                        <p class="m-0">
+                            {{ order.countryName }}, {{ order.city }}
+                            {{ order.postalCode }}, {{ order.fullStreet }}
+                        </p>
+                        <p class="m-0">Percentage: {{ order.percentage }}%</p>
+                        <p class="m-0">Creation Date: {{ order.creationDate | string2Date }}</p>
+                    </div>
+                    <div class="col-12">
+                        <google-map [center]="location" height="500px" width="100%" [zoom]="10"></google-map>
+                    </div>
+                    <div class="col-12">
+                        <p-card header="Deliveries">
+                            <h3 *ngIf="order.deliveries.length===0">
+                                There are no deliveries yet! 🤨
+                            </h3>
+                            <ul *ngIf="order.deliveries.length!==0">
+                                <li *ngFor="let delivery of order.deliveries">
+                                    {{ delivery.name }} - {{ delivery.creationDate | string2Date }} - {{
+                                    delivery.isDelivered ? 'Delivered' : 'Not Delivered' }}
+                                </li>
+                            </ul>
+                        </p-card>
+                    </div>
+                    <div class="col-12">
+                        <p-card header="Products">
+                            <ul>
+                                <li *ngFor="let product of order.products">
+                                    {{ product.name }} - {{ product.quantity }} {{ product.unit }}
+                                </li>
+                            </ul>
+                        </p-card>
+                    </div>
+                </div>
+
             </p-card>
         </div>
     </div>
