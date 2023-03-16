@@ -43,7 +43,7 @@ namespace Core.Actions.DonateForm.GetProducts
             {
                 Id = _hashids.EncodeLong(c.Id),
                 Name = c.Name,
-                Unit = c.Unit.ToString(),
+                Unit = c.Unit.ToString().ToLower(),
             }).ToList();
 
             return response;

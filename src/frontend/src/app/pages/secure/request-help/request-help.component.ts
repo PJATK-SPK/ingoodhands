@@ -60,7 +60,7 @@ export class RequestHelpComponent implements OnInit {
         scaledSize: {
           width: 35,
           height: 35,
-          equals: (other: google.maps.Size) => true
+          equals: (_: google.maps.Size) => true
         }
       }
     };
@@ -80,7 +80,7 @@ export class RequestHelpComponent implements OnInit {
         scaledSize: {
           width: 35,
           height: 35,
-          equals: (other: google.maps.Size) => true
+          equals: (_: google.maps.Size) => true
         }
       }
     };

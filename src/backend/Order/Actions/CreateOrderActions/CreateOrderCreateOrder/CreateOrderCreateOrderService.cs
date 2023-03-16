@@ -6,6 +6,7 @@ using Core.Services;
 using Core.Setup.Auth0;
 using FluentValidation;
 using HashidsNet;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Orders.Services.OrderNameBuilder;
 using System.Linq.Dynamic.Core;
@@ -51,6 +52,13 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
 
             await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
             await _createOrderCreateOrderPayloadValidator.ValidateAndThrowAsync(payload);
+
+            var thereIsOrderInThisLocation = await _appDbContext.Orders
+                .Where(c => c.OwnerUserId == currentUser.Id && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
+                .AnyAsync();
+
+            if (thereIsOrderInThisLocation)
+                throw new ClientInputErrorException("You already added order for this location! Please finish or cancel existing order.");
 
             var listOfOrderProduct = payload.Products.Select(c => new OrderProduct
             {
