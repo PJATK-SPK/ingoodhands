@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,6 @@ import { SwPush } from '@angular/service-worker';
 export class AppComponent implements OnInit {
 
   private readonly VAPID_PUBLIC_KEY = 'BL4zflzV0yTIsPYdfwQf_0JEVjnDGg3iS37pqJqHishDblnMa6UcMr2EgVnWNS4MOBRwzruWRiWFt6WDMURK6tE';
-  private readonly REMOVE_PRIVATE = 'pSA9iLL4Ah1B3drgRF2ifI6dpKgfUIJBaka98ytUwIE';
 
   constructor(
     private readonly push: SwPush,
@@ -94,10 +93,13 @@ export class AppComponent implements OnInit {
     }
 
     const result = from(this.push.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY }));
-    const updateReq = (sub: PushSubscription) => {
-      const keys = sub.toJSON().keys!;
-      const payload = { endpoint: sub.endpoint, auth: keys['auth'], p256dh: keys['p256dh'] }
-      return this.httpClient.post<DbUser>(`${environment.api}/my-notifications/update-web-push`, payload);
+    const updateReq = (sub: PushSubscription | null) => {
+      if (sub) {
+        const keys = sub.toJSON().keys!;
+        const payload = { endpoint: sub.endpoint, auth: keys['auth'], p256dh: keys['p256dh'] }
+        return this.httpClient.post<any>(`${environment.api}/my-notifications/update-web-push`, payload);
+      }
+      return of(null);
     }
 
     const lastShotDate = sessionStorage.getItem('notificationsDate');
@@ -107,7 +109,7 @@ export class AppComponent implements OnInit {
       return result.pipe(
         catchError(err => {
           console.error("Could not subscribe to notifications", err);
-          return EMPTY;
+          return of(null);
         }),
         switchMap(c => updateReq(c)),
         tap(() => sessionStorage.setItem('notificationsDate', now.toISO()))
