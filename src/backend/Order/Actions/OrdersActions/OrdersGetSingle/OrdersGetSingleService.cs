@@ -34,7 +34,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
             _getCurrentUserService = getCurrentUserService;
         }
 
-        public async Task<OrdersGetSingleItemResponse> Execute(string id)
+        public async Task<OrdersGetSingleResponse> Execute(string id)
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = _getCurrentUserService.Execute(auth0UserInfo).Result;
@@ -59,7 +59,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 .Where(c => c.OrderId == decodedOrderId)
                 .ToListAsync();
 
-            if (dbDeliveryResult == null)
+            if (!dbDeliveryResult.Any())
             {
                 _logger.LogError("Couldn't find delivery for order with id:{decodedOrderId} in database", decodedOrderId);
                 throw new ItemNotFoundException("Sorry we coudln't find that delivery details associated with that order in database");
@@ -79,7 +79,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 IsDelivered = d.IsDelivered
             }).ToList();
 
-            var orderItemResponse = new OrdersGetSingleItemResponse
+            var orderItemResponse = new OrdersGetSingleResponse
             {
                 Id = _hashids.EncodeLong(dbOrderResult.Id),
                 Name = dbOrderResult.Name,
