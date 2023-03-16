@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 
+# Local dev
 src/environments/environment.local.ts
 
 # Node
