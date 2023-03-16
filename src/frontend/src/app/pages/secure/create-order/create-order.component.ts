@@ -41,7 +41,7 @@ export class CreateOrderComponent implements OnInit {
 
   public ngOnInit(): void {
     this.fetchAddresses();
-    this.service.fetchProducts$.subscribe(data => this.allProducts = data);
+    this.service.products$.subscribe(data => this.allProducts = data);
   }
 
   public filterProduct(event: { originalEvent: PointerEvent, query: string }) {
@@ -138,7 +138,7 @@ export class CreateOrderComponent implements OnInit {
   }
 
   private fetchAddresses(): void {
-    this.service.getAddresses().subscribe(res => {
+    this.service.addresses$.subscribe(res => {
       this.addresses = res;
     });
   }

@@ -12,16 +12,11 @@ export class CreateOrderService {
 
     constructor(private readonly http: HttpClient) { }
 
-    public readonly fetchProducts$ =
-        this.http.get<Product[]>(`${environment.api}/donate-form/products`);
+    public readonly products$ =
+        this.http.get<Product[]>(`${environment.api}/create-order/products`);
 
-    public getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.api}/create-order/products`);
-    }
-
-    public getAddresses(): Observable<ListAddress[]> {
-        return this.http.get<ListAddress[]>(`${environment.api}/create-order/addresses`);
-    }
+    public readonly addresses$ =
+        this.http.get<ListAddress[]>(`${environment.api}/create-order/addresses`);
 
     public deleteAddress(id: string): Observable<Address> {
         return this.http.delete<Address>(`${environment.api}/create-order/addresses/${id}`);
