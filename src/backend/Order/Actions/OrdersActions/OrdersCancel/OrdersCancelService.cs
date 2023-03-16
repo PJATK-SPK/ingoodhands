@@ -49,7 +49,7 @@ namespace Orders.Actions.OrdersActions.OrdersCancel
             if (dbOrderResult == null)
             {
                 _logger.LogError("Couldn't find Order with id:{decodedOrderId} in database", decodedOrderId);
-                throw new ItemNotFoundException("Sorry we coudln't find that order in database");
+                throw new ItemNotFoundException("Sorry we couldn't find that order in database");
             }
 
             dbOrderResult.IsCanceledByUser = true;
@@ -58,7 +58,7 @@ namespace Orders.Actions.OrdersActions.OrdersCancel
             if (!dbOrderResult.OrderProducts!.Any())
             {
                 _logger.LogError("Couldn't find OrderProducts for Order with id:{decodedOrderId} in database", decodedOrderId);
-                throw new ItemNotFoundException("Sorry we coudln't find related Products with your order in database");
+                throw new ItemNotFoundException("Sorry we couldn't find related Products with your order in database");
             }
 
             foreach (var orderProduct in dbOrderResult.OrderProducts!)
