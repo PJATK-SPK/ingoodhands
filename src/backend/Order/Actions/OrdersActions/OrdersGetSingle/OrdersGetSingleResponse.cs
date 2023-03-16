@@ -1,6 +1,6 @@
 ﻿namespace Orders.Actions.OrdersActions.OrdersGetSingle
 {
-    public class OrdersGetSingleItemResponse
+    public class OrdersGetSingleResponse
     {
         public string Id { get; set; } = default!;
         public string Name { get; set; } = default!;
