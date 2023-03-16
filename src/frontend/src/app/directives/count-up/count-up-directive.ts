@@ -2,7 +2,7 @@ import { Directive, OnInit, Input, ElementRef, Renderer2 } from "@angular/core";
 import {
     BehaviorSubject, combineLatest, switchMap,
     animationFrameScheduler, interval, map, takeWhile,
-    endWith, distinctUntilChanged, takeUntil, Observable
+    endWith, distinctUntilChanged, takeUntil
 } from "rxjs";
 import { Destroy } from "../../services/destroy";
 
