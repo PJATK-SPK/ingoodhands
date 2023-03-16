@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
-using Donate.Actions.DonateForm.GetProducts;
 using Donate.Actions.DonateForm.GetWarehouses;
 using Donate.Actions.DonateForm.PerformDonate;
 using Donate.Actions.MyDonations.GetDetails;
@@ -27,7 +26,6 @@ namespace Donate
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<GetScoreModule>();
-            builder.RegisterModule<GetProductsModule>();
             builder.RegisterModule<PerformDonateModule>();
             builder.RegisterModule<GetWarehousesModule>();
             builder.RegisterModule<GetListMyDonationModule>();
