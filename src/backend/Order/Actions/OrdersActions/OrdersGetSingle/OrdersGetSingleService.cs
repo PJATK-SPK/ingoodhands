@@ -81,7 +81,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 GpsLongitude = dbOrderResult.Address.GpsLongitude,
                 City = dbOrderResult.Address?.City!,
                 PostalCode = dbOrderResult.Address?.PostalCode!,
-                FullStreet = StreetFullNameBuilderService.Build(dbOrderResult.Address?.Street!),
+                FullStreet = StreetFullNameBuilderService.Build(dbOrderResult.Address!),
                 Deliveries = deliveryResponse,
                 Products = productResponse
             };
