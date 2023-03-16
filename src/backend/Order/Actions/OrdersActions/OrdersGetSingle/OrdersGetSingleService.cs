@@ -56,10 +56,6 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 throw new ItemNotFoundException("Sorry we couldn't find that order in database");
             }
 
-            var dbDeliveryResult = await _appDbContext.Deliveries
-                .Where(c => c.OrderId == decodedOrderId)
-                .ToListAsync();
-
             var productResponse = dbOrderResult!.OrderProducts!.Select(c => new OrdersGetSingleProductResponse
             {
                 Name = c.Product!.Name,
