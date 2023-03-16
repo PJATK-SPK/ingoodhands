@@ -1,6 +1,6 @@
 using Core.Actions.DonateForm.GetProducts;
-using Core.Services;
 using Core.Database.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
@@ -11,6 +11,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 
 namespace WebApi.Controllers.Order;
 
+[Authorize]
 [EnableCors]
 [ApiController]
 [Route("create-order")]
@@ -37,7 +38,6 @@ public class CreateOrderController : ControllerBase
         _createOrderDeleteAddressAction = createOrderDeleteAddressAction;
         _createOrderCreateOrderAction = createOrderCreateOrderAction;
         _getProductsAction = getProductsAction;
-
     }
 
     [HttpGet("countries")]
@@ -47,7 +47,7 @@ public class CreateOrderController : ControllerBase
     public async Task<ActionResult> GetAddresses() => await _createOrderGetAddressesAction.Execute();
 
     [HttpGet("products")]
-    public async Task<ActionResult> GetProducts() => await _getProductsAction.Execute();
+    public async Task<ActionResult> GetProducts() => await _getProductsAction.Execute(RoleName.Needy);
 
     [HttpPost("addresses")]
     public async Task<ActionResult> AddAddress([FromBody] CreateOrderAddAddressPayload payload) => await _createOrderAddAddressesAction.Execute(payload);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Database.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Actions.DonateForm.GetProducts
 {
@@ -11,9 +12,9 @@ namespace Core.Actions.DonateForm.GetProducts
             _getProductsService = getProductsService;
         }
 
-        public async Task<OkObjectResult> Execute()
+        public async Task<OkObjectResult> Execute(RoleName? roleName = null)
         {
-            var listOfProducts = await _getProductsService.GetProducts();
+            var listOfProducts = await _getProductsService.GetProducts(roleName);
 
             return new OkObjectResult(listOfProducts);
         }

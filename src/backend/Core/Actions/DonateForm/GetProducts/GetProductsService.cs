@@ -1,5 +1,7 @@
 ﻿using Core.Database;
+using Core.Database.Enums;
 using Core.Exceptions;
+using Core.Services;
 using HashidsNet;
 using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core;
@@ -12,16 +14,23 @@ namespace Core.Actions.DonateForm.GetProducts
         private readonly AppDbContext _appDbContext;
         private readonly ILogger<GetProductsService> _logger;
         private readonly Hashids _hashids;
+        private readonly RoleService _roleService;
 
-        public GetProductsService(AppDbContext appDbContext, ILogger<GetProductsService> logger, Hashids hashids)
+        public GetProductsService(AppDbContext appDbContext, ILogger<GetProductsService> logger, Hashids hashids, RoleService roleService)
         {
             _appDbContext = appDbContext;
             _logger = logger;
             _hashids = hashids;
+            _roleService = roleService;
         }
 
-        public async Task<List<GetProductsResponse>> GetProducts()
+        public async Task<List<GetProductsResponse>> GetProducts(RoleName? roleName)
         {
+            if (roleName != null)
+            {
+                await _roleService.ThrowIfNoRole((RoleName)roleName);
+            }
+
             var listOfProducts = await _appDbContext.Products.Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToDynamicListAsync();
 
             if (!listOfProducts.Any())
