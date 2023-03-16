@@ -12,4 +12,8 @@ export class OrderService {
     getOrder(id: string): Observable<OrdersGetSingleResponse> {
         return this.http.get<OrdersGetSingleResponse>(`${environment.api}/orders/${id}`);
     }
+
+    cancelOrder(id: string): Observable<void> {
+        return this.http.post<void>(`${environment.api}/orders/${id}/cancel`, {});
+    }
 }
