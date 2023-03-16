@@ -1,0 +1,65 @@
+﻿using Core.Database;
+using Core.Database.Enums;
+using Core.Exceptions;
+using Core.Services;
+using Core.Setup.Auth0;
+using HashidsNet;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace Orders.Actions.OrdersActions.OrdersCancel
+{
+    public class OrdersCancelService
+    {
+        private readonly Hashids _hashids;
+        private readonly RoleService _roleService;
+        private readonly AppDbContext _appDbContext;
+        private readonly ILogger<OrdersCancelService> _logger;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
+
+        public OrdersCancelService(
+            Hashids hashids,
+            RoleService roleService,
+            AppDbContext appDbContext,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService,
+            ILogger<OrdersCancelService> logger)
+        {
+            _hashids = hashids;
+            _roleService = roleService;
+            _appDbContext = appDbContext;
+            _currentUserService = currentUserService;
+            _getCurrentUserService = getCurrentUserService;
+            _logger = logger;
+        }
+
+        public async Task CancelOrderById(string id)
+        {
+            var auth0UserInfo = await _currentUserService.GetUserInfo();
+            var currentUser = _getCurrentUserService.Execute(auth0UserInfo).Result;
+            await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
+
+            var decodedOrderId = _hashids.DecodeSingleLong(id);
+
+            var dbOrderResult = await _appDbContext.Orders
+                .Include(c => c.Address)
+                    .ThenInclude(c => c!.Country)
+                .Include(c => c.OrderProducts)!
+                    .ThenInclude(c => c.Product)
+                .SingleOrDefaultAsync(c => c.OwnerUserId == currentUser.Id && c.Id == decodedOrderId);
+
+            if (dbOrderResult == null)
+            {
+                _logger.LogError("Couldn't find Order with id:{decodedOrderId} in database", decodedOrderId);
+                throw new ItemNotFoundException("Sorry we coudln't find that order in database");
+            }
+
+            dbOrderResult.IsCanceledByUser = true;
+            dbOrderResult.Status = DbEntityStatus.Inactive;
+
+            await _appDbContext.SaveChangesAsync();
+        }
+    }
+}
