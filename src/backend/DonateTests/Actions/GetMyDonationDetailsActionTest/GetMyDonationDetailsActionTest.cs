@@ -1,23 +1,17 @@
-﻿using Core.Database;
-using Core.Setup.Enums;
+﻿using Autofac;
 using Core;
-using Donate.Actions.DonateForm.GetProducts;
-using Donate;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestsBase;
-using Donate.Actions.MyDonations.GetDetails;
-using Autofac;
+using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Setup.Auth0;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Exceptions;
+using Core.Setup.Auth0;
+using Core.Setup.Enums;
+using Donate;
+using Donate.Actions.MyDonations.GetDetails;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestsBase;
 
 namespace DonateTests.Services.GetMyDonationDetailsActionTest
 {
