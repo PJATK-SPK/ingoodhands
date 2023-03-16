@@ -11,7 +11,7 @@
         public double GpsLongitude { get; set; }
         public string City { get; set; } = default!;
         public string PostalCode { get; set; } = default!;
-        public string Street { get; set; } = default!;
+        public string FullStreet { get; set; } = default!;
         public List<OrdersGetSingleDeliveryResponse> Deliveries { get; set; } = default!;
         public List<OrdersGetSingleProductResponse> Products { get; set; } = default!;
     }

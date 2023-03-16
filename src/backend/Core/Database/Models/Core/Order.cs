@@ -17,6 +17,7 @@ namespace Core.Database.Models.Core
         public DateTime CreationDate { get; set; }
         public bool IsCanceledByUser { get; set; }
         public List<OrderProduct>? OrderProducts { get; set; }
+        public List<Delivery>? Deliveries { get; set; }
 
         public void Configure(EntityTypeBuilder<Order> builder)
             => new OrderConfig<Order>().Configure(builder);

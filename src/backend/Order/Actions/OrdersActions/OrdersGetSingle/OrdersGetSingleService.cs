@@ -47,23 +47,18 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                     .ThenInclude(c => c!.Country)
                 .Include(c => c.OrderProducts)!
                     .ThenInclude(c => c.Product)
+                .Include(c => c.Deliveries)
                 .SingleOrDefaultAsync(c => c.OwnerUserId == currentUser.Id && c.Id == decodedOrderId);
 
             if (dbOrderResult == null)
             {
                 _logger.LogError("Couldn't find Order with id:{decodedOrderId} in database", decodedOrderId);
-                throw new ItemNotFoundException("Sorry we coudln't find that order in database");
+                throw new ItemNotFoundException("Sorry we couldn't find that order in database");
             }
 
             var dbDeliveryResult = await _appDbContext.Deliveries
                 .Where(c => c.OrderId == decodedOrderId)
                 .ToListAsync();
-
-            if (!dbDeliveryResult.Any())
-            {
-                _logger.LogError("Couldn't find delivery for order with id:{decodedOrderId} in database", decodedOrderId);
-                throw new ItemNotFoundException("Sorry we coudln't find that delivery details associated with that order in database");
-            }
 
             var productResponse = dbOrderResult!.OrderProducts!.Select(c => new OrdersGetSingleProductResponse
             {
@@ -72,7 +67,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 Unit = c.Product.Unit.ToString()
             }).ToList();
 
-            var deliveryResponse = dbDeliveryResult.Select(d => new OrdersGetSingleDeliveryResponse
+            var deliveryResponse = dbOrderResult.Deliveries!.Select(d => new OrdersGetSingleDeliveryResponse
             {
                 Name = d.Name,
                 CreationDate = d.CreationDate,
@@ -90,7 +85,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 GpsLongitude = dbOrderResult.Address.GpsLongitude,
                 City = dbOrderResult.Address?.City!,
                 PostalCode = dbOrderResult.Address?.PostalCode!,
-                Street = dbOrderResult.Address?.Street!,
+                FullStreet = StreetFullNameBuilderService.Build(dbOrderResult.Address?.Street!),
                 Deliveries = deliveryResponse,
                 Products = productResponse
             };
