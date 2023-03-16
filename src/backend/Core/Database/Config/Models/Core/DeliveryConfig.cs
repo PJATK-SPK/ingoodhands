@@ -27,6 +27,7 @@ namespace Core.Database.Config.Models.Core
 
             builder.HasOne(c => c.Warehouse).WithMany(c => (IEnumerable<TBase>?)c.Deliveries).HasForeignKey(c => c.WarehouseId).HasConstraintName("deliveries_warehouses_id_fkey");
             builder.HasOne(c => c.DelivererUser).WithMany(c => (IEnumerable<TBase>?)c.Deliveries).HasForeignKey(c => c.DelivererUserId).HasConstraintName("deliveries_deliverer_users_id_fkey");
+            builder.HasOne(c => c.Order).WithMany(c => (IEnumerable<TBase>?)c.Deliveries).HasForeignKey(c => c.OrderId).HasConstraintName("deliveries_order_id_fkey");
         }
     }
 }

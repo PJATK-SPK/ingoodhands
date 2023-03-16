@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Actions.OrdersActions.OrdersGetSingle;
 
 namespace WebApi.Controllers.Order;
 
@@ -8,86 +9,15 @@ namespace WebApi.Controllers.Order;
 [Route("orders")]
 public class OrdersController : ControllerBase
 {
-    internal class DeleteMeOrderDeliveryResponse
+    private readonly OrdersGetSingleAction _ordersGetSingleAction;
+
+    public OrdersController(OrdersGetSingleAction ordersGetSingleAction)
     {
-        public string Name { get; set; } = default!;
-        public DateTime CreationDate { get; set; } = default!;
-        public bool IsDelivered { get; set; } = default!;
-    }
-    internal class DeleteMeOrderProductResponse
-    {
-        public string Name { get; set; } = default!;
-        public int Quantity { get; set; } = default!;
-        public string Unit { get; set; } = default!;
-    }
-    internal class DeleteMeOrderResponseItem
-    {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!;
-        public int Percentage { get; set; } = default!;
-        public DateTime CreationDate { get; set; } = default!;
-        public string CountryName { get; set; } = default!;
-        public double GpsLatitude { get; set; }
-        public double GpsLongitude { get; set; }
-        public string City { get; set; } = default!;
-        public string PostalCode { get; set; } = default!;
-        public string Street { get; set; } = default!;
-        public List<DeleteMeOrderDeliveryResponse> Deliveries { get; set; } = default!;
-        public List<DeleteMeOrderProductResponse> Products { get; set; } = default!;
+        _ordersGetSingleAction = ordersGetSingleAction;
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetSingle(string id)
-    {
-        var appDbContextProducts = new List<DeleteMeOrderResponseItem>
-        {
-           new DeleteMeOrderResponseItem
-           {
-               Id = "knb34",
-               Name = "ORD000001",
-               Percentage = 25,
-               CreationDate = DateTime.UtcNow.AddDays(-5),
-               CountryName = "Ukraine",
-               GpsLatitude = 12.23,
-               GpsLongitude = 23.34,
-               City="Kyiv",
-               PostalCode="00-000",
-               Street = "Gdañska 1",
-               Deliveries = new List<DeleteMeOrderDeliveryResponse>
-               {
-                    new DeleteMeOrderDeliveryResponse
-                    {
-                         Name = "DEL000002",
-                         CreationDate= DateTime.UtcNow.AddDays(-5),
-                         IsDelivered=false,
-                    },
-                    new DeleteMeOrderDeliveryResponse
-                    {
-                         Name = "DEL000001",
-                         CreationDate= DateTime.UtcNow.AddDays(-10),
-                         IsDelivered=true,
-                    }
-               },
-               Products= new List<DeleteMeOrderProductResponse>
-               {
-                   new DeleteMeOrderProductResponse
-                   {
-                        Name="Milk",
-                        Quantity=10,
-                        Unit = "l"
-                   },
-                   new DeleteMeOrderProductResponse
-                   {
-                        Name="Rice",
-                        Quantity=15,
-                        Unit = "kg"
-                   }
-               }
-           }
-        };
-
-        return await Task.FromResult(Ok(appDbContextProducts));
-    }
+    public async Task<ActionResult> GetSingle(string id) => await _ordersGetSingleAction.Execute(id);
 
     [HttpPost("{id}/cancel")]
     public async Task<ActionResult> Cancel(string id)

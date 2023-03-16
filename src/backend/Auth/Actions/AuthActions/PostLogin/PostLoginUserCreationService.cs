@@ -34,31 +34,31 @@ namespace Auth.Actions.AuthActions.PostLogin
             if (user == null && auth0UserFromDatabase == null)
             {
                 user = CreateUser(auth0UserInfo);
-                _appDbContext.Add(user);
+                await _appDbContext.AddAsync(user);
 
                 var userRoles = await CreateUserRoles(user, serviceUser);
-                _appDbContext.AddRange(userRoles);
+                await _appDbContext.AddRangeAsync(userRoles);
 
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
-                _appDbContext.Add(newAuth0User);
+                await _appDbContext.AddAsync(newAuth0User);
 
             }
             else if (user != null && auth0UserFromDatabase == null)
             {
                 var newAuth0User = CreateAuth0User(auth0UserInfo, user, serviceUser!);
-                _appDbContext.Add(newAuth0User);
+                await _appDbContext.AddAsync(newAuth0User);
 
                 var userRoles = await CreateUserRoles(user, serviceUser);
-                _appDbContext.AddRange(userRoles);
+                await _appDbContext.AddRangeAsync(userRoles);
             }
 
             if (!user!.Roles!.Any())
             {
                 var userRoles = await CreateUserRoles(user, serviceUser);
-                _appDbContext.AddRange(userRoles);
+                await _appDbContext.AddRangeAsync(userRoles);
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
             return user!;
         }

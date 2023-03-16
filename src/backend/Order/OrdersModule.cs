@@ -10,6 +10,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
 using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
+using Orders.Actions.OrdersActions.OrdersGetSingle;
 
 namespace Orders
 {
@@ -25,6 +26,7 @@ namespace Orders
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<StocksGetListModule>();
+            builder.RegisterModule<OrdersGetSingleModule>();
             builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<RequestHelpGetMapModule>();
             builder.RegisterModule<CreateOrderAddAddressModule>();
