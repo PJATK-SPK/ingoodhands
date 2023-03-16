@@ -11,6 +11,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
 using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
 using Orders.Actions.OrdersActions.OrdersGetSingle;
+using Orders.Actions.OrdersActions.OrdersCancel;
 
 namespace Orders
 {
@@ -25,6 +26,7 @@ namespace Orders
 
         private static void RegisterActions(ContainerBuilder builder)
         {
+            builder.RegisterModule<OrdersCancelModule>();
             builder.RegisterModule<StocksGetListModule>();
             builder.RegisterModule<OrdersGetSingleModule>();
             builder.RegisterModule<WarehousesGetListModule>();

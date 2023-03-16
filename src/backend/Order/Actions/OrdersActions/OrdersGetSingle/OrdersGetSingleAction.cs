@@ -10,6 +10,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
         {
             _ordersGetSingleService = ordersGetSingleService;
         }
+
         public async Task<OkObjectResult> Execute(string id)
         {
             var result = await _ordersGetSingleService.Execute(id);
