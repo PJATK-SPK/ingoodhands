@@ -8,6 +8,7 @@ namespace Orders.Actions.StocksActions.StocksGetList
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<StocksGetListAction>();
+            builder.RegisterAsScoped<StocksGetListService>();
         }
     }
 }
