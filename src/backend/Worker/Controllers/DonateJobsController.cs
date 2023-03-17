@@ -8,12 +8,12 @@ namespace Worker.Controllers
     [EnableCors]
     [ApiController]
     [Route("donate-jobs")]
-    public class DonateJobs : ControllerBase
+    public class DonateJobsController : ControllerBase
     {
         private readonly SetExpiredDonationsJob _setExpiredDonationsJob;
         private readonly IncludeToStockJob _includeToStockJob;
 
-        public DonateJobs(SetExpiredDonationsJob setExpiredDonationsJob, IncludeToStockJob includeToStockJob)
+        public DonateJobsController(SetExpiredDonationsJob setExpiredDonationsJob, IncludeToStockJob includeToStockJob)
         {
             _setExpiredDonationsJob = setExpiredDonationsJob;
             _includeToStockJob = includeToStockJob;
