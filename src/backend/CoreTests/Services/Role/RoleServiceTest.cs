@@ -11,10 +11,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace CoreTests.Services
+namespace CoreTests.Services.Role
 {
     [TestClass()]
-    public class RoleServiceTests
+    public class RoleServiceTest
     {
         private readonly List<Module> _usedModules = new()
         {

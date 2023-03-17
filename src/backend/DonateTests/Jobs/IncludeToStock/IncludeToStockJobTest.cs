@@ -13,7 +13,7 @@ using TestsBase;
 namespace DonateTests.Jobs.IncludeToStock
 {
     [TestClass()]
-    public class IncludeToStockJobTests
+    public class IncludeToStockJobTest
     {
         private readonly List<Module> _usedModules = new()
         {

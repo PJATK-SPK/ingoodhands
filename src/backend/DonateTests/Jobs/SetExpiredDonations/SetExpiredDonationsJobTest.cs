@@ -12,7 +12,7 @@ using TestsBase;
 namespace DonateTests.Jobs.SetExpiredDonations
 {
     [TestClass()]
-    public class SetExpiredDonationsJobTests
+    public class SetExpiredDonationsJobTest
     {
         private readonly List<Module> _usedModules = new()
         {

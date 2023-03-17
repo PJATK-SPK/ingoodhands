@@ -6,10 +6,10 @@ using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace CoreTests.Actions.MyNotificationsGetListLast30DaysTest
+namespace CoreTests.Actions.MyNotificationsGetListLast30Days
 {
     [TestClass()]
-    public class MyNotificationsGetListLast30DaysActionTest
+    public class MyNotificationsGetListLast30DaysTest
     {
         private readonly List<Module> _usedModules = new()
         {

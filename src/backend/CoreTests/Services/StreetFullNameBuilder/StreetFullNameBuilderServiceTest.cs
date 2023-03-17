@@ -1,10 +1,10 @@
 ﻿using Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CoreTests.Services
+namespace CoreTests.Services.StreetFullNameBuilder
 {
     [TestClass()]
-    public class StreetFullNameBuilderServiceTests
+    public class StreetFullNameBuilderServiceTest
     {
         [TestMethod()]
         public void Check_all_cases()

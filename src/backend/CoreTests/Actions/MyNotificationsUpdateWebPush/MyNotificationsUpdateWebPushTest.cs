@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Core;
-using Core.Actions.MyNotifications.GetList;
 using Core.Actions.MyNotifications.UpdateWebPush;
 using Core.Database;
 using Core.Setup.Enums;
@@ -11,7 +10,7 @@ using TestsBase;
 namespace CoreTests.Actions.MyNotificationsUpdateWebPushTest
 {
     [TestClass()]
-    public class MyNotificationsUpdateWebPushActionTest
+    public class MyNotificationsUpdateWebPushTest
     {
         private readonly List<Module> _usedModules = new()
         {

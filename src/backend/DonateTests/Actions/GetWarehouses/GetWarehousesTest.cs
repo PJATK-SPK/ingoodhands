@@ -12,7 +12,7 @@ using TestsBase;
 namespace DonateTests.Services.GetWarehouses
 {
     [TestClass()]
-    public class GetWarehousesTests
+    public class GetWarehousesTest
     {
         private readonly List<Module> _usedModules = new()
         {

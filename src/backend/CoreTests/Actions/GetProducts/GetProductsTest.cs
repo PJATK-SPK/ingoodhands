@@ -8,10 +8,10 @@ using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace CoreTests.Actions.GetProductsActionTest
+namespace CoreTests.Actions.GetProducts
 {
     [TestClass()]
-    public class GetProductsActionTest
+    public class GetProductsTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -40,9 +40,9 @@ namespace CoreTests.Actions.GetProductsActionTest
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<GetProductsAction>();
             // Arrange
-            var testingUser1 = GetProductsActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetProductsActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetProductsActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = GetProductsFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetProductsFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetProductsFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -50,7 +50,7 @@ namespace CoreTests.Actions.GetProductsActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(GetProductsActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(GetProductsFixture.GetCurrentUserInfo(testingAuth0User1));
             // Act
             var executed = await action.Execute(RoleName.Needy);
             var result = executed.Value as List<GetProductsResponse>;

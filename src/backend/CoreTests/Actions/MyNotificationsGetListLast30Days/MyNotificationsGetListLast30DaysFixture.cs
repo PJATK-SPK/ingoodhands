@@ -1,11 +1,12 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
 
-namespace CoreTests.Actions.GetProductsActionTest
+namespace CoreTests.Actions.MyNotificationsGetListLast30Days
 {
-    public static class GetProductsActionFixture
+    public static class MyNotificationsGetListLast30DaysFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -28,26 +29,14 @@ namespace CoreTests.Actions.GetProductsActionTest
             UserId = user.Id
         };
 
-        public static UserRole CreateUserRole(User user, long roleId) => new()
+        public static Notification CreateNotifaction(User user, long daysPastFromToday, string partMessage) => new()
         {
-            RoleId = roleId,
+            UserId = user.Id,
             User = user,
+            CreationDate = DateTime.UtcNow.AddDays(-daysPastFromToday),
+            Message = "You've reached level 10 donor! " + partMessage,
             UpdateUserId = UserSeeder.ServiceUser.Id,
-            UpdatedAt = DateTime.UtcNow,
-            Status = DbEntityStatus.Active
-        };
-
-        public static CurrentUserInfo GetCurrentUserInfo(Auth0User auth0User) => new()
-        {
-            Email = auth0User.Email,
-            EmailVerified = true,
-            Identifier = auth0User.Identifier,
-            GivenName = auth0User.FirstName,
-            FamilyName = auth0User.LastName,
-            Locale = "pl",
-            Name = auth0User.FirstName + auth0User.LastName,
-            Nickname = auth0User.Nickname,
-            UpdatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
     }
 }
