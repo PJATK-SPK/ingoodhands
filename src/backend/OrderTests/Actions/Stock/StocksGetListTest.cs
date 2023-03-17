@@ -23,7 +23,7 @@ namespace OrdersTests.Actions.Stock
         };
 
         [TestMethod()]
-        public async Task StocksGetListTest_StocksGetList_ReturnsResponse()
+        public async Task StocksGetListTest_ByUserWarehouseId_ReturnsResponse()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -33,12 +33,12 @@ namespace OrdersTests.Actions.Stock
             var page = 1;
             var pageSize = 10;
 
-            var testingUser1 = StocksGetListFixture.CreateUser("Normal", "User");
+            var testingUser1 = StocksGetListFixture.CreateUser("Normal", "User", WarehouseSeeder.Warehouse1PL.Id);
             var testingAuth0User1 = StocksGetListFixture.CreateAuth0User(testingUser1, 1);
             var testUser1Role1 = StocksGetListFixture.CreateUserRole(testingUser1, RoleSeeder.Role4WarehouseKeeper.Id);
-            var stock1 = StocksGetListFixture.CreateStock(ProductSeeder.Product4Groats, 50);
-            var stock2 = StocksGetListFixture.CreateStock(ProductSeeder.Product2Pasta, 10);
-            var stock3 = StocksGetListFixture.CreateStock(ProductSeeder.Product11Juice, 100);
+            var stock1 = StocksGetListFixture.CreateStock(ProductSeeder.Product4Groats, 50, (long)testingUser1.WarehouseId!);
+            var stock2 = StocksGetListFixture.CreateStock(ProductSeeder.Product2Pasta, 10, (long)testingUser1.WarehouseId!);
+            var stock3 = StocksGetListFixture.CreateStock(ProductSeeder.Product11Juice, 100, WarehouseSeeder.Warehouse5DE.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -49,18 +49,7 @@ namespace OrdersTests.Actions.Stock
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(new CurrentUserInfo
-            {
-                Email = testingAuth0User1.Email,
-                EmailVerified = true,
-                Identifier = testingAuth0User1.Identifier,
-                GivenName = testingAuth0User1.FirstName,
-                FamilyName = testingAuth0User1.LastName,
-                Locale = "pl",
-                Name = testingAuth0User1.FirstName + testingAuth0User1.LastName,
-                Nickname = testingAuth0User1.Nickname,
-                UpdatedAt = DateTime.UtcNow,
-            });
+            toolkit.UpdateUserInfo(StocksGetListFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute(page, pageSize);
@@ -71,7 +60,8 @@ namespace OrdersTests.Actions.Stock
             Assert.AreEqual(page, result.CurrentPage);
             Assert.AreEqual(pageSize, result.PageSize);
             Assert.IsTrue(result!.Queryable.Any());
-            Assert.AreEqual(3, result!.Queryable.Count());
+            Assert.AreEqual(2, result!.Queryable.Count());
+            Assert.AreEqual(60, result!.Queryable.Where(c => toolkit.Hashids.DecodeSingleLong(c.WarehouseId) == testingUser1.WarehouseId).Sum(c => c.Quantity));
         }
     }
 }

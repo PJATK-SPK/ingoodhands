@@ -3,7 +3,6 @@ using Core.Database.Config.Models.Core;
 using Core.Database.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Configuration;
 
 namespace Core.Database.Models.Core
 {
@@ -15,6 +14,7 @@ namespace Core.Database.Models.Core
         public List<User>? Users { get; set; }
         public List<Donation>? Donations { get; set; }
         public List<Delivery>? Deliveries { get; set; }
+        public List<Stock>? Stocks { get; set; }
 
         public void Configure(EntityTypeBuilder<Warehouse> builder)
             => new WarehouseConfig<Warehouse>().Configure(builder);

@@ -10,6 +10,8 @@ namespace Core.Database.Models.Core
         public long ProductId { get; set; }
         public Product? Product { get; set; }
         public int Quantity { get; set; }
+        public long WarehouseId { get; set; }
+        public Warehouse? Warehouse { get; set; }
 
         public void Configure(EntityTypeBuilder<Stock> builder)
             => new StockConfig<Stock>().Configure(builder);

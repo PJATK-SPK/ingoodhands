@@ -4,11 +4,6 @@ using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Donate.Jobs.IncludeToStock
 {
@@ -27,14 +22,16 @@ namespace Donate.Jobs.IncludeToStock
                 .Include(c => c.Products)
                 .Where(c => c.IsDelivered && !c.IsIncludedInStock)
                 .ToListAsync();
-            
-            var allStock = await _appDbContext.Stocks.ToDictionaryAsync(c => c.ProductId);
+
+            var allStock = await _appDbContext.Stocks
+                .ToDictionaryAsync(c => (c.ProductId, c.WarehouseId), new StockKeyEqualityComparer());
 
             foreach (var donation in deliveredNotIncludedInStockDonations)
             {
                 foreach (var product in donation.Products!)
                 {
-                    if (allStock.TryGetValue(product.ProductId, out var stockItem))
+                    var stockItemKey = (product.ProductId, donation.WarehouseId);
+                    if (allStock.TryGetValue(stockItemKey, out var stockItem))
                     {
                         stockItem.Quantity += product.Quantity;
                         donation.IsIncludedInStock = true;
@@ -47,11 +44,12 @@ namespace Donate.Jobs.IncludeToStock
                             Quantity = product.Quantity,
                             Status = DbEntityStatus.Active,
                             UpdatedAt = DateTime.UtcNow,
-                            UpdateUserId = UserSeeder.ServiceUser.Id
+                            UpdateUserId = UserSeeder.ServiceUser.Id,
+                            WarehouseId = donation.WarehouseId
                         };
                         donation.IsIncludedInStock = true;
                         _appDbContext.Stocks.Add(newStockItem);
-                        allStock.Add(newStockItem.ProductId, newStockItem);
+                        allStock.Add(stockItemKey, newStockItem);
                     }
                 }
             }
