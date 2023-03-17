@@ -1,12 +1,11 @@
 ﻿using Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
 using Core.Database.Seeders;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
+namespace AuthTests.Actions.ManageUsers
 {
-    public static class PatchSingleActionFixture
+    public static class PatchSingleFixture
     {
         public static User CreateUser(string firstName, string lastName, long? warehouseId = null) => new()
         {

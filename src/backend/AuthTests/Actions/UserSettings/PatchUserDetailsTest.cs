@@ -3,21 +3,21 @@ using Auth.Actions.UserSettingsActions.PatchUserDetails;
 using Auth.Models;
 using Autofac;
 using Core;
-using Core.Setup.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
+using Core.Setup.Auth0;
+using Core.Setup.Enums;
+using FluentValidation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
-using Core.Setup.Enums;
-using FluentValidation;
 
-namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
+namespace AuthTests.Actions.UserSettings
 {
     [TestClass()]
-    public class PatchUserDetailsActionTest
+    public class PatchUserDetailsTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -26,7 +26,7 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
         };
 
         [TestMethod()]
-        public async Task PatchUserDetailsActionTest_PatchFirstNameAndLastName()
+        public async Task PatchUserDetailsTest_PatchFirstNameAndLastName()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -94,7 +94,7 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
         }
 
         [TestMethod()]
-        public async Task PatchUserDetailsActionTest_ThrowExceptionOnPayloadNull()
+        public async Task PatchUserDetailsTest_ThrowExceptionOnPayloadNull()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -152,7 +152,7 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
         }
 
         [TestMethod()]
-        public async Task PatchUserDetailsActionTest_ThrowExceptionOnPayloadExceedingDbFieldLength()
+        public async Task PatchUserDetailsTest_ThrowExceptionOnPayloadExceedingDbFieldLength()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -174,7 +174,7 @@ namespace AuthTests.Actions.UserSettingsTests.PatchUserDetails
         }
 
         [TestMethod()]
-        public async Task PatchUserDetailsActionTest_ThrowExceptionOnNoUsersInDatabase()
+        public async Task PatchUserDetailsTest_ThrowExceptionOnNoUsersInDatabase()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

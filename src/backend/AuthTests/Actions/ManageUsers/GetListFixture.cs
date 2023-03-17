@@ -1,15 +1,10 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Database.Seeders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
+namespace AuthTests.Actions.ManageUsers
 {
-    public static class GetListActionFixture
+    public static class GetListFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {

@@ -10,10 +10,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
+namespace AuthTests.Actions.ManageUsers
 {
     [TestClass()]
-    public class GetListActionTest
+    public class GetListTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -22,7 +22,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
         };
 
         [TestMethod()]
-        public async Task GetListActionTest_ReturnTwoUsersWithRoles()
+        public async Task GetListTest_ReturnTwoUsersWithRoles()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -33,11 +33,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = GetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetListActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = GetListActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = GetListActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = GetListFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetListFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetListFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = GetListFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = GetListFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -46,17 +46,17 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             context.Add(testUser1Role3);
 
             // Second User
-            var testingUser2 = GetListActionFixture.CreateUser("Normal", "User2");
-            var testingAuth0User2 = GetListActionFixture.CreateAuth0User(testingUser2, 2);
-            var testUser2Role = GetListActionFixture.CreateUserRole(testingUser2, roleDonorId);
+            var testingUser2 = GetListFixture.CreateUser("Normal", "User2");
+            var testingAuth0User2 = GetListFixture.CreateAuth0User(testingUser2, 2);
+            var testUser2Role = GetListFixture.CreateUserRole(testingUser2, roleDonorId);
 
             context.Add(testingUser2);
             context.Add(testingAuth0User2);
             context.Add(testUser2Role);
 
-            var testingUser3 = GetListActionFixture.CreateUser("Normal", "User3");
-            var testingAuth0User3 = GetListActionFixture.CreateAuth0User(testingUser3, 3);
-            var testUser3Role = GetListActionFixture.CreateUserRole(testingUser3, roleDonorId);
+            var testingUser3 = GetListFixture.CreateUser("Normal", "User3");
+            var testingAuth0User3 = GetListFixture.CreateAuth0User(testingUser3, 3);
+            var testUser3Role = GetListFixture.CreateUserRole(testingUser3, roleDonorId);
 
             context.Add(testingUser3);
             context.Add(testingAuth0User3);
@@ -86,7 +86,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
         }
 
         [TestMethod()]
-        public async Task GetListActionTest_ReturnFilteredUser()
+        public async Task GetListTest_ReturnFilteredUser()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -97,11 +97,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = GetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetListActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = GetListActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = GetListActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = GetListFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetListFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetListFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = GetListFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = GetListFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -110,9 +110,9 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetListTest
             context.Add(testUser1Role3);
 
             // Second User
-            var testingUser2 = GetListActionFixture.CreateUser("Herman", "Dziad");
-            var testingAuth0User2 = GetListActionFixture.CreateAuth0User(testingUser2, 2);
-            var testUser2Role = GetListActionFixture.CreateUserRole(testingUser2, roleDonorId);
+            var testingUser2 = GetListFixture.CreateUser("Herman", "Dziad");
+            var testingAuth0User2 = GetListFixture.CreateAuth0User(testingUser2, 2);
+            var testUser2Role = GetListFixture.CreateUserRole(testingUser2, roleDonorId);
 
             context.Add(testingUser2);
             context.Add(testingAuth0User2);

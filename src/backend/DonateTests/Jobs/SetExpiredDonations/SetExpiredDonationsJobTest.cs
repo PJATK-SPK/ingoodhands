@@ -21,7 +21,7 @@ namespace DonateTests.Jobs.SetExpiredDonations
         };
 
         [TestMethod()]
-        public async Task SetExpiredDonationsJobTest()
+        public async Task SetExpiredDonationsJobTest_VariousCases()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

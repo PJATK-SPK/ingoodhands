@@ -11,10 +11,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
+namespace AuthTests.Actions.ManageUsers
 {
     [TestClass()]
-    public class GetSingleActionTest
+    public class GetSingleTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -23,7 +23,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
         };
 
         [TestMethod()]
-        public async Task GetSingleActionTest_ReturnOneUserWithRoles()
+        public async Task GetSingleTest_ReturnOneUserWithRoles()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -34,11 +34,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = GetSingleActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetSingleActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = GetSingleActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = GetSingleActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = GetSingleFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetSingleFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = GetSingleFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = GetSingleFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -47,9 +47,9 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
             context.Add(testUser1Role3);
 
             // Second User
-            var testingUser2 = GetSingleActionFixture.CreateUser("Normal", "User2");
-            var testingAuth0User2 = GetSingleActionFixture.CreateAuth0User(testingUser2, 2);
-            var testUser2Role = GetSingleActionFixture.CreateUserRole(testingUser2, roleDonorId);
+            var testingUser2 = GetSingleFixture.CreateUser("Normal", "User2");
+            var testingAuth0User2 = GetSingleFixture.CreateAuth0User(testingUser2, 2);
+            var testUser2Role = GetSingleFixture.CreateUserRole(testingUser2, roleDonorId);
 
             context.Add(testingUser2);
             context.Add(testingAuth0User2);
@@ -82,7 +82,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
         }
 
         [TestMethod()]
-        public async Task GetSingleActionTest_NoUserOfGivenIdInDb_ThrowsException()
+        public async Task GetSingleTest_NoUserOfGivenIdInDb_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -94,11 +94,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
             var userIdThatIsNotInDatabase = 100;
 
-            var testingUser1 = GetSingleActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetSingleActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = GetSingleActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = GetSingleActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = GetSingleFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetSingleFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = GetSingleFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = GetSingleFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);

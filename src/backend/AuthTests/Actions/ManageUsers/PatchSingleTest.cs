@@ -1,24 +1,20 @@
 ﻿using Auth;
 using Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle;
-using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 using Auth.Actions.ManageUsersActions.ManageUsersPatchSingle;
-using AuthTests.Actions.ManageUsersActionsTest.GetListTest;
 using Autofac;
 using Core;
 using Core.Database;
 using Core.Database.Enums;
-using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
+namespace AuthTests.Actions.ManageUsers
 {
     [TestClass()]
-    public class PatchSingleActionTest
+    public class PatchSingleTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -27,7 +23,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
         };
 
         [TestMethod()]
-        public async Task PatchSingleActionTest_ChangeRolesAndWarehouseId()
+        public async Task PatchSingleTest_ChangeRolesAndWarehouseId()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -38,11 +34,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = PatchSingleActionFixture.CreateUser("Normal", "User", 2);
-            var testingAuth0User1 = PatchSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = PatchSingleActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = PatchSingleActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = PatchSingleActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = PatchSingleFixture.CreateUser("Normal", "User", 2);
+            var testingAuth0User1 = PatchSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = PatchSingleFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = PatchSingleFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = PatchSingleFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -65,7 +61,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
                 UpdatedAt = DateTime.UtcNow,
             });
             var encodedWarehouseId = toolkit.Hashids.EncodeLong(1);
-            var payLoad = PatchSingleActionFixture.CreatePatchingPayload(RoleName.Administrator, RoleName.Needy, encodedWarehouseId);
+            var payLoad = PatchSingleFixture.CreatePatchingPayload(RoleName.Administrator, RoleName.Needy, encodedWarehouseId);
             var encodedUserId = toolkit.Hashids.EncodeLong(testingUser1.Id);
 
             // Act
@@ -80,7 +76,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
         }
 
         [TestMethod()]
-        public async Task PatchSingleActionTest_NoWarehouseIdInPayload_NullUserWarehouseId()
+        public async Task PatchSingleTest_NoWarehouseIdInPayload_NullUserWarehouseId()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -91,9 +87,9 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
 
-            var testingUser1 = PatchSingleActionFixture.CreateUser("Normal", "User", 4);
-            var testingAuth0User1 = PatchSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = PatchSingleActionFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testingUser1 = PatchSingleFixture.CreateUser("Normal", "User", 4);
+            var testingAuth0User1 = PatchSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = PatchSingleFixture.CreateUserRole(testingUser1, roleAdminId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -113,7 +109,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
                 Nickname = testingAuth0User1.Nickname,
                 UpdatedAt = DateTime.UtcNow,
             });
-            var payLoad = PatchSingleActionFixture.CreatePatchingPayload(RoleName.Administrator, RoleName.Needy, RoleName.Deliverer);
+            var payLoad = PatchSingleFixture.CreatePatchingPayload(RoleName.Administrator, RoleName.Needy, RoleName.Deliverer);
             var encodedUserId = toolkit.Hashids.EncodeLong(testingUser1.Id);
 
             // Act
@@ -130,7 +126,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
         }
 
         [TestMethod()]
-        public async Task PatchSingleActionTest_NoUserOfGivenIdInDb_ThrowsException()
+        public async Task PatchSingleTest_NoUserOfGivenIdInDb_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -142,11 +138,11 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             var roleDelivererId = context.Roles.First(c => c.Name == RoleName.Deliverer).Id;
             var userIdThatIsNotInDatabase = 100;
 
-            var testingUser1 = GetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role = GetListActionFixture.CreateUserRole(testingUser1, roleDonorId);
-            var testUser1Role2 = GetListActionFixture.CreateUserRole(testingUser1, roleAdminId);
-            var testUser1Role3 = GetListActionFixture.CreateUserRole(testingUser1, roleDelivererId);
+            var testingUser1 = GetListFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetListFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role = GetListFixture.CreateUserRole(testingUser1, roleDonorId);
+            var testUser1Role2 = GetListFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testUser1Role3 = GetListFixture.CreateUserRole(testingUser1, roleDelivererId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -169,7 +165,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
                 UpdatedAt = DateTime.UtcNow,
             });
             var encodedWarehouseId = toolkit.Hashids.EncodeLong(1);
-            var payLoad = PatchSingleActionFixture.CreatePatchingPayload(RoleName.Needy, encodedWarehouseId);
+            var payLoad = PatchSingleFixture.CreatePatchingPayload(RoleName.Needy, encodedWarehouseId);
             var encodedUserIdThatIsNotInDatabase = toolkit.Hashids.EncodeLong(userIdThatIsNotInDatabase);
 
             // Act
@@ -181,7 +177,7 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
         }
 
         [TestMethod()]
-        public async Task PatchSingleActionTest_NoRolesInpayload_ThrowsException()
+        public async Task PatchSingleTest_NoRolesInpayload_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -190,9 +186,9 @@ namespace AuthTests.Actions.ManageUsersActionsTest.PatchSingleTest
             // Arrange
             var roleAdminId = context.Roles.First(c => c.Name == RoleName.Administrator).Id;
 
-            var testingUser1 = GetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = GetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = GetListActionFixture.CreateUserRole(testingUser1, roleAdminId);
+            var testingUser1 = GetListFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = GetListFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = GetListFixture.CreateUserRole(testingUser1, roleAdminId);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);

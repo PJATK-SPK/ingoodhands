@@ -3,21 +3,20 @@ using Auth.Actions.UserSettingsActions.GetUserDetails;
 using Auth.Models;
 using Autofac;
 using Core;
-using Core.Setup.Auth0;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Exceptions;
+using Core.Setup.Auth0;
+using Core.Setup.Enums;
+using FluentValidation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
-using Core.Setup.Enums;
-using FluentValidation;
 
-namespace AuthTests.Actions.UserSettingsTests.GetCurrentUser
+namespace AuthTests.Actions.UserSettings
 {
     [TestClass()]
-    public class GetCurrentUserActionTest
+    public class GetCurrentUserTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -26,7 +25,7 @@ namespace AuthTests.Actions.UserSettingsTests.GetCurrentUser
         };
 
         [TestMethod()]
-        public async Task GetCurrentUserActionTest_GetUserFromDatabase()
+        public async Task GetCurrentUserTest_GetUserFromDatabase()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -83,7 +82,7 @@ namespace AuthTests.Actions.UserSettingsTests.GetCurrentUser
         }
 
         [TestMethod()]
-        public async Task GetCurrentUserActionTest_UserDataValidationThrowsError()
+        public async Task GetCurrentUserTest_UserDataValidationThrowsError()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

@@ -13,10 +13,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace AuthTests.Actions.AuthActionsTest.PostLogin
+namespace AuthTests.Actions.Auth
 {
     [TestClass()]
-    public class PostLoginActionTests
+    public class PostLoginTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -25,7 +25,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         };
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserAndAuth0UserPresent()
+        public async Task PostLoginTest_UserAndAuth0UserPresent()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -84,7 +84,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserAndAuth0UserNotPresent()
+        public async Task PostLoginTest_UserAndAuth0UserNotPresent()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -121,7 +121,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserYesAuth0UserNo()
+        public async Task PostLoginTest_UserYesAuth0UserNo()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -167,7 +167,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_NoRolesInDb()
+        public async Task PostLoginTest_NoRolesInDb()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -204,7 +204,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_NoServiceUserInDb()
+        public async Task PostLoginTest_NoServiceUserInDb()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -240,7 +240,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserNoAuth0UserYes()
+        public async Task PostLoginTest_UserNoAuth0UserYes()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -284,7 +284,7 @@ namespace AuthTests.Actions.AuthActionsTest.PostLogin
         }
 
         [TestMethod()]
-        public async Task PostLoginActionTest_UserDataValidationThrowsError()
+        public async Task PostLoginTest_UserDataValidationThrowsError()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

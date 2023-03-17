@@ -2,9 +2,9 @@
 using Core.Database.Models.Auth;
 using Core.Database.Seeders;
 
-namespace AuthTests.Actions.ManageUsersActionsTest.GetSingleTest
+namespace AuthTests.Actions.ManageUsers
 {
-    public static class GetSingleActionFixture
+    public static class GetSingleFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
