@@ -7,7 +7,7 @@ namespace DonateTests.Jobs.IncludeToStock
 {
     public static class IncludeToStockJobFixture
     {
-        public static Donation CreateDonation(bool isDelivered, bool isIncludedInStock, string name = "DNT000001") => new()
+        public static Donation CreateDonation(bool isDelivered, bool isIncludedInStock, long warehouseId, string name = "DNT000001") => new()
         {
             CreationDate = DateTime.UtcNow.AddDays(-5),
             CreationUserId = UserSeeder.ServiceUser.Id,
@@ -19,7 +19,7 @@ namespace DonateTests.Jobs.IncludeToStock
             Status = DbEntityStatus.Active,
             UpdatedAt = DateTime.UtcNow,
             UpdateUserId = UserSeeder.ServiceUser.Id,
-            WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
+            WarehouseId = warehouseId
         };
 
         public static DonationProduct CreateDonationProduct(long donationId, long productId, int quantity) => new()
