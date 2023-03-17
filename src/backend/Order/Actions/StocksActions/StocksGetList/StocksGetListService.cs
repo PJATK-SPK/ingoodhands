@@ -48,7 +48,7 @@ namespace Orders.Actions.StocksActions.StocksGetList
                 ProductName = c.Product!.Name,
                 Quantity = c.Quantity,
                 Unit = c.Product!.Unit.ToString().ToLower(),
-                WareHouseId = _hashids.EncodeLong(c.WarehouseId)
+                WarehouseId = _hashids.EncodeLong(c.WarehouseId)
             }).ToList();
 
             var response = new PagedResult<StocksGetListItemResponse>()

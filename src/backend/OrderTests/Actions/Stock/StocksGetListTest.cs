@@ -61,7 +61,7 @@ namespace OrdersTests.Actions.Stock
             Assert.AreEqual(pageSize, result.PageSize);
             Assert.IsTrue(result!.Queryable.Any());
             Assert.AreEqual(2, result!.Queryable.Count());
-            Assert.AreEqual(60, result!.Queryable.Where(c => toolkit.Hashids.DecodeSingleLong(c.WareHouseId) == testingUser1.WarehouseId).Sum(c => c.Quantity));
+            Assert.AreEqual(60, result!.Queryable.Where(c => toolkit.Hashids.DecodeSingleLong(c.WarehouseId) == testingUser1.WarehouseId).Sum(c => c.Quantity));
         }
     }
 }
