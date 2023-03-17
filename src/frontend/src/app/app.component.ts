@@ -97,7 +97,12 @@ export class AppComponent implements OnInit {
       if (sub) {
         const keys = sub.toJSON().keys!;
         const payload = { endpoint: sub.endpoint, auth: keys['auth'], p256dh: keys['p256dh'] }
-        return this.httpClient.post<any>(`${environment.api}/my-notifications/update-web-push`, payload);
+        return this.httpClient.post<any>(`${environment.api}/my-notifications/update-web-push`, payload).pipe(
+          catchError(() => {
+            console.error("Could not save webpush data!");
+            return of(null);
+          })
+        );
       }
       return of(null);
     }
