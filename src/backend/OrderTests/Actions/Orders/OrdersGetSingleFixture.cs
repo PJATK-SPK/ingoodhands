@@ -4,9 +4,9 @@ using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
 
-namespace OrderTests.Actions.OrdersActionTest
+namespace OrderTests.Actions.Orders
 {
-    public static class OrdersGetSingleActionFixture
+    public static class OrdersGetSingleFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {

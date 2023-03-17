@@ -8,10 +8,10 @@ using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
 using TestsBase;
 
-namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesActionTest
+namespace OrderTests.Actions.CreateOrder
 {
     [TestClass()]
-    public class CreateOrderGetAddressesActionTest
+    public class CreateOrderGetAddressesTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -20,22 +20,22 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesAction
         };
 
         [TestMethod()]
-        public async Task CreateOrderGetAddressesActionTest_GetAddresses_ReturnListOfActiveAddresses()
+        public async Task CreateOrderGetAddressesTest_GetAddresses_ReturnListOfActiveAddresses()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<CreateOrderGetAddressesAction>();
 
             // Arrange 
-            var testingUser1 = CreateOrderGetAddressesActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = CreateOrderGetAddressesActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUserRole1 = CreateOrderGetAddressesActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = CreateOrderGetAddressesFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderGetAddressesFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderGetAddressesFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var newAddress1 = CreateOrderGetAddressesActionFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
-            var newAddress2 = CreateOrderGetAddressesActionFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
+            var newAddress1 = CreateOrderGetAddressesFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
+            var newAddress2 = CreateOrderGetAddressesFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
 
-            var newUserAddress1 = CreateOrderGetAddressesActionFixture.CreateUserAddress(testingUser1, newAddress1);
-            var newUserAddress2 = CreateOrderGetAddressesActionFixture.CreateUserAddress(testingUser1, newAddress2);
+            var newUserAddress1 = CreateOrderGetAddressesFixture.CreateUserAddress(testingUser1, newAddress1);
+            var newUserAddress2 = CreateOrderGetAddressesFixture.CreateUserAddress(testingUser1, newAddress2);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -47,7 +47,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesAction
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(CreateOrderGetAddressesActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(CreateOrderGetAddressesFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute();

@@ -1,12 +1,12 @@
 ﻿using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
-using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
 
-namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionTest
+namespace OrderTests.Actions.CreateOrder
 {
-    public static class CreateOrderAddAddressActionFixture
+    public static class CreateOrderGetAddressesFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -52,30 +52,29 @@ namespace OrdersTests.Actions.CreateOrderActionTest.CreateOrderAddAddressActionT
             UpdatedAt = DateTime.UtcNow,
         };
 
-        public static CreateOrderAddAddressPayload CreatePayload(string countryName) => new()
+        public static Address CreateAddress(Address addres1, Address address2) => new()
         {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = "Papieska",
-            StreetNumber = "21",
-            Apartment = "37",
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
+            CountryId = 177,
+            PostalCode = addres1.PostalCode,
+            City = addres1.City,
+            Street = addres1.Street,
+            StreetNumber = address2.StreetNumber,
+            Apartment = address2.Apartment,
+            GpsLatitude = address2.GpsLatitude,
+            GpsLongitude = addres1.GpsLongitude,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active
         };
 
-        public static CreateOrderAddAddressPayload CreatePayloadNullStreetValues(string countryName) => new()
+        public static UserAddress CreateUserAddress(User user, Address address) => new()
         {
-            Id = "",
-            CountryName = countryName,
-            PostalCode = "82-420",
-            City = "Bachmut",
-            Street = null,
-            StreetNumber = null,
-            Apartment = null,
-            GpsLatitude = 1.111,
-            GpsLongitude = 2.222
+            User = user,
+            Address = address,
+            IsDeletedByUser = false,
+            UpdateUser = user,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active
         };
     }
 }

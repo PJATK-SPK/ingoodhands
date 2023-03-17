@@ -3,18 +3,16 @@ using Core;
 using Core.Database;
 using Core.Database.Seeders;
 using Core.Exceptions;
-using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
-using OrderTests.Actions.CreateOrderActionTest.CreateOrderGetAddressesActionTest;
 using TestsBase;
 
-namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActionTest
+namespace OrderTests.Actions.CreateOrder
 {
     [TestClass()]
-    public class CreateOrderDeleteAddressActionTest
+    public class CreateOrderDeleteAddressTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -23,22 +21,22 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
         };
 
         [TestMethod()]
-        public async Task CreateOrderDeleteAddressActionTest_DeleteAddresses_ReturnResponseWithDeletedAddress()
+        public async Task CreateOrderDeleteAddressTest_DeleteAddresses_ReturnResponseWithDeletedAddress()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<CreateOrderDeleteAddressAction>();
 
             // Arrange 
-            var testingUser1 = CreateOrderDeleteAddressActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = CreateOrderDeleteAddressActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUserRole1 = CreateOrderDeleteAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = CreateOrderDeleteAddressFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderDeleteAddressFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderDeleteAddressFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var newAddress1 = CreateOrderDeleteAddressActionFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
-            var newAddress2 = CreateOrderDeleteAddressActionFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
+            var newAddress1 = CreateOrderDeleteAddressFixture.CreateAddress(AddressSeeder.Address1Poland, AddressSeeder.Address9France);
+            var newAddress2 = CreateOrderDeleteAddressFixture.CreateAddress(AddressSeeder.Address5Germany, AddressSeeder.Address6Hungary);
 
-            var newUserAddress1 = CreateOrderDeleteAddressActionFixture.CreateUserAddress(testingUser1, newAddress1);
-            var newUserAddress2 = CreateOrderDeleteAddressActionFixture.CreateUserAddress(testingUser1, newAddress2);
+            var newUserAddress1 = CreateOrderDeleteAddressFixture.CreateUserAddress(testingUser1, newAddress1);
+            var newUserAddress2 = CreateOrderDeleteAddressFixture.CreateUserAddress(testingUser1, newAddress2);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -50,7 +48,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(CreateOrderDeleteAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(CreateOrderDeleteAddressFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var encodedAddress2Id = toolkit.Hashids.EncodeLong(newUserAddress2.Address!.Id);
             // Act
@@ -64,16 +62,16 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
         }
 
         [TestMethod()]
-        public async Task CreateOrderDeleteAddressActionTest_NoAddressById_ThrowsException()
+        public async Task CreateOrderDeleteAddressTest_NoAddressById_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<CreateOrderDeleteAddressAction>();
 
             // Arrange 
-            var testingUser1 = CreateOrderDeleteAddressActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = CreateOrderDeleteAddressActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUserRole1 = CreateOrderDeleteAddressActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = CreateOrderDeleteAddressFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderDeleteAddressFixture.CreateAuth0User(testingUser1, 1);
+            var testUserRole1 = CreateOrderDeleteAddressFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -81,7 +79,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderDeleteAddressActio
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(CreateOrderDeleteAddressActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(CreateOrderDeleteAddressFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var encodedAddress2Id = toolkit.Hashids.EncodeLong(1500);
             // Act

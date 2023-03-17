@@ -9,10 +9,10 @@ using Orders;
 using Orders.Actions.OrdersActions.OrdersGetSingle;
 using TestsBase;
 
-namespace OrderTests.Actions.OrdersActionTest
+namespace OrderTests.Actions.Orders
 {
     [TestClass()]
-    public class OrdersGetSingleActionTest
+    public class OrdersGetSingleTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -21,25 +21,25 @@ namespace OrderTests.Actions.OrdersActionTest
         };
 
         [TestMethod()]
-        public async Task OrdersGetSingleActionTest_GetSingleAction_ReturnsResponse()
+        public async Task OrdersGetSingleTest_GetSingle_ReturnsResponse()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<OrdersGetSingleAction>();
 
             //Arrange
-            var testingUser1 = OrdersGetSingleActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = OrdersGetSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = OrdersGetSingleActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = OrdersGetSingleFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersGetSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersGetSingleFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var order1 = OrdersGetSingleActionFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
-            var orderProduct1 = OrdersGetSingleActionFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
-            var orderProduct2 = OrdersGetSingleActionFixture.CreateOrderProduct(order1, ProductSeeder.Product13Soup.Id, 50);
+            var order1 = OrdersGetSingleFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
+            var orderProduct1 = OrdersGetSingleFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
+            var orderProduct2 = OrdersGetSingleFixture.CreateOrderProduct(order1, ProductSeeder.Product13Soup.Id, 50);
 
-            var delivery1 = OrdersGetSingleActionFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL);
-            var delivery2 = OrdersGetSingleActionFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL, "DEL000002");
-            var deliveryProduct1 = OrdersGetSingleActionFixture.CreateDeliveryProduct(delivery1, ProductSeeder.Product11Juice.Id, 100);
-            var deliveryProduct2 = OrdersGetSingleActionFixture.CreateDeliveryProduct(delivery2, ProductSeeder.Product13Soup.Id, 50);
+            var delivery1 = OrdersGetSingleFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL);
+            var delivery2 = OrdersGetSingleFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL, "DEL000002");
+            var deliveryProduct1 = OrdersGetSingleFixture.CreateDeliveryProduct(delivery1, ProductSeeder.Product11Juice.Id, 100);
+            var deliveryProduct2 = OrdersGetSingleFixture.CreateDeliveryProduct(delivery2, ProductSeeder.Product13Soup.Id, 50);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -56,7 +56,7 @@ namespace OrderTests.Actions.OrdersActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(OrdersGetSingleActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(OrdersGetSingleFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var executed = await action.Execute(toolkit.Hashids.EncodeLong(order1.Id));
@@ -71,16 +71,16 @@ namespace OrderTests.Actions.OrdersActionTest
         }
 
         [TestMethod()]
-        public async Task OrdersGetSingleActionTest_GetSingleNotFoundOrderId_ThrowsException()
+        public async Task OrdersGetSingleTest_GetSingleNotFoundOrderId_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<OrdersGetSingleAction>();
 
             //Arrange
-            var testingUser1 = OrdersGetSingleActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = OrdersGetSingleActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = OrdersGetSingleActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = OrdersGetSingleFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersGetSingleFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersGetSingleFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -88,7 +88,7 @@ namespace OrderTests.Actions.OrdersActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(OrdersGetSingleActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(OrdersGetSingleFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(toolkit.Hashids.EncodeLong(1500)));

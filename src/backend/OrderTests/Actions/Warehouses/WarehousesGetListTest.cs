@@ -6,14 +6,13 @@ using Core.Setup.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
-using Orders.Actions.WarehousesActions.GetWarehouses;
 using Orders.Actions.WarehousesActions.GetWarehousesList;
 using TestsBase;
 
 namespace OrdersTests.Actions.WarehousesActionTest
 {
     [TestClass()]
-    public class WarehousesGetListActionTest
+    public class WarehousesGetListTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -22,7 +21,7 @@ namespace OrdersTests.Actions.WarehousesActionTest
         };
 
         [TestMethod()]
-        public async Task WarehousesGetListActionTest_GetWarehouseList_ReturnsResponse()
+        public async Task WarehousesGetListTest_GetWarehouseList_ReturnsResponse()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -36,7 +35,7 @@ namespace OrdersTests.Actions.WarehousesActionTest
         }
 
         [TestMethod()]
-        public async Task WarehousesGetListActionTest_RemoveAllWarehousesFromDb_ThrowException()
+        public async Task WarehousesGetListTest_RemoveAllWarehousesFromDb_ThrowException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

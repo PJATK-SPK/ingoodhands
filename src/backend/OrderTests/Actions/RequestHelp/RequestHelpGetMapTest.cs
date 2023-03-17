@@ -2,19 +2,19 @@
 using Core;
 using Core.Database;
 using Core.Database.Seeders;
-using Core.Exceptions;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
-using Orders.Actions.StocksActions.StocksGetList;
+using Orders.Actions.RequestHelpActions.RequestHelpGetMap;
+using OrderTests.Actions.RequestHelp;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace OrdersTests.Actions.StockActionTest
+namespace OrdersTests.Actions.RequestHelp
 {
     [TestClass()]
-    public class StocksGetListActionTest
+    public class RequestHelpGetMapTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -23,29 +23,28 @@ namespace OrdersTests.Actions.StockActionTest
         };
 
         [TestMethod()]
-        public async Task StocksGetListActionTest_StocksGetList_ReturnsResponse()
+        public async Task RequestHelpGetMapTest_GetMapAction_ReturnsResponse()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<StocksGetListAction>();
+            var action = toolkit.Resolve<RequestHelpGetMapAction>();
 
             //Arrange
-            var page = 1;
-            var pageSize = 10;
+            var testingUser1 = RequestHelpGetMapFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = RequestHelpGetMapFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = RequestHelpGetMapFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var testingUser1 = StocksGetListActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = StocksGetListActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = StocksGetListActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role4WarehouseKeeper.Id);
-            var stock1 = StocksGetListActionFixture.CreateStock(ProductSeeder.Product4Groats, 50);
-            var stock2 = StocksGetListActionFixture.CreateStock(ProductSeeder.Product2Pasta, 10);
-            var stock3 = StocksGetListActionFixture.CreateStock(ProductSeeder.Product11Juice, 100);
+            var order1 = RequestHelpGetMapFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
+            var orderProduct1 = RequestHelpGetMapFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
+            var orderProduct2 = RequestHelpGetMapFixture.CreateOrderProduct(order1, ProductSeeder.Product13Soup.Id, 50);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
             context.Add(testUser1Role1);
-            context.Add(stock1);
-            context.Add(stock2);
-            context.Add(stock3);
+
+            context.Add(order1);
+            context.Add(orderProduct1);
+            context.Add(orderProduct2);
 
             await context.SaveChangesAsync();
 
@@ -63,15 +62,15 @@ namespace OrdersTests.Actions.StockActionTest
             });
 
             // Act
-            var executed = await action.Execute(page, pageSize);
-            var result = executed.Value as PagedResult<StocksGetListItemResponse>;
+            var executed = await action.Execute();
+            var result = executed.Value as RequestHelpGetMapResponse;
 
             // Assert            
             Assert.IsNotNull(result);
-            Assert.AreEqual(page, result.CurrentPage);
-            Assert.AreEqual(pageSize, result.PageSize);
-            Assert.IsTrue(result!.Queryable.Any());
-            Assert.AreEqual(3, result!.Queryable.Count());
+            Assert.IsTrue(result!.Warehouses.Any());
+            Assert.IsTrue(result!.Orders.Any());
+            Assert.AreEqual(1, result!.Orders.Count);
+            Assert.AreEqual(9, result!.Warehouses.Count);
         }
     }
 }

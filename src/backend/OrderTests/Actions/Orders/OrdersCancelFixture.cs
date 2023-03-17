@@ -2,10 +2,11 @@
 using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
+using Core.Setup.Auth0;
 
-namespace OrdersTests.Actions.RequestHelpActionTest
+namespace OrderTests.Actions.Orders
 {
-    public static class RequestHelpGetMapActionFixture
+    public static class OrdersCancelFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -37,6 +38,19 @@ namespace OrdersTests.Actions.RequestHelpActionTest
             Status = DbEntityStatus.Active
         };
 
+        public static CurrentUserInfo GetCurrentUserInfo(Auth0User auth0User) => new()
+        {
+            Email = auth0User.Email,
+            EmailVerified = true,
+            Identifier = auth0User.Identifier,
+            GivenName = auth0User.FirstName,
+            FamilyName = auth0User.LastName,
+            Locale = "pl",
+            Name = auth0User.FirstName + auth0User.LastName,
+            Nickname = auth0User.Nickname,
+            UpdatedAt = DateTime.UtcNow,
+        };
+
         public static Order CreateOrder(User user, Address address, string orderName = "ORD000001") => new()
         {
             Name = orderName,
@@ -58,6 +72,31 @@ namespace OrdersTests.Actions.RequestHelpActionTest
             UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,
             Status = DbEntityStatus.Active
+        };
+
+        public static Delivery CreateDelivery(User user, Address address, Order order, bool isDelivered, Warehouse warehouse, string deliveryName = "DEL000001") => new()
+        {
+            Name = deliveryName,
+            Order = order,
+            IsDelivered = isDelivered,
+            DelivererUser = user,
+            CreationDate = DateTime.UtcNow,
+            IsLost = false,
+            IsPacked = true,
+            WarehouseId = warehouse.Id,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active
+        };
+
+        public static DeliveryProduct CreateDeliveryProduct(Delivery delivery, long productId, int quantity) => new()
+        {
+            Delivery = delivery,
+            ProductId = productId,
+            Quantity = quantity,
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            UpdatedAt = DateTime.UtcNow,
+            Status = DbEntityStatus.Active,
         };
     }
 }

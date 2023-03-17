@@ -2,17 +2,16 @@
 using Core;
 using Core.Database;
 using Core.Database.Seeders;
-using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
 using TestsBase;
 
-namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionTest
+namespace OrderTests.Actions.CreateOrder
 {
     [TestClass()]
-    public class CreateOrderCreateOrderActionTest
+    public class CreateOrderCreateOrderTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -21,16 +20,16 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionT
         };
 
         [TestMethod()]
-        public async Task CreateOrderCreateOrderActionTest_CreateOrder_ReturnOrderName()
+        public async Task CreateOrderCreateOrderTest_CreateOrder_ReturnOrderName()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<CreateOrderCreateOrderAction>();
 
             // Arrange
-            var testingUser1 = CreateOrderCreateOrderActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = CreateOrderCreateOrderActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUserROle1 = CreateOrderCreateOrderActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = CreateOrderCreateOrderFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = CreateOrderCreateOrderFixture.CreateAuth0User(testingUser1, 1);
+            var testUserROle1 = CreateOrderCreateOrderFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -38,7 +37,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionT
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(CreateOrderCreateOrderActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(CreateOrderCreateOrderFixture.GetCurrentUserInfo(testingAuth0User1));
 
             var product1 = new CreateOrderCreateOrderProductPayload
             {

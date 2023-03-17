@@ -10,10 +10,10 @@ using Orders;
 using Orders.Actions.OrdersActions.OrdersCancel;
 using TestsBase;
 
-namespace OrderTests.Actions.OrdersActionTest
+namespace OrderTests.Actions.Orders
 {
     [TestClass()]
-    public class OrdersCancelActionTest
+    public class OrdersCancelTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -22,25 +22,25 @@ namespace OrderTests.Actions.OrdersActionTest
         };
 
         [TestMethod()]
-        public async Task OrdersCancelActionTest_CancelAction_ReturnsOkMessage()
+        public async Task OrdersCancelTest_CancelAction_ReturnsOkMessage()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<OrdersCancelAction>();
 
             //Arrange
-            var testingUser1 = OrdersCancelActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = OrdersCancelActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = OrdersCancelActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = OrdersCancelFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersCancelFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersCancelFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var order1 = OrdersCancelActionFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
-            var orderProduct1 = OrdersCancelActionFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
-            var orderProduct2 = OrdersCancelActionFixture.CreateOrderProduct(order1, ProductSeeder.Product13Soup.Id, 50);
+            var order1 = OrdersCancelFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
+            var orderProduct1 = OrdersCancelFixture.CreateOrderProduct(order1, ProductSeeder.Product11Juice.Id, 100);
+            var orderProduct2 = OrdersCancelFixture.CreateOrderProduct(order1, ProductSeeder.Product13Soup.Id, 50);
 
-            var delivery1 = OrdersCancelActionFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL);
-            var delivery2 = OrdersCancelActionFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL, "DEL000002");
-            var deliveryProduct1 = OrdersCancelActionFixture.CreateDeliveryProduct(delivery1, ProductSeeder.Product11Juice.Id, 100);
-            var deliveryProduct2 = OrdersCancelActionFixture.CreateDeliveryProduct(delivery2, ProductSeeder.Product13Soup.Id, 50);
+            var delivery1 = OrdersCancelFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL);
+            var delivery2 = OrdersCancelFixture.CreateDelivery(testingUser1, AddressSeeder.Address2Poland, order1, true, WarehouseSeeder.Warehouse2PL, "DEL000002");
+            var deliveryProduct1 = OrdersCancelFixture.CreateDeliveryProduct(delivery1, ProductSeeder.Product11Juice.Id, 100);
+            var deliveryProduct2 = OrdersCancelFixture.CreateDeliveryProduct(delivery2, ProductSeeder.Product13Soup.Id, 50);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -57,7 +57,7 @@ namespace OrderTests.Actions.OrdersActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(OrdersCancelActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(OrdersCancelFixture.GetCurrentUserInfo(testingAuth0User1));
 
             Assert.AreEqual(1, context.Orders.Where(c => c.IsCanceledByUser == false).Count());
 
@@ -73,16 +73,16 @@ namespace OrderTests.Actions.OrdersActionTest
         }
 
         [TestMethod()]
-        public async Task OrdersCancelActionTest_CancelActionNotFoundOrderId_ThrowsException()
+        public async Task OrdersCancelTest_CancelNotFoundOrderId_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<OrdersCancelAction>();
 
             //Arrange
-            var testingUser1 = OrdersCancelActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = OrdersCancelActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = OrdersCancelActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = OrdersCancelFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersCancelFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersCancelFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -90,7 +90,7 @@ namespace OrderTests.Actions.OrdersActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(OrdersCancelActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(OrdersCancelFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(toolkit.Hashids.EncodeLong(1500)));
@@ -101,18 +101,18 @@ namespace OrderTests.Actions.OrdersActionTest
         }
 
         [TestMethod()]
-        public async Task OrdersCancelActionTest_CancelActionNoOrderProducts_ThrowsException()
+        public async Task OrdersCancelTest_CancelNoOrderProducts_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
             var action = toolkit.Resolve<OrdersCancelAction>();
 
             //Arrange
-            var testingUser1 = OrdersCancelActionFixture.CreateUser("Normal", "User");
-            var testingAuth0User1 = OrdersCancelActionFixture.CreateAuth0User(testingUser1, 1);
-            var testUser1Role1 = OrdersCancelActionFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
+            var testingUser1 = OrdersCancelFixture.CreateUser("Normal", "User");
+            var testingAuth0User1 = OrdersCancelFixture.CreateAuth0User(testingUser1, 1);
+            var testUser1Role1 = OrdersCancelFixture.CreateUserRole(testingUser1, RoleSeeder.Role3Needy.Id);
 
-            var order1 = OrdersCancelActionFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
+            var order1 = OrdersCancelFixture.CreateOrder(testingUser1, AddressSeeder.Address1Poland, "ORD000001");
 
             context.Add(testingUser1);
             context.Add(testingAuth0User1);
@@ -121,7 +121,7 @@ namespace OrderTests.Actions.OrdersActionTest
 
             await context.SaveChangesAsync();
 
-            toolkit.UpdateUserInfo(OrdersCancelActionFixture.GetCurrentUserInfo(testingAuth0User1));
+            toolkit.UpdateUserInfo(OrdersCancelFixture.GetCurrentUserInfo(testingAuth0User1));
 
             // Act
             var exception = await Assert.ThrowsExceptionAsync<ItemNotFoundException>(() => action.Execute(toolkit.Hashids.EncodeLong(order1.Id)));

@@ -6,13 +6,12 @@ using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
-using OrderTests.Actions.CreateOrderActionTest.CreateOrderCreateOrderActionTest;
 using TestsBase;
 
-namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetCountriesActionTest
+namespace OrderTests.Actions.CreateOrder
 {
     [TestClass()]
-    public class CreateOrderGetCountriesActionTest
+    public class CreateOrderGetCountriesTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -21,7 +20,7 @@ namespace OrderTests.Actions.CreateOrderActionTest.CreateOrderGetCountriesAction
         };
 
         [TestMethod()]
-        public async Task CreateOrderGetCountriesActionTest_GetCountriesAction_ReturnsListOfCountries()
+        public async Task CreateOrderGetCountriesTest_GetCountries_ReturnsListOfCountries()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

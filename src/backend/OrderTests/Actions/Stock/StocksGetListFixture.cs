@@ -3,9 +3,9 @@ using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 
-namespace OrdersTests.Actions.StockActionTest
+namespace OrderTests.Actions.Stock
 {
-    public static class StocksGetListActionFixture
+    public static class StocksGetListFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {
@@ -37,7 +37,7 @@ namespace OrdersTests.Actions.StockActionTest
             Status = DbEntityStatus.Active
         };
 
-        public static Stock CreateStock(Product product, int quantity) => new()
+        public static Core.Database.Models.Core.Stock CreateStock(Product product, int quantity) => new()
         {
             ProductId = product.Id,
             Quantity = quantity,
