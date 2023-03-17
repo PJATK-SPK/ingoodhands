@@ -142,17 +142,17 @@ namespace Core.Services
             return roleNames;
         }
 
-        private async Task AssertRoleToUserAndSaveItToDatabase(User currentUser, User serviceUser, long roleId)
+        private async Task AssertRoleToUserAndSaveItToDatabase(User currentUser, User updatingUser, long roleId)
         {
             var newUserRole = new UserRole
             {
                 RoleId = roleId,
                 User = currentUser,
-                UpdateUserId = serviceUser!.Id,
+                UpdateUserId = updatingUser!.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             };
-            _appDbContext.Add(newUserRole);
+            await _appDbContext.AddAsync(newUserRole);
             await _appDbContext.SaveChangesAsync();
         }
     }

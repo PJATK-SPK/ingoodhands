@@ -4,6 +4,7 @@ using Core.Database.Enums;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
 using Core.Services;
+using Core.Setup.Auth0;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -21,23 +22,30 @@ namespace Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
         private readonly ILogger<ManageUsersPatchSingleService> _logger;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
 
         public ManageUsersPatchSingleService(
             AppDbContext appDbContext,
             RoleService roleService,
             Hashids hashids,
-            ILogger<ManageUsersPatchSingleService> logger
-            )
+            ILogger<ManageUsersPatchSingleService> logger,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService)
         {
             _appDbContext = appDbContext;
             _roleService = roleService;
             _hashids = hashids;
             _logger = logger;
+            _currentUserService = currentUserService;
+            _getCurrentUserService = getCurrentUserService;
         }
 
         public async Task<ManageUsersPatchSingleResponseItem> PatchUserRolesAndWarehouseId(string id, ManageUsersPatchSinglePayload payload)
         {
-            await _roleService.ThrowIfNoRole(RoleName.Administrator);
+            var auth0UserInfo = await _currentUserService.GetUserInfo();
+            var currentUser = _getCurrentUserService.Execute(auth0UserInfo).Result;
+            await _roleService.ThrowIfNoRole(RoleName.Administrator, currentUser.Id);
             var userId = _hashids.DecodeSingleLong(id);
 
             var dbResult = await _appDbContext.Users
@@ -82,7 +90,7 @@ namespace Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle
                         UserId = dbResult.Id,
                         RoleId = role.Id,
                         UpdatedAt = DateTime.UtcNow,
-                        UpdateUserId = dbResult.Id,
+                        UpdateUserId = currentUser.Id,
                         Status = DbEntityStatus.Active
                     };
                     dbResult.Roles!.Add(userRole);
