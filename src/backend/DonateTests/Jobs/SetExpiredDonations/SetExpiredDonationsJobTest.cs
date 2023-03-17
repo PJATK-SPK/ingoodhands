@@ -1,13 +1,13 @@
-﻿using Core.Database.Enums;
-using Core.Database;
+﻿using Autofac;
 using Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestsBase;
-using Autofac;
-using Donate;
+using Core.Database;
+using Core.Database.Enums;
 using Core.Setup.Enums;
+using Donate;
 using Donate.Jobs.SetExpiredDonations;
 using Donate.Shared;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestsBase;
 
 namespace DonateTests.Jobs.SetExpiredDonations
 {

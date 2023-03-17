@@ -1,28 +1,21 @@
-﻿using Core.Database;
-using Core.Setup.Enums;
+﻿using Autofac;
 using Core;
-using Donate.Actions.DonateForm.GetWarehouses;
-using Donate;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestsBase;
-using Donate.Actions.MyDonations.GetList;
-using Autofac;
-using Core.Database.Models.Core;
+using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Setup.Auth0;
+using Core.Database.Models.Core;
 using Core.Database.Seeders;
-using System.Linq.Dynamic.Core;
+using Core.Setup.Auth0;
+using Core.Setup.Enums;
+using Donate;
+using Donate.Actions.MyDonations.GetNotDeliveredCount;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestsBase;
 
-namespace DonateTests.Services.GetListMyDonationActionTest
+namespace DonateTests.Actions.GetNotDeliveredCount
 {
     [TestClass()]
-    public class GetListMyDonationActionTest
+    public class GetNotDeliveredCountTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -31,13 +24,14 @@ namespace DonateTests.Services.GetListMyDonationActionTest
         };
 
         [TestMethod()]
-        public async Task GetListMyDonationActionTest_GetList_ReturnListOfDonations()
+        public async Task GetNotDeliveredCount_GeProducts_ReturnsProducts()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetListMyDonationAction>();
+            var action = toolkit.Resolve<GetNotDeliveredCountAction>();
 
             // Arrange
+            var donationId = toolkit.Hashids.EncodeLong(1);
             var roleId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
 
             var testingUser = new User()
@@ -94,7 +88,7 @@ namespace DonateTests.Services.GetListMyDonationActionTest
                 CreationUserId = testingUser.Id,
                 CreationUser = testingUser,
                 CreationDate = DateTime.UtcNow,
-                WarehouseId = 1,
+                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
                 Name = "DNT000001",
                 IsExpired = false,
                 IsDelivered = false,
@@ -111,7 +105,7 @@ namespace DonateTests.Services.GetListMyDonationActionTest
                 CreationUserId = testingUser.Id,
                 CreationUser = testingUser,
                 CreationDate = DateTime.UtcNow,
-                WarehouseId = 1,
+                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
                 Name = "DNT000002",
                 IsExpired = false,
                 IsDelivered = false,
@@ -124,12 +118,12 @@ namespace DonateTests.Services.GetListMyDonationActionTest
             await context.SaveChangesAsync();
 
             // Act
-            var executed = await action.Execute(1, 100);
-            var result = executed.Value as PagedResult<GetListMyDonationsItemResponse>;
+            var result = await action.Execute();
+
+            var output = result.Value as GetNotDeliveredCountResponse;
 
             // Assert
-            Assert.IsTrue(result!.Queryable.Any());
-            Assert.AreEqual(2, result!.Queryable.Count());
+            Assert.AreEqual(2, output!.Count);
         }
     }
 }

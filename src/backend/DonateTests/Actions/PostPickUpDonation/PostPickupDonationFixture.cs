@@ -4,9 +4,9 @@ using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Donate.Shared;
 
-namespace DonateTests.Actions.PostPickUpDonationActionTest
+namespace DonateTests.Actions.PostPickUpDonation
 {
-    public static class PostPickupDonationActionFixture
+    public static class PostPickupDonationFixture
     {
         public static User CreateUser(string firstName, string lastName, long? warehouseId = null) => new()
         {

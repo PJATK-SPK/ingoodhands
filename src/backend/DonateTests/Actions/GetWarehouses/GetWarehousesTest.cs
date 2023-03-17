@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace DonateTests.Services.GetWarehousesActionTests
+namespace DonateTests.Services.GetWarehouses
 {
     [TestClass()]
-    public class GetWarehousesActionTests
+    public class GetWarehousesTests
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -21,7 +21,7 @@ namespace DonateTests.Services.GetWarehousesActionTests
         };
 
         [TestMethod()]
-        public async Task GetWarehousesActionTest_GetWarehouses_ReturnsWareHouses()
+        public async Task GetWarehousesTest_GetWarehouses_ReturnsWareHouses()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -36,7 +36,7 @@ namespace DonateTests.Services.GetWarehousesActionTests
         }
 
         [TestMethod()]
-        public async Task GetWarehousesActionTest_RemoveAllWarehousesFromDb_ThrowException()
+        public async Task GetWarehousesTest_RemoveAllWarehousesFromDb_ThrowException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

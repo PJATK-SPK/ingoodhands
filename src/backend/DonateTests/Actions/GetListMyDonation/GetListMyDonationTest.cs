@@ -3,17 +3,20 @@ using Core;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
+using Core.Database.Models.Core;
+using Core.Database.Seeders;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Donate;
-using Donate.Actions.DonateForm.PerformDonate;
+using Donate.Actions.MyDonations.GetList;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq.Dynamic.Core;
 using TestsBase;
 
-namespace DonateTests.Services.PerformDonateActionTest
+namespace DonateTests.Services.GetListMyDonation
 {
     [TestClass()]
-    public class PerformDonateActionTest
+    public class GetListMyDonationTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -22,11 +25,11 @@ namespace DonateTests.Services.PerformDonateActionTest
         };
 
         [TestMethod()]
-        public async Task PerformDonateActionTest_PerformDonation_ReturnDonationName()
+        public async Task GetListMyDonationTest_GetList_ReturnListOfDonations()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<PerformDonateAction>();
+            var action = toolkit.Resolve<GetListMyDonationAction>();
 
             // Arrange
             var roleId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
@@ -65,7 +68,6 @@ namespace DonateTests.Services.PerformDonateActionTest
                 Status = DbEntityStatus.Active
             };
             context.Add(testUserRole);
-            await context.SaveChangesAsync();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {
@@ -80,40 +82,48 @@ namespace DonateTests.Services.PerformDonateActionTest
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            var product1 = new PerformDonateProductPayload
+            var donation = new Donation
             {
-                Id = toolkit.Hashids.EncodeLong(1),
-                Quantity = 5
+                Id = 1,
+                CreationUserId = testingUser.Id,
+                CreationUser = testingUser,
+                CreationDate = DateTime.UtcNow,
+                WarehouseId = 1,
+                Name = "DNT000001",
+                IsExpired = false,
+                IsDelivered = false,
+                IsIncludedInStock = false,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                Status = DbEntityStatus.Active
             };
-            var product2 = new PerformDonateProductPayload
-            {
-                Id = toolkit.Hashids.EncodeLong(2),
-                Quantity = 10
-            };
-            var product3 = new PerformDonateProductPayload
-            {
-                Id = toolkit.Hashids.EncodeLong(3),
-                Quantity = 2
-            };
+            context.Add(donation);
 
-            // Sample PerformDonatePayload instance with the above products
-            var donatePayload = new PerformDonatePayload
+            var donation2 = new Donation
             {
-                WarehouseId = toolkit.Hashids.EncodeLong(4),
-                Products = new List<PerformDonateProductPayload>
-                {
-                    product1,
-                    product2,
-                    product3
-                }
+                Id = 2,
+                CreationUserId = testingUser.Id,
+                CreationUser = testingUser,
+                CreationDate = DateTime.UtcNow,
+                WarehouseId = 1,
+                Name = "DNT000002",
+                IsExpired = false,
+                IsDelivered = false,
+                IsIncludedInStock = false,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                Status = DbEntityStatus.Active
             };
+            context.Add(donation2);
+            await context.SaveChangesAsync();
 
             // Act
-            var executed = await action.Execute(donatePayload);
-            var result = executed.Value as PerformDonateResponse;
+            var executed = await action.Execute(1, 100);
+            var result = executed.Value as PagedResult<GetListMyDonationsItemResponse>;
 
             // Assert
-            Assert.AreEqual("DNT000001", result!.DonateName);
+            Assert.IsTrue(result!.Queryable.Any());
+            Assert.AreEqual(2, result!.Queryable.Count());
         }
     }
 }

@@ -3,19 +3,17 @@ using Core;
 using Core.Database;
 using Core.Database.Enums;
 using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
-using Core.Database.Seeders;
 using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Donate;
-using Donate.Actions.MyDonations.GetNotDeliveredCount;
+using Donate.Actions.DonateForm.PerformDonate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace DonateTests.Actions.GetNotDeliveredCountActionTest
+namespace DonateTests.Services.PerformDonate
 {
     [TestClass()]
-    public class GetNotDeliveredCountActionTest
+    public class PerformDonateTest
     {
         private readonly List<Module> _usedModules = new()
         {
@@ -24,14 +22,13 @@ namespace DonateTests.Actions.GetNotDeliveredCountActionTest
         };
 
         [TestMethod()]
-        public async Task GetNotDeliveredCount_GeProducts_ReturnsProducts()
+        public async Task PerformDonateTest_PerformDonation_ReturnDonationName()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<GetNotDeliveredCountAction>();
+            var action = toolkit.Resolve<PerformDonateAction>();
 
             // Arrange
-            var donationId = toolkit.Hashids.EncodeLong(1);
             var roleId = context.Roles.First(c => c.Name == RoleName.Donor).Id;
 
             var testingUser = new User()
@@ -68,6 +65,7 @@ namespace DonateTests.Actions.GetNotDeliveredCountActionTest
                 Status = DbEntityStatus.Active
             };
             context.Add(testUserRole);
+            await context.SaveChangesAsync();
 
             toolkit.UpdateUserInfo(new CurrentUserInfo
             {
@@ -82,48 +80,40 @@ namespace DonateTests.Actions.GetNotDeliveredCountActionTest
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            var donation = new Donation
+            var product1 = new PerformDonateProductPayload
             {
-                Id = 1,
-                CreationUserId = testingUser.Id,
-                CreationUser = testingUser,
-                CreationDate = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-                Name = "DNT000001",
-                IsExpired = false,
-                IsDelivered = false,
-                IsIncludedInStock = false,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
+                Id = toolkit.Hashids.EncodeLong(1),
+                Quantity = 5
             };
-            context.Add(donation);
+            var product2 = new PerformDonateProductPayload
+            {
+                Id = toolkit.Hashids.EncodeLong(2),
+                Quantity = 10
+            };
+            var product3 = new PerformDonateProductPayload
+            {
+                Id = toolkit.Hashids.EncodeLong(3),
+                Quantity = 2
+            };
 
-            var donation2 = new Donation
+            // Sample PerformDonatePayload instance with the above products
+            var donatePayload = new PerformDonatePayload
             {
-                Id = 2,
-                CreationUserId = testingUser.Id,
-                CreationUser = testingUser,
-                CreationDate = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-                Name = "DNT000002",
-                IsExpired = false,
-                IsDelivered = false,
-                IsIncludedInStock = false,
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                Status = DbEntityStatus.Active
+                WarehouseId = toolkit.Hashids.EncodeLong(4),
+                Products = new List<PerformDonateProductPayload>
+                {
+                    product1,
+                    product2,
+                    product3
+                }
             };
-            context.Add(donation2);
-            await context.SaveChangesAsync();
 
             // Act
-            var result = await action.Execute();
-
-            var output = result.Value as GetNotDeliveredCountResponse;
+            var executed = await action.Execute(donatePayload);
+            var result = executed.Value as PerformDonateResponse;
 
             // Assert
-            Assert.AreEqual(2, output!.Count);
+            Assert.AreEqual("DNT000001", result!.DonateName);
         }
     }
 }
