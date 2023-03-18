@@ -8,6 +8,9 @@ namespace Orders.Jobs.CreateDeliveries
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAsScoped<CreateDeliveriesJob>();
+            builder.RegisterAsScoped<CreateDeliveriesJobDataService>();
+            builder.RegisterAsScoped<CreateDeliveriesJobOrderRemainderService>();
+            builder.RegisterAsScoped<CreateDeliveriesJobWarehouseService>();
         }
     }
 }
