@@ -41,14 +41,14 @@ namespace Orders.Jobs.CreateDeliveries
             return result;
         }
 
-        private Dictionary<long, List<Stock>> ComputeWarehousesStocks(List<Stock> stocks)
+        private static Dictionary<long, List<Stock>> ComputeWarehousesStocks(List<Stock> stocks)
         {
             var result = new Dictionary<long, List<Stock>>();
 
             stocks.ForEach(stock =>
             {
-                if (result.ContainsKey(stock.WarehouseId))
-                    result[stock.WarehouseId].Add(stock);
+                if (result.TryGetValue(stock.WarehouseId, out var item))
+                    item.Add(stock);
                 else
                     result.Add(stock.WarehouseId, new List<Stock> { stock });
             });
@@ -56,7 +56,7 @@ namespace Orders.Jobs.CreateDeliveries
             return result;
         }
 
-        private bool AnyWarehouseHasSomethingFromThisOrder(
+        private static bool AnyWarehouseHasSomethingFromThisOrder(
            CreateDeliveriesJobOrderRemainder remainder,
            List<Stock> stocks)
         {
@@ -84,7 +84,7 @@ namespace Orders.Jobs.CreateDeliveries
             if (!warehouseDeliverers.Any())
                 throw new ItemNotFoundException($"Cannot create delivery for order {order.Id}, because warehouse {warehouse.Id} has no deliverers!");
 
-            var deliverer = warehouseDeliverers[new Random().Next(warehouseDeliverers.Count)];
+            var deliverer = warehouseDeliverers[Random.Shared.Next(warehouseDeliverers.Count)];
 
             var result = new Delivery
             {
@@ -103,7 +103,7 @@ namespace Orders.Jobs.CreateDeliveries
             return result;
         }
 
-        private long GetScoreForWarehouse(CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
+        private static long GetScoreForWarehouse(CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
         {
             var result = 0;
 
@@ -119,7 +119,7 @@ namespace Orders.Jobs.CreateDeliveries
             return result;
         }
 
-        private List<DeliveryProduct> CreateDeliveryProductsForWarehouse(
+        private static List<DeliveryProduct> CreateDeliveryProductsForWarehouse(
             Delivery delivery,
             CreateDeliveriesJobOrderRemainder remainder,
             List<Stock> stocks)

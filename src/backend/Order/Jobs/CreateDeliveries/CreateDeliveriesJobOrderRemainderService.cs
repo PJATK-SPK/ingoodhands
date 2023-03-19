@@ -32,7 +32,7 @@ namespace Orders.Jobs.CreateDeliveries
             remainder.Products = GenerateProducts(remainder.Order);
         }
 
-        private List<CreateDeliveriesJobOrderRemainderProduct> GenerateProducts(Order order)
+        private static List<CreateDeliveriesJobOrderRemainderProduct> GenerateProducts(Order order)
         {
             var result = new List<CreateDeliveriesJobOrderRemainderProduct>();
 

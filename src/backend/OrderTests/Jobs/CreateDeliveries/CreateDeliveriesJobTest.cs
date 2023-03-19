@@ -62,7 +62,7 @@ namespace OrderTests.Jobs.CreateDeliveries
             await RunPart2OfCompleteTest(toolkit);
         }
 
-        private async Task RunPart1OfCompleteTest(TestsToolkit toolkit)
+        private static async Task RunPart1OfCompleteTest(TestsToolkit toolkit)
         {
             var orders = CreateDeliveriesJobFixture.CreateOrdersForCompleteTest(toolkit);
             var stocks = CreateDeliveriesJobFixture.CreateStockForCompleteTestPart1();
@@ -103,7 +103,7 @@ namespace OrderTests.Jobs.CreateDeliveries
             Assert.AreEqual(30, stockPastaWarehouse2.Quantity);
         }
 
-        private async Task RunPart2OfCompleteTest(TestsToolkit toolkit)
+        private static async Task RunPart2OfCompleteTest(TestsToolkit toolkit)
         {
             var context = toolkit.Resolve<AppDbContext>();
             var order = await context.Orders.Where(c => !c.IsCanceledByUser).SingleAsync();
