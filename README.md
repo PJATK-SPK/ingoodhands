@@ -19,7 +19,7 @@
 [![Frontend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml)
 [![Backend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml)
 
-<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="20%" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
+<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="200px" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
 
 <br />
 <div align="center">
@@ -70,7 +70,23 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![App screenshot][product-screenshot]](https://indagoodhandsdev.web.app/)
+<div align="center">
+  <a href="https://indagoodhandsdev.web.app" target="_blank">
+    <img width="600px" height="auto" src="https://raw.githubusercontent.com/PJATK-SPK/ingoodhands/main/assets/1.gif"></img>
+  </a>
+</div>
+
+<div align="center">
+  <a href="https://indagoodhandsdev.web.app" target="_blank">
+    <img width="600px" height="auto" src="https://raw.githubusercontent.com/PJATK-SPK/ingoodhands/main/assets/2.gif"></img>
+  </a>
+</div>
+
+<div align="center">
+  <a href="https://indagoodhandsdev.web.app" target="_blank">
+    <img width="600px" height="auto" src="https://raw.githubusercontent.com/PJATK-SPK/ingoodhands/main/assets/3.gif"></img>
+  </a>
+</div>
 
 **ingoodhands** is a web application developed using .NET 7, Angular 15, Postgres and Auth0. The purpose of this application is to provide aid in the form of food, beverages and defensive equipment to Ukraine, which is currently facing war with Russia and receiving support from western countries. The application assumes that there are several warehouses located throughout Europe where these goods are stored.  
 
@@ -173,7 +189,6 @@ Project Link: [https://github.com/PJATK-SPK/ingoodhands](https://github.com/PJAT
 [license-url]: https://github.com/PJATK-SPK/ingoodhands/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: https://i.imgur.com/7IO8YmD.png
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
 [Dotnet-7]: https://img.shields.io/badge/Dotnet-DD0031?style=for-the-badge&logo=dotnet&logoColor=white
