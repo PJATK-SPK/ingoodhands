@@ -21,5 +21,5 @@ public class StocksController : ControllerBase
 
     public class DeleteMeResponse { public string WarehouseName { get; set; } = default!; }
     [HttpGet("warehouse-name")]
-    public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL001" }));
+    public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL099" }));
 }

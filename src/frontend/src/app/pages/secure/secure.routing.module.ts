@@ -14,6 +14,7 @@ import { RequestHelpComponent } from './request-help/request-help.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { OrderComponent } from './order/order.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
+import { DeliveriesComponent } from './deliveries/deliveries.component';
 
 const routes: Routes = [
     {
@@ -85,6 +86,11 @@ const routes: Routes = [
         path: 'order/:id',
         loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
         component: OrderComponent
+    },
+    {
+        path: 'deliveries',
+        loadChildren: () => import('./deliveries/deliveries.module').then(m => m.DeliveriesModule),
+        component: DeliveriesComponent
     },
 ];
 
