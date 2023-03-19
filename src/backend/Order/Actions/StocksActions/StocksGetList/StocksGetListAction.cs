@@ -11,7 +11,7 @@ namespace Orders.Actions.StocksActions.StocksGetList
             _stocksGetListService = stocksGetListService;
         }
 
-        public async Task<OkObjectResult> Execute(int page, int pageSize)
+        public async Task<ActionResult> Execute(int page, int pageSize)
         {
             var response = await _stocksGetListService.GetStockList(page, pageSize);
 
