@@ -24,7 +24,9 @@
                         <p class="m-0">Creation Date: {{ order.creationDate | string2Date }}</p>
                     </div>
                     <div class="col-12">
-                        <google-map [center]="location" height="500px" width="100%" [zoom]="10"></google-map>
+                        <google-map [center]="location" height="500px" width="100%" [zoom]="10">
+                            <map-marker [options]="marker"></map-marker>
+                        </google-map>
                     </div>
                     <div class="col-12">
                         <p-card header="Deliveries">
