@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateTests", "DonateTests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTests", "CoreTests\CoreTests.csproj", "{D3E34DEC-526E-485F-862C-E08939AFCD0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order", "Order\Order.csproj", "{C0F95199-08DF-45E7-907C-FB8AC1C95A4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orders", "Orders\Orders.csproj", "{C0F95199-08DF-45E7-907C-FB8AC1C95A4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderTests", "OrderTests\OrderTests.csproj", "{CFA91DBF-9CC7-4C09-A8E9-136AB6092975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderTests", "OrdersTests\OrdersTests.csproj", "{CFA91DBF-9CC7-4C09-A8E9-136AB6092975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

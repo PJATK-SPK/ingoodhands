@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Company>PJATK</Company>
@@ -12,13 +11,12 @@
 
 	<ItemGroup>
 		<SonarQubeSetting Include="sonar.coverage.exclusions">
-			<Value>**</Value>
+			<Value>OrdersModule.cs</Value>
 		</SonarQubeSetting>
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Core\Core.csproj" />
-		<ProjectReference Include="..\Donate\Donate.csproj" />
-		<ProjectReference Include="..\Orders\Orders.csproj" />
 	</ItemGroup>
+
 </Project>
