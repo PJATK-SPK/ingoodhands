@@ -65,9 +65,10 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
 
             var deliveryResponse = dbOrderResult.Deliveries!.Select(d => new OrdersGetSingleDeliveryResponse
             {
+                Id = _hashids.EncodeLong(d.Id),
                 Name = d.Name,
                 CreationDate = d.CreationDate,
-                IsDelivered = d.IsDelivered
+                IsDelivered = d.IsDelivered,
             }).ToList();
 
             var orderItemResponse = new OrdersGetSingleResponse

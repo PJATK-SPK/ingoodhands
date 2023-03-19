@@ -1,6 +1,7 @@
 using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
 using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
+using Core.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -77,6 +78,12 @@ public class DeliveriesController : ControllerBase
         public bool IsLost { get; set; } = default!;
         public bool TripStarted { get; set; } = default!;
         public string DelivererFullName { get; set; } = default!;
+        public string CountryName { get; set; } = default!;
+        public double GpsLatitude { get; set; }
+        public double GpsLongitude { get; set; }
+        public string City { get; set; } = default!;
+        public string PostalCode { get; set; } = default!;
+        public string FullStreet { get; set; } = default!;
         public DateTime CreationDate { get; set; } = default!;
         public List<DeleteMeResponse2Product> Products { get; set; } = default!;
     }
@@ -91,6 +98,12 @@ public class DeliveriesController : ControllerBase
             IsDelivered = false,
             IsLost = false,
             TripStarted = false,
+            CountryName = "Poland",
+            GpsLatitude = 12.23,
+            GpsLongitude = 23.24,
+            City = "Poznañ",
+            PostalCode = "12-234",
+            FullStreet = "Poznanska 12/3",
             DelivererFullName = "YourStory Pijony",
             CreationDate = DateTime.UtcNow,
             Products = new List<DeleteMeResponse2Product>

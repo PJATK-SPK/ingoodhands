@@ -47,9 +47,23 @@
                             </p-tag>
                         </p>
 
+                        <p class="m-0">
+                            <a target="_blank"
+                                href="https://www.google.com/maps/search/?api=1&query={{delivery.gpsLatitude}}%2C{{delivery.gpsLongitude}}">
+                                <b>Address:</b>
+                            </a>
+                            {{ delivery.countryName }}, {{ delivery.city }}
+                            {{ delivery.postalCode }}, {{ delivery.fullStreet }}
+                        </p>
                         <p class="m-0"><b>Order:</b> {{ delivery.orderName }}</p>
                         <p class="m-0"><b>Deliverer:</b> {{ delivery.delivererFullName }}</p>
                         <p class="m-0"><b>Creation Date:</b> {{ delivery.creationDate | string2Date }}</p>
+                    </div>
+
+                    <div class="col-12">
+                        <google-map [center]="location" height="500px" width="100%" [zoom]="10">
+                            <map-marker [options]="marker"></map-marker>
+                        </google-map>
                     </div>
 
                     <div class="col-12">

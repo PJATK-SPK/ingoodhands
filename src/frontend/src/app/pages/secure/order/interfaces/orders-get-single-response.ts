@@ -1,4 +1,5 @@
 export interface OrdersGetSingleDeliveryResponse {
+    id: string;
     name: string;
     creationDate: string;
     isDelivered: boolean;

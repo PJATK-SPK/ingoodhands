@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from './services/order.service';
-import { OrdersGetSingleResponse } from './interfaces/orders-get-single-response';
-import { ConfirmationService } from 'primeng/api';
+import { OrdersGetSingleDeliveryResponse, OrdersGetSingleResponse } from './interfaces/orders-get-single-response';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-order',
@@ -39,17 +39,21 @@ export class OrderComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly route: ActivatedRoute,
     private readonly orderService: OrderService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly msg: MessageService,
   ) { }
 
   public ngOnInit(): void {
     this.route.params.subscribe(params => {
       const orderId = params['id'];
-      this.orderService.getOrder(orderId).subscribe(order => {
-        this.order = order;
-        this.location.lat = order.gpsLatitude;
-        this.location.lng = order.gpsLongitude;
-      });
+      this.fetch(orderId);
+    });
+  }
+
+  public onMarkAsDeliveredClick(delivery: OrdersGetSingleDeliveryResponse) {
+    this.orderService.setDeliveryAsDelivered(this.order!.id, delivery.id).subscribe(() => {
+      this.fetch(this.order!.id);
+      this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery marked as delivered!' });
     });
   }
 
@@ -67,7 +71,31 @@ export class OrderComponent implements OnInit {
 
   public cancelOrder() {
     this.orderService.cancelOrder(this.order!.id).subscribe(() => {
-      this.router.navigateByUrl('secure/request-help');
+      this.msg.add({ severity: 'success', summary: 'Success', detail: 'Order canceled!' });
+      setTimeout(() => {
+        this.router.navigateByUrl('secure/request-help');
+      }, 1000);
+    });
+  }
+
+  private fetch(orderId: string) {
+    this.orderService.getOrder(orderId).subscribe(order => {
+      this.order = order;
+      this.location.lat = order.gpsLatitude;
+      this.location.lng = order.gpsLongitude;
+
+      this.order.deliveries.push({
+        id: 'badf',
+        name: 'DEL000123',
+        creationDate: '2021-05-01T12:00:00',
+        isDelivered: true,
+      });
+      this.order.deliveries.push({
+        id: 'badf',
+        name: 'DEL000234',
+        creationDate: '2021-06-01T12:00:00',
+        isDelivered: false,
+      });
     });
   }
 }

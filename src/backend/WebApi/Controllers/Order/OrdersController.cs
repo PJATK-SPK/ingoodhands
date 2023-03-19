@@ -24,4 +24,11 @@ public class OrdersController : ControllerBase
 
     [HttpPost("{id}/cancel")]
     public async Task<ActionResult> Cancel(string id) => await _ordersCancelAction.Execute(id);
+
+    [HttpPost("{orderId}/delivery/{deliveryId}/set-as-delivered")]
+    public async Task<ActionResult> SetDeliveryAsDelivered(string orderId, string deliveryId)
+    {
+        // ustawiasz delivery.IsDelivered =1
+        return await Task.FromResult(Ok(new { Message = "OK" }));
+    }
 }

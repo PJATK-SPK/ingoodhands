@@ -13,5 +13,11 @@ export interface DeliveryGetSingleResponse {
     tripStarted: boolean;
     delivererFullName: string;
     creationDate: string;
+    countryName: string;
+    gpsLatitude: number;
+    gpsLongitude: number;
+    city: string;
+    postalCode: string;
+    fullStreet: string;
     products: DeliveryGetSingleProductResponse[];
 }

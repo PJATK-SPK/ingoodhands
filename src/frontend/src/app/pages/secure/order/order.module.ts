@@ -6,6 +6,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { String2DateModule } from 'src/app/pipes/string2date/string2date.module';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     GoogleMapsModule,
     ButtonModule,
     ConfirmPopupModule,
+    TooltipModule,
+    TagModule
   ],
   exports: [
     OrderComponent
