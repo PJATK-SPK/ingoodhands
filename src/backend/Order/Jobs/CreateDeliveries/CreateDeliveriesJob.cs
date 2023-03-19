@@ -32,7 +32,7 @@ namespace Orders.Jobs.CreateDeliveries
                 var found = remainders.TryGetValue(order.Id, out var remainder);
                 if (!found) continue;
 
-                _warehouseService.AddDeliveriesToOrder(order, remainder!, data.Stocks);
+                await _warehouseService.AddDeliveriesToOrder(order, remainder!, data.Stocks);
             }
 
             await _context.SaveChangesAsync();

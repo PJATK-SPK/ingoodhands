@@ -1,41 +1,172 @@
-﻿using Core.Database.Models.Core;
+﻿using Core.Database.Enums;
+using Core.Database.Models.Core;
+using Core.Database.Seeders;
+using Core.Exceptions;
+using Core.Services;
 using Orders.Jobs.CreateDeliveries.Models;
+using Orders.Services.OrderNameBuilder;
 
 namespace Orders.Jobs.CreateDeliveries
 {
     public class CreateDeliveriesJobWarehouseService
     {
         private readonly CreateDeliveriesJobOrderRemainderService _remainderService;
+        private readonly OrderNameBuilderService _orderNameBuilderService;
+        private readonly CounterService _counterService;
 
-        public CreateDeliveriesJobWarehouseService(CreateDeliveriesJobOrderRemainderService remainderService)
+        public CreateDeliveriesJobWarehouseService(
+            CreateDeliveriesJobOrderRemainderService remainderService,
+            OrderNameBuilderService orderNameBuilderService,
+            CounterService counterService)
         {
             _remainderService = remainderService;
+            _orderNameBuilderService = orderNameBuilderService;
+            _counterService = counterService;
         }
 
-        public List<Delivery> AddDeliveriesToOrder(Order order, CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
+        public async Task<List<Delivery>> AddDeliveriesToOrder(Order order, CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
         {
             var result = new List<Delivery>();
 
-            var items = CreateItems(stocks);
+            var warehousesStocks = ComputeWarehousesStocks(stocks);
 
-            // Petla:
-            // 1. Wygenerowac deliverke
-            // 2, Update remainder
+            while (AnyWarehouseHasSomethingFromThisOrder(remainder, stocks))
+            {
+                var delivery = await CreateDeliveryForWarehouseWithMostStock(order, remainder, warehousesStocks);
+
+                order.Deliveries!.Add(delivery);
+                _remainderService.Update(remainder);
+            }
 
             return result;
         }
 
-        private Dictionary<long, List<Stock>> CreateItems(List<Stock> stocks)
+        private Dictionary<long, List<Stock>> ComputeWarehousesStocks(List<Stock> stocks)
         {
             var result = new Dictionary<long, List<Stock>>();
 
             stocks.ForEach(stock =>
             {
-                if (result.ContainsKey(stock.Id))
-                    result[stock.Id].Add(stock);
+                if (result.ContainsKey(stock.WarehouseId))
+                    result[stock.WarehouseId].Add(stock);
                 else
-                    result.Add(stock.Id, new List<Stock> { stock });
+                    result.Add(stock.WarehouseId, new List<Stock> { stock });
             });
+
+            return result;
+        }
+
+        private bool AnyWarehouseHasSomethingFromThisOrder(
+           CreateDeliveriesJobOrderRemainder remainder,
+           List<Stock> stocks)
+        {
+            var not0OrderProducts = remainder.Products.Where(c => c.Quantity > 0).Select(c => c.OrderProduct.ProductId);
+            var not0Stocks = stocks.Where(c => c.Quantity > 0).Select(c => c.ProductId);
+
+            return not0Stocks.Any(c => not0OrderProducts.Contains(c));
+        }
+
+        private async Task<Delivery> CreateDeliveryForWarehouseWithMostStock(
+            Order order,
+            CreateDeliveriesJobOrderRemainder remainder,
+            Dictionary<long, List<Stock>> warehousesStocks)
+        {
+            var warehouseIdWithMostStock = warehousesStocks
+                .Select(c => new { WarehouseId = c.Key, Score = GetScoreForWarehouse(remainder, c.Value) })
+                .OrderByDescending(c => c.Score)
+                .Select(c => c.WarehouseId)
+                .First();
+
+            var stocks = warehousesStocks[warehouseIdWithMostStock];
+            var warehouse = stocks.First().Warehouse!;
+            var warehouseDeliverers = warehouse.Users!.Where(c => c.Roles!.Any(s => s.Role!.Name == RoleName.Deliverer)).ToList();
+
+            if (!warehouseDeliverers.Any())
+                throw new ItemNotFoundException($"Cannot create delivery for order {order.Id}, because warehouse {warehouse.Id} has no deliverers!");
+
+            var deliverer = warehouseDeliverers[new Random().Next(warehouseDeliverers.Count)];
+
+            var result = new Delivery
+            {
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                CreationDate = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                Status = DbEntityStatus.Active,
+                DelivererUserId = deliverer.Id,
+                Name = _orderNameBuilderService.Build(await _counterService.GetAndUpdateNextCounter(TableName.Deliveries)),
+                Order = order,
+                WarehouseId = warehouse.Id,
+            };
+
+            result.DeliveryProducts = CreateDeliveryProductsForWarehouse(result, remainder, stocks);
+
+            return result;
+        }
+
+        private long GetScoreForWarehouse(CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
+        {
+            var result = 0;
+
+            foreach (var remainderProduct in remainder.Products)
+            {
+                var stock = stocks.SingleOrDefault(c => c.ProductId == remainderProduct.OrderProduct.ProductId);
+                if (stock == null)
+                    continue;
+
+                result += stock.Quantity;
+            }
+
+            return result;
+        }
+
+        private List<DeliveryProduct> CreateDeliveryProductsForWarehouse(
+            Delivery delivery,
+            CreateDeliveriesJobOrderRemainder remainder,
+            List<Stock> stocks)
+        {
+            var result = new List<DeliveryProduct>();
+
+            foreach (var remainderProduct in remainder.Products)
+            {
+                var stock = stocks.SingleOrDefault(c => c.ProductId == remainderProduct.OrderProduct.ProductId);
+                if (stock == null || stock.Quantity <= 0)
+                    continue;
+
+                // == Example 1
+                // ORDER: 150
+                // STOCK: 200
+                // --
+                // GET: 150
+                // STOCK AFTER: 50
+
+                // == Example 2
+                // ORDER: 200
+                // STOCK: 120
+                // --
+                // GET: 120
+                // STOCK AFTER: 0
+
+                var qtyToGet =
+                    stock.Quantity >= remainderProduct.Quantity ? remainderProduct.Quantity : stock.Quantity;
+
+                var newStockQty =
+                    stock.Quantity >= remainderProduct.Quantity ? stock.Quantity - remainderProduct.Quantity : 0;
+
+                stock.Quantity = newStockQty;
+                stock.UpdatedAt = DateTime.UtcNow;
+                stock.UpdateUserId = UserSeeder.ServiceUser.Id;
+
+                var deliveryProduct = new DeliveryProduct
+                {
+                    Delivery = delivery,
+                    ProductId = remainderProduct.OrderProduct.ProductId,
+                    Quantity = qtyToGet,
+                    UpdateUserId = UserSeeder.ServiceUser.Id,
+                    UpdatedAt = DateTime.UtcNow,
+                };
+
+                result.Add(deliveryProduct);
+            }
 
             return result;
         }

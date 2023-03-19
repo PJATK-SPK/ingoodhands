@@ -66,11 +66,13 @@ namespace OrderTests.Jobs.CreateDeliveries
         {
             var orders = CreateDeliveriesJobFixture.CreateOrdersForCompleteTest(toolkit);
             var stocks = CreateDeliveriesJobFixture.CreateStockForCompleteTestPart1();
+            var users = CreateDeliveriesJobFixture.CreateUsersForCompleteTest();
 
             var context = toolkit.Resolve<AppDbContext>();
-            var task1 = context.Orders.AddRangeAsync(orders);
-            var task2 = context.Stocks.AddRangeAsync(stocks);
-            await Task.WhenAll(task1, task2);
+            var task1 = context.Users.AddRangeAsync(users);
+            var task2 = context.Orders.AddRangeAsync(orders);
+            var task3 = context.Stocks.AddRangeAsync(stocks);
+            await Task.WhenAll(task1, task2, task3);
             await context.SaveChangesAsync();
 
             var job = toolkit.Resolve<CreateDeliveriesJob>();
@@ -108,14 +110,11 @@ namespace OrderTests.Jobs.CreateDeliveries
             var stocks = await context.Stocks.ToListAsync();
 
             Assert.AreEqual(2, order.Deliveries!.Count);
-            Assert.AreEqual(0, order.OrderProducts!.Single(c => c.ProductId == ProductSeeder.Product9Milk.Id).Quantity);
-            Assert.AreEqual(100, order.OrderProducts!.Single(c => c.ProductId == ProductSeeder.Product1Rice.Id).Quantity);
-            Assert.AreEqual(0, order.OrderProducts!.Single(c => c.ProductId == ProductSeeder.Product2Pasta.Id).Quantity);
-            Assert.AreEqual(40, order.OrderProducts!.Single(c => c.ProductId == ProductSeeder.Product3Cereals.Id).Quantity);
 
             var newStocks = CreateDeliveriesJobFixture.CreateStockForCompleteTestPart2();
             await context.Stocks.AddRangeAsync(newStocks);
             await context.SaveChangesAsync();
+            stocks = await context.Stocks.ToListAsync();
 
             var job = toolkit.Resolve<CreateDeliveriesJob>();
 
@@ -138,7 +137,7 @@ namespace OrderTests.Jobs.CreateDeliveries
             var stockMilkWarehouse2 = stocks.Single(c => c.WarehouseId == WarehouseSeeder.Warehouse2PL.Id && c.ProductId == ProductSeeder.Product9Milk.Id);
             var stockPastaWarehouse2 = stocks.Single(c => c.WarehouseId == WarehouseSeeder.Warehouse2PL.Id && c.ProductId == ProductSeeder.Product2Pasta.Id);
             var stockRiceWarehouse2 = stocks.Single(c => c.WarehouseId == WarehouseSeeder.Warehouse2PL.Id && c.ProductId == ProductSeeder.Product1Rice.Id);
-            var stockCerealsWarehouse3 = stocks.Single(c => c.WarehouseId == WarehouseSeeder.Warehouse2PL.Id && c.ProductId == ProductSeeder.Product3Cereals.Id);
+            var stockCerealsWarehouse3 = stocks.Single(c => c.WarehouseId == WarehouseSeeder.Warehouse3PL.Id && c.ProductId == ProductSeeder.Product3Cereals.Id);
 
             Assert.AreEqual(70, stockMilkWarehouse1.Quantity);
             Assert.AreEqual(0, stockRiceWarehouse1.Quantity);

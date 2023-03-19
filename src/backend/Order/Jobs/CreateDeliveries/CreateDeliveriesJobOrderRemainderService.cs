@@ -39,9 +39,9 @@ namespace Orders.Jobs.CreateDeliveries
             foreach (var orderProduct in order.OrderProducts!)
             {
                 var deliveryProducts = order.Deliveries!
-                    .Where(c => !c.IsLost && c.Status == DbEntityStatus.Inactive)
+                    .Where(c => !c.IsLost && c.Status == DbEntityStatus.Active)
                     .SelectMany(c => c.DeliveryProducts!)
-                    .Where(c => c.ProductId == orderProduct.Id)
+                    .Where(c => c.ProductId == orderProduct.ProductId)
                     .ToList()!;
 
                 var providedQty = deliveryProducts.Sum(c => c.Quantity);
