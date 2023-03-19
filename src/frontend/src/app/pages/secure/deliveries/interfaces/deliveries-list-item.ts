@@ -5,7 +5,6 @@ export interface DeliveriesListItem<DateType> {
     isDelivered: boolean;
     isLost: boolean;
     tripStarted: boolean;
-    delivererFullName: string;
     creationDate: DateType;
     productTypesCount: number;
 }

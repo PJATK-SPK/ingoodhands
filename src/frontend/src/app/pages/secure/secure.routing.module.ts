@@ -15,6 +15,7 @@ import { CreateOrderComponent } from './create-order/create-order.component';
 import { OrderComponent } from './order/order.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
+import { DeliveryComponent } from './delivery/delivery.component';
 
 const routes: Routes = [
     {
@@ -91,6 +92,11 @@ const routes: Routes = [
         path: 'deliveries',
         loadChildren: () => import('./deliveries/deliveries.module').then(m => m.DeliveriesModule),
         component: DeliveriesComponent
+    },
+    {
+        path: 'delivery/:id',
+        loadChildren: () => import('./delivery/delivery.module').then(m => m.DeliveryModule),
+        component: DeliveryComponent
     },
 ];
 

@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, map } from 'rxjs';
 import { DateTime } from 'luxon';
 import { HttpClient } from "@angular/common/http";
-import { DeliveriesListItem } from "../models/deliveries-list-item";
+import { DeliveriesListItem } from "../interfaces/deliveries-list-item";
 
 @Injectable()
 export class DeliveriesService {

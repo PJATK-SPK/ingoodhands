@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeliveriesService } from './services/deliveries.service';
 import { PagedResult } from 'src/app/interfaces/paged-result';
 import { DateTime } from 'luxon';
-import { DeliveriesListItem } from './models/deliveries-list-item';
+import { DeliveriesListItem } from './interfaces/deliveries-list-item';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { Destroy } from 'src/app/services/destroy';
 

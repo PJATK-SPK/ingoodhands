@@ -4,6 +4,7 @@ using Core.Database.Models.Core;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Orders.Actions.OrdersActions.OrdersCancel;
 using System.Drawing.Printing;
 using System.Linq.Dynamic.Core;
 using static WebApi.Controllers.Order.StocksController;
@@ -69,6 +70,7 @@ public class DeliveriesController : ControllerBase
     }
     public class DeleteMeResponse2
     {
+        public string Id { get; set; } = default!;
         public string DeliveryName { get; set; } = default!;
         public string OrderName { get; set; } = default!;
         public bool IsDelivered { get; set; } = default!;
@@ -83,6 +85,7 @@ public class DeliveriesController : ControllerBase
     {
         var result = new DeleteMeResponse2
         {
+            Id = "brtysa3",
             DeliveryName = "DEL000001",
             OrderName = "ORD000001",
             IsDelivered = false,
@@ -111,7 +114,7 @@ public class DeliveriesController : ControllerBase
         return await Task.FromResult(Ok(result));
     }
 
-    [HttpGet("pickup/{id}")]
+    [HttpPost("{id}/pickup")]
     public async Task<ActionResult> Pickup(string id)
     {
         // ustawiasz tripstarted =1
@@ -120,4 +123,11 @@ public class DeliveriesController : ControllerBase
 
     [HttpGet("warehouse-name")]
     public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL099" }));
+
+    [HttpPost("{id}/set-lost")]
+    public async Task<ActionResult> SetLost(string id)
+    {
+        // ustawiasz islost =1
+        return await Task.FromResult(Ok(new { Message = "OK" }));
+    }
 }

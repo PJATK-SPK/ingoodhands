@@ -4,24 +4,22 @@
             <p-card>
                 <div *ngIf="order" class="grid">
                     <div class="col-12">
-                        <div style="display:grid; grid-template-columns: auto 200px">
-                            <div class="flex align-items-center justify-content-start">
-                                <h2>{{ order.name }}</h2>
-                            </div>
-                            <div class="flex align-items-center justify-content-end">
-                                <p-confirmPopup></p-confirmPopup>
-                                <button pButton icon="pi pi-times" class="p-button-danger" label="CANCEL ORDER"
-                                    (click)="confirm($event)"></button>
-                            </div>
+                        <div class="flex align-items-center justify-content-start">
+                            <h2>{{ order.name }}</h2>
                         </div>
 
+                        <div class="flex pb-3 align-items-center justify-content-start">
+                            <p-confirmPopup></p-confirmPopup>
+                            <button pButton icon="pi pi-times" class="p-button-outlined p-button-danger"
+                                label="CANCEL ORDER" (click)="confirm($event)"></button>
+                        </div>
 
                         <p class="m-0">
                             {{ order.countryName }}, {{ order.city }}
                             {{ order.postalCode }}, {{ order.fullStreet }}
                         </p>
-                        <p class="m-0">Percentage: {{ order.percentage }}%</p>
-                        <p class="m-0">Creation Date: {{ order.creationDate | string2Date }}</p>
+                        <p class="m-0"><b>Percentage:</b> {{ order.percentage }}%</p>
+                        <p class="m-0"><b>Creation Date:</b> {{ order.creationDate | string2Date }}</p>
                     </div>
                     <div class="col-12">
                         <google-map [center]="location" height="500px" width="100%" [zoom]="10">

@@ -54,7 +54,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             await _createOrderCreateOrderPayloadValidator.ValidateAndThrowAsync(payload);
 
             var thereIsOrderInThisLocation = await _appDbContext.Orders
-                .Where(c => c.OwnerUserId == currentUser.Id && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
+                .Where(c => c.OwnerUserId == currentUser.Id && !c.IsCanceledByUser && c.Percentage != 100 && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
                 .AnyAsync();
 
             if (thereIsOrderInThisLocation)
