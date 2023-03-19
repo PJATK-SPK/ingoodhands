@@ -14,12 +14,26 @@ import { ConfirmationService } from 'primeng/api';
   ]
 })
 export class OrderComponent implements OnInit {
-
   order: OrdersGetSingleResponse | undefined;
-  public location = {
+
+  public location: google.maps.LatLngLiteral = {
     lat: 50.1425722,
     lng: 20.8328481
   };
+
+  public marker: google.maps.MarkerOptions = {
+    draggable: false,
+    position: this.location,
+    title: `Order location`,
+    icon: {
+      url: `assets/img/order.png`,
+      scaledSize: {
+        width: 35,
+        height: 35,
+        equals: (_: google.maps.Size) => true
+      }
+    }
+  }
 
   constructor(
     private readonly confirmationService: ConfirmationService,
