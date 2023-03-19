@@ -5,7 +5,7 @@ using Orders.Services.DeliveryNameBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace OrdersTests.Services.DeliveryNameBuilder
+namespace OrderTests.Services.DeliveryNameBuilder
 {
     [TestClass()]
     public class DeliveryNameBuilderServiceTest

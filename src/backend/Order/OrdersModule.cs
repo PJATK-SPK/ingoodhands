@@ -12,6 +12,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
 using Orders.Actions.OrdersActions.OrdersGetSingle;
 using Orders.Actions.OrdersActions.OrdersCancel;
+using Orders.Jobs.CreateDeliveries;
 
 namespace Orders
 {
@@ -40,7 +41,7 @@ namespace Orders
 
         private static void RegisterJobs(ContainerBuilder builder)
         {
-            // Will be used in future
+            builder.RegisterModule<CreateDeliveriesJobModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)
