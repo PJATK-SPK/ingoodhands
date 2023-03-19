@@ -4,24 +4,26 @@
             <p-card>
                 <div *ngIf="order" class="grid">
                     <div class="col-12">
-                        <div style="display:grid; grid-template-columns: auto 200px">
-                            <div class="flex align-items-center justify-content-start">
-                                <h2>{{ order.name }}</h2>
-                            </div>
-                            <div class="flex align-items-center justify-content-end">
-                                <p-confirmPopup></p-confirmPopup>
-                                <button pButton icon="pi pi-times" class="p-button-danger" label="CANCEL ORDER"
-                                    (click)="confirm($event)"></button>
-                            </div>
+                        <div class="flex align-items-center justify-content-start">
+                            <h2>{{ order.name }}</h2>
                         </div>
 
+                        <div class="flex pb-3 align-items-center justify-content-start">
+                            <p-confirmPopup></p-confirmPopup>
+                            <button pButton icon="pi pi-times" class="p-button-outlined p-button-danger"
+                                label="CANCEL ORDER" (click)="confirm($event)"></button>
+                        </div>
 
                         <p class="m-0">
+                            <a target="_blank"
+                                href="https://www.google.com/maps/search/?api=1&query={{order.gpsLatitude}}%2C{{order.gpsLongitude}}">
+                                <b>Address:</b>
+                            </a>
                             {{ order.countryName }}, {{ order.city }}
                             {{ order.postalCode }}, {{ order.fullStreet }}
                         </p>
-                        <p class="m-0">Percentage: {{ order.percentage }}%</p>
-                        <p class="m-0">Creation Date: {{ order.creationDate | string2Date }}</p>
+                        <p class="m-0"><b>Percentage:</b> {{ order.percentage }}%</p>
+                        <p class="m-0"><b>Creation Date:</b> {{ order.creationDate | string2Date }}</p>
                     </div>
                     <div class="col-12">
                         <google-map [center]="location" height="500px" width="100%" [zoom]="10">
@@ -34,9 +36,28 @@
                                 There are no deliveries yet! 🤨
                             </h3>
                             <ul *ngIf="order.deliveries.length!==0">
-                                <li *ngFor="let delivery of order.deliveries">
-                                    {{ delivery.name }} - {{ delivery.creationDate | string2Date }} - {{
-                                    delivery.isDelivered ? 'Delivered' : 'Not Delivered' }}
+                                <li class="pt-3" style="display:grid;grid-template-columns:auto 50px;"
+                                    *ngFor="let delivery of order.deliveries">
+                                    <div>
+                                        <div>
+                                            <b>{{ delivery.name }}</b>
+
+                                            <p-tag *ngIf="!delivery.isDelivered" styleClass="ml-2 mb-1"
+                                                icon="pi pi-calendar" severity="warning" value="Not delivered">
+                                            </p-tag>
+
+                                            <p-tag *ngIf="delivery.isDelivered" styleClass="ml-2 mb-1"
+                                                icon="pi pi-calendar" severity="success" value="Delivered">
+                                            </p-tag>
+                                        </div>
+                                        <div> {{ delivery.creationDate | string2Date }}</div>
+                                    </div>
+                                    <div>
+                                        <button pButton pRipple *ngIf="!delivery.isDelivered" type="button"
+                                            icon="pi pi-check" (click)="onMarkAsDeliveredClick(delivery)"
+                                            pTooltip="Mark as delivered"
+                                            class="p-button-rounded p-button-outlined"></button>
+                                    </div>
                                 </li>
                             </ul>
                         </p-card>

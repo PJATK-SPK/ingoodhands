@@ -16,4 +16,8 @@ export class OrderService {
     cancelOrder(id: string): Observable<void> {
         return this.http.post<void>(`${environment.api}/orders/${id}/cancel`, {});
     }
+
+    setDeliveryAsDelivered(orderId: string, deliveryId: string): Observable<void> {
+        return this.http.post<void>(`${environment.api}/orders/${orderId}/delivery/${deliveryId}/set-as-delivered`, {});
+    }
 }

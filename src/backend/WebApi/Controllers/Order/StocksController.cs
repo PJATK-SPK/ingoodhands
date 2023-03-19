@@ -18,4 +18,8 @@ public class StocksController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult> GetList(int page, int pageSize) => await _stocksGetListAction.Execute(page, pageSize);
+
+    public class DeleteMeResponse { public string WarehouseName { get; set; } = default!; }
+    [HttpGet("warehouse-name")]
+    public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL099" }));
 }

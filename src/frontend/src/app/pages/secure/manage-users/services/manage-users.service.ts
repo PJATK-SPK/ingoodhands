@@ -3,7 +3,7 @@ import { PagedResult } from 'src/app/interfaces/paged-result';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
-import { ManageUsersItem } from "../models/manage-users-item";
+import { ManageUsersItem } from "../interfaces/manage-users-item";
 
 @Injectable()
 export class ManageUsersService {

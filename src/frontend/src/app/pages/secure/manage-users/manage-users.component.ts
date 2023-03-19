@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageUsersService } from './services/manage-users.service';
-import { ManageUsersItem } from './models/manage-users-item';
+import { ManageUsersItem } from './interfaces/manage-users-item';
 import { PagedResult } from 'src/app/interfaces/paged-result';
 import { Role } from 'src/app/enums/role';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
