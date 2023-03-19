@@ -1,5 +1,9 @@
-<div *ngIf="!authChecked">
-  Loading...
+<div *ngIf="!authChecked || !loaded">
+  <div class="loader">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
 </div>
 
 <p-toast></p-toast>
