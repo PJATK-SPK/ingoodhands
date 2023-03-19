@@ -10,16 +10,13 @@ namespace Orders.Jobs.CreateDeliveries
 {
     public class CreateDeliveriesJobWarehouseService
     {
-        private readonly CreateDeliveriesJobOrderRemainderService _remainderService;
         private readonly OrderNameBuilderService _orderNameBuilderService;
         private readonly CounterService _counterService;
 
         public CreateDeliveriesJobWarehouseService(
-            CreateDeliveriesJobOrderRemainderService remainderService,
             OrderNameBuilderService orderNameBuilderService,
             CounterService counterService)
         {
-            _remainderService = remainderService;
             _orderNameBuilderService = orderNameBuilderService;
             _counterService = counterService;
         }
@@ -35,7 +32,7 @@ namespace Orders.Jobs.CreateDeliveries
                 var delivery = await CreateDeliveryForWarehouseWithMostStock(order, remainder, warehousesStocks);
 
                 order.Deliveries!.Add(delivery);
-                _remainderService.Update(remainder);
+                CreateDeliveriesJobOrderRemainderService.Update(remainder);
             }
 
             return result;

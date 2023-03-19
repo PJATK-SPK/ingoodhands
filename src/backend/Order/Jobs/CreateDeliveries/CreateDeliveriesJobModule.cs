@@ -9,7 +9,6 @@ namespace Orders.Jobs.CreateDeliveries
         {
             builder.RegisterAsScoped<CreateDeliveriesJob>();
             builder.RegisterAsScoped<CreateDeliveriesJobDataService>();
-            builder.RegisterAsScoped<CreateDeliveriesJobOrderRemainderService>();
             builder.RegisterAsScoped<CreateDeliveriesJobWarehouseService>();
         }
     }

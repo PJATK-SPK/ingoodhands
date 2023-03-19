@@ -7,25 +7,22 @@ namespace Orders.Jobs.CreateDeliveries
     {
         private readonly AppDbContext _context;
         private readonly CreateDeliveriesJobDataService _dataService;
-        private readonly CreateDeliveriesJobOrderRemainderService _remainderService;
         private readonly CreateDeliveriesJobWarehouseService _warehouseService;
 
         public CreateDeliveriesJob(
             AppDbContext context,
             CreateDeliveriesJobDataService dataService,
-            CreateDeliveriesJobOrderRemainderService remainderService,
             CreateDeliveriesJobWarehouseService warehouseService)
         {
             _context = context;
             _dataService = dataService;
-            _remainderService = remainderService;
             _warehouseService = warehouseService;
         }
 
         public async Task<ActionResult> Execute()
         {
             var data = await _dataService.Fetch();
-            var remainders = _remainderService.Execute(data.Orders);
+            var remainders = CreateDeliveriesJobOrderRemainderService.Execute(data.Orders);
 
             foreach (var order in data.Orders)
             {

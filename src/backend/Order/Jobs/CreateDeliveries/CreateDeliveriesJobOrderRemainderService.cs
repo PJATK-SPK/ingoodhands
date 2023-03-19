@@ -4,9 +4,9 @@ using Orders.Jobs.CreateDeliveries.Models;
 
 namespace Orders.Jobs.CreateDeliveries
 {
-    public class CreateDeliveriesJobOrderRemainderService
+    public static class CreateDeliveriesJobOrderRemainderService
     {
-        public Dictionary<long, CreateDeliveriesJobOrderRemainder> Execute(List<Order> orders)
+        public static Dictionary<long, CreateDeliveriesJobOrderRemainder> Execute(List<Order> orders)
         {
             var result = new Dictionary<long, CreateDeliveriesJobOrderRemainder>();
 
@@ -27,7 +27,7 @@ namespace Orders.Jobs.CreateDeliveries
             return result;
         }
 
-        public void Update(CreateDeliveriesJobOrderRemainder remainder)
+        public static void Update(CreateDeliveriesJobOrderRemainder remainder)
         {
             remainder.Products = GenerateProducts(remainder.Order);
         }
