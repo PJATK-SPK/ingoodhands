@@ -68,3 +68,37 @@ resource "google_cloud_scheduler_job" "include_to_stock" {
     }
   }
 }
+
+resource "google_cloud_scheduler_job" "create_deliveries" {
+  name             = "create-deliveries"
+  description      = "job to trigger create-deliveries"
+  schedule         = "0 1 * * *"
+  time_zone        = "Europe/Warsaw"
+  attempt_deadline = "320s"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://worker-ka7w7ys4tq-ew.a.run.app/order-jobs/create-deliveries"
+
+    oidc_token {
+      service_account_email = google_service_account.worker.email
+    }
+  }
+}
+
+resource "google_cloud_scheduler_job" "recalc_percentages" {
+  name             = "recalc-percentages"
+  description      = "job to trigger recalc-percentages"
+  schedule         = "0 1 * * *"
+  time_zone        = "Europe/Warsaw"
+  attempt_deadline = "320s"
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://worker-ka7w7ys4tq-ew.a.run.app/order-jobs/recalc-percentages"
+
+    oidc_token {
+      service_account_email = google_service_account.worker.email
+    }
+  }
+}
