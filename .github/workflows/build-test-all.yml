@@ -20,6 +20,7 @@ jobs:
           filters: |
             frontend:
               - 'src/frontend/**'
+              - 'firebase.json'
             backend:
               - 'src/backend/**'
             workflow:
