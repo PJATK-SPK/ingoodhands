@@ -16,7 +16,7 @@
       "source": "**/*.html",
       "headers": [ {
         "key": "Cache-Control",
-        "value": "max-age=0, no-cache"
+        "value": "max-age=0, must-revalidate"
       } ]
     }
 
