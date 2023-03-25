@@ -13,13 +13,12 @@
       }
     ],
     "headers": [ {
-      "source": "**/*.html",
+      "source": "index.html",
       "headers": [ {
         "key": "Cache-Control",
         "value": "max-age=0, must-revalidate"
       } ]
     }
-
     ]
   }
 }
