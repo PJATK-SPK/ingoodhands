@@ -7,7 +7,6 @@ using Core.Setup.Auth0;
 using FluentValidation;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Orders.Services.OrderNameBuilder;
 using System.Linq.Dynamic.Core;
 using Z.EntityFramework.Plus;
@@ -23,6 +22,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
         private readonly RoleService _roleService;
         private readonly OrderNameBuilderService _orderNameBuilderService;
         private readonly CounterService _counterService;
+        private readonly NotificationService _notificationService;
         private readonly CreateOrderCreateOrderPayloadValidator _createOrderCreateOrderPayloadValidator;
 
         public CreateOrderCreateOrderService(
@@ -33,7 +33,8 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             RoleService roleService,
             CreateOrderCreateOrderPayloadValidator createOrderCreateOrderPayloadValidator,
             OrderNameBuilderService orderNameBuilderService,
-            CounterService counterService)
+            CounterService counterService,
+            NotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
@@ -43,6 +44,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             _createOrderCreateOrderPayloadValidator = createOrderCreateOrderPayloadValidator;
             _orderNameBuilderService = orderNameBuilderService;
             _counterService = counterService;
+            _notificationService = notificationService;
         }
 
         public async Task<CreateOrderCreateOrderResponse> CreateOrder(CreateOrderCreateOrderPayload payload)
@@ -89,6 +91,8 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
 
             await _appDbContext.AddAsync(newOrder);
             await _appDbContext.SaveChangesAsync();
+
+            await _notificationService.AddAsync(currentUser.Id, $"Your order {orderName} has been created!");
 
             var response = new CreateOrderCreateOrderResponse
             {
