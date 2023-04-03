@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230403193532_FixWarehouse")]
+    [Migration("20230403194200_FixWarehouse")]
     partial class FixWarehouse
     {
         /// <inheritdoc />
@@ -3957,7 +3957,7 @@ namespace Core.Migrations
                         },
                         new
                         {
-                            Id = 5L,
+                            Id = 4L,
                             AddressId = 4L,
                             ShortName = "DE001",
                             Status = 0,
@@ -3966,7 +3966,7 @@ namespace Core.Migrations
                         },
                         new
                         {
-                            Id = 9L,
+                            Id = 5L,
                             AddressId = 5L,
                             ShortName = "DE002",
                             Status = 0,

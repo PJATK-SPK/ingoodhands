@@ -39,7 +39,7 @@ namespace Core.Database.Seeders
         
         public static readonly Warehouse Warehouse4DE = new()
         {
-            Id = 5,
+            Id = 4,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
             UpdateUserId = UserSeeder.ServiceUser.Id,
@@ -48,7 +48,7 @@ namespace Core.Database.Seeders
         };
         public static readonly Warehouse Warehouse5DE = new()
         {
-            Id = 9,
+            Id = 5,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
             UpdateUserId = UserSeeder.ServiceUser.Id,
