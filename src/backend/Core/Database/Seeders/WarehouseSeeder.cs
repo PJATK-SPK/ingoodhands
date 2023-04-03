@@ -36,27 +36,25 @@ namespace Core.Database.Seeders
             ShortName = "PL003",
             AddressId = AddressSeeder.Address3Poland.Id
         };
-
+        
         public static readonly Warehouse Warehouse4DE = new()
         {
-            Id = 4,
+            Id = 5,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
             UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "DE001",
             AddressId = AddressSeeder.Address4Germany.Id
         };
-
         public static readonly Warehouse Warehouse5DE = new()
         {
-            Id = 5,
+            Id = 9,
             Status = DbEntityStatus.Active,
             UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
             UpdateUserId = UserSeeder.ServiceUser.Id,
             ShortName = "DE002",
             AddressId = AddressSeeder.Address5Germany.Id
         };
-
         public static readonly Warehouse Warehouse6HU = new()
         {
             Id = 6,
@@ -86,17 +84,7 @@ namespace Core.Database.Seeders
             ShortName = "FR001",
             AddressId = AddressSeeder.Address8France.Id
         };
-
-        public static readonly Warehouse Warehouse9FR = new()
-        {
-            Id = 9,
-            Status = DbEntityStatus.Active,
-            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
-            UpdateUserId = UserSeeder.ServiceUser.Id,
-            ShortName = "FR002",
-            AddressId = AddressSeeder.Address9France.Id
-        };
-
+        
         public static void Execute(ModelBuilder builder)
         {
             builder.Entity<Warehouse>().HasData(Warehouse1PL);
@@ -107,7 +95,6 @@ namespace Core.Database.Seeders
             builder.Entity<Warehouse>().HasData(Warehouse6HU);
             builder.Entity<Warehouse>().HasData(Warehouse7CZ);
             builder.Entity<Warehouse>().HasData(Warehouse8FR);
-            builder.Entity<Warehouse>().HasData(Warehouse9FR);
         }
     }
 }
