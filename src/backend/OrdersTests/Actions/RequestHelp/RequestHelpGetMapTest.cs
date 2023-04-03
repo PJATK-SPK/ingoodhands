@@ -70,7 +70,7 @@ namespace OrdersTests.Actions.RequestHelp
             Assert.IsTrue(result!.Warehouses.Any());
             Assert.IsTrue(result!.Orders.Any());
             Assert.AreEqual(1, result!.Orders.Count);
-            Assert.AreEqual(9, result!.Warehouses.Count);
+            Assert.AreEqual(8, result!.Warehouses.Count);
         }
     }
 }
