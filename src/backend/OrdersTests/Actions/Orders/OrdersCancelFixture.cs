@@ -82,7 +82,7 @@ namespace OrdersTests.Actions.Orders
             DelivererUser = user,
             CreationDate = DateTime.UtcNow,
             IsLost = false,
-            IsPacked = true,
+            TripStarted = true,
             WarehouseId = warehouse.Id,
             UpdateUserId = UserSeeder.ServiceUser.Id,
             UpdatedAt = DateTime.UtcNow,

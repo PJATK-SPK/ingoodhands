@@ -16,7 +16,7 @@ namespace Core.Database.Models.Core
         public User? DelivererUser { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsLost { get; set; }
-        public bool IsPacked { get; set; }
+        public bool TripStarted { get; set; }
         public long WarehouseId { get; set; }
         public Warehouse? Warehouse { get; set; }
         public List<DeliveryProduct>? DeliveryProducts { get; set; }
@@ -29,7 +29,7 @@ namespace Core.Database.Models.Core
         public override int GetHashCode()
             => HashCode.Combine(
                 base.GetHashCode(),
-                HashCode.Combine(Name, OrderId, IsDelivered, DelivererUserId, CreationDate, IsLost, IsPacked, WarehouseId)
+                HashCode.Combine(Name, OrderId, IsDelivered, DelivererUserId, CreationDate, IsLost, TripStarted, WarehouseId)
                 );
     }
 }

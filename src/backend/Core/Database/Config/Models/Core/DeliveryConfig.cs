@@ -20,7 +20,7 @@ namespace Core.Database.Config.Models.Core
             builder.Property(c => c.DelivererUserId).IsRequired();
             builder.Property(c => c.CreationDate).IsRequired();
             builder.Property(c => c.IsLost).IsRequired();
-            builder.Property(c => c.IsPacked).IsRequired();
+            builder.Property(c => c.TripStarted).IsRequired();
             builder.Property(c => c.WarehouseId).IsRequired();
 
             builder.HasIndex(c => c.Name).IsUnique().HasDatabaseName("delivery_name_idx");
