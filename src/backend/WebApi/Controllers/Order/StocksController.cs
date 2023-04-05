@@ -1,3 +1,4 @@
+using Core.Actions.WarehouseName.GetWarehouseName;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Actions.StocksActions.StocksGetList;
@@ -10,16 +11,18 @@ namespace WebApi.Controllers.Order;
 public class StocksController : ControllerBase
 {
     private readonly StocksGetListAction _stocksGetListAction;
+    private readonly GetWarehouseNameAction _getWarehouseNameAction;
 
-    public StocksController(StocksGetListAction stocksGetListAction)
+    public StocksController(StocksGetListAction stocksGetListAction, GetWarehouseNameAction getWarehouseNameAction)
     {
         _stocksGetListAction = stocksGetListAction;
+        _getWarehouseNameAction = getWarehouseNameAction;
     }
 
     [HttpGet]
     public async Task<ActionResult> GetList(int page, int pageSize) => await _stocksGetListAction.Execute(page, pageSize);
 
-    public class DeleteMeResponse { public string WarehouseName { get; set; } = default!; }
+
     [HttpGet("warehouse-name")]
-    public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL099" }));
+    public async Task<ActionResult> GetWarehouseName() => await _getWarehouseNameAction.Execute();
 }
