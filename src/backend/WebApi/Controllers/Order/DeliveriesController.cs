@@ -1,14 +1,7 @@
-using Auth.Actions.ManageUsersActions.ManageUsersGetSingle;
-using Core.Database.Models.Auth;
-using Core.Database.Models.Core;
-using Core.Services;
+using Core.Actions.WarehouseName.GetWarehouseName;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Orders.Actions.OrdersActions.OrdersCancel;
-using System.Drawing.Printing;
 using System.Linq.Dynamic.Core;
-using static WebApi.Controllers.Order.StocksController;
 
 namespace WebApi.Controllers.Order;
 
@@ -17,6 +10,13 @@ namespace WebApi.Controllers.Order;
 [Route("deliveries")]
 public class DeliveriesController : ControllerBase
 {
+    private readonly GetWarehouseNameAction _getWarehouseNameAction;
+
+    public DeliveriesController(GetWarehouseNameAction getWarehouseNameAction)
+    {
+        _getWarehouseNameAction = getWarehouseNameAction;
+    }
+
     public class DeleteMeResponse1
     {
         public string Id { get; set; } = default!;
@@ -135,7 +135,7 @@ public class DeliveriesController : ControllerBase
     }
 
     [HttpGet("warehouse-name")]
-    public async Task<ActionResult> GetWarehouseName() => await Task.Run(() => Ok(new DeleteMeResponse { WarehouseName = "PL099" }));
+    public async Task<ActionResult> GetWarehouseName() => await _getWarehouseNameAction.Execute();
 
     [HttpPost("{id}/set-lost")]
     public async Task<ActionResult> SetLost(string id)

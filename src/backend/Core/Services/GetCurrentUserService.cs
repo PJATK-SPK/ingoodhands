@@ -24,6 +24,7 @@ namespace Core.Services
             var userFromDatabase = await _appDbContext.Users
                 .Include(c => c.Auth0Users!)
                 .Include(c => c.Roles!).ThenInclude(c => c.Role!)
+                .Include(c => c.Warehouse)
                 .Where(c => c.Auth0Users!.Any(s => s.Identifier == auth0UserInfo.Identifier))
                 .SingleOrDefaultAsync();
 
