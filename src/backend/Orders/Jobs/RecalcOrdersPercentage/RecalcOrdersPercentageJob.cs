@@ -1,38 +1,37 @@
-﻿using Autofac.Features.ResolveAnything;
+﻿using Core.Database;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Orders.Jobs.CreateDeliveries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Orders.Jobs.RecalcOrdersPercentage
 {
     public class RecalcOrdersPercentageJob
     {
+        private readonly AppDbContext _appDbContext;
         private readonly RecalcOrdersPercentageJobDataService _recalcOrdersPercentageJobDataService;
+        private readonly RecalcOrdersPercentageJobService _recalcOrdersPercentageJobService;
 
-        public RecalcOrdersPercentageJob(RecalcOrdersPercentageJobDataService recalcOrdersPercentageJobDataService)
+        public RecalcOrdersPercentageJob(
+            RecalcOrdersPercentageJobDataService recalcOrdersPercentageJobDataService,
+            RecalcOrdersPercentageJobService recalcOrdersPercentageJobService,
+            AppDbContext appDbContext)
         {
             _recalcOrdersPercentageJobDataService = recalcOrdersPercentageJobDataService;
+            _recalcOrdersPercentageJobService = recalcOrdersPercentageJobService;
+            _appDbContext = appDbContext;
         }
 
         public async Task<ActionResult> Execute()
         {
             var listOfOrders = await _recalcOrdersPercentageJobDataService.Fetch();
-            var remainders = CreateDeliveriesJobOrderRemainderService.Execute(listOfOrders);
 
-            foreach (var order in listOfOrders)
+            if (listOfOrders != null)
             {
-                var found = remainders.TryGetValue(order.Id, out var remainder);
-                if (!found) continue;
+                foreach (var order in listOfOrders)
+                {
+                    await _recalcOrdersPercentageJobService.CalculateAndUpdatePercentage(order);
+                }
 
-                await _warehouseService.AddDeliveriesToOrder(order, remainder!, data.Stocks);
+                await _appDbContext.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
 
             return new OkObjectResult(new { Message = "OK" });
         }

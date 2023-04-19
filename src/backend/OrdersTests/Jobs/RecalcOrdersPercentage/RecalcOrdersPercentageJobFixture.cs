@@ -2,6 +2,7 @@
 using Core.Database.Models.Auth;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
+using Orders.Services.DeliveryNameBuilder;
 using Orders.Services.OrderNameBuilder;
 using TestsBase;
 
@@ -35,7 +36,7 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
                 FirstName = "Jan3",
                 LastName = "Kowalski",
                 Email = "jan3.kowalski@ingoodhands.com",
-                WarehouseId = WarehouseSeeder.Warehouse3PL.Id
+                WarehouseId = WarehouseSeeder.Warehouse4DE.Id
             };
 
             user1.Roles = new List<UserRole> { new UserRole() {
@@ -83,12 +84,13 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
                         ProductId = ProductSeeder.Product5Walnuts.Id,
                         Quantity = 1
                     },
-                }
+                },
+                Deliveries = new List<Delivery>()
             };
 
             var order2 = new Order
             {
-                AddressId = WarehouseSeeder.Warehouse1PL.Id,
+                AddressId = WarehouseSeeder.Warehouse4DE.Id,
                 Name = builder.Build(2),
                 Percentage = 0,
                 UpdateUserId = UserSeeder.ServiceUser.Id,
@@ -103,7 +105,7 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
                         UpdateUserId = UserSeeder.ServiceUser.Id,
                         UpdatedAt = DateTime.UtcNow,
                         ProductId = ProductSeeder.Product9Milk.Id,
-                        Quantity = 30
+                        Quantity = 200
                     },
                     new OrderProduct
                     {
@@ -111,89 +113,317 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
                         UpdatedAt = DateTime.UtcNow,
                         ProductId = ProductSeeder.Product1Rice.Id,
                         Quantity = 200
-                    },
+                    }
+                },
+                Deliveries = new List<Delivery>()
+            };
+
+            var order3 = new Order
+            {
+                AddressId = WarehouseSeeder.Warehouse1PL.Id,
+                Name = builder.Build(3),
+                Percentage = 0,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                OwnerUserId = UserSeeder.ServiceUser.Id,
+                CreationDate = DateTime.UtcNow,
+                IsCanceledByUser = false,
+                OrderProducts = new List<OrderProduct>
+                {
                     new OrderProduct
                     {
                         UpdateUserId = UserSeeder.ServiceUser.Id,
                         UpdatedAt = DateTime.UtcNow,
                         ProductId = ProductSeeder.Product2Pasta.Id,
-                        Quantity = 20
+                        Quantity = 100
+                    },
+                },
+                Deliveries = new List<Delivery>()
+            };
+
+            var order4 = new Order
+            {
+                AddressId = WarehouseSeeder.Warehouse1PL.Id,
+                Name = builder.Build(4),
+                Percentage = 0,
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+                OwnerUserId = UserSeeder.ServiceUser.Id,
+                CreationDate = DateTime.UtcNow,
+                IsCanceledByUser = false,
+                OrderProducts = new List<OrderProduct>
+                {
+                    new OrderProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 350
                     },
                     new OrderProduct
                     {
                         UpdateUserId = UserSeeder.ServiceUser.Id,
                         UpdatedAt = DateTime.UtcNow,
-                        ProductId = ProductSeeder.Product3Cereals.Id,
-                        Quantity = 40
+                        ProductId = ProductSeeder.Product1Rice.Id,
+                        Quantity = 50
+                    },
+                    new OrderProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product12EnergyDrink.Id,
+                        Quantity = 150
+                    },
+                    new OrderProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product5Walnuts.Id,
+                        Quantity = 50
                     }
-                }
+                },
+                Deliveries = new List<Delivery>()
             };
 
-            return new List<Order> { order1, order2 };
+            return new List<Order> { order1, order2, order3, order4 };
         }
 
-        public static List<Stock> CreateStockForCompleteTestPart1()
+        public static List<Delivery> CreateDeliveryForCompleteTestPart1(TestsToolkit toolkit, Order order2, Order order3, Order order4, User user1, User user2)
         {
-            var w1Milk = new Stock
+            var builder = toolkit.Resolve<DeliveryNameBuilderService>();
+
+            var delivery1 = new Delivery
             {
+                Name = builder.Build(1),
+                Order = order2,
+                IsDelivered = true,
+                DelivererUser = user1,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
+                WarehouseId = WarehouseSeeder.Warehouse4DE.Id,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 100
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product1Rice.Id,
+                        Quantity = 100
+                    }
+                },
                 UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-                ProductId = ProductSeeder.Product9Milk.Id,
-                Quantity = 100,
             };
 
-            var w1Rice = new Stock
+            var delivery2 = new Delivery
             {
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-                ProductId = ProductSeeder.Product1Rice.Id,
-                Quantity = 100,
-            };
-
-            var w2Milk = new Stock
-            {
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
+                Name = builder.Build(2),
+                Order = order3,
+                IsDelivered = true,
+                DelivererUser = user2,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
                 WarehouseId = WarehouseSeeder.Warehouse2PL.Id,
-                ProductId = ProductSeeder.Product9Milk.Id,
-                Quantity = 50,
-            };
-
-            var w2Pasta = new Stock
-            {
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product2Pasta.Id,
+                        Quantity = 100
+                    }
+                },
                 UpdateUserId = UserSeeder.ServiceUser.Id,
                 UpdatedAt = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse2PL.Id,
-                ProductId = ProductSeeder.Product2Pasta.Id,
-                Quantity = 50,
             };
 
-            return new List<Stock> { w1Milk, w1Rice, w2Milk, w2Pasta };
-        }
-
-        public static List<Stock> CreateStockForCompleteTestPart2()
-        {
-            var w2Rice = new Stock
+            var delivery3 = new Delivery
             {
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
-                WarehouseId = WarehouseSeeder.Warehouse2PL.Id,
-                ProductId = ProductSeeder.Product1Rice.Id,
-                Quantity = 300,
-            };
-
-            var w3Cereals = new Stock
-            {
-                UpdateUserId = UserSeeder.ServiceUser.Id,
-                UpdatedAt = DateTime.UtcNow,
+                Name = builder.Build(3),
+                Order = order4,
+                IsDelivered = true,
+                DelivererUser = user2,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
                 WarehouseId = WarehouseSeeder.Warehouse3PL.Id,
-                ProductId = ProductSeeder.Product3Cereals.Id,
-                Quantity = 50,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 50
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product1Rice.Id,
+                        Quantity = 50
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product12EnergyDrink.Id,
+                        Quantity = 50
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product5Walnuts.Id,
+                        Quantity = 50
+                    }
+                },
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
             };
 
-            return new List<Stock> { w2Rice, w3Cereals };
+            return new List<Delivery> { delivery1, delivery2, delivery3 };
+        }
+
+        public static List<Delivery> CreateDeliveryForCompleteTestPart2(TestsToolkit toolkit, Order order2, Order order4, User user1, User user2)
+        {
+            var builder = toolkit.Resolve<DeliveryNameBuilderService>();
+
+            var delivery1 = new Delivery
+            {
+                Name = builder.Build(4),
+                Order = order2,
+                IsDelivered = false,
+                DelivererUser = user1,
+                CreationDate = DateTime.UtcNow,
+                IsLost = true,
+                TripStarted = false,
+                WarehouseId = WarehouseSeeder.Warehouse4DE.Id,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product1Rice.Id,
+                        Quantity = 100
+                    }
+                },
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            var delivery2 = new Delivery
+            {
+                Name = builder.Build(5),
+                Order = order4,
+                IsDelivered = true,
+                DelivererUser = user2,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
+                WarehouseId = WarehouseSeeder.Warehouse3PL.Id,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 50
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product12EnergyDrink.Id,
+                        Quantity = 50
+                    },
+                },
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            return new List<Delivery> { delivery1, delivery2 };
+        }
+
+        public static List<Delivery> CreateDeliveryForCompleteTestPart3(TestsToolkit toolkit, Order order2, Order order4, User user1, User user2)
+        {
+            var builder = toolkit.Resolve<DeliveryNameBuilderService>();
+
+            var delivery1 = new Delivery
+            {
+                Name = builder.Build(6),
+                Order = order2,
+                IsDelivered = true,
+                DelivererUser = user1,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
+                WarehouseId = WarehouseSeeder.Warehouse4DE.Id,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 100
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product1Rice.Id,
+                        Quantity = 100
+                    }
+                },
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            var delivery2 = new Delivery
+            {
+                Name = builder.Build(7),
+                Order = order4,
+                IsDelivered = true,
+                DelivererUser = user2,
+                CreationDate = DateTime.UtcNow,
+                IsLost = false,
+                TripStarted = true,
+                WarehouseId = WarehouseSeeder.Warehouse3PL.Id,
+                DeliveryProducts = new List<DeliveryProduct>
+                {
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product9Milk.Id,
+                        Quantity = 250
+                    },
+                    new DeliveryProduct
+                    {
+                        UpdateUserId = UserSeeder.ServiceUser.Id,
+                        UpdatedAt = DateTime.UtcNow,
+                        ProductId = ProductSeeder.Product12EnergyDrink.Id,
+                        Quantity = 50
+                    },
+                },
+                UpdateUserId = UserSeeder.ServiceUser.Id,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            return new List<Delivery> { delivery1, delivery2 };
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
-using Orders.Jobs.CreateDeliveries;
 
 namespace Orders.Jobs.RecalcOrdersPercentage
 {
