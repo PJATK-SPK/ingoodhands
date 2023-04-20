@@ -83,6 +83,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
                 OwnerUser = currentUser,
                 CreationDate = DateTime.UtcNow,
                 IsCanceledByUser = false,
+                IsFinished = false,
                 OrderProducts = listOfOrderProduct,
                 UpdateUserId = currentUser.Id,
                 UpdatedAt = DateTime.UtcNow,

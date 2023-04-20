@@ -24,7 +24,7 @@ namespace Orders.Jobs.RecalcOrdersPercentage
 
             if (percentage >= 100)
             {
-                order.Status = DbEntityStatus.Inactive;
+                order.IsFinished = true;
             }
 
             order.Percentage = percentage;

@@ -16,6 +16,7 @@ namespace Core.Database.Models.Core
         public User? OwnerUser { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsCanceledByUser { get; set; }
+        public bool IsFinished { get; set; }
         public List<OrderProduct>? OrderProducts { get; set; }
         public List<Delivery>? Deliveries { get; set; }
 
@@ -27,7 +28,7 @@ namespace Core.Database.Models.Core
         public override int GetHashCode()
             => HashCode.Combine(
                 base.GetHashCode(),
-                HashCode.Combine(AddressId, Name, Percentage, OwnerUserId, CreationDate, IsCanceledByUser)
+                HashCode.Combine(AddressId, Name, Percentage, OwnerUserId, CreationDate, IsCanceledByUser, IsFinished)
                 );
     }
 }

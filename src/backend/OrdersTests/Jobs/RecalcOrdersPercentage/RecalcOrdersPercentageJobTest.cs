@@ -186,7 +186,6 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
             Assert.AreEqual(0, order1.Percentage);
             Assert.AreEqual(50, order2.Percentage);
             Assert.AreEqual(100, order3.Percentage);
-            Assert.AreEqual(DbEntityStatus.Inactive, order3.Status);
             Assert.AreEqual(50, order4.Percentage);
         }
 
@@ -233,11 +232,8 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
             Assert.AreEqual(true, order1.IsCanceledByUser);
             Assert.AreEqual(0, order1.Percentage);
             Assert.AreEqual(100, order2.Percentage);
-            Assert.AreEqual(DbEntityStatus.Inactive, order2.Status);
             Assert.AreEqual(100, order3.Percentage);
-            Assert.AreEqual(DbEntityStatus.Inactive, order3.Status);
             Assert.AreEqual(100, order4.Percentage);
-            Assert.AreEqual(DbEntityStatus.Inactive, order4.Status);
         }
     }
 }
