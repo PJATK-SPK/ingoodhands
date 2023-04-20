@@ -1,21 +1,11 @@
-﻿using Core.Database;
-using Core.Database.Enums;
-using Core.Database.Models.Core;
+﻿using Core.Database.Models.Core;
 using Microsoft.EntityFrameworkCore;
-using Orders.Jobs.CreateDeliveries.Models;
 
 namespace Orders.Jobs.RecalcOrdersPercentage
 {
     public class RecalcOrdersPercentageJobService
     {
-        private readonly AppDbContext _appDbContext;
-
-        public RecalcOrdersPercentageJobService(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
-
-        public async Task<int> CalculateAndUpdatePercentage(Order order)
+        public int CalculateAndUpdatePercentage(Order order)
         {
             int totalQuantity = order.OrderProducts!.Sum(op => op.Quantity);
             int deliveredQuantity = order.Deliveries!.Where(del => del.IsDelivered).Sum(d => d.DeliveryProducts!.Sum(dp => dp.Quantity));
@@ -28,8 +18,6 @@ namespace Orders.Jobs.RecalcOrdersPercentage
             }
 
             order.Percentage = percentage;
-
-            await _appDbContext.SaveChangesAsync();
 
             return percentage;
         }

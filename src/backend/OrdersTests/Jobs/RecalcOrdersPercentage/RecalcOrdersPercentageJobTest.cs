@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Core;
 using Core.Database;
-using Core.Database.Enums;
 using Core.Database.Seeders;
 using Core.Setup.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +38,7 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
             * 
             * -- Efekt: 
             * Order 2 = 50% Complete
-            * Order 3 = 100% Complete - marked as Status-Inactive
+            * Order 3 = 100% Complete - marked as isFinished = true
             * Order 4 = 33% Complete 
             */
 
@@ -60,7 +59,7 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
              * 
              * -- Efekt: 
              * Order 2 = 50% Complete
-             * Order 3 = 100% Complete - marked as Status-Inactive
+             * Order 3 = 100% Complete - marked as isFinished = true
              * Order 4 = 50% Complete
              */
 
@@ -76,9 +75,9 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
              * * Delivery 2 - ORDER 4 - dostawa 250 mleka, 50 energyDrink
              * 
              * -- Efekt: 
-             * Order 2 = 100% Complete - marked as Status-Inactive
-             * Order 3 = 100% Complete - marked as Status-Inactive
-             * Order 4 = 100% Complete - marked as Status-Inactive
+             * Order 2 = 100% Complete - marked as isFinished = true
+             * Order 3 = 100% Complete - marked as isFinished = true
+             * Order 4 = 100% Complete - marked as isFinished = true
              */
 
             await RunPart3OfCompleteTest(toolkit);
@@ -186,6 +185,7 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
             Assert.AreEqual(0, order1.Percentage);
             Assert.AreEqual(50, order2.Percentage);
             Assert.AreEqual(100, order3.Percentage);
+            Assert.IsTrue(order3.IsFinished);
             Assert.AreEqual(50, order4.Percentage);
         }
 
@@ -231,9 +231,13 @@ namespace OrdersTests.Jobs.RecalcOrdersPercentage
             // Check orders
             Assert.AreEqual(true, order1.IsCanceledByUser);
             Assert.AreEqual(0, order1.Percentage);
+            Assert.IsFalse(order1.IsFinished);
             Assert.AreEqual(100, order2.Percentage);
+            Assert.IsTrue(order2.IsFinished);
             Assert.AreEqual(100, order3.Percentage);
+            Assert.IsTrue(order3.IsFinished);
             Assert.AreEqual(100, order4.Percentage);
+            Assert.IsTrue(order4.IsFinished);
         }
     }
 }

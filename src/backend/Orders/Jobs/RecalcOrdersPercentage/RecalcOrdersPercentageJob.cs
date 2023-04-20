@@ -23,15 +23,13 @@ namespace Orders.Jobs.RecalcOrdersPercentage
         {
             var listOfOrders = await _recalcOrdersPercentageJobDataService.Fetch();
 
-            if (listOfOrders != null)
-            {
-                foreach (var order in listOfOrders)
-                {
-                    await _recalcOrdersPercentageJobService.CalculateAndUpdatePercentage(order);
-                }
 
-                await _appDbContext.SaveChangesAsync();
+            foreach (var order in listOfOrders)
+            {
+                _recalcOrdersPercentageJobService.CalculateAndUpdatePercentage(order);
             }
+
+            await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult(new { Message = "OK" });
         }
