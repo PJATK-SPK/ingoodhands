@@ -74,6 +74,7 @@ namespace OrdersTests.Jobs.CreateDeliveries
                 OwnerUserId = UserSeeder.ServiceUser.Id,
                 CreationDate = DateTime.UtcNow,
                 IsCanceledByUser = true,
+                IsFinished = false,
                 OrderProducts = new List<OrderProduct>
                 {
                     new OrderProduct
@@ -96,6 +97,7 @@ namespace OrdersTests.Jobs.CreateDeliveries
                 OwnerUserId = UserSeeder.ServiceUser.Id,
                 CreationDate = DateTime.UtcNow,
                 IsCanceledByUser = false,
+                IsFinished = false,
                 OrderProducts = new List<OrderProduct>
                 {
                     new OrderProduct

@@ -19,6 +19,7 @@ namespace Core.Database.Config.Models.Core
             builder.Property(c => c.OwnerUserId).IsRequired();
             builder.Property(c => c.CreationDate).IsRequired();
             builder.Property(c => c.IsCanceledByUser).IsRequired();
+            builder.Property(c => c.IsFinished).IsRequired();
 
             builder.HasIndex(c => c.Name).IsUnique().HasDatabaseName("order_name_idx");
             builder.HasIndex(c => c.Percentage).HasDatabaseName("percentage_idx");

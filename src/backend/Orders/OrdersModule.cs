@@ -13,6 +13,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
 using Orders.Actions.OrdersActions.OrdersGetSingle;
 using Orders.Actions.OrdersActions.OrdersCancel;
 using Orders.Jobs.CreateDeliveries;
+using Orders.Jobs.RecalcOrdersPercentage;
 
 namespace Orders
 {
@@ -42,6 +43,7 @@ namespace Orders
         private static void RegisterJobs(ContainerBuilder builder)
         {
             builder.RegisterModule<CreateDeliveriesJobModule>();
+            builder.RegisterModule<RecalcOrdersPercentageJobModule>();
         }
 
         private static void RegisterServices(ContainerBuilder builder)
