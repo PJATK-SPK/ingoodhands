@@ -9,7 +9,6 @@ namespace Orders.Jobs.RecalcOrdersPercentage
         {
             builder.RegisterAsScoped<RecalcOrdersPercentageJob>();
             builder.RegisterAsScoped<RecalcOrdersPercentageJobDataService>();
-            builder.RegisterAsScoped<RecalcOrdersPercentageJobService>();
         }
     }
 }

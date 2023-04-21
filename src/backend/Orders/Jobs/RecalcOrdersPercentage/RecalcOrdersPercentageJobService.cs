@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Orders.Jobs.RecalcOrdersPercentage
 {
-    public class RecalcOrdersPercentageJobService
+    public static class RecalcOrdersPercentageJobService
     {
         public static int CalculateAndUpdatePercentage(Order order)
         {
