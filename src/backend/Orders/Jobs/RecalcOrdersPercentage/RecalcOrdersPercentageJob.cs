@@ -7,15 +7,13 @@ namespace Orders.Jobs.RecalcOrdersPercentage
     {
         private readonly AppDbContext _appDbContext;
         private readonly RecalcOrdersPercentageJobDataService _recalcOrdersPercentageJobDataService;
-        private readonly RecalcOrdersPercentageJobService _recalcOrdersPercentageJobService;
+
 
         public RecalcOrdersPercentageJob(
             RecalcOrdersPercentageJobDataService recalcOrdersPercentageJobDataService,
-            RecalcOrdersPercentageJobService recalcOrdersPercentageJobService,
             AppDbContext appDbContext)
         {
             _recalcOrdersPercentageJobDataService = recalcOrdersPercentageJobDataService;
-            _recalcOrdersPercentageJobService = recalcOrdersPercentageJobService;
             _appDbContext = appDbContext;
         }
 
@@ -26,7 +24,7 @@ namespace Orders.Jobs.RecalcOrdersPercentage
 
             foreach (var order in listOfOrders)
             {
-                _recalcOrdersPercentageJobService.CalculateAndUpdatePercentage(order);
+                RecalcOrdersPercentageJobService.CalculateAndUpdatePercentage(order);
             }
 
             await _appDbContext.SaveChangesAsync();
