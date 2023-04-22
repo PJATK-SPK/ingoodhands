@@ -25,7 +25,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             _createOrderCreateOrderPayloadValidator = createOrderCreateOrderPayloadValidator;
         }
 
-        public async Task<(CurrentUserInfo? auth0UserInfo, User? currentUser)> GetUsers(CreateOrderCreateOrderPayload payload)
+        public async Task<User?> GetUser(CreateOrderCreateOrderPayload payload)
         {
             var auth0UserInfo = await _currentUserService.GetUserInfo();
             var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);

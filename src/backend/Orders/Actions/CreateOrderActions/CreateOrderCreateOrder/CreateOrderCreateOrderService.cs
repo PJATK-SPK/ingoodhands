@@ -39,7 +39,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
 
         public async Task<CreateOrderCreateOrderResponse> CreateOrder(CreateOrderCreateOrderPayload payload)
         {
-            var (auth0UserInfo, currentUser) = await _fetchService.GetUsers(payload);
+            var currentUser = await _fetchService.GetUser(payload);
 
             var thereIsOrderInThisLocation = await _appDbContext.Orders
                 .Where(c => c.OwnerUserId == currentUser!.Id && !c.IsCanceledByUser && c.Percentage != 100 && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
