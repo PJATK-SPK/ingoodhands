@@ -3,7 +3,6 @@ using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Exceptions;
 using Core.Services;
-using Core.Setup.Auth0;
 using FluentValidation;
 using HashidsNet;
 using Microsoft.EntityFrameworkCore;
@@ -17,46 +16,33 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
     {
         private readonly AppDbContext _appDbContext;
         private readonly Hashids _hashids;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly GetCurrentUserService _getCurrentUserService;
-        private readonly RoleService _roleService;
         private readonly OrderNameBuilderService _orderNameBuilderService;
         private readonly CounterService _counterService;
         private readonly NotificationService _notificationService;
-        private readonly CreateOrderCreateOrderPayloadValidator _createOrderCreateOrderPayloadValidator;
+        private readonly CreateOrderFetchService _fetchService;
 
         public CreateOrderCreateOrderService(
             AppDbContext appDbContext,
             Hashids hashids,
-            ICurrentUserService currentUserService,
-            GetCurrentUserService getCurrentUserService,
-            RoleService roleService,
-            CreateOrderCreateOrderPayloadValidator createOrderCreateOrderPayloadValidator,
             OrderNameBuilderService orderNameBuilderService,
             CounterService counterService,
-            NotificationService notificationService)
+            NotificationService notificationService,
+            CreateOrderFetchService fetchService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
-            _currentUserService = currentUserService;
-            _getCurrentUserService = getCurrentUserService;
-            _roleService = roleService;
-            _createOrderCreateOrderPayloadValidator = createOrderCreateOrderPayloadValidator;
             _orderNameBuilderService = orderNameBuilderService;
             _counterService = counterService;
             _notificationService = notificationService;
+            _fetchService = fetchService;
         }
 
         public async Task<CreateOrderCreateOrderResponse> CreateOrder(CreateOrderCreateOrderPayload payload)
         {
-            var auth0UserInfo = await _currentUserService.GetUserInfo();
-            var currentUser = await _getCurrentUserService.Execute(auth0UserInfo);
-
-            await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
-            await _createOrderCreateOrderPayloadValidator.ValidateAndThrowAsync(payload);
+            var currentUser = await _fetchService.GetUser(payload);
 
             var thereIsOrderInThisLocation = await _appDbContext.Orders
-                .Where(c => c.OwnerUserId == currentUser.Id && !c.IsCanceledByUser && c.Percentage != 100 && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
+                .Where(c => c.OwnerUserId == currentUser!.Id && !c.IsCanceledByUser && c.Percentage != 100 && c.AddressId == _hashids.DecodeSingleLong(payload.AddressId))
                 .AnyAsync();
 
             if (thereIsOrderInThisLocation)
@@ -66,7 +52,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             {
                 ProductId = _hashids.DecodeSingleLong(c.Id),
                 Quantity = c.Quantity,
-                UpdateUserId = currentUser.Id,
+                UpdateUserId = currentUser!.Id,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active
             }).ToList();
@@ -79,7 +65,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
                 AddressId = _hashids.DecodeSingleLong(payload.AddressId),
                 Name = orderName,
                 Percentage = 0,
-                OwnerUserId = currentUser.Id,
+                OwnerUserId = currentUser!.Id,
                 OwnerUser = currentUser,
                 CreationDate = DateTime.UtcNow,
                 IsCanceledByUser = false,

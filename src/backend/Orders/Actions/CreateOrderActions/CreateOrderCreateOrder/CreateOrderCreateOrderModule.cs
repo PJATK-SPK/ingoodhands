@@ -9,6 +9,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
         {
             builder.RegisterAsScoped<CreateOrderCreateOrderAction>();
             builder.RegisterAsScoped<CreateOrderCreateOrderService>();
+            builder.RegisterAsScoped<CreateOrderFetchService>();
             builder.RegisterAsScoped<CreateOrderCreateOrderPayloadValidator>();
         }
     }
