@@ -114,7 +114,7 @@ namespace Auth.Actions.AuthActions.PostLogin
             };
         }
 
-        private static void UpdateAuth0User(Auth0User auth0User, CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
+        private static void UpdateAuth0User(Auth0User auth0User, CurrentUserInfo currentAuth0UserInfo)
         {
             auth0User.FirstName = currentAuth0UserInfo.GivenName;
             auth0User.LastName = currentAuth0UserInfo.FamilyName;
