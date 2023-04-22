@@ -14,7 +14,6 @@ namespace Auth.Services
             RuleFor(c => c.Nickname).MaximumLength(50);
             RuleFor(c => c.Identifier).NotNull().MaximumLength(80);
             RuleFor(c => c.Email).NotNull().EmailAddress().MaximumLength(254);
-            RuleFor(c => c.EmailVerified).Equal(true).WithMessage("Please confirm you address email via Auth0!");
         }
     }
 }
