@@ -31,7 +31,13 @@ namespace Auth.Actions.AuthActions.PostLogin
                 throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
             }
 
-            if (user == null && auth0UserFromDatabase == null)
+            if (user != null && auth0UserFromDatabase != null)
+            {
+                UpdateUser(user, auth0UserInfo);
+
+                UpdateAuth0User(auth0UserFromDatabase, auth0UserInfo, user, serviceUser!);
+            }
+            else if (user == null && auth0UserFromDatabase == null)
             {
                 user = CreateUser(auth0UserInfo);
                 await _appDbContext.AddAsync(user);
@@ -64,6 +70,24 @@ namespace Auth.Actions.AuthActions.PostLogin
         }
         private static User CreateUser(CurrentUserInfo currentAuth0UserInfo)
         {
+            return new User
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = GetFirstName(currentAuth0UserInfo),
+                LastName = currentAuth0UserInfo.FamilyName,
+                Email = currentAuth0UserInfo.Email!,
+                WarehouseId = null
+            };
+        }
+
+        private static void UpdateUser(User user, CurrentUserInfo currentAuth0UserInfo)
+        {
+            user.FirstName = GetFirstName(currentAuth0UserInfo);
+            user.LastName = currentAuth0UserInfo.FamilyName;
+        }
+
+        private static string GetFirstName(CurrentUserInfo currentAuth0UserInfo)
+        {
             var firstName = "User";
 
             if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.GivenName))
@@ -71,14 +95,7 @@ namespace Auth.Actions.AuthActions.PostLogin
             else if (!string.IsNullOrWhiteSpace(currentAuth0UserInfo.Name!))
                 firstName = currentAuth0UserInfo.Name!.Trim();
 
-            return new User
-            {
-                Status = DbEntityStatus.Active,
-                FirstName = firstName,
-                LastName = currentAuth0UserInfo.FamilyName,
-                Email = currentAuth0UserInfo.Email!,
-                WarehouseId = null
-            };
+            return firstName;
         }
 
         private static Auth0User CreateAuth0User(CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
@@ -95,6 +112,14 @@ namespace Auth.Actions.AuthActions.PostLogin
                 Identifier = currentAuth0UserInfo.Identifier!,
                 User = user
             };
+        }
+
+        private static void UpdateAuth0User(Auth0User auth0User, CurrentUserInfo currentAuth0UserInfo, User user, User serviceUser)
+        {
+            auth0User.FirstName = currentAuth0UserInfo.GivenName;
+            auth0User.LastName = currentAuth0UserInfo.FamilyName;
+            auth0User.Nickname = currentAuth0UserInfo.Nickname;
+            auth0User.Name = currentAuth0UserInfo.Name;
         }
 
         private async Task<List<UserRole>> CreateUserRoles(User user, User serviceUser)

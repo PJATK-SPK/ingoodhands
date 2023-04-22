@@ -337,7 +337,7 @@ namespace AuthTests.Actions.Auth
             toolkit.UpdateUserInfo(currentUserInfo);
 
             // Act
-            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute());
+            await action.Execute();
 
             currentUserInfo.EmailVerified = true;
             toolkit.UpdateUserInfo(currentUserInfo);
