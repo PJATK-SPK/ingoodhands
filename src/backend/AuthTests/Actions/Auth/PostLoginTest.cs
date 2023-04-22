@@ -310,5 +310,50 @@ namespace AuthTests.Actions.Auth
             Assert.IsInstanceOfType(exception, typeof(ValidationException));
             Assert.IsNotNull(exception.Message);
         }
+
+        [TestMethod()]
+        public async Task PostLoginTest_EmailNotVerifiedAndVerified()
+        {
+            using var toolkit = new TestsToolkit(_usedModules);
+            var context = toolkit.Resolve<AppDbContext>();
+            var action = toolkit.Resolve<PostLoginAction>();
+
+            // Arrange
+            var newEmail = "s21166@pjwstk.edu.pl";
+
+            var currentUserInfo = new CurrentUserInfo
+            {
+                Email = newEmail,
+                EmailVerified = false,
+                FamilyName = "Badysiak",
+                GivenName = "Paweł",
+                Locale = "pl",
+                Name = "Paweł Badysiak",
+                Nickname = "s21166",
+                Identifier = "google-oauth2|117638106834834546346",
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            toolkit.UpdateUserInfo(currentUserInfo);
+
+            // Act
+            var exception = await Assert.ThrowsExceptionAsync<ValidationException>(() => action.Execute());
+
+            currentUserInfo.EmailVerified = true;
+            toolkit.UpdateUserInfo(currentUserInfo);
+
+            var result = await action.Execute();
+
+            var donorRoleId = context.Roles.Single(c => c.Name == RoleName.Donor).Id;
+            var needyRoleId = context.Roles.Single(c => c.Name == RoleName.Needy).Id;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(context.Users.Single(x => x.Email == newEmail)?.Email, newEmail);
+            Assert.AreEqual(2, context.Users.Count());
+            Assert.AreEqual(1, context.Auth0Users.Count());
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == donorRoleId).Any());
+            Assert.IsTrue(context.UserRoles.Where(c => c.User!.Email == newEmail && c.RoleId == needyRoleId).Any());
+        }
     }
 }
