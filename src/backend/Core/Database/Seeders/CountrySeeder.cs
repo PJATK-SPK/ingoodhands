@@ -67,6 +67,19 @@ namespace Core.Database.Seeders
             "UKR", "ARE", "GBR", "USA", "UMI", "URY", "UZB", "VUT", "VEN", "VNM", "VIR", "WLF", "ESH", "YEM", "ZMB", "ZWE"
         };
 
+        public static long GetCountryId(string countryIso2)
+        {
+            for (int i = 0; i < CountryNames.Count; i++)
+            {
+                var countryNameIso2 = CountryNamesIso2[i];
+
+                if (countryIso2 == countryNameIso2)
+                    return i + 1;
+            }
+
+            return -1;
+        }
+
         public static void Execute(ModelBuilder builder)
         {
             for (int i = 0; i < CountryNames.Count; i++)
