@@ -33,7 +33,7 @@ namespace Orders.Actions.CreateOrderActions.CreateOrderCreateOrder
             await _roleService.ThrowIfNoRole(RoleName.Needy, currentUser.Id);
             await _createOrderCreateOrderPayloadValidator.ValidateAndThrowAsync(payload);
 
-            return (auth0UserInfo, currentUser);
+            return currentUser;
         }
     }
 }
