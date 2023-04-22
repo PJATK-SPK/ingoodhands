@@ -1,8 +1,10 @@
-﻿using Core.Database.Enums;
+﻿using Core.Database;
+using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Services;
+using Microsoft.EntityFrameworkCore;
 using Orders.Jobs.CreateDeliveries.Models;
 using Orders.Services.OrderNameBuilder;
 
@@ -12,13 +14,16 @@ namespace Orders.Jobs.CreateDeliveries
     {
         private readonly OrderNameBuilderService _orderNameBuilderService;
         private readonly CounterService _counterService;
+        private readonly NotificationService _notificationService;
 
         public CreateDeliveriesJobWarehouseService(
             OrderNameBuilderService orderNameBuilderService,
-            CounterService counterService)
+            CounterService counterService,
+            NotificationService notificationService)
         {
             _orderNameBuilderService = orderNameBuilderService;
             _counterService = counterService;
+            _notificationService = notificationService;
         }
 
         public async Task<List<Delivery>> AddDeliveriesToOrder(Order order, CreateDeliveriesJobOrderRemainder remainder, List<Stock> stocks)
@@ -96,6 +101,14 @@ namespace Orders.Jobs.CreateDeliveries
             };
 
             result.DeliveryProducts = CreateDeliveryProductsForWarehouse(result, remainder, stocks);
+
+            var warehouseKeepers = warehouse.Users!.Where(c => c.Roles!.Any(r => r.Role!.Name == RoleName.WarehouseKeeper)).ToList();
+            foreach (var warehouseKeeper in warehouseKeepers)
+            {
+                await _notificationService.AddAsync(warehouseKeeper.Id, $"New delivery {result.Name} has been assigned to your warehouse!");
+            }
+
+            await _notificationService.AddAsync(deliverer.Id, $"New delivery {result.Name} has been added to your tasks!");
 
             return result;
         }
