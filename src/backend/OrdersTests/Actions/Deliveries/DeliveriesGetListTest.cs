@@ -5,7 +5,7 @@ using Core.Database.Seeders;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orders;
-using Orders.Actions.DeliveriesActions.DliveriesGetList;
+using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using System.Linq.Dynamic.Core;
 using TestsBase;
 
@@ -25,7 +25,7 @@ namespace OrdersTests.Actions.Deliveries
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
-            var action = toolkit.Resolve<DliveriesGetListAction>();
+            var action = toolkit.Resolve<DeliveriesGetListAction>();
 
             //Arrange
             var page = 1;
@@ -57,7 +57,7 @@ namespace OrdersTests.Actions.Deliveries
 
             // Act
             var executed = await action.Execute(page, pageSize);
-            var result = executed.Value as PagedResult<DliveriesGetListResponseItem>;
+            var result = executed.Value as PagedResult<DeliveriesGetListResponseItem>;
 
             // Assert            
             Assert.IsNotNull(result);

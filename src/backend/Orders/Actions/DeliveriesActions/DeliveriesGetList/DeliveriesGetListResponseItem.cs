@@ -1,6 +1,6 @@
-﻿namespace Orders.Actions.DeliveriesActions.DliveriesGetList
+﻿namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
 {
-    public class DliveriesGetListResponseItem
+    public class DeliveriesGetListResponseItem
     {
         public string Id { get; set; } = default!;
         public string DeliveryName { get; set; } = default!;

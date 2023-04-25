@@ -1,7 +1,7 @@
 using Core.Actions.WarehouseName.GetWarehouseName;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Orders.Actions.DeliveriesActions.DliveriesGetList;
+using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Order;
@@ -12,11 +12,11 @@ namespace WebApi.Controllers.Order;
 public class DeliveriesController : ControllerBase
 {
     private readonly GetWarehouseNameAction _getWarehouseNameAction;
-    private readonly DliveriesGetListAction _dliveriesGetListAction;
+    private readonly DeliveriesGetListAction _dliveriesGetListAction;
 
     public DeliveriesController(
         GetWarehouseNameAction getWarehouseNameAction,
-        DliveriesGetListAction dliveriesGetListAction)
+        DeliveriesGetListAction dliveriesGetListAction)
     {
         _getWarehouseNameAction = getWarehouseNameAction;
         _dliveriesGetListAction = dliveriesGetListAction;

@@ -7,23 +7,23 @@ using HashidsNet;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 
-namespace Orders.Actions.DeliveriesActions.DliveriesGetList
+namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
 {
-    public class DliveriesGetListService
+    public class DeliveriesGetListService
     {
         private readonly AppDbContext _appDbContext;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
 
 
-        public DliveriesGetListService(AppDbContext appDbContext, RoleService roleService, Hashids hashids)
+        public DeliveriesGetListService(AppDbContext appDbContext, RoleService roleService, Hashids hashids)
         {
             _appDbContext = appDbContext;
             _roleService = roleService;
             _hashids = hashids;
         }
 
-        public async Task<PagedResult<DliveriesGetListResponseItem>> GetList(int page, int pageSize, string? filter = null)
+        public async Task<PagedResult<DeliveriesGetListResponseItem>> GetList(int page, int pageSize, string? filter = null)
         {
             await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper);
 
@@ -39,7 +39,7 @@ namespace Orders.Actions.DeliveriesActions.DliveriesGetList
 
             var result = dbResult.PageResult(page, pageSize);
 
-            var mapped = result.Queryable.Select(c => new DliveriesGetListResponseItem
+            var mapped = result.Queryable.Select(c => new DeliveriesGetListResponseItem
             {
                 Id = _hashids.EncodeLong(c.Id),
                 DeliveryName = c.Name,
@@ -51,7 +51,7 @@ namespace Orders.Actions.DeliveriesActions.DliveriesGetList
                 ProductTypesCount = c.DeliveryProducts != null ? c.DeliveryProducts.Count : 0
             }).ToList();
 
-            var response = new PagedResult<DliveriesGetListResponseItem>()
+            var response = new PagedResult<DeliveriesGetListResponseItem>()
             {
                 CurrentPage = result.CurrentPage,
                 PageCount = result.PageCount,
