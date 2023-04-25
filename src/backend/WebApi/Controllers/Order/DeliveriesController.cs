@@ -1,6 +1,7 @@
 using Core.Actions.WarehouseName.GetWarehouseName;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Actions.DeliveriesActions.DliveriesGetList;
 using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Order;
@@ -11,57 +12,18 @@ namespace WebApi.Controllers.Order;
 public class DeliveriesController : ControllerBase
 {
     private readonly GetWarehouseNameAction _getWarehouseNameAction;
+    private readonly DliveriesGetListAction _dliveriesGetListAction;
 
-    public DeliveriesController(GetWarehouseNameAction getWarehouseNameAction)
+    public DeliveriesController(
+        GetWarehouseNameAction getWarehouseNameAction,
+        DliveriesGetListAction dliveriesGetListAction)
     {
         _getWarehouseNameAction = getWarehouseNameAction;
+        _dliveriesGetListAction = dliveriesGetListAction;
     }
 
-    public class DeleteMeResponse1
-    {
-        public string Id { get; set; } = default!;
-        public string DeliveryName { get; set; } = default!;
-        public string OrderName { get; set; } = default!;
-        public bool IsDelivered { get; set; } = default!;
-        public bool IsLost { get; set; } = default!;
-        public bool TripStarted { get; set; } = default!;
-        public DateTime CreationDate { get; set; } = default!;
-        public int ProductTypesCount { get; set; } = default!;
-    }
     [HttpGet]
-    public async Task<ActionResult> GetList(int page, int pageSize, string? filter)
-    {
-        // nie zapomnij o tych 3 parametrach xd
-        var appDbContextProducts = new List<DeleteMeResponse1>
-        {
-            new DeleteMeResponse1
-            {
-                Id="b4653",
-                DeliveryName = "DEL000001",
-                OrderName = "ORD000001",
-                IsDelivered=false,
-                IsLost=false,
-                TripStarted=false,
-                CreationDate= DateTime.UtcNow,
-                ProductTypesCount=3, // Because 100xMilk, 20xRice, 1xCereals -> 3 types
-            },
-            new DeleteMeResponse1
-            {
-                Id="b4623",
-                DeliveryName = "DEL000002",
-                OrderName = "ORD000002",
-                IsDelivered=true,
-                IsLost=true,
-                TripStarted=true,
-                CreationDate= DateTime.UtcNow,
-                ProductTypesCount=1,
-            }
-        }.AsQueryable();
-
-        var result = appDbContextProducts.PageResult(page, pageSize);
-
-        return await Task.FromResult(Ok(result));
-    }
+    public async Task<ActionResult> GetList(int page, int pageSize, string? filter) => await _dliveriesGetListAction.Execute(page, pageSize, filter);
 
     public class DeleteMeResponse2Product
     {

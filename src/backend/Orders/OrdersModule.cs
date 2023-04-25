@@ -15,6 +15,7 @@ using Orders.Actions.OrdersActions.OrdersCancel;
 using Orders.Jobs.CreateDeliveries;
 using Orders.Jobs.RecalcOrdersPercentage;
 using Orders.Actions.OrdersActions.OrdersSetAsDelivered;
+using Orders.Actions.DeliveriesActions.DliveriesGetList;
 
 namespace Orders
 {
@@ -30,11 +31,12 @@ namespace Orders
         private static void RegisterActions(ContainerBuilder builder)
         {
             builder.RegisterModule<OrdersCancelModule>();
-            builder.RegisterModule<OrdersSetAsDeliveredModule>();
             builder.RegisterModule<StocksGetListModule>();
             builder.RegisterModule<OrdersGetSingleModule>();
+            builder.RegisterModule<DliveriesGetListModule>();
             builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<RequestHelpGetMapModule>();
+            builder.RegisterModule<OrdersSetAsDeliveredModule>();
             builder.RegisterModule<CreateOrderAddAddressModule>();
             builder.RegisterModule<CreateOrderCreateOrderModule>();
             builder.RegisterModule<CreateOrderGetCountriesModule>();
