@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { PagedResult } from 'src/app/interfaces/paged-result';
 import { environment } from 'src/environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { DateTime } from 'luxon';
 import { HttpClient } from "@angular/common/http";
 import { DeliveriesListItem } from "../interfaces/deliveries-list-item";
@@ -12,7 +12,10 @@ export class DeliveriesService {
     constructor(private readonly http: HttpClient) { }
 
     public warehouseName$ = this.http.get<{ warehouseName: string }>(environment.api + '/deliveries/warehouse-name')
-        .pipe(map(c => c.warehouseName));
+        .pipe(
+            map(c => c.warehouseName),
+            catchError(() => '?')
+        );
 
     public getList(page: number, pageSize: number, filter?: string): Observable<PagedResult<DeliveriesListItem<DateTime>>> {
         let params: { page: string, pageSize: string, filter?: string } = {

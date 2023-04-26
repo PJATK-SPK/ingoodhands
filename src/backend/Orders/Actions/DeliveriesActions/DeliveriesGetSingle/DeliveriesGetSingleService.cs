@@ -62,7 +62,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesGetSingle
                 IsDelivered = dbResult.IsDelivered,
                 IsLost = dbResult.IsLost,
                 TripStarted = dbResult.TripStarted,
-                DelivererFullName = dbResult.DelivererUser!.FirstName + dbResult.DelivererUser.LastName,
+                DelivererFullName = dbResult.DelivererUser!.FirstName + " " + dbResult.DelivererUser.LastName,
                 CountryName = dbResult.Warehouse!.Address!.Country!.EnglishName,
                 GpsLatitude = dbResult.Warehouse.Address.GpsLatitude,
                 GpsLongitude = dbResult.Warehouse.Address.GpsLongitude,

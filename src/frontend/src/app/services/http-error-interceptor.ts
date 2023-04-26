@@ -47,6 +47,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             texts = this.splitMsg(err.error.message);
             severity = 'warn';
         }
+        else if (err.status === 404) {
+            show = true;
+            title = 'Not found';
+            texts = this.splitMsg(err.error.message);
+            this.authService.logout();
+        }
         else if (err.status === 403) {
             show = true;
             title = 'Unauthorized';

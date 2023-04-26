@@ -34,7 +34,7 @@ namespace Core.Actions.WarehouseName.GetWarehouseName
             if (usersWarehouse == null)
             {
                 _logger.LogError("Couldn't find warehouse name for user with id:{currentUserId}", currentUser.Id);
-                throw new ItemNotFoundException("Sorry we couldn't find that warehouse name assigned to this user");
+                throw new ItemNotFoundException("You are not assigned to any warehouse! Please contact administrator.");
             }
 
             var response = new GetWarehouseNameResponse
