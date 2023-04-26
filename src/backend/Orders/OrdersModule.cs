@@ -17,6 +17,7 @@ using Orders.Jobs.RecalcOrdersPercentage;
 using Orders.Actions.OrdersActions.OrdersSetAsDelivered;
 using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using Orders.Actions.DeliveriesActions.DeliveriesGetSingle;
+using Orders.Actions.DeliveriesActions.DeliveriesPickup;
 
 namespace Orders
 {
@@ -34,6 +35,7 @@ namespace Orders
             builder.RegisterModule<OrdersCancelModule>();
             builder.RegisterModule<StocksGetListModule>();
             builder.RegisterModule<OrdersGetSingleModule>();
+            builder.RegisterModule<DeliveriesPickupModule>();
             builder.RegisterModule<DeliveriesGetListModule>();
             builder.RegisterModule<WarehousesGetListModule>();
             builder.RegisterModule<RequestHelpGetMapModule>();

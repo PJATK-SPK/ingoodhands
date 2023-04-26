@@ -72,7 +72,7 @@ namespace OrdersTests.Actions.Deliveries
         }
 
         [TestMethod()]
-        public async Task GetSingleNotFoundOrderId_ThrowsException()
+        public async Task GetSingleNotFoundDeliveryId_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
