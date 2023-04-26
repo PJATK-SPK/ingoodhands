@@ -5,6 +5,9 @@
                 <form [formGroup]="form" (submit)="onSubmit($event)">
                     <div class="col-12">
                         <h2 class="text-2xl font-bold m-0">
+
+                            <img *ngIf="pictureUrl" [src]="pictureUrl" alt="icon of user" class="avatar" />
+
                             {{userFullName}}
                             <span class="email-text">({{email}})</span>
                         </h2>

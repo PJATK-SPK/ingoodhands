@@ -5,5 +5,6 @@ export interface ManageUsersItem {
     fullName: string;
     warehouseName: string;
     email: string;
+    pictureUrl: string;
     roles: Role[];
 }

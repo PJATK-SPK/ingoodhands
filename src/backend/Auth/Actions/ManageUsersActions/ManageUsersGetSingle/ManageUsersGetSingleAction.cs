@@ -36,6 +36,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
             var userId = _hashids.DecodeSingleLong(id);
 
             var dbResult = await _appDbContext.Users
+                 .Include(c => c.Auth0Users)
                  .Include(c => c.Roles)!
                      .ThenInclude(c => c.Role)
                  .Include(c => c.Warehouse)
@@ -52,6 +53,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
                 Id = _hashids.EncodeLong(userId),
                 FullName = dbResult.FirstName + " " + dbResult.LastName,
                 Email = dbResult.Email,
+                PictureUrl = dbResult.Auth0Users!.First().PictureURL,
                 WarehouseId = dbResult.WarehouseId != null ? _hashids.EncodeLong(dbResult.WarehouseId!.Value) : null,
                 Roles = dbResult.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             };

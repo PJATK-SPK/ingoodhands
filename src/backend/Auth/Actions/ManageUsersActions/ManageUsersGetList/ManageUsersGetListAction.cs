@@ -32,6 +32,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
             await _roleService.ThrowIfNoRole(RoleName.Administrator);
 
             IQueryable<User> dbResult = _appDbContext.Users
+                .Include(c => c.Auth0Users)
                 .Include(c => c.Roles)!
                     .ThenInclude(c => c.Role)
                 .Include(c => c.Warehouse)
@@ -49,6 +50,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetList
                 Id = _hashids.EncodeLong(c.Id),
                 FullName = c.FirstName + " " + c.LastName,
                 Email = c.Email,
+                PictureUrl = c.Auth0Users!.First().PictureURL,
                 WarehouseId = c.WarehouseId == null ? null : c.WarehouseId.ToString(),
                 Roles = c.Roles!.Select(c => c.Role!.Name.ToString()).ToList()
             }).ToList();

@@ -2,6 +2,7 @@
 using Core;
 using Core.Setup.Enums;
 using Donate;
+using Orders;
 
 namespace Worker
 {
@@ -11,6 +12,7 @@ namespace Worker
         {
             new CoreModule(WebApiUserProviderType.ProvideServiceUser),
             new DonateModule(),
+            new OrdersModule(),
         };
     }
 }
