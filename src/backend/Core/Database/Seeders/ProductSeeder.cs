@@ -196,6 +196,86 @@ namespace Core.Database.Seeders
             Status = DbEntityStatus.Active
         };
 
+        public static readonly Product Product20Helmet = new()
+        {
+            Id = 20,
+            Name = "Helmet",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product21BulletproofVest = new()
+        {
+            Id = 21,
+            Name = "Bulletproof vest",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product22FoodRation = new()
+        {
+            Id = 22,
+            Name = "Food ration",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product23MilitaryBoots = new()
+        {
+            Id = 23,
+            Name = "Military boots",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product24WinterJacket = new()
+        {
+            Id = 24,
+            Name = "Winter jacket",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product25WinterPants = new()
+        {
+            Id = 25,
+            Name = "Winter pants",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product26MilitaryUniform = new()
+        {
+            Id = 26,
+            Name = "Military uniform",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
+        public static readonly Product Product27CellPhone = new()
+        {
+            Id = 27,
+            Name = "Cell phone",
+            Unit = UnitType.Pcs,
+            UpdatedAt = new DateTime(2023, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+            UpdateUserId = UserSeeder.ServiceUser.Id,
+            Status = DbEntityStatus.Active
+        };
+
         public static void Execute(ModelBuilder builder)
         {
             builder.Entity<Product>().HasData(Product1Rice);
@@ -217,6 +297,14 @@ namespace Core.Database.Seeders
             builder.Entity<Product>().HasData(Product17Disinfectants);
             builder.Entity<Product>().HasData(Product18ToiletPaper);
             builder.Entity<Product>().HasData(Product19Medicines);
+            builder.Entity<Product>().HasData(Product20Helmet);
+            builder.Entity<Product>().HasData(Product21BulletproofVest);
+            builder.Entity<Product>().HasData(Product22FoodRation);
+            builder.Entity<Product>().HasData(Product23MilitaryBoots);
+            builder.Entity<Product>().HasData(Product24WinterJacket);
+            builder.Entity<Product>().HasData(Product25WinterPants);
+            builder.Entity<Product>().HasData(Product26MilitaryUniform);
+            builder.Entity<Product>().HasData(Product27CellPhone);
         }
     }
 }
