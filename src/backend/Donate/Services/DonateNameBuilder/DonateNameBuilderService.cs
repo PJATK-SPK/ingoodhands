@@ -16,7 +16,7 @@ namespace Donate.Services.DonateNameBuilder
         {
             if (id >= 1000000 || id < 1)
             {
-                _logger.LogError("Id in Build in DonateNameBuilderService did not pass valdiation");
+                _logger.LogError("Id:{id} in Build in DonateNameBuilderService did not pass valdiation", id);
                 throw new ApplicationErrorException("Donation id is out of range");
             }
 

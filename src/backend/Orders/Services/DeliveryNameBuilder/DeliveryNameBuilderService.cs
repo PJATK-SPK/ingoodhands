@@ -16,7 +16,7 @@ namespace Orders.Services.DeliveryNameBuilder
         {
             if (id >= 1000000 || id < 1)
             {
-                _logger.LogError("Id in Build in DeliveryNameBuilderService did not pass valdiation");
+                _logger.LogError("Id:{id} in Build in DeliveryNameBuilderService did not pass valdiation", id);
                 throw new ApplicationErrorException("Delivery id is out of range");
             }
 
