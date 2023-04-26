@@ -17,6 +17,7 @@ namespace Core.Database.Config.Models.Auth
             builder.Property(c => c.LastName).HasMaxLength(50);
             builder.Property(c => c.Nickname).HasMaxLength(50);
             builder.Property(c => c.Name).HasMaxLength(50);
+            builder.Property(c => c.PictureURL).HasMaxLength(600);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(254);
             builder.Property(c => c.Identifier).IsRequired().HasMaxLength(80);
             builder.HasUniqueConstraint(c => c.Identifier);

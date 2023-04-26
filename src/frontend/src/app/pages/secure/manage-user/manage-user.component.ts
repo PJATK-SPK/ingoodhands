@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-manage-user',
@@ -26,6 +27,7 @@ export class ManageUserComponent implements OnInit {
   public isSaving = false;
   public userFullName?: string;
   public email?: string;
+  public pictureUrl?: string;
 
   public form = new FormGroup({
     warehouseId: new FormControl<{ id: string, name: string } | null>(null),
@@ -50,6 +52,7 @@ export class ManageUserComponent implements OnInit {
     private readonly warehouseService: WarehouseService,
     private readonly msg: MessageService,
     private readonly http: HttpClient,
+    private readonly auth: AuthService,
   ) { }
 
   public ngOnInit(): void {
@@ -61,6 +64,7 @@ export class ManageUserComponent implements OnInit {
       this.service.getUser(this.id).subscribe(user => {
         this.userFullName = user.fullName;
         this.email = user.email;
+        this.pictureUrl = user.pictureUrl;
         this.patchForm(user);
       });
     });
@@ -114,6 +118,7 @@ export class ManageUserComponent implements OnInit {
       .subscribe(res => {
         setTimeout(() => {
           this.isSaving = false;
+          this.auth.updateDbUserFromDb();
           this.msg.add({ severity: 'success', summary: 'Success', detail: 'Done!' });
         }, 500);
       });

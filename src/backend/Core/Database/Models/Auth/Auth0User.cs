@@ -11,6 +11,7 @@ namespace Core.Database.Models.Auth
         public string? LastName { get; set; }
         public string? Nickname { get; set; }
         public string? Name { get; set; }
+        public string? PictureURL { get; set; }
         public string Email { get; set; } = default!;
         public string Identifier { get; set; } = default!;
         public User? User { get; set; }

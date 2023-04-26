@@ -24,8 +24,15 @@
                     <p-card class="p-2" *ngFor="let item of pagedResult.queryable">
                         <div class="grid">
                             <div class="col-12">
+
                                 <h2 class="text-xl font-bold m-0 text-primary" style="cursor:pointer"
                                     [routerLink]="'/secure/manage-user/' + item.id">
+
+                                    <img *ngIf="item.pictureUrl" [src]="item.pictureUrl" alt="icon of user"
+                                        class="avatar" />
+
+                                    <div *ngIf="item.pictureUrl" class="avatar-padding"></div>
+
                                     {{item.fullName}} <b *ngIf="item.warehouseName"> ({{item.warehouseName}}) </b>
                                     <span class="email-text">({{item.email}})</span>
                                 </h2>

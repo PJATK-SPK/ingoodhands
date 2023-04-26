@@ -4,6 +4,7 @@ export interface ManageUserDetails {
     id: string;
     fullName: string;
     email: string;
+    pictureUrl: string;
     warehouseId: string;
     roles: Role[];
 }
