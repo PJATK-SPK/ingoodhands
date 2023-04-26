@@ -69,7 +69,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesGetSingle
                 City = dbResult.Warehouse.Address.City,
                 PostalCode = dbResult.Warehouse.Address.PostalCode,
                 FullStreet = StreetFullNameBuilderService.Build(dbResult.Warehouse.Address!),
-                CreationDate = DateTime.UtcNow,
+                CreationDate = dbResult.CreationDate,
                 Products = productResponse
             };
 

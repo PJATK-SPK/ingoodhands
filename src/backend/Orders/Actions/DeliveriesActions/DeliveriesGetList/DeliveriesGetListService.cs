@@ -47,7 +47,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
                 IsDelivered = c.IsDelivered,
                 IsLost = c.IsLost,
                 TripStarted = c.TripStarted,
-                CreationDate = DateTime.UtcNow,
+                CreationDate = c.CreationDate,
                 ProductTypesCount = c.DeliveryProducts != null ? c.DeliveryProducts.Count : 0
             }).ToList();
 
