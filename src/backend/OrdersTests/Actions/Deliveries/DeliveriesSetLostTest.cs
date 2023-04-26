@@ -1,20 +1,14 @@
-﻿using Core.Database.Enums;
-using Core.Database.Seeders;
+﻿using Autofac;
+using Core;
 using Core.Database;
+using Core.Database.Enums;
+using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Setup.Enums;
-using Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Orders.Actions.DeliveriesActions.DeliveriesPickup;
 using Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestsBase;
-using Autofac;
 using Orders.Actions.DeliveriesActions.DeliveriesSetLost;
+using TestsBase;
 
 namespace OrdersTests.Actions.Deliveries
 {
@@ -28,7 +22,7 @@ namespace OrdersTests.Actions.Deliveries
         };
 
         [TestMethod()]
-        public async Task Pickup_ChangeTripStarted()
+        public async Task SetLost_ChangeLostToTrue()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();
@@ -63,7 +57,7 @@ namespace OrdersTests.Actions.Deliveries
         }
 
         [TestMethod()]
-        public async Task PickupNotFoundDelivery_ThrowsException()
+        public async Task SetLost_DeliveryNotFound_ThrowsException()
         {
             using var toolkit = new TestsToolkit(_usedModules);
             var context = toolkit.Resolve<AppDbContext>();

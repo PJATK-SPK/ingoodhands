@@ -53,7 +53,7 @@ namespace Core.Services
 
                 if (!await HasRole(roleName, currentUser.Id))
                 {
-                    _logger.LogError("User doesn't have required role");
+                    _logger.LogError("User with Id: {currentUserId} doesn't have required role", currentUser.Id);
                     throw new UnauthorizedException("Your user doesn't have required role");
                 }
             }
@@ -61,7 +61,7 @@ namespace Core.Services
             {
                 if (!await HasRole(roleName, userId))
                 {
-                    _logger.LogError("User doesn't have required role");
+                    _logger.LogError("User with Id: {currentUserId} doesn't have required role", userId);
                     throw new UnauthorizedException("Your user doesn't have required role");
                 }
             }
@@ -77,7 +77,7 @@ namespace Core.Services
 
                 if (await HasRole(roleName, currentUser.Id))
                 {
-                    _logger.LogError("User already has roleName that this method is trying to assign");
+                    _logger.LogError("User with Id: {currentUserId} already has roleName that this method is trying to assign", currentUser.Id);
                     throw new UnauthorizedException("Your user already has that role");
                 }
                 else
@@ -91,7 +91,7 @@ namespace Core.Services
             {
                 if (await HasRole(roleName, userId))
                 {
-                    _logger.LogError("User already has roleName that this method is trying to assign");
+                    _logger.LogError("User with Id: {currentUserId} already has roleName that this method is trying to assign", userId);
                     throw new UnauthorizedException("Your user already has that role");
                 }
                 else
@@ -131,7 +131,7 @@ namespace Core.Services
 
             if (user == null)
             {
-                _logger.LogError("Failed to get roles for user, because User was not found");
+                _logger.LogError("Failed to get roles for user with Id: {currentUserId}, because User was not found", userId);
                 throw new ApplicationErrorException("Sorry we couldn't find your user in database");
             }
 

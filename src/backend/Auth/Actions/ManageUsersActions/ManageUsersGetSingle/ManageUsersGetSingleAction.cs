@@ -43,7 +43,7 @@ namespace Auth.Actions.ManageUsersActions.ManageUsersGetSingle
 
             if (dbResult == null)
             {
-                _logger.LogError("Couldn't find user by id in database");
+                _logger.LogError("Couldn't find user with ID:{userId} in database", userId);
                 throw new ItemNotFoundException("Sorry we are unable to find this user in database");
             }
 

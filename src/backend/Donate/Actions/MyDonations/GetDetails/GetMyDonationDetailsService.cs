@@ -48,12 +48,12 @@ namespace Donate.Actions.MyDonations.GetDetails
 
             if (donationById == null)
             {
-                _logger.LogError("Couldn't find donation in database");
+                _logger.LogError("Couldn't find donation with Id: {donationId} in database", decodedDonationId);
                 throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
             }
             if (!donationById.Products!.Any())
             {
-                _logger.LogError("Couldn't find any active products in database");
+                _logger.LogError("Couldn't find any active products for donation with Id: {donationId} in database", decodedDonationId);
                 throw new ItemNotFoundException("Sorry there seems to be a problem with our service");
             }
 
@@ -66,7 +66,7 @@ namespace Donate.Actions.MyDonations.GetDetails
 
             if (donationById.Warehouse == null)
             {
-                _logger.LogError("Couldn't find warehouse in database");
+                _logger.LogError("Couldn't find warehouse assigned to donation with Id:{donationId} in database", decodedDonationId);
                 throw new ApplicationErrorException("Sorry there seems to be a problem with our service");
             }
 
