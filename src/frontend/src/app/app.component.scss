@@ -14,17 +14,17 @@
 }
 
 .dot:nth-child(1) {
-    background-color: red;
+    background-color: #34495e;
     animation: jump 0.6s 0.5s ease-in infinite
 }
 
 .dot:nth-child(2) {
-    background-color: blue;
+    background-color: #3498db;
     animation: jump 0.6s 0.7s ease-in infinite
 }
 
 .dot:nth-child(3) {
-    background-color: orange;
+    background-color: #9b59b6;
     animation: jump 0.6s 0.9s ease-in infinite
 }
 
