@@ -1,5 +1,4 @@
-﻿using HashidsNet;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Donate.Actions.DonateForm.GetWarehouses
 {

@@ -31,7 +31,11 @@ namespace Core.Actions.DonateForm.GetProducts
                 await _roleService.ThrowIfNoRole((RoleName)roleName);
             }
 
-            var listOfProducts = await _appDbContext.Products.Where(c => c.Status == Core.Database.Enums.DbEntityStatus.Active).FromCache().ToDynamicListAsync();
+            var listOfProducts = await _appDbContext.Products
+                .Where(c => c.Status == DbEntityStatus.Active)
+                .FromCache()
+                .OrderBy(c => c.Name)
+                .ToDynamicListAsync();
 
             if (!listOfProducts.Any())
             {
