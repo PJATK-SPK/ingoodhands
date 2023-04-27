@@ -17,6 +17,7 @@ namespace OrdersTests.Actions.Deliveries
             FirstName = firstName,
             LastName = lastName,
             Email = firstName + "@" + lastName + ".com",
+            WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
         };
 
         public static Auth0User CreateAuth0User(User user, int id) => new()

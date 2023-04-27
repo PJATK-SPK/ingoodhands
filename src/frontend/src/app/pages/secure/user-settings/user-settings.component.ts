@@ -17,6 +17,7 @@ export class UserSettingsComponent {
   public form = new FormGroup({
     firstName: new FormControl(this.auth.dbUser.firstName, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
     lastName: new FormControl(this.auth.dbUser.lastName, [Validators.minLength(1), Validators.maxLength(50), Validators.required]),
+    phoneNumber: new FormControl(this.auth.dbUser.phoneNumber, [Validators.maxLength(50)]),
     email: new FormControl({ value: this.auth.dbUser.email, disabled: true }, [Validators.required]),
   });
 
@@ -37,6 +38,7 @@ export class UserSettingsComponent {
     const payload = {
       firstName: this.form.get('firstName')?.value,
       lastName: this.form.get('lastName')?.value,
+      phoneNumber: this.form.get('phoneNumber')?.value,
     }
 
     this.isSaving = true;

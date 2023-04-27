@@ -37,6 +37,12 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
                 throw new ItemNotFoundException("Sorry we couldn't find that delivery in database");
             }
 
+            if (dbResult.DelivererUserId == null)
+            {
+                _logger.LogError("Delivery with id:{decodedDeliveryId} has no assigned deliverer and user tried to start trip.", decodedDeliveryId);
+                throw new ItemNotFoundException("You cant start trip of this delivery, because there is no deliverer assigned!");
+            }
+
             dbResult!.TripStarted = true;
             await _appDbContext.SaveChangesAsync();
 

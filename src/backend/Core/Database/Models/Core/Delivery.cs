@@ -12,7 +12,7 @@ namespace Core.Database.Models.Core
         public long OrderId { get; set; }
         public Order? Order { get; set; }
         public bool IsDelivered { get; set; }
-        public long DelivererUserId { get; set; }
+        public long? DelivererUserId { get; set; }
         public User? DelivererUser { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsLost { get; set; }

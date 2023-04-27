@@ -5,6 +5,7 @@ export interface DbUser {
     firstName: string;
     lastName: string;
     email: string;
+    phoneNumber: string;
     auth0Identifiers: string[];
     roles: Role[];
 }

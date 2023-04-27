@@ -14,7 +14,7 @@ namespace Core.Database.Config.Models.Core
             builder.ToTable("notifications", "core");
 
             builder.Property(c => c.CreationDate).IsRequired();
-            builder.Property(c => c.Message).IsRequired();
+            builder.Property(c => c.Message).HasMaxLength(600).IsRequired();
             builder.HasOne(c => c.User).WithMany(c => (IEnumerable<TBase>?)c.Notifications).HasForeignKey(c => c.UserId).HasConstraintName("notifications_user_id_fkey");
         }
     }

@@ -51,7 +51,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             show = true;
             title = 'Not found';
             texts = this.splitMsg(err.error.message);
-            this.authService.logout();
         }
         else if (err.status === 403) {
             show = true;

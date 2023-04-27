@@ -36,6 +36,12 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesSetLost
                 throw new ItemNotFoundException("Sorry we couldn't find that delivery in database");
             }
 
+            if (dbResult.DelivererUserId == null)
+            {
+                _logger.LogError("Delivery with id:{decodedDeliveryId} has no assigned deliverer and user tried to set is as lost.", decodedDeliveryId);
+                throw new ItemNotFoundException("You cant set this delivery as lost, because there is no deliverer assigned!");
+            }
+
             dbResult!.IsLost = true;
             await _appDbContext.SaveChangesAsync();
 

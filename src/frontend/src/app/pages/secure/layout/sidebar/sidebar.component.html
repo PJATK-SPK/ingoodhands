@@ -9,18 +9,22 @@
                     <div class="p-3 flex align-items-center justify-content-between text-600">
                         <span class="font-medium text-sm text-900">{{ group.label }}</span>
                     </div>
+
                     <ul class="list-none p-0 m-0 overflow-hidden">
-                        <li *ngFor="let page of group.pages">
-                            <a *ngIf="!page.role || userHasRole(page.role)" pRipple [routerLink]="page.routerLink"
-                                class="flex align-items-center cursor-pointer p-3 text-700 hover:surface-100 transition-colors border-right-2 transition-duration-150"
-                                [ngClass]="router.url === page.routerLink ? 'bg-purple-50 text-purple-500 border-purple-500' : 'border-transparent'">
-                                <i [class]="page.icon"></i>
-                                <span class="font-medium">{{ page.label }}</span>
-                                <span *ngIf="page.alerts | async as alerts"
-                                    class="inline-flex align-items-center justify-content-center ml-auto bg-purple-500 text-0 border-circle transition-duration-150"
-                                    style="min-width: 1.5rem; height: 1.5rem">{{ alerts }}</span>
-                            </a>
-                        </li>
+                        <div *ngFor="let category of group.categories">
+
+                            <li *ngFor="let page of category.pages">
+                                <a *ngIf="!page.role || userHasRole(page.role)" pRipple [routerLink]="page.routerLink"
+                                    class="flex align-items-center cursor-pointer p-3 text-700 hover:surface-100 transition-colors border-right-2 transition-duration-150"
+                                    [ngClass]="router.url === page.routerLink ? 'bg-purple-50 text-purple-500 border-purple-500' : getBgClassByRole(category.role)">
+                                    <i [class]="page.icon"></i>
+                                    <span class="font-medium">{{ page.label }}</span>
+                                    <span *ngIf="page.alerts | async as alerts"
+                                        class="inline-flex align-items-center justify-content-center ml-auto bg-purple-500 text-0 border-circle transition-duration-150"
+                                        style="min-width: 1.5rem; height: 1.5rem">{{ alerts }}</span>
+                                </a>
+                            </li>
+                        </div>
 
                     </ul>
                 </li>

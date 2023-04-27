@@ -78,24 +78,17 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  public getDelivererText(delivery: OrdersGetSingleDeliveryResponse): string {
+    let result = `${delivery.delivererFullName} (${delivery.delivererEmail})`;
+    result += `, ${delivery.delivererPhoneNumber}`;
+    return result;
+  }
+
   private fetch(orderId: string) {
     this.orderService.getOrder(orderId).subscribe(order => {
       this.order = order;
       this.location.lat = order.gpsLatitude;
       this.location.lng = order.gpsLongitude;
-
-      this.order.deliveries.push({
-        id: 'badf',
-        name: 'DEL000123',
-        creationDate: '2021-05-01T12:00:00',
-        isDelivered: true,
-      });
-      this.order.deliveries.push({
-        id: 'badf',
-        name: 'DEL000234',
-        creationDate: '2021-06-01T12:00:00',
-        isDelivered: false,
-      });
     });
   }
 }

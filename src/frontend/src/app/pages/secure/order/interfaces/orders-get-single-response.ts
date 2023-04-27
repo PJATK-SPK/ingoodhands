@@ -3,6 +3,11 @@ export interface OrdersGetSingleDeliveryResponse {
     name: string;
     creationDate: string;
     isDelivered: boolean;
+    tripStarted: boolean;
+    isLost: boolean;
+    delivererFullName: string;
+    delivererEmail: string;
+    delivererPhoneNumber: string;
 }
 
 export interface OrdersGetSingleProductResponse {

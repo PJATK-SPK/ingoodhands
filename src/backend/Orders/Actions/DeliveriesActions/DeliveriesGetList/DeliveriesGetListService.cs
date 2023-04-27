@@ -3,8 +3,11 @@ using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
 using Core.Services;
+using Core.Setup.Auth0;
 using HashidsNet;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Orders.Actions.StocksActions.StocksGetList;
 using System.Linq.Dynamic.Core;
 
 namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
@@ -14,23 +17,46 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
         private readonly AppDbContext _appDbContext;
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
 
-
-        public DeliveriesGetListService(AppDbContext appDbContext, RoleService roleService, Hashids hashids)
+        public DeliveriesGetListService(
+            AppDbContext appDbContext,
+            RoleService roleService,
+            Hashids hashids,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService)
         {
             _appDbContext = appDbContext;
             _roleService = roleService;
             _hashids = hashids;
+            _currentUserService = currentUserService;
+            _getCurrentUserService = getCurrentUserService;
         }
 
         public async Task<PagedResult<DeliveriesGetListResponseItem>> GetList(int page, int pageSize, string? filter = null)
         {
-            await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper);
+            var auth0UserInfo = await _currentUserService.GetUserInfo();
+            var currentUser = _getCurrentUserService.Execute(auth0UserInfo).Result;
+
+            await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper, currentUser.Id);
+
+            if (currentUser.WarehouseId == null)
+            {
+                return new PagedResult<DeliveriesGetListResponseItem>()
+                {
+                    CurrentPage = 1,
+                    PageCount = 1,
+                    PageSize = 1,
+                    Queryable = Array.Empty<DeliveriesGetListResponseItem>().AsQueryable(),
+                    RowCount = 0
+                };
+            }
 
             IQueryable<Delivery> dbResult = _appDbContext.Deliveries
                 .Include(c => c.DeliveryProducts)
                 .Include(c => c.Order)
-                .Where(c => c.DelivererUser!.Id != UserSeeder.ServiceUser.Id);
+                .Where(c => c.DelivererUserId != null && c.DelivererUser!.Id != UserSeeder.ServiceUser.Id);
 
             if (filter != null)
             {
