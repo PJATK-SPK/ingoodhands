@@ -1,8 +1,6 @@
-﻿using Core.Database;
-using Core.Database.Enums;
+﻿using Core.Database.Enums;
 using Core.Database.Models.Core;
 using Core.Database.Seeders;
-using Core.Exceptions;
 using Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Orders.Jobs.CreateDeliveries.Models;
@@ -81,12 +79,6 @@ namespace Orders.Jobs.CreateDeliveries
 
             var stocks = warehousesStocks[warehouseIdWithMostStock];
             var warehouse = stocks.First().Warehouse!;
-            var warehouseDeliverers = warehouse.Users!.Where(c => c.Roles!.Any(s => s.Role!.Name == RoleName.Deliverer)).ToList();
-
-            if (!warehouseDeliverers.Any())
-                throw new ItemNotFoundException($"Cannot create delivery for order {order.Id}, because warehouse {warehouse.Id} has no deliverers!");
-
-            var deliverer = warehouseDeliverers[Random.Shared.Next(warehouseDeliverers.Count)];
 
             var result = new Delivery
             {
@@ -94,7 +86,6 @@ namespace Orders.Jobs.CreateDeliveries
                 CreationDate = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active,
-                DelivererUserId = deliverer.Id,
                 Name = _orderNameBuilderService.Build(await _counterService.GetAndUpdateNextCounter(TableName.Deliveries)),
                 Order = order,
                 WarehouseId = warehouse.Id,
@@ -103,12 +94,11 @@ namespace Orders.Jobs.CreateDeliveries
             result.DeliveryProducts = CreateDeliveryProductsForWarehouse(result, remainder, stocks);
 
             var warehouseKeepers = warehouse.Users!.Where(c => c.Roles!.Any(r => r.Role!.Name == RoleName.WarehouseKeeper)).ToList();
+
             foreach (var warehouseKeeper in warehouseKeepers)
             {
                 await _notificationService.AddAsync(warehouseKeeper.Id, $"New delivery {result.Name} has been assigned to your warehouse!");
             }
-
-            await _notificationService.AddAsync(deliverer.Id, $"New delivery {result.Name} has been added to your tasks!");
 
             return result;
         }

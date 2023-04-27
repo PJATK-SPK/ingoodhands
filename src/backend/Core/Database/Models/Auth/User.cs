@@ -13,6 +13,7 @@ namespace Core.Database.Models.Auth
         public string FirstName { get; set; } = default!;
         public string? LastName { get; set; }
         public string Email { get; set; } = default!;
+        public string? PhoneNumber { get; set; }
         public long? WarehouseId { get; set; }
         public Warehouse? Warehouse { get; set; }
         public List<Auth0User>? Auth0Users { get; set; }
@@ -32,7 +33,7 @@ namespace Core.Database.Models.Auth
         public override int GetHashCode()
             => HashCode.Combine(
                 HashCode.Combine(Id, Status, FirstName),
-                HashCode.Combine(LastName, Email)
+                HashCode.Combine(LastName, Email, PhoneNumber)
                );
     }
 }

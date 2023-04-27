@@ -42,6 +42,19 @@
                                         <div>
                                             <b>{{ delivery.name }}</b>
 
+                                            <p-tag *ngIf="delivery.isLost" styleClass="ml-2 mb-1" icon="pi pi-calendar"
+                                                severity="danger" value="LOST">
+                                            </p-tag>
+
+                                            <p-tag *ngIf="!delivery.tripStarted " styleClass="ml-2 mb-1"
+                                                icon="pi pi-calendar" severity="warning" value="Trip not started yet">
+                                            </p-tag>
+
+                                            <p-tag *ngIf="delivery.tripStarted && !delivery.isDelivered"
+                                                styleClass="ml-2 mb-1" icon="pi pi-calendar" severity="success"
+                                                value="Trip started">
+                                            </p-tag>
+
                                             <p-tag *ngIf="!delivery.isDelivered" styleClass="ml-2 mb-1"
                                                 icon="pi pi-calendar" severity="warning" value="Not delivered">
                                             </p-tag>
@@ -51,6 +64,7 @@
                                             </p-tag>
                                         </div>
                                         <div> {{ delivery.creationDate | string2Date }}</div>
+                                        <div> Deliverer: {{getDelivererText(delivery)}} </div>
                                     </div>
                                     <div>
                                         <button pButton pRipple *ngIf="!delivery.isDelivered" type="button"

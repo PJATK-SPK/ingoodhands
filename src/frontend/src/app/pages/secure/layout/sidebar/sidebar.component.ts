@@ -34,6 +34,24 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  public getBgClassByRole(role: Role | 'all') {
+    let result = 'border-transparent';
+
+    if (role == Role.administrator) {
+      result += ' bg-gray-50';
+    } else if (role == Role.warehouseKeeper) {
+      result += ' bg-green-50';
+    } else if (role == Role.deliverer) {
+      result += ' bg-red-50';
+    } else if (role == Role.donor) {
+      result += ' bg-yellow-50';
+    } else if (role == Role.needy) {
+      result += ' bg-blue-50';
+    }
+
+    return result;
+  }
+
   public onLogoutClick() {
     this.auth.logout().subscribe();
   }

@@ -33,6 +33,7 @@ namespace Auth.Actions.UserSettingsActions.PatchUserDetails
 
             userFromDatabase.FirstName = userSettingsPayload.FirstName;
             userFromDatabase.LastName = userSettingsPayload.LastName;
+            userFromDatabase.PhoneNumber = userSettingsPayload.PhoneNumber;
 
             await _appDbContext.SaveChangesAsync();
 

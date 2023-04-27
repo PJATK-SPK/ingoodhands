@@ -11,6 +11,7 @@ namespace Auth.Models
             FirstName = user.FirstName;
             LastName = user.LastName;
             Email = user.Email;
+            PhoneNumber = user.PhoneNumber;
 
             if (user.Auth0Users != null)
                 Auth0Identifiers = user.Auth0Users.Select(c => c.Identifier).ToList();
@@ -26,6 +27,7 @@ namespace Auth.Models
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? PhoneNumber { get; set; }
         public string Email { get; set; }
         public List<string> Auth0Identifiers { get; set; }
         public List<string> Roles { get; set; }

@@ -16,6 +16,7 @@ namespace Core.Database.Config.Models.Auth
             builder.Property(c => c.Status).IsRequired();
             builder.Property(c => c.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(c => c.LastName).HasMaxLength(50);
+            builder.Property(c => c.PhoneNumber).HasMaxLength(20);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(254);
             builder.HasIndex(c => c.Email).IsUnique().HasDatabaseName("users_email_idx");
 

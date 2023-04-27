@@ -37,6 +37,18 @@ namespace Orders.Actions.StocksActions.StocksGetList
             var currentUser = _getCurrentUserService.Execute(auth0UserInfo).Result;
             await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper, currentUser.Id);
 
+            if (currentUser.WarehouseId == null)
+            {
+                return new OkObjectResult(new PagedResult<StocksGetListItemResponse>()
+                {
+                    CurrentPage = 1,
+                    PageCount = 1,
+                    PageSize = 1,
+                    Queryable = Array.Empty<StocksGetListItemResponse>().AsQueryable(),
+                    RowCount = 0
+                });
+            }
+
             var listOfActiveStock = _appDbContext.Stocks
                .Include(c => c.Product)
                .Where(c => c.Status == DbEntityStatus.Active && c.WarehouseId == currentUser.WarehouseId)

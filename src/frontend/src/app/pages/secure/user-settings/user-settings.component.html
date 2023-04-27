@@ -31,6 +31,15 @@
                                     is invalid.</small>
                             </div>
 
+                            <div class="col-12 md:col-6 lg:col-4">
+                                <label for="phoneNumber" class="block">Phone number</label>
+                                <input id="phoneNumber" class="input-field" type="text" pInputText
+                                    aria-describedby="phoneNumber-help" formControlName="phoneNumber">
+                                <small *ngIf="form.controls['phoneNumber'].errors" id="phoneNumber-help"
+                                    class="p-error block">Phone number
+                                    is invalid.</small>
+                            </div>
+
                             <div class="col-12">
                                 <div class="pr-5 flex align-items-center justify-content-end">
                                     <button pButton [loading]="isSaving" type="submit" label="Save"

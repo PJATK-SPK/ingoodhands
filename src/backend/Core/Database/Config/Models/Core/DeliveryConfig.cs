@@ -17,7 +17,7 @@ namespace Core.Database.Config.Models.Core
             builder.Property(c => c.Name).IsRequired().HasMaxLength(9);
             builder.Property(c => c.OrderId).IsRequired();
             builder.Property(c => c.IsDelivered).IsRequired();
-            builder.Property(c => c.DelivererUserId).IsRequired();
+            builder.Property(c => c.DelivererUserId);
             builder.Property(c => c.CreationDate).IsRequired();
             builder.Property(c => c.IsLost).IsRequired();
             builder.Property(c => c.TripStarted).IsRequired();

@@ -69,6 +69,11 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 Name = d.Name,
                 CreationDate = d.CreationDate,
                 IsDelivered = d.IsDelivered,
+                TripStarted = d.TripStarted,
+                IsLost = d.IsLost,
+                DelivererFullName = d.DelivererUser != null ? d.DelivererUser.FirstName + " " + d.DelivererUser.LastName : null,
+                DelivererEmail = d.DelivererUser?.Email,
+                DelivererPhoneNumber = d.DelivererUser?.PhoneNumber,
             }).ToList();
 
             var orderItemResponse = new OrdersGetSingleResponse
