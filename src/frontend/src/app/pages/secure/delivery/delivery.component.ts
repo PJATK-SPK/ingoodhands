@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DeliveryService } from './services/delivery.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DeliveryGetSingleResponse } from './interfaces/delivery-get-single-response';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
+import { FORCE_REFRESH_SIDEBAR } from '../layout/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-delivery',
@@ -16,6 +17,7 @@ import { tap } from 'rxjs';
 })
 export class DeliveryComponent implements OnInit {
   delivery: DeliveryGetSingleResponse | undefined;
+  public isButtonOnAction = false;
 
   public location: google.maps.LatLngLiteral = {
     lat: 50.1425722,
@@ -50,13 +52,6 @@ export class DeliveryComponent implements OnInit {
     });
   }
 
-  public onPickupClick(event: Event) {
-    this.service.pickup(this.delivery!.id).subscribe(() => {
-      this.fetch(this.delivery!.id).subscribe(() => {
-        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery picked up!' });
-      });
-    });
-  }
 
   public onMarkAsLostClick(event: Event) {
     this.confirmationService.confirm({
@@ -70,12 +65,42 @@ export class DeliveryComponent implements OnInit {
     });
   }
 
-  public setLost() {
-    this.service.setLost(this.delivery!.id).subscribe(() => {
-      this.fetch(this.delivery!.id).subscribe(() => {
-        this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery set as lost!' });
+  public onStartTripClick(event: Event) {
+    this.isButtonOnAction = true;
+
+    this.service.pickup(this.delivery!.id)
+      .pipe(
+        catchError(err => {
+          this.isButtonOnAction = false;
+          return throwError(() => err);
+        })
+      )
+      .subscribe(() => {
+        this.fetch(this.delivery!.id).subscribe(() => {
+          setTimeout(() => {
+            FORCE_REFRESH_SIDEBAR.next();
+            this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery picked up!' });
+          }, 800);
+        });
       });
-    });
+  }
+
+  public setLost() {
+    this.service.setLost(this.delivery!.id)
+      .pipe(
+        catchError(err => {
+          this.isButtonOnAction = false;
+          return throwError(() => err);
+        })
+      )
+      .subscribe(() => {
+        this.fetch(this.delivery!.id).subscribe(() => {
+          setTimeout(() => {
+            FORCE_REFRESH_SIDEBAR.next();
+            this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery set as lost!' });
+          }, 800);
+        });
+      });
   }
 
   private fetch(deliveryId: string) {

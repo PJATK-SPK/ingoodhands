@@ -16,6 +16,8 @@ import { OrderComponent } from './order/order.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { AvailableDeliveriesComponent } from './available-deliveries/available-deliveries.component';
+import { CurrentDeliveryComponent } from './current-delivery/current-delivery.component';
 
 const routes: Routes = [
     {
@@ -92,6 +94,16 @@ const routes: Routes = [
         path: 'deliveries',
         loadChildren: () => import('./deliveries/deliveries.module').then(m => m.DeliveriesModule),
         component: DeliveriesComponent
+    },
+    {
+        path: 'available-deliveries',
+        loadChildren: () => import('./available-deliveries/available-deliveries.module').then(m => m.AvailableDeliveriesModule),
+        component: AvailableDeliveriesComponent
+    },
+    {
+        path: 'current-delivery',
+        loadChildren: () => import('./current-delivery/current-delivery.module').then(m => m.CurrentDeliveryModule),
+        component: CurrentDeliveryComponent
     },
     {
         path: 'delivery/:id',

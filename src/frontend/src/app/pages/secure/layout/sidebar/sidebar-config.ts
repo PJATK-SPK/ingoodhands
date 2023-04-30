@@ -74,6 +74,11 @@ export const getSidebarConfig = (httpClient: HttpClient) => [
                         icon: 'pi pi-fw pi-box',
                         routerLink: '/secure/deliveries',
                         role: Role.warehouseKeeper,
+                        alerts: timer(0, 15 * 1000)
+                            .pipe(
+                                mergeMap(() => httpClient.get<{ count: number }>(`${environment.api}/deliveries/warehouse-deliveries-count`)),
+                                map(data => data.count)
+                            )
                     }
                 ]
             },
@@ -88,11 +93,28 @@ export const getSidebarConfig = (httpClient: HttpClient) => [
                     },
                 ]
             },
-            // {
-            //     role: Role.deliverer,
-            //     pages: [
-            //     ]
-            // },
+            {
+                role: Role.deliverer,
+                pages: [
+                    {
+                        label: 'Available deliveries',
+                        icon: 'pi pi-fw pi-inbox',
+                        routerLink: '/secure/available-deliveries',
+                        role: Role.deliverer,
+                        alerts: timer(0, 15 * 1000)
+                            .pipe(
+                                mergeMap(() => httpClient.get<{ count: number }>(`${environment.api}/available-deliveries/count`)),
+                                map(data => data.count)
+                            )
+                    },
+                    {
+                        label: 'Current delivery',
+                        icon: 'pi pi-fw pi-shopping-bag',
+                        routerLink: '/secure/current-delivery',
+                        role: Role.deliverer,
+                    },
+                ]
+            },
             {
                 role: Role.administrator,
                 pages: [

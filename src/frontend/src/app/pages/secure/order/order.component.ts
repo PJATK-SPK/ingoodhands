@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from './services/order.service';
 import { OrdersGetSingleDeliveryResponse, OrdersGetSingleResponse } from './interfaces/orders-get-single-response';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ScreenService, ScreenSize } from 'src/app/services/screen.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-order',
@@ -15,6 +17,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class OrderComponent implements OnInit {
   order: OrdersGetSingleResponse | undefined;
+
+  public ScreenSize = ScreenSize;
+  public isSettingDeliveredId = '0';
 
   public location: google.maps.LatLngLiteral = {
     lat: 50.1425722,
@@ -36,6 +41,7 @@ export class OrderComponent implements OnInit {
   }
 
   constructor(
+    public readonly screen: ScreenService,
     private readonly confirmationService: ConfirmationService,
     private readonly route: ActivatedRoute,
     private readonly orderService: OrderService,
@@ -51,10 +57,23 @@ export class OrderComponent implements OnInit {
   }
 
   public onMarkAsDeliveredClick(delivery: OrdersGetSingleDeliveryResponse) {
-    this.orderService.setDeliveryAsDelivered(this.order!.id, delivery.id).subscribe(() => {
-      this.fetch(this.order!.id);
-      this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery marked as delivered!' });
-    });
+    this.isSettingDeliveredId = delivery.id;
+
+    this.orderService.setDeliveryAsDelivered(this.order!.id, delivery.id)
+      .pipe(
+        catchError(err => {
+          this.isSettingDeliveredId = '0';
+          return throwError(() => err);
+        })
+      )
+      .subscribe(() => {
+        this.fetch(this.order!.id);
+
+        setTimeout(() => {
+          this.isSettingDeliveredId = '0';
+          this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery marked as delivered!' });
+        }, 800);
+      });
   }
 
   public confirm(event: Event) {

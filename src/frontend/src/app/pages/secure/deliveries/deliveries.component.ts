@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import { DeliveriesListItem } from './interfaces/deliveries-list-item';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { Destroy } from 'src/app/services/destroy';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-deliveries',
@@ -25,6 +26,7 @@ export class DeliveriesComponent implements OnInit {
 
   constructor(
     public readonly service: DeliveriesService,
+    public readonly auth: AuthService,
     private readonly destroy$: Destroy) { }
 
   public getProductsText(count: number): string {
