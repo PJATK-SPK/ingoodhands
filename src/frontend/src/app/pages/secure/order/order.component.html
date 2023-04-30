@@ -36,8 +36,7 @@
                                 There are no deliveries yet! 🤨
                             </h3>
                             <ul *ngIf="order.deliveries.length!==0">
-                                <li class="pt-3" style="display:grid;grid-template-columns:auto 50px;"
-                                    *ngFor="let delivery of order.deliveries">
+                                <li class="pt-3" class="delivery-container" *ngFor="let delivery of order.deliveries">
                                     <div>
                                         <div>
                                             <b>{{ delivery.name }}</b>
@@ -67,10 +66,17 @@
                                         <div> Deliverer: {{getDelivererText(delivery)}} </div>
                                     </div>
                                     <div>
-                                        <button pButton pRipple *ngIf="!delivery.isDelivered" type="button"
-                                            icon="pi pi-check" (click)="onMarkAsDeliveredClick(delivery)"
-                                            pTooltip="Mark as delivered"
+                                        <button pButton pRipple
+                                            *ngIf="screen.screenSize < ScreenSize.sm && !delivery.isDelivered"
+                                            [disabled]="isSettingDeliveredId !== '0'" type="button" icon="pi pi-check"
+                                            (click)="onMarkAsDeliveredClick(delivery)" pTooltip="Mark as delivered"
                                             class="p-button-rounded p-button-outlined"></button>
+
+                                        <button pButton
+                                            *ngIf="screen.screenSize >= ScreenSize.sm && !delivery.isDelivered"
+                                            [disabled]="isSettingDeliveredId !== '0'" type="button" icon="pi pi-check"
+                                            (click)="onMarkAsDeliveredClick(delivery)" label="MARK AS DELIVERED"
+                                            class="p-button-outlined p-button-success"></button>
                                     </div>
                                 </li>
                             </ul>

@@ -2,3 +2,19 @@
     color: #666;
     font-size: 12px;
 }
+
+.delivery-container {
+    display: grid;
+}
+
+@media (max-width: 768px) {
+    .delivery-container {
+        grid-template-columns: auto 50px;
+    }
+}
+
+@media (min-width: 769px) {
+    .delivery-container {
+        grid-template-columns: auto 180px;
+    }
+}

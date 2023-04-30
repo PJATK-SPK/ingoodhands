@@ -15,6 +15,7 @@ import { AuthGuard } from './auth-guard';
 import { HttpErrorInterceptor } from './services/http-error-interceptor';
 import { WarehouseService } from './services/warehouse.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ScreenService } from './services/screen.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AuthGuard,
     MessageService,
     WarehouseService,
+    ScreenService
   ],
   bootstrap: [AppComponent]
 })

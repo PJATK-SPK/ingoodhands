@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, first, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
@@ -7,6 +7,24 @@ import { environment } from 'src/environments/environment';
 import { DbUser } from './interfaces/db-user';
 import { DateTime, Settings } from 'luxon';
 import { SwPush } from '@angular/service-worker';
+import { ScreenService } from './services/screen.service';
+
+interface ResizeEvent extends Event {
+  bubbles: boolean;
+  cancelBubble: boolean;
+  cancelable: boolean;
+  composed: boolean;
+  currentTarget: Window;
+  defaultPrevented: boolean;
+  eventPhase: number;
+  isTrusted: boolean;
+  path: Window[];
+  returnValue: boolean;
+  srcElement: Window;
+  target: Window;
+  timeStamp: number
+  type: "resize";
+}
 
 @Component({
   selector: 'app-root',
@@ -22,6 +40,7 @@ export class AppComponent implements OnInit {
     private readonly auth: AuthService,
     private readonly router: Router,
     private readonly httpClient: HttpClient,
+    private readonly screenService: ScreenService,
   ) { }
 
   public authChecked = false;
@@ -32,6 +51,12 @@ export class AppComponent implements OnInit {
     Settings.defaultZone = 'Europe/Warsaw';
 
     this.checkAuth().subscribe();
+    this.screenService.refresh();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(event: ResizeEvent = { target: { innerWidth: window.innerWidth } } as any): void {
+    this.screenService.refresh();
   }
 
   private checkAuth(): Observable<any> {

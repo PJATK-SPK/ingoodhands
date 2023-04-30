@@ -3,6 +3,7 @@ import { StocksService } from './services/stocks.service';
 import { StockItem } from './models/stock-item';
 import { PagedResult } from 'src/app/interfaces/paged-result';
 import { DateTime } from 'luxon';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-stocks-donation',
@@ -18,7 +19,9 @@ export class StocksComponent implements OnInit {
   public pageSize = 10;
   public pagedResult: PagedResult<StockItem> | undefined;
 
-  constructor(public readonly service: StocksService) { }
+  constructor(
+    public readonly service: StocksService,
+    public readonly auth: AuthService) { }
 
   public getProductsText(count: number): string {
     return count > 1 ? `${count} products` : `${count} product`;

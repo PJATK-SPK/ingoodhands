@@ -14,13 +14,13 @@
                                     <p-confirmPopup></p-confirmPopup>
                                     <button pButton icon="pi pi-times" *ngIf="!delivery.tripStarted"
                                         class="p-button-outlined p-button-success" label="START TRIP"
-                                        (click)="onPickupClick($event)"></button>
+                                        [disabled]="isButtonOnAction" (click)="onStartTripClick($event)"></button>
                                 </span>
 
                                 <span class="pl-2">
                                     <button pButton icon="pi pi-times" *ngIf="!delivery.isLost"
-                                        class="p-button-outlined p-button-danger" label="MARK AS LOST"
-                                        (click)="onMarkAsLostClick($event)"></button>
+                                        [disabled]="isButtonOnAction" class="p-button-outlined p-button-danger"
+                                        label="MARK AS LOST" (click)="onMarkAsLostClick($event)"></button>
                                 </span>
                             </div>
                         </div>

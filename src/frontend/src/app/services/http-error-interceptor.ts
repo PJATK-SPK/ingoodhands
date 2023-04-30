@@ -39,18 +39,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         else if (err.status === 500) {
             show = true;
             title = 'Server error';
-            texts = this.splitMsg(err.error.message);
+            texts = this.splitMsg(err?.error?.message);
         }
         else if (err.status === 400) {
             show = true;
             title = 'Data error';
-            texts = this.splitMsg(err.error.message);
+            texts = this.splitMsg(err?.error?.message);
             severity = 'warn';
         }
         else if (err.status === 404) {
             show = true;
             title = 'Not found';
-            texts = this.splitMsg(err.error.message);
+            texts = this.splitMsg(err?.error?.message);
         }
         else if (err.status === 403) {
             show = true;

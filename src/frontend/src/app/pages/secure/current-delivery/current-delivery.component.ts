@@ -4,6 +4,7 @@ import { CurrentDeliveryService } from './services/current-delivery.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { tap } from 'rxjs';
 import { CurrentDeliveryGetSingleResponse } from './interfaces/current-delivery-get-single-response';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-current-delivery',
@@ -37,6 +38,7 @@ export class CurrentDeliveryComponent implements OnInit {
   }
 
   constructor(
+    public readonly auth: AuthService,
     private readonly confirmationService: ConfirmationService,
     private readonly route: ActivatedRoute,
     private readonly service: CurrentDeliveryService,

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { PagedResult } from 'src/app/interfaces/paged-result';
 import { environment } from 'src/environments/environment';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DateTime } from 'luxon';
 import { HttpClient } from "@angular/common/http";
 import { AvailableDeliveriesListItem } from "../interfaces/available-deliveries-list-item";
@@ -11,11 +11,14 @@ export class AvailableDeliveriesService {
 
     constructor(private readonly http: HttpClient) { }
 
-    public warehouseName$ = this.http.get<{ warehouseName: string }>(environment.api + '/deliveries/warehouse-name')
+    public hasActiveDelivery$ = this.http.get<{ result: boolean }>(environment.api + '/available-deliveries/has-active-delivery')
         .pipe(
-            map(c => c.warehouseName),
-            catchError(() => '?')
+            map(c => c.result)
         );
+
+    public assignDelivery(id: string) {
+        return this.http.post(environment.api + `/available-deliveries/assign-delivery/${id}`, {});
+    }
 
     public getList(page: number, pageSize: number, filter?: string): Observable<PagedResult<AvailableDeliveriesListItem<DateTime>>> {
         let params: { page: string, pageSize: string, filter?: string } = {
@@ -27,7 +30,7 @@ export class AvailableDeliveriesService {
             params.filter = filter;
         }
 
-        return this.http.get<PagedResult<AvailableDeliveriesListItem<string>>>(environment.api + '/deliveries', { params })
+        return this.http.get<PagedResult<AvailableDeliveriesListItem<string>>>(environment.api + '/available-deliveries', { params })
             .pipe(
                 map(result => {
                     return {
