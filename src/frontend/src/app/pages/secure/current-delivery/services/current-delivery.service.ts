@@ -10,14 +10,10 @@ export class CurrentDeliveryService {
     constructor(private http: HttpClient) { }
 
     getSingle(): Observable<CurrentDeliveryGetSingleResponse> {
-        return this.http.get<CurrentDeliveryGetSingleResponse>(`${environment.api}/deliveries`);
-    }
-
-    setLost(id: string): Observable<void> {
-        return this.http.post<void>(`${environment.api}/deliveries/${id}/set-lost`, {});
+        return this.http.get<CurrentDeliveryGetSingleResponse>(`${environment.api}/current-delivery`);
     }
 
     pickup(id: string): Observable<void> {
-        return this.http.post<void>(`${environment.api}/deliveries/${id}/pickup`, {});
+        return this.http.post<void>(`${environment.api}/current-delivery/${id}/pickup`, {});
     }
 }

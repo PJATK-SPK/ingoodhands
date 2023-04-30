@@ -74,6 +74,7 @@ export class AvailableDeliveriesComponent implements OnInit {
           }, 1000);
           FORCE_REFRESH_SIDEBAR.next();
           this.msg.add({ severity: 'success', summary: 'Success', detail: 'Delivery assigned. Redirecting...' });
+          this.service.hasActiveDelivery$.subscribe(result => this.hasActiveDelivery = result);
         }, 800);
       });
   }

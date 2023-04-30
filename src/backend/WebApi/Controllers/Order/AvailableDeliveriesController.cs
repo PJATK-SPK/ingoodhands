@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Order;
@@ -17,13 +16,15 @@ public class AvailableDeliveriesController : ControllerBase
     [HttpGet("count")]
     public async Task<ActionResult> GetWarehouseDeliveriesCount() => await Task.Run(() => Ok(new DeleteMe1()));
 
-    // Sandro: Spradzamy czy pan dostawca ma ju¿ wziête na pok³ad jakieœ delivery (TripStarted=1 && DelivererId == CurrentUser.Id)
+    // Sandro: Spradzamy czy pan dostawca ma ju¿ wziête na pok³ad jakieœ delivery (TripStarted=1 && DelivererId == CurrentUser.Id && IsDelivered = false)
+    // IsDelivered jest kluczowe, bo przeciez móg³ mieæ jakies w przeszlosci a nas itneresuje czy TERAZ ma jakies aktywne.
     // Jeœli ma no to true, jeœli nie ma to false.
-    public class DeleteMe2 { public bool Result { get; set; } = false; }
+    public class DeleteMe2 { public bool Result { get; set; } = true; }
     [HttpGet("has-active-delivery")]
     public async Task<ActionResult> HasActiveDelivery() => await Task.Run(() => Ok(new DeleteMe2()));
 
     // Sandro: Sprawdzamy czy to pan dostawca i przypisujemy danej deliverce tego pana
+    // dodatkowo ustawiamy TripStarted = 1
     [HttpPost("assign-delivery/{deliveryId}")]
     public async Task<ActionResult> AssignDelivery(string deliveryId) => await Task.Run(() => Ok());
 
