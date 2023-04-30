@@ -6,70 +6,63 @@
                 <h1 class="text-2xl font-bold m-0">You don't have warehouse assigned! 😯</h1>
             </p-card>
 
-            <!-- // 4. Nowy ekran "Current delivery" - informacje aktualnej dostawy (from/to) -->
+            <p-card *ngIf="auth.dbUser.warehouseId && !hasActiveDelivery">
+                <h1 class="text-2xl font-bold m-0">You don't have active delivery! 🤨</h1>
+            </p-card>
 
-            <p-card *ngIf="auth.dbUser.warehouseId">
+            <p-card *ngIf="auth.dbUser.warehouseId && hasActiveDelivery">
                 <div *ngIf="delivery" class="grid">
+
                     <div class="col-12">
                         <div class="flex align-items-center justify-content-start">
                             <h2>{{ delivery.deliveryName }}</h2>
                         </div>
-
-                        <div class="col-12">
-                            <div class="flex align-items-center justify-content-start">
-                                <span>
-                                    <p-confirmPopup></p-confirmPopup>
-                                    <button pButton icon="pi pi-times" *ngIf="!delivery.tripStarted"
-                                        class="p-button-outlined p-button-success" label="START TRIP"
-                                        (click)="onPickupClick($event)"></button>
-                                </span>
-
-                                <span class="pl-2">
-                                    <button pButton icon="pi pi-times" *ngIf="!delivery.isLost"
-                                        class="p-button-outlined p-button-danger" label="MARK AS LOST"
-                                        (click)="onMarkAsLostClick($event)"></button>
-                                </span>
-                            </div>
-                        </div>
-
-                        <p>
-                            <p-tag *ngIf="delivery.isLost" styleClass="ml-2 mb-1" icon="pi pi-calendar"
-                                severity="danger" value="LOST">
-                            </p-tag>
-
-                            <p-tag *ngIf="!delivery.tripStarted " styleClass="ml-2 mb-1" icon="pi pi-calendar"
-                                severity="warning" value="Trip not started yet">
-                            </p-tag>
-
-                            <p-tag *ngIf="delivery.tripStarted && !delivery.isDelivered" styleClass="ml-2 mb-1"
-                                icon="pi pi-calendar" severity="success" value="Trip started">
-                            </p-tag>
-
-                            <p-tag *ngIf="!delivery.isDelivered" styleClass="ml-2 mb-1" icon="pi pi-calendar"
-                                severity="warning" value="Not delivered">
-                            </p-tag>
-
-                            <p-tag *ngIf="delivery.isDelivered" styleClass="ml-2 mb-1" icon="pi pi-calendar"
-                                severity="success" value="Delivered">
-                            </p-tag>
-                        </p>
-
-                        <p class="m-0">
-                            <a target="_blank"
-                                href="https://www.google.com/maps/search/?api=1&query={{delivery.gpsLatitude}}%2C{{delivery.gpsLongitude}}">
-                                <b>Address:</b>
-                            </a>
-                            {{ delivery.countryName }}, {{ delivery.city }}
-                            {{ delivery.postalCode }}, {{ delivery.fullStreet }}
-                        </p>
-                        <p class="m-0"><b>Order:</b> {{ delivery.orderName }}</p>
-                        <p class="m-0"><b>Deliverer:</b> {{ delivery.delivererFullName }}</p>
-                        <p class="m-0"><b>Creation Date:</b> {{ delivery.creationDate | string2Date }}</p>
                     </div>
 
                     <div class="col-12">
-                        <google-map [center]="location" height="500px" width="100%" [zoom]="10">
-                            <map-marker [options]="marker"></map-marker>
+                        <p class="mb-0"><b>Deliverer:</b> {{ delivery.delivererFullName }}</p>
+                        <p class="m-0"><b>Needy:</b>
+                            {{ delivery.needyFullName }}.
+                            {{ delivery.needyEmail}}
+                            <span *ngIf="delivery.needyPhoneNumber"> {{delivery.needyPhoneNumber}}</span>
+                        </p>
+                        <p class="m-0"><b>Creation Date:</b> {{ delivery.creationDate | string2Date }}</p>
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <h3>Warehouse {{ delivery.warehouseName }}</h3>
+                        <p class="m-0">
+                            <a target="_blank"
+                                href="https://www.google.com/maps/search/?api=1&query={{delivery.warehouseLocation.gpsLatitude}}%2C{{delivery.warehouseLocation.gpsLongitude}}">
+                                <b>Address:</b>
+                            </a>
+                            {{ delivery.warehouseLocation.countryName }}, {{ delivery.warehouseLocation.city }}
+                            {{ delivery.warehouseLocation.postalCode }}, {{ delivery.warehouseLocation.fullStreet }}
+                        </p>
+
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <h3>Order {{ delivery.orderName }}</h3>
+                        <p class="m-0">
+                            <a target="_blank"
+                                href="https://www.google.com/maps/search/?api=1&query={{delivery.orderLocation.gpsLatitude}}%2C{{delivery.orderLocation.gpsLongitude}}">
+                                <b>Address:</b>
+                            </a>
+                            {{ delivery.orderLocation.countryName }}, {{ delivery.orderLocation.city }}
+                            {{ delivery.orderLocation.postalCode }}, {{ delivery.orderLocation.fullStreet }}
+                        </p>
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <google-map [center]="warehouseLocation" height="500px" width="100%" [zoom]="10">
+                            <map-marker [options]="warehouseMarker"></map-marker>
+                        </google-map>
+                    </div>
+
+                    <div class="col-12 lg:col-6">
+                        <google-map [center]="orderLocation" height="500px" width="100%" [zoom]="10">
+                            <map-marker [options]="orderMarker"></map-marker>
                         </google-map>
                     </div>
 
