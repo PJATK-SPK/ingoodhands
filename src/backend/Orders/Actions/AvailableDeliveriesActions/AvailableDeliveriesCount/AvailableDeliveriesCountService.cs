@@ -41,14 +41,14 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesCount
                 };
             }
 
-            var delivererWarehouse = await _appDbContext.Users
+            var delivererWithWarehouse = await _appDbContext.Users
                 .Include(c => c.Warehouse)
                     .ThenInclude(c => c!.Deliveries)
                 .Where(c => c.Id == currentUser.Id)
                 .ToListAsync();
 
-            var warehouseId = delivererWarehouse.First().WarehouseId;
-            var numberOfDeliveriesInWarehouse = delivererWarehouse
+            var warehouseId = delivererWithWarehouse.First().WarehouseId;
+            var numberOfDeliveriesInWarehouse = delivererWithWarehouse
                 .Where(c => c.WarehouseId == warehouseId)
                 .SelectMany(c => c.Warehouse!.Deliveries!)
                 .Count(c => !c.TripStarted && !c.IsLost);

@@ -2,6 +2,6 @@
 {
     public class AvailableDeliveriesCountResponse
     {
-        public int Count { get; set; } = 1;
+        public int Count { get; set; }
     }
 }
