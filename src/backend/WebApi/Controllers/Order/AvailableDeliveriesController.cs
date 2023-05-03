@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesCount;
 using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Order;
@@ -9,12 +10,18 @@ namespace WebApi.Controllers.Order;
 [Route("available-deliveries")]
 public class AvailableDeliveriesController : ControllerBase
 {
+    private readonly AvailableDeliveriesCountAction _availableDeliveriesCountAction;
+
+    public AvailableDeliveriesController(AvailableDeliveriesCountAction availableDeliveriesCountAction)
+    {
+        _availableDeliveriesCountAction = availableDeliveriesCountAction;
+    }
+
     // Sandro: Analogia do MyDonationsController::GetCountOfNotDelivered. Sprawdzamy czy pan jest dostawc¹ i bierymy jego warehouse
     // Nastepnie sprawdzamy ile jest deliverek do wziêcia dla tego warehouseu (czyli TripStarted = 0 && IsLost = 0) i liczymy
     // UWAGAA !!!!!!!!!! GDY PAN NIE MA WAREHOUSEID ZWRACAMY 0 (ZERO)
-    public class DeleteMe1 { public int Count { get; set; } = 1; }
     [HttpGet("count")]
-    public async Task<ActionResult> GetWarehouseDeliveriesCount() => await Task.Run(() => Ok(new DeleteMe1()));
+    public async Task<ActionResult> GetWarehouseDeliveriesCount() => await _availableDeliveriesCountAction.Execute();
 
     // Sandro: Spradzamy czy pan dostawca ma ju¿ wziête na pok³ad jakieœ delivery (TripStarted=1 && DelivererId == CurrentUser.Id && IsDelivered = false)
     // IsDelivered jest kluczowe, bo przeciez móg³ mieæ jakies w przeszlosci a nas itneresuje czy TERAZ ma jakies aktywne.
