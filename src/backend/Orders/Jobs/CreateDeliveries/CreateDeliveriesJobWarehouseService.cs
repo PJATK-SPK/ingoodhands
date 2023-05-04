@@ -4,22 +4,23 @@ using Core.Database.Seeders;
 using Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Orders.Jobs.CreateDeliveries.Models;
+using Orders.Services.DeliveryNameBuilder;
 using Orders.Services.OrderNameBuilder;
 
 namespace Orders.Jobs.CreateDeliveries
 {
     public class CreateDeliveriesJobWarehouseService
     {
-        private readonly OrderNameBuilderService _orderNameBuilderService;
+        private readonly DeliveryNameBuilderService _deliveryNameBuilderService;
         private readonly CounterService _counterService;
         private readonly NotificationService _notificationService;
 
         public CreateDeliveriesJobWarehouseService(
-            OrderNameBuilderService orderNameBuilderService,
+            OrderNameBuilderService deliveryNameBuilderService,
             CounterService counterService,
             NotificationService notificationService)
         {
-            _orderNameBuilderService = orderNameBuilderService;
+            _deliveryNameBuilderService = deliveryNameBuilderService;
             _counterService = counterService;
             _notificationService = notificationService;
         }
@@ -86,7 +87,7 @@ namespace Orders.Jobs.CreateDeliveries
                 CreationDate = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 Status = DbEntityStatus.Active,
-                Name = _orderNameBuilderService.Build(await _counterService.GetAndUpdateNextCounter(TableName.Deliveries)),
+                Name = _deliveryNameBuilderService.Build(await _counterService.GetAndUpdateNextCounter(TableName.Deliveries)),
                 Order = order,
                 WarehouseId = warehouse.Id,
             };
