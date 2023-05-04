@@ -47,7 +47,8 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                     .ThenInclude(c => c!.Country)
                 .Include(c => c.OrderProducts)!
                     .ThenInclude(c => c.Product)
-                .Include(c => c.Deliveries)
+                .Include(c => c.Deliveries)!
+                    .ThenInclude(c => c.DelivererUser)
                 .SingleOrDefaultAsync(c => c.OwnerUserId == currentUser.Id && c.Id == decodedOrderId);
 
             if (dbOrderResult == null)
