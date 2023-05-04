@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Jobs.CreateDeliveries;
+using Orders.Jobs.RecalcOrdersPercentage;
 
 namespace Worker.Controllers
 {
@@ -10,16 +11,18 @@ namespace Worker.Controllers
     public class OrderJobsController : ControllerBase
     {
         private readonly CreateDeliveriesJob _createDeliveriesJob;
+        private readonly RecalcOrdersPercentageJob _recalcOrdersPercentageJob;
 
-        public OrderJobsController(CreateDeliveriesJob createDeliveriesJob)
+        public OrderJobsController(CreateDeliveriesJob createDeliveriesJob, RecalcOrdersPercentageJob recalcOrdersPercentageJob)
         {
             _createDeliveriesJob = createDeliveriesJob;
+            _recalcOrdersPercentageJob = recalcOrdersPercentageJob;
         }
 
         [HttpPost("create-deliveries")]
         public Task<ActionResult> SetExpiredDonations() => _createDeliveriesJob.Execute();
 
-        [HttpPost("recalc-percentages")] // @Pawel - po zrobieniu usunąć await, async (zrobić jak wyżej) i wywalic kom
-        public async Task<ActionResult> RecalcOrderPercentages() => await Task.Run(() => Ok(new { Result = "OK" }));
+        [HttpPost("recalc-percentages")]
+        public Task<ActionResult> RecalcOrderPercentages() => _recalcOrdersPercentageJob.Execute();
     }
 }

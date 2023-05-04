@@ -99,7 +99,11 @@ export class OrderComponent implements OnInit {
 
   public getDelivererText(delivery: OrdersGetSingleDeliveryResponse): string {
     let result = `${delivery.delivererFullName} (${delivery.delivererEmail})`;
-    result += `, ${delivery.delivererPhoneNumber}`;
+
+    if (delivery.delivererPhoneNumber) {
+      result += `, ${delivery.delivererPhoneNumber}`;
+    }
+
     return result;
   }
 

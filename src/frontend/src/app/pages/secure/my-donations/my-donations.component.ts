@@ -47,11 +47,12 @@ export class MyDonationsComponent implements OnInit {
 
         if (latestRawScore == undefined) {
           this.shouldCount = true;
-          localStorage.setItem(key, score.toString());
         } else {
           const parsedLatestScore = parseInt(latestRawScore, 10);
           this.shouldCount = parsedLatestScore !== this.score;
         }
+
+        localStorage.setItem(key, score.toString());
       })
     );
   }

@@ -48,6 +48,9 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 .Include(c => c.OrderProducts)!
                     .ThenInclude(c => c.Product)
                 .Include(c => c.Deliveries)!
+                    .ThenInclude(c => c.DeliveryProducts)
+                        .ThenInclude(c => c.Product)
+                .Include(c => c.Deliveries)!
                     .ThenInclude(c => c.DelivererUser)
                 .SingleOrDefaultAsync(c => c.OwnerUserId == currentUser.Id && c.Id == decodedOrderId);
 
@@ -75,6 +78,12 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 DelivererFullName = d.DelivererUser != null ? d.DelivererUser.FirstName + " " + d.DelivererUser.LastName : null,
                 DelivererEmail = d.DelivererUser?.Email,
                 DelivererPhoneNumber = d.DelivererUser?.PhoneNumber,
+                Products = d.DeliveryProducts!.Select(c => new OrdersGetSingleProductResponse
+                {
+                    Name = c.Product!.Name,
+                    Quantity = c.Quantity,
+                    Unit = c.Product.Unit.ToString().ToLower()
+                }).ToList(),
             }).ToList();
 
             var orderItemResponse = new OrdersGetSingleResponse

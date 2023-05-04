@@ -11,5 +11,6 @@
         public string? DelivererFullName { get; set; }
         public string? DelivererEmail { get; set; }
         public string? DelivererPhoneNumber { get; set; }
+        public List<OrdersGetSingleProductResponse> Products { get; set; } = default!;
     }
 }

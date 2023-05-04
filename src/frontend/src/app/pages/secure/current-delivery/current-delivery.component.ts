@@ -69,8 +69,13 @@ export class CurrentDeliveryComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.fetch().subscribe();
-    this.availableDeliveriesService.hasActiveDelivery$.subscribe(result => this.hasActiveDelivery = result);
+    this.availableDeliveriesService.hasActiveDelivery$.subscribe(result => {
+      this.hasActiveDelivery = result;
+
+      if (this.hasActiveDelivery) {
+        this.fetch().subscribe();
+      }
+    });
   }
 
   public onPickupClick(event: Event) {
@@ -80,18 +85,6 @@ export class CurrentDeliveryComponent implements OnInit {
       });
     });
   }
-
-  // public onMarkAsLostClick(event: Event) {
-  //   this.confirmationService.confirm({
-  //     target: event.target!,
-  //     message: 'Are you sure that you want mark this delivery as lost?',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     accept: () => {
-  //       this.setLost();
-  //     },
-  //     reject: () => { }
-  //   });
-  // }
 
   private fetch() {
     return this.service.getSingle().pipe(tap(delivery => {

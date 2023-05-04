@@ -37,7 +37,7 @@
                             </h3>
                             <ul *ngIf="order.deliveries.length!==0">
                                 <li class="pt-3" class="delivery-container" *ngFor="let delivery of order.deliveries">
-                                    <div>
+                                    <div class="pb-3">
                                         <div>
                                             <b>{{ delivery.name }}</b>
 
@@ -62,18 +62,31 @@
                                                 icon="pi pi-calendar" severity="success" value="Delivered">
                                             </p-tag>
                                         </div>
+
                                         <div> {{ delivery.creationDate | string2Date }}</div>
-                                        <div> Deliverer: {{getDelivererText(delivery)}} </div>
+
+                                        <div *ngIf="delivery.delivererEmail"> <b>Deliverer:</b>
+                                            {{getDelivererText(delivery)}}
+                                        </div>
+
+                                        <div class="pt-1 pb-1">
+                                            <ul>
+                                                <li *ngFor="let product of delivery.products">
+                                                    <b>{{ product.name }}</b> - {{ product.quantity }} {{ product.unit
+                                                    }}
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div>
                                         <button pButton pRipple
-                                            *ngIf="screen.screenSize < ScreenSize.sm && !delivery.isDelivered"
+                                            *ngIf="screen.screenSize < ScreenSize.sm && !delivery.isDelivered && delivery.tripStarted"
                                             [disabled]="isSettingDeliveredId !== '0'" type="button" icon="pi pi-check"
                                             (click)="onMarkAsDeliveredClick(delivery)" pTooltip="Mark as delivered"
                                             class="p-button-rounded p-button-outlined"></button>
 
                                         <button pButton
-                                            *ngIf="screen.screenSize >= ScreenSize.sm && !delivery.isDelivered"
+                                            *ngIf="screen.screenSize >= ScreenSize.sm && !delivery.isDelivered && delivery.tripStarted"
                                             [disabled]="isSettingDeliveredId !== '0'" type="button" icon="pi pi-check"
                                             (click)="onMarkAsDeliveredClick(delivery)" label="MARK AS DELIVERED"
                                             class="p-button-outlined p-button-success"></button>
