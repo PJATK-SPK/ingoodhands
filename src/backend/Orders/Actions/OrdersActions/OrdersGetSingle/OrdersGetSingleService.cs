@@ -48,7 +48,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
                 .Include(c => c.OrderProducts)!
                     .ThenInclude(c => c.Product)
                 .Include(c => c.Deliveries)!
-                    .ThenInclude(c => c.DeliveryProducts)
+                    .ThenInclude(c => c.DeliveryProducts)!
                         .ThenInclude(c => c.Product)
                 .Include(c => c.Deliveries)!
                     .ThenInclude(c => c.DelivererUser)
