@@ -16,20 +16,30 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
         private readonly RoleService _roleService;
         private readonly Hashids _hashids;
         private readonly ILogger<DeliveriesPickupAction> _logger;
+        private readonly NotificationService _notificationService;
 
-        public DeliveriesPickupAction(AppDbContext appDbContext, Hashids hashids, ILogger<DeliveriesPickupAction> logger, RoleService roleService)
+        public DeliveriesPickupAction(
+            AppDbContext appDbContext,
+            Hashids hashids,
+            ILogger<DeliveriesPickupAction> logger,
+            RoleService roleService,
+            NotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
             _logger = logger;
             _roleService = roleService;
+            _notificationService = notificationService;
         }
         public async Task<OkObjectResult> Execute(string id)
         {
             await _roleService.ThrowIfNoRole(RoleName.WarehouseKeeper);
 
             var decodedDeliveryId = _hashids.DecodeSingleLong(id);
-            var dbResult = await _appDbContext.Deliveries.SingleOrDefaultAsync(c => c.Id == decodedDeliveryId && c.Status == DbEntityStatus.Active);
+            var dbResult = await _appDbContext.Deliveries
+                .Include(c => c.Warehouse)
+                    .ThenInclude(c => c!.Users)
+                .SingleOrDefaultAsync(c => c.Id == decodedDeliveryId && c.Status == DbEntityStatus.Active);
 
             if (dbResult == null)
             {
@@ -45,6 +55,13 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
 
             dbResult!.TripStarted = true;
             await _appDbContext.SaveChangesAsync();
+
+            var warehouseKeepers = dbResult!.Warehouse!.Users;
+
+            foreach (var warehouseKeeper in warehouseKeepers!)
+            {
+                await _notificationService.AddAsync(warehouseKeeper.Id, $"Time to prepare delivery: {dbResult.Name}!");
+            }
 
             return new OkObjectResult(new { Status = "OK" });
         }
