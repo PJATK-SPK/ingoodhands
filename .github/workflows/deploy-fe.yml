@@ -28,6 +28,7 @@ jobs:
           workflow: build-test-all.yml
           name: fe-artifact
           path: .
+          workflow_conclusion: ""
 
       - name: Untar fe artifact
         run: tar -xvf fe_artifact.tar -C src/frontend
