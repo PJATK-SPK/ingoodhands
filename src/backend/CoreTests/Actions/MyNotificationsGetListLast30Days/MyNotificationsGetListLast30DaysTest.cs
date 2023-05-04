@@ -2,6 +2,9 @@
 using Core;
 using Core.Actions.MyNotifications.GetList;
 using Core.Database;
+using Core.Database.Enums;
+using Core.Database.Models.Auth;
+using Core.Setup.Auth0;
 using Core.Setup.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
@@ -27,6 +30,19 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30Days
             var user1 = MyNotificationsGetListLast30DaysFixture.CreateUser("Normal", "User");
             var auth0User1 = MyNotificationsGetListLast30DaysFixture.CreateAuth0User(user1, 1);
 
+            toolkit.UpdateUserInfo(new CurrentUserInfo
+            {
+                Email = auth0User1.Email,
+                EmailVerified = true,
+                Identifier = auth0User1.Identifier,
+                GivenName = auth0User1.FirstName,
+                FamilyName = auth0User1.LastName,
+                Locale = "pl",
+                Name = auth0User1.FirstName + auth0User1.LastName,
+                Nickname = auth0User1.Nickname,
+                UpdatedAt = DateTime.UtcNow,
+            });
+
             var notification35daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 35, "I won't work");
             var notification5daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 5, "I will work");
             var notification29daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 29, "I will work too");
@@ -34,6 +50,7 @@ namespace CoreTests.Actions.MyNotificationsGetListLast30Days
             var notification2daysAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 2, "I will work three");
             var notification1dayAgo = MyNotificationsGetListLast30DaysFixture.CreateNotifaction(user1, 1, "I will work four");
 
+            context.Auth0Users.Add(auth0User1);
             context.Add(user1);
             context.Add(notification35daysAgo);
             context.Add(notification5daysAgo);

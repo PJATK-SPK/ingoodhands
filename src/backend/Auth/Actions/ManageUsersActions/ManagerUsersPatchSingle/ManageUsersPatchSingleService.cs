@@ -97,7 +97,7 @@ namespace Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle
                 }
             }
 
-            var decodedWarehouseId = _hashids.DecodeSingleLong(payload.WarehouseId);
+            long? decodedWarehouseId = string.IsNullOrWhiteSpace(payload.WarehouseId) ? null : _hashids.DecodeSingleLong(payload.WarehouseId);
 
             if (payload.WarehouseId == null)
             {

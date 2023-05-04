@@ -74,7 +74,7 @@ export class ManageUserComponent implements OnInit {
     const filtered: Warehouse[] = [];
 
     this.warehouses.forEach(item => {
-      if (item.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+      if (item.name.toLowerCase().startsWith(event.query.toLowerCase())) {
         filtered.push(item);
       }
     });
@@ -100,8 +100,6 @@ export class ManageUserComponent implements OnInit {
       warehouseId: this.form.get('warehouseId')?.value?.id ?? null,
       roles: [] as Role[],
     }
-
-    console.log(payload);
 
     if (this.form.get('isAdministrator')?.value) payload.roles.push(Role.administrator);
     if (this.form.get('isDonor')?.value) payload.roles.push(Role.donor);

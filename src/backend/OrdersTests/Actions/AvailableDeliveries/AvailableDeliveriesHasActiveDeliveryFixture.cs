@@ -126,7 +126,7 @@ namespace OrdersTests.Actions.AvailableDeliveries
                 DelivererUser = user,
                 CreationDate = DateTime.UtcNow,
                 IsLost = false,
-                TripStarted = false,
+                TripStarted = true,
                 WarehouseId = warehouse.Id,
                 DeliveryProducts = new List<DeliveryProduct>
                 {

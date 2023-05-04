@@ -52,16 +52,16 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
 
             var donation = await _appDbContext.Donations.SingleOrDefaultAsync(c => c.Name == donationName);
 
-            if (donation!.WarehouseId != currentUser.WarehouseId)
-            {
-                _logger.LogError("User {id} tried to pickup donation from other warehouse!", currentUser.Id);
-                throw new ApplicationErrorException("This donation is not for your warehouse! Contact Administrator.");
-            }
-
             if (donation == null)
             {
                 _logger.LogError("Donation by it's DNT \"{name}\" number has not been found", donationName);
                 throw new ItemNotFoundException("Donation not found");
+            }
+
+            if (donation!.WarehouseId != currentUser.WarehouseId)
+            {
+                _logger.LogError("User {id} tried to pickup donation from other warehouse!", currentUser.Id);
+                throw new ApplicationErrorException("This donation is not for your warehouse! Contact Administrator.");
             }
 
             if (donation!.IsDelivered)
