@@ -6,6 +6,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderCreateOrder;
 using Orders.Actions.CreateOrderActions.CreateOrderDeleteAddress;
 using Orders.Actions.CreateOrderActions.CreateOrderGetAddresses;
 using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
+using Orders.Actions.CurrentDelivery.CurrentDeliveryGetSingle;
 using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using Orders.Actions.DeliveriesActions.DeliveriesGetSingle;
 using Orders.Actions.DeliveriesActions.DeliveriesPickup;
@@ -48,6 +49,7 @@ namespace Orders
             builder.RegisterModule<CreateOrderCreateOrderModule>();
             builder.RegisterModule<CreateOrderGetCountriesModule>();
             builder.RegisterModule<CreateOrderGetAddressesModule>();
+            builder.RegisterModule<CurrentDeliveryGetSingleModule>();
             builder.RegisterModule<AvailableDeliveriesCountModule>();
             builder.RegisterModule<CreateOrderDeleteAddressModule>();
         }

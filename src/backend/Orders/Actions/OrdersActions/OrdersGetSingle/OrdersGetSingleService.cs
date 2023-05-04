@@ -60,7 +60,7 @@ namespace Orders.Actions.OrdersActions.OrdersGetSingle
             {
                 Name = c.Product!.Name,
                 Quantity = c.Quantity,
-                Unit = c.Product.Unit.ToString()
+                Unit = c.Product.Unit.ToString().ToLower(),
             }).ToList();
 
             var deliveryResponse = dbOrderResult.Deliveries!.Select(d => new OrdersGetSingleDeliveryResponse
