@@ -52,7 +52,7 @@ namespace Orders.Actions.CurrentDelivery.CurrentDeliveryGetSingle
                         .ThenInclude(c => c!.Country)
                 .Include(c => c.DeliveryProducts)!
                     .ThenInclude(c => c.Product)
-                .FirstOrDefault(c => c.DelivererUserId == currentUser.Id && !c.IsDelivered);
+                .FirstOrDefault(c => c.DelivererUserId == currentUser.Id && c.TripStarted && !c.IsLost && !c.Order!.IsCanceledByUser && !c.IsDelivered);
 
             if (dbresult == null)
             {

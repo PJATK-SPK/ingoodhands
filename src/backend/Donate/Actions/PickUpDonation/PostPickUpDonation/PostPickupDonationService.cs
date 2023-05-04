@@ -47,7 +47,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             if (!userHasAssignedWarehouseId)
             {
                 _logger.LogError("User {id} doesn't have warehouse assigned, warehouseId is empty", currentUser.Id);
-                throw new ApplicationErrorException("You do not have an assigned warehouse. Contact Administrator to assign warehouse to you");
+                throw new ApplicationErrorException("You do not have an assigned warehouse");
             }
 
             var donation = await _appDbContext.Donations.SingleOrDefaultAsync(c => c.Name == donationName);
@@ -61,7 +61,7 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             if (donation!.WarehouseId != currentUser.WarehouseId)
             {
                 _logger.LogError("User {id} tried to pickup donation from other warehouse!", currentUser.Id);
-                throw new ApplicationErrorException("This donation is not for your warehouse! Contact Administrator.");
+                throw new ApplicationErrorException("This donation is not for your warehouse");
             }
 
             if (donation!.IsDelivered)
@@ -73,7 +73,6 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             donation.IsDelivered = true;
 
             await _appDbContext.SaveChangesAsync();
-
             await _notificationService.AddAsync(donation.CreationUserId, $"Your donation {donationName} has arrived at the warehouse!");
         }
     }

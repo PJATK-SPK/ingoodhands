@@ -51,7 +51,7 @@ namespace Orders.Actions.StocksActions.StocksGetList
 
             var listOfActiveStock = _appDbContext.Stocks
                .Include(c => c.Product)
-               .Where(c => c.Status == DbEntityStatus.Active && c.WarehouseId == currentUser.WarehouseId)
+               .Where(c => c.Quantity != 0 && c.Status == DbEntityStatus.Active && c.WarehouseId == currentUser.WarehouseId)
                .PageResult(page, pageSize);
 
             var mapped = listOfActiveStock.Queryable.Select(c => new StocksGetListItemResponse
