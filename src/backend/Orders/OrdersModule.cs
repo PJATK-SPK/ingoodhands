@@ -9,6 +9,7 @@ using Orders.Actions.CreateOrderActions.CreateOrderGetCountries;
 using Orders.Actions.CurrentDelivery.CurrentDeliveryGetSingle;
 using Orders.Actions.DeliveriesActions.DeliveriesGetList;
 using Orders.Actions.DeliveriesActions.DeliveriesGetSingle;
+using Orders.Actions.DeliveriesActions.DeliveriesGetWarehouseDeliveriesCount;
 using Orders.Actions.DeliveriesActions.DeliveriesPickup;
 using Orders.Actions.DeliveriesActions.DeliveriesSetLost;
 using Orders.Actions.OrdersActions.OrdersCancel;
@@ -52,6 +53,7 @@ namespace Orders
             builder.RegisterModule<CurrentDeliveryGetSingleModule>();
             builder.RegisterModule<AvailableDeliveriesCountModule>();
             builder.RegisterModule<CreateOrderDeleteAddressModule>();
+            builder.RegisterModule<DeliveriesGetWarehouseDeliveriesCountModule>();
         }
 
         private static void RegisterJobs(ContainerBuilder builder)
