@@ -12,8 +12,8 @@
                             <div class="flex align-items-center justify-content-start">
                                 <span>
                                     <p-confirmPopup></p-confirmPopup>
-                                    <button pButton icon="pi pi-times" *ngIf="!delivery.tripStarted"
-                                        class="p-button-outlined p-button-success" label="START TRIP"
+                                    <button pButton icon="pi pi-arrow-up-right" *ngIf="!delivery.tripStarted"
+                                        class="p-button-outlined p-button-success" label="GOODS HANDED OVER"
                                         [disabled]="isButtonOnAction" (click)="onStartTripClick($event)"></button>
                                 </span>
 

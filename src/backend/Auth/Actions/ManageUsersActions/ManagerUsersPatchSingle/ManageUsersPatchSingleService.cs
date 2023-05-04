@@ -97,15 +97,17 @@ namespace Auth.Actions.ManageUsersActions.ManagerUsersPatchSingle
                 }
             }
 
-            if (payload.WarehouseId != null)
+            var decodedWarehouseId = _hashids.DecodeSingleLong(payload.WarehouseId);
+
+            if (payload.WarehouseId == null)
             {
-                var warehouseId = _hashids.DecodeSingleLong(payload.WarehouseId);
                 dbResult.Warehouse = null;
-                dbResult.WarehouseId = warehouseId;
-            }
-            else
-            {
                 dbResult.WarehouseId = null;
+            }
+            else if (decodedWarehouseId != dbResult.WarehouseId)
+            {
+                dbResult.Warehouse = null;
+                dbResult.WarehouseId = decodedWarehouseId;
             }
 
             await _appDbContext.SaveChangesAsync();
