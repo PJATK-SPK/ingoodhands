@@ -16,7 +16,7 @@ namespace Orders.Jobs.CreateDeliveries
         private readonly NotificationService _notificationService;
 
         public CreateDeliveriesJobWarehouseService(
-            OrderNameBuilderService deliveryNameBuilderService,
+            DeliveryNameBuilderService deliveryNameBuilderService,
             CounterService counterService,
             NotificationService notificationService)
         {
