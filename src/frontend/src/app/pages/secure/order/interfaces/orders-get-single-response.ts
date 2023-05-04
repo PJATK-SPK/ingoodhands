@@ -8,6 +8,7 @@ export interface OrdersGetSingleDeliveryResponse {
     delivererFullName: string;
     delivererEmail: string;
     delivererPhoneNumber: string;
+    products: OrdersGetSingleProductResponse[];
 }
 
 export interface OrdersGetSingleProductResponse {

@@ -60,7 +60,6 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
             }
 
             dbResult!.DelivererUser = currentUser;
-            dbResult.TripStarted = true;
 
             await _appDbContext.SaveChangesAsync();
 

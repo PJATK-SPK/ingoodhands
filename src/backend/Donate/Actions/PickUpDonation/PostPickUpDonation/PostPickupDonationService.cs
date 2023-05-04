@@ -71,8 +71,10 @@ namespace Donate.Actions.PickUpDonation.PostPickUpDonation
             }
 
             donation.IsDelivered = true;
+
             await _appDbContext.SaveChangesAsync();
-            await _notificationService.AddAsync(currentUser.Id, $"Your donation {donationName} has arrived at the warehouse!");
+
+            await _notificationService.AddAsync(donation.CreationUserId, $"Your donation {donationName} has arrived at the warehouse!");
         }
     }
 }
