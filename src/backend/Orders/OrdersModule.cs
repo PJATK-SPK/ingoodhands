@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Core.Setup.Autofac;
+using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDelivery;
 using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesCount;
 using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesHasActiveDelivery;
 using Orders.Actions.CreateOrderActions.CreateOrderAddAddress;
@@ -54,6 +55,7 @@ namespace Orders
             builder.RegisterModule<CurrentDeliveryGetSingleModule>();
             builder.RegisterModule<AvailableDeliveriesCountModule>();
             builder.RegisterModule<CreateOrderDeleteAddressModule>();
+            builder.RegisterModule<AvailableDeliveriesAssignDeliveryModule>();
             builder.RegisterModule<AvailableDeliveriesHasActiveDeliveryModule>();
             builder.RegisterModule<DeliveriesGetWarehouseDeliveriesCountModule>();
         }
