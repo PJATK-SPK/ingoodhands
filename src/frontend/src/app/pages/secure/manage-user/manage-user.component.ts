@@ -101,6 +101,8 @@ export class ManageUserComponent implements OnInit {
       roles: [] as Role[],
     }
 
+    console.log(payload);
+
     if (this.form.get('isAdministrator')?.value) payload.roles.push(Role.administrator);
     if (this.form.get('isDonor')?.value) payload.roles.push(Role.donor);
     if (this.form.get('isNeedy')?.value) payload.roles.push(Role.needy);

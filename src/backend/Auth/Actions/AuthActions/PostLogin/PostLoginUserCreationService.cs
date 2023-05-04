@@ -33,8 +33,6 @@ namespace Auth.Actions.AuthActions.PostLogin
 
             if (user != null && auth0UserFromDatabase != null)
             {
-                UpdateUser(user, auth0UserInfo);
-
                 UpdateAuth0User(auth0UserFromDatabase, auth0UserInfo);
             }
             else if (user == null && auth0UserFromDatabase == null)

@@ -32,7 +32,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesHasActive
 
             await _roleService.ThrowIfNoRole(RoleName.Deliverer, currentUser.Id);
 
-            var hasActiveDelivery = await _appDbContext.Deliveries.AnyAsync(c => !c.TripStarted && c.DelivererUserId == currentUser.Id && !c.IsDelivered);
+            var hasActiveDelivery = await _appDbContext.Deliveries.AnyAsync(c => c.TripStarted && c.DelivererUserId == currentUser.Id && !c.IsDelivered);
 
             return new AvailableDeliveriesHasActiveDeliveryResponse
             {

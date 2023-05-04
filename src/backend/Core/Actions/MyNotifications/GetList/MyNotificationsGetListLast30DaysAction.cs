@@ -1,4 +1,6 @@
 ﻿using Core.Database;
+using Core.Services;
+using Core.Setup.Auth0;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,17 +11,28 @@ namespace Core.Actions.MyNotifications.GetList
     {
         private readonly AppDbContext _appDbContext;
         private readonly Hashids _hashids;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly GetCurrentUserService _getCurrentUserService;
 
-        public MyNotificationsGetListLast30DaysAction(AppDbContext appDbContext, Hashids hashids)
+        public MyNotificationsGetListLast30DaysAction(
+            AppDbContext appDbContext,
+            Hashids hashids,
+            ICurrentUserService currentUserService,
+            GetCurrentUserService getCurrentUserService)
         {
             _appDbContext = appDbContext;
             _hashids = hashids;
+            _currentUserService = currentUserService;
+            _getCurrentUserService = getCurrentUserService;
         }
 
         public async Task<OkObjectResult> Execute()
         {
+            var auth0UserInfo = _currentUserService.GetUserInfo();
+            var currentUser = await _getCurrentUserService.Execute(auth0UserInfo.Result);
+
             var dbResult = await _appDbContext.Notifications
-                .Where(c => c.CreationDate > DateTime.UtcNow.AddDays(-30))
+                .Where(c => c.UserId == currentUser.Id && c.CreationDate > DateTime.UtcNow.AddDays(-30))
                 .OrderByDescending(c => c.CreationDate)
                 .ToListAsync();
 
