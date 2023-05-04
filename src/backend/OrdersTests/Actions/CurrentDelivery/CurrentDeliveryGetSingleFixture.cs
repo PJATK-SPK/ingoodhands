@@ -123,7 +123,7 @@ namespace OrdersTests.Actions.CurrentDelivery
                 DelivererUser = user,
                 CreationDate = DateTime.UtcNow,
                 IsLost = false,
-                TripStarted = false,
+                TripStarted = true,
                 WarehouseId = warehouse.Id,
                 DeliveryProducts = new List<DeliveryProduct>
                 {
@@ -162,7 +162,7 @@ namespace OrdersTests.Actions.CurrentDelivery
                 DelivererUser = user,
                 CreationDate = DateTime.UtcNow,
                 IsLost = false,
-                TripStarted = false,
+                TripStarted = true,
                 WarehouseId = warehouse.Id,
                 DeliveryProducts = new List<DeliveryProduct>
                 {
