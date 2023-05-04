@@ -66,7 +66,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
 
             var needyUserId = dbResult.Order!.OwnerUserId;
 
-            await _notificationService.AddAsync(needyUserId, $"Your order: {dbResult.Order.Name} is being processed!");
+            await _notificationService.AddAsync(needyUserId, $"Delivery of your order: {dbResult.Order.Name} is being processed!");
 
             return new OkResult();
         }

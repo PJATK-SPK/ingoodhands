@@ -60,7 +60,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
 
             foreach (var warehouseKeeper in warehouseKeepers!)
             {
-                await _notificationService.AddAsync(warehouseKeeper.Id, $"Time to pepare delivery: {dbResult.Name}!");
+                await _notificationService.AddAsync(warehouseKeeper.Id, $"Time to prepare delivery: {dbResult.Name}!");
             }
 
             return new OkObjectResult(new { Status = "OK" });
