@@ -41,6 +41,7 @@ namespace Orders.Actions.CurrentDelivery.CurrentDeliveryGetSingle
             await _roleService.ThrowIfNoRole(RoleName.Deliverer, currentUser.Id);
 
             var dbresult = _appDbContext.Deliveries
+                .Include(c => c.DelivererUser)
                 .Include(c => c.Order)
                      .ThenInclude(c => c!.OwnerUser)
                 .Include(c => c.Order)
