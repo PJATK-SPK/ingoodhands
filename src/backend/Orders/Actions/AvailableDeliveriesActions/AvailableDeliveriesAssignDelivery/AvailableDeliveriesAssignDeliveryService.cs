@@ -50,7 +50,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
 
             var dbResult = await _appDbContext.Deliveries
                 .Include(c => c.Order)
-                    .ThenInclude(c => c.OwnerUser)
+                    .ThenInclude(c => c!.OwnerUser)
                 .SingleOrDefaultAsync(c => c.Id == encodedDeliveryId);
 
             if (dbResult == null)

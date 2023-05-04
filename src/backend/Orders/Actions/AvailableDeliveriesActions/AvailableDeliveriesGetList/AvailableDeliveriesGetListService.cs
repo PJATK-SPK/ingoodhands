@@ -19,22 +19,19 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesGetList
         private readonly GetCurrentUserService _getCurrentUserService;
         private readonly RoleService _roleService;
         private readonly Hashids _hashIds;
-        private readonly ILogger<AvailableDeliveriesAssignDeliveryService> _logger;
 
         public AvailableDeliveriesGetListService(
             AppDbContext appDbContext,
             ICurrentUserService currentUserService,
             GetCurrentUserService getCurrentUserService,
             RoleService roleService,
-            Hashids hashIds,
-            ILogger<AvailableDeliveriesAssignDeliveryService> logger)
+            Hashids hashIds)
         {
             _appDbContext = appDbContext;
             _currentUserService = currentUserService;
             _getCurrentUserService = getCurrentUserService;
             _roleService = roleService;
             _hashIds = hashIds;
-            _logger = logger;
         }
 
         public async Task<PagedResult<AvailableDeliveriesGetListResponse>> GetList(int page, int pageSize, string? filter = null)

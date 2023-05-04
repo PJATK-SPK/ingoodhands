@@ -38,7 +38,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
             var decodedDeliveryId = _hashids.DecodeSingleLong(id);
             var dbResult = await _appDbContext.Deliveries
                 .Include(c => c.Warehouse)
-                    .ThenInclude(c => c.Users)
+                    .ThenInclude(c => c!.Users)
                 .SingleOrDefaultAsync(c => c.Id == decodedDeliveryId && c.Status == DbEntityStatus.Active);
 
             if (dbResult == null)
