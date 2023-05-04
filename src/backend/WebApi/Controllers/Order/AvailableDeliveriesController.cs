@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesCount;
+using Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesHasActiveDelivery;
 using System.Linq.Dynamic.Core;
 
 namespace WebApi.Controllers.Order;
@@ -11,24 +12,19 @@ namespace WebApi.Controllers.Order;
 public class AvailableDeliveriesController : ControllerBase
 {
     private readonly AvailableDeliveriesCountAction _availableDeliveriesCountAction;
+    private readonly AvailableDeliveriesHasActiveDeliveryAction _availableDeliveriesHasActiveDeliveryAction;
 
-    public AvailableDeliveriesController(AvailableDeliveriesCountAction availableDeliveriesCountAction)
+    public AvailableDeliveriesController(AvailableDeliveriesCountAction availableDeliveriesCountAction, AvailableDeliveriesHasActiveDeliveryAction availableDeliveriesHasActiveDeliveryAction)
     {
         _availableDeliveriesCountAction = availableDeliveriesCountAction;
+        _availableDeliveriesHasActiveDeliveryAction = availableDeliveriesHasActiveDeliveryAction;
     }
 
-    // Sandro: Analogia do MyDonationsController::GetCountOfNotDelivered. Sprawdzamy czy pan jest dostawc¹ i bierymy jego warehouse
-    // Nastepnie sprawdzamy ile jest deliverek do wziêcia dla tego warehouseu (czyli TripStarted = 0 && IsLost = 0) i liczymy
-    // UWAGAA !!!!!!!!!! GDY PAN NIE MA WAREHOUSEID ZWRACAMY 0 (ZERO)
     [HttpGet("count")]
     public async Task<ActionResult> GetWarehouseDeliveriesCount() => await _availableDeliveriesCountAction.Execute();
 
-    // Sandro: Spradzamy czy pan dostawca ma ju¿ wziête na pok³ad jakieœ delivery (TripStarted=1 && DelivererId == CurrentUser.Id && IsDelivered = false)
-    // IsDelivered jest kluczowe, bo przeciez móg³ mieæ jakies w przeszlosci a nas itneresuje czy TERAZ ma jakies aktywne.
-    // Jeœli ma no to true, jeœli nie ma to false.
-    public class DeleteMe2 { public bool Result { get; set; } = true; }
     [HttpGet("has-active-delivery")]
-    public async Task<ActionResult> HasActiveDelivery() => await Task.Run(() => Ok(new DeleteMe2()));
+    public async Task<ActionResult> HasActiveDelivery() => await _availableDeliveriesHasActiveDeliveryAction.Execute();
 
     // Sandro: Sprawdzamy czy to pan dostawca i przypisujemy danej deliverce tego pana
     // dodatkowo ustawiamy TripStarted = 1
