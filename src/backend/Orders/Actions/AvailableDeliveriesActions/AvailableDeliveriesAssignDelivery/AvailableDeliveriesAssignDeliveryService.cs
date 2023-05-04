@@ -1,5 +1,6 @@
 ﻿using Core.Database;
 using Core.Database.Enums;
+using Core.Database.Seeders;
 using Core.Exceptions;
 using Core.Services;
 using Core.Setup.Auth0;
@@ -18,6 +19,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
         private readonly RoleService _roleService;
         private readonly Hashids _hashIds;
         private readonly ILogger<AvailableDeliveriesAssignDeliveryService> _logger;
+        private readonly NotificationService _notificationService;
 
         public AvailableDeliveriesAssignDeliveryService(
             AppDbContext appDbContext,
@@ -25,7 +27,8 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
             GetCurrentUserService getCurrentUserService,
             RoleService roleService,
             Hashids hashIds,
-            ILogger<AvailableDeliveriesAssignDeliveryService> logger)
+            ILogger<AvailableDeliveriesAssignDeliveryService> logger,
+            NotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _currentUserService = currentUserService;
@@ -33,6 +36,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
             _roleService = roleService;
             _hashIds = hashIds;
             _logger = logger;
+            _notificationService = notificationService;
         }
 
         public async Task<OkResult> AssignDelivery(string id)
@@ -44,7 +48,10 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
 
             var encodedDeliveryId = _hashIds.DecodeSingleLong(id);
 
-            var dbResult = await _appDbContext.Deliveries.SingleOrDefaultAsync(c => c.Id == encodedDeliveryId);
+            var dbResult = await _appDbContext.Deliveries
+                .Include(c => c.Order)
+                    .ThenInclude(c => c.OwnerUser)
+                .SingleOrDefaultAsync(c => c.Id == encodedDeliveryId);
 
             if (dbResult == null)
             {
@@ -56,6 +63,10 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
             dbResult.TripStarted = true;
 
             await _appDbContext.SaveChangesAsync();
+
+            var needyUserId = dbResult.Order!.OwnerUserId;
+
+            await _notificationService.AddAsync(needyUserId, $"Your order: {dbResult.Order.Name} is being processed!");
 
             return new OkResult();
         }
