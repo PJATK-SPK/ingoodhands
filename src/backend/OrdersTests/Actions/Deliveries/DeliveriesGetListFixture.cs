@@ -11,14 +11,21 @@ namespace OrdersTests.Actions.Deliveries
 {
     public static class DeliveriesGetListFixture
     {
-        public static User CreateUser(string firstName, string lastName) => new()
+        public static User CreateUser(string firstName, string lastName, long? warehouseId = null)
         {
-            Status = DbEntityStatus.Active,
-            FirstName = firstName,
-            LastName = lastName,
-            Email = firstName + "@" + lastName + ".com",
-            WarehouseId = WarehouseSeeder.Warehouse1PL.Id,
-        };
+            warehouseId ??= WarehouseSeeder.Warehouse1PL.Id;
+
+            var result = new User
+            {
+                Status = DbEntityStatus.Active,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = firstName + "@" + lastName + ".com",
+                WarehouseId = warehouseId,
+            };
+
+            return result;
+        }
 
         public static Auth0User CreateAuth0User(User user, int id) => new()
         {
