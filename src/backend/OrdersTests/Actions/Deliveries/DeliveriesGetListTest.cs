@@ -31,7 +31,7 @@ namespace OrdersTests.Actions.Deliveries
             var page = 1;
             var pageSize = 10;
 
-            var testingUser1 = DeliveriesGetListFixture.CreateUser("Normal", "User");
+            var testingUser1 = DeliveriesGetListFixture.CreateUser("Normal", "User", WarehouseSeeder.Warehouse2PL.Id);
             var testingAuth0User1 = DeliveriesGetListFixture.CreateAuth0User(testingUser1, 1);
             var testUser1Role1 = DeliveriesGetListFixture.CreateUserRole(testingUser1, RoleSeeder.Role4WarehouseKeeper.Id);
             var order = DeliveriesGetListFixture.CreateOrder(toolkit);
@@ -64,9 +64,7 @@ namespace OrdersTests.Actions.Deliveries
             Assert.AreEqual(page, result.CurrentPage);
             Assert.AreEqual(pageSize, result.PageSize);
             Assert.IsTrue(result!.Queryable.Any());
-            Assert.AreEqual(5, result!.Queryable.Count());
-            Assert.AreEqual(4, result!.Queryable.Single(c => toolkit.Hashids.DecodeSingleLong(c.Id) == delivery4.Id).ProductTypesCount);
-            Assert.AreEqual(2, result!.Queryable.Single(c => toolkit.Hashids.DecodeSingleLong(c.Id) == delivery2.Id).ProductTypesCount);
+            Assert.AreEqual(1, result!.Queryable.Count());
         }
     }
 }

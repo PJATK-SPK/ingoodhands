@@ -56,7 +56,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesGetList
             IQueryable<Delivery> dbResult = _appDbContext.Deliveries
                 .Include(c => c.DeliveryProducts)
                 .Include(c => c.Order)
-                .Where(c => c.DelivererUserId != null && c.DelivererUser!.Id != UserSeeder.ServiceUser.Id);
+                .Where(c => c.DelivererUserId != null && c.DelivererUser!.Id != UserSeeder.ServiceUser.Id && c.WarehouseId == currentUser.WarehouseId);
 
             if (filter != null)
             {

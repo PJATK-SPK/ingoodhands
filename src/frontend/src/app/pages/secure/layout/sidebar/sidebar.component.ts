@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
   public config = getSidebarConfig(this.http);
   public readonly picture = this.auth.oidc.getUserData().pipe(map(data => data?.picture));
   public readonly name = this.auth.oidc.getUserData().pipe(map(data => data?.name));
+  public warehouseName?= '';
 
   constructor(
     public readonly router: Router,
@@ -32,6 +33,8 @@ export class SidebarComponent implements OnInit {
     FORCE_REFRESH_SIDEBAR.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.config = getSidebarConfig(this.http);
     });
+
+    this.warehouseName = this.auth.dbUser.warehouseName;
   }
 
   public getBgClassByRole(role: Role | 'all') {
