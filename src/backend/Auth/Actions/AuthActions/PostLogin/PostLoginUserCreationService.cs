@@ -76,12 +76,6 @@ namespace Auth.Actions.AuthActions.PostLogin
             };
         }
 
-        private static void UpdateUser(User user, CurrentUserInfo currentAuth0UserInfo)
-        {
-            user.FirstName = GetFirstName(currentAuth0UserInfo);
-            user.LastName = currentAuth0UserInfo.FamilyName;
-        }
-
         private static string GetFirstName(CurrentUserInfo currentAuth0UserInfo)
         {
             var firstName = "User";
