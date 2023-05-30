@@ -16,6 +16,7 @@ import { HttpErrorInterceptor } from './services/http-error-interceptor';
 import { WarehouseService } from './services/warehouse.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ScreenService } from './services/screen.service';
+import { NotificationsService } from './services/notifications.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ScreenService } from './services/screen.service';
     AuthGuard,
     MessageService,
     WarehouseService,
-    ScreenService
+    ScreenService,
+    NotificationsService
   ],
   bootstrap: [AppComponent]
 })

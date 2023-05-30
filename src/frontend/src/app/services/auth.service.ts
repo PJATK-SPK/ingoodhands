@@ -12,6 +12,7 @@ export const WANTS_TO_BE_LOGGED_IN_KEY = 'wantsToBeLoggedIn';
 export class AuthService {
 
     public isLoggedIn = false;
+    public webPushActive = false;
     public dbUser!: DbUser;
 
     constructor(

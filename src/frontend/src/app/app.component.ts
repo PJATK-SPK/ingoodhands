@@ -138,13 +138,18 @@ export class AppComponent implements OnInit {
     if (!lastShotDate || now.toSeconds() - DateTime.fromISO(lastShotDate).toSeconds() > 60) {
       return result.pipe(
         catchError(err => {
+          this.auth.webPushActive = false;
           console.error("Could not subscribe to notifications", err);
           return of(null);
         }),
         switchMap(c => updateReq(c)),
-        tap(() => sessionStorage.setItem('notificationsDate', now.toISO()))
+        tap(() => {
+          sessionStorage.setItem('notificationsDate', now.toISO());
+          this.auth.webPushActive = true;
+        })
       );
     } else {
+      this.auth.webPushActive = true;
       return of({});
     }
   }
