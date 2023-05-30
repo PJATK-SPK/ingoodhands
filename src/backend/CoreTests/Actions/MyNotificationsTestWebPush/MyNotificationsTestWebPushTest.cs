@@ -67,6 +67,10 @@ namespace CoreTests.Actions.MyNotificationsTestWebPush
 
             // Act
             await testAction.Execute();
+
+            // Assert
+            var entry = context.UsersWebPush.Single();
+            Assert.IsNotNull(entry);
         }
     }
 }

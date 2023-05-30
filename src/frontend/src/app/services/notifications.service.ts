@@ -41,6 +41,6 @@ export class NotificationsService {
     }
 
     public getReadNotifications(): string[] {
-        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]') as string[];
+        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) ?? '[]') as string[];
     }
 }
