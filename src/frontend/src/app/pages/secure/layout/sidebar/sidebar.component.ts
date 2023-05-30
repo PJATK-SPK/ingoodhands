@@ -17,7 +17,7 @@ export const FORCE_REFRESH_SIDEBAR = new Subject<void>();
 })
 export class SidebarComponent implements OnInit {
 
-  public config = getSidebarConfig(this.http);
+  public config = getSidebarConfig(this.http, this.auth);
   public readonly picture = this.auth.oidc.getUserData().pipe(map(data => data?.picture));
   public readonly name = this.auth.oidc.getUserData().pipe(map(data => data?.name));
   public warehouseName?= '';
@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
 
   public ngOnInit(): void {
     FORCE_REFRESH_SIDEBAR.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.config = getSidebarConfig(this.http);
+      this.config = getSidebarConfig(this.http, this.auth);
     });
 
     this.warehouseName = this.auth.dbUser.warehouseName;

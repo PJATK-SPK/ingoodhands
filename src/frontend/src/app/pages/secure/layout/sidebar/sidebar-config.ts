@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable, map, mergeMap, timer } from "rxjs";
 import { Role } from "src/app/enums/role";
+import { AuthService } from "src/app/services/auth.service";
 import { environment } from "src/environments/environment";
 
 export interface SidebarPageConfig {
@@ -21,9 +22,9 @@ export interface SidebarConfig {
     categories: SidebarCategoryConfig[];
 }
 
-export const getSidebarConfig = (httpClient: HttpClient) => [
+export const getSidebarConfig = (httpClient: HttpClient, auth: AuthService) => [
     {
-        label: 'APPLICATION',
+        label: auth.dbUser?.firstName ? auth.dbUser?.firstName + ' ' + auth.dbUser.lastName : 'APPLICATION',
         categories: [
             {
                 role: 'all',

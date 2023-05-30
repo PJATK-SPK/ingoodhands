@@ -3,9 +3,9 @@ using Core.Database.Models.Auth;
 using Core.Database.Seeders;
 using Core.Setup.Auth0;
 
-namespace CoreTests.Actions.MyNotificationsUpdateWebPush
+namespace CoreTests.Actions.MyNotificationsTestWebPush
 {
-    public static class MyNotificationsUpdateWebPushFixture
+    public static class MyNotificationsTestWebPushFixture
     {
         public static User CreateUser(string firstName, string lastName) => new()
         {

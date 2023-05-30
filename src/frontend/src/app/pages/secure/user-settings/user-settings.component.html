@@ -40,10 +40,11 @@
                                     is invalid.</small>
                             </div>
 
+
                             <div class="col-12">
                                 <div class="pr-5 flex align-items-center justify-content-end">
                                     <button pButton [loading]="isSaving" type="submit" label="Save"
-                                        class="p-button-outlined p-button-primary"></button>
+                                        class="ml-1 p-button-outlined p-button-primary"></button>
                                 </div>
                             </div>
 
@@ -60,6 +61,22 @@
                 <p-tag *ngFor="let role of auth.dbUser.roles" severity="success" styleClass="mr-2 mb-1"
                     icon="pi pi-info-circle" [value]="role">
                 </p-tag>
+
+                <h3 class="text-xl font-bold m-0">Browser WebPush:</h3>
+                <p-tag *ngIf="auth.webPushActive" severity="success" styleClass="mr-2 mb-1" icon="pi pi-info-circle"
+                    value="Active"> </p-tag>
+                <p-tag *ngIf="!auth.webPushActive" severity="danger" styleClass="mr-2 mb-1" icon="pi pi-info-circle"
+                    value="Inactive"> </p-tag>
+
+                <p class="m-0 p-0">Confirmed notifications (browser): {{readNotificationsCount}}</p>
+
+                <button pButton [loading]="isResetting" [disabled]="readNotificationsCount === 0"
+                    (click)="onResetClick()" label="Reset notifications"
+                    class="p-button-outlined p-button-danger"></button>
+
+                <button pButton [loading]="isTesting" (click)="onTestClick()" label="Test notifications"
+                    class="ml-1 p-button-outlined p-button-secondary"></button>
+
             </p-card>
         </div>
     </div>

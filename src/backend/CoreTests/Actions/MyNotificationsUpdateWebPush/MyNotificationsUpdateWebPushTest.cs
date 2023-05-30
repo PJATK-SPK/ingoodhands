@@ -3,11 +3,10 @@ using Core;
 using Core.Actions.MyNotifications.UpdateWebPush;
 using Core.Database;
 using Core.Setup.Enums;
-using CoreTests.Actions.MyNotificationsGetListLast30DaysTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestsBase;
 
-namespace CoreTests.Actions.MyNotificationsUpdateWebPushTest
+namespace CoreTests.Actions.MyNotificationsUpdateWebPush
 {
     [TestClass()]
     public class MyNotificationsUpdateWebPushTest
