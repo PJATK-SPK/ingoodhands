@@ -5,7 +5,6 @@ using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Orders.Actions.DeliveriesActions.DeliveriesGetSingle;
 using Core.Services;
 
 namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
@@ -37,10 +36,7 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
 
             var decodedDeliveryId = _hashids.DecodeSingleLong(id);
             var dbResult = await _appDbContext.Deliveries
-                .Include(c => c.Warehouse!)
-                    .ThenInclude(c => c.Users!)
-                        .ThenInclude(c => c.Roles)!
-                            .ThenInclude(c => c.Role)
+                .Include(c => c.Order)
                 .SingleOrDefaultAsync(c => c.Id == decodedDeliveryId && c.Status == DbEntityStatus.Active);
 
             if (dbResult == null)
@@ -58,12 +54,10 @@ namespace Orders.Actions.DeliveriesActions.DeliveriesPickup
             dbResult!.TripStarted = true;
             await _appDbContext.SaveChangesAsync();
 
-            var warehouseKeepers = dbResult!.Warehouse!.Users!.Where(c => c.Roles!.Any(s => s.Role!.Name == RoleName.WarehouseKeeper));
+            await _notificationService.AddAsync(dbResult.DelivererUserId.Value, $"Warehouse keeper gave you items for delivery {dbResult.Name}!");
 
-            foreach (var warehouseKeeper in warehouseKeepers!)
-            {
-                await _notificationService.AddAsync(warehouseKeeper.Id, $"Time to prepare delivery: {dbResult.Name}!");
-            }
+            var needyUserId = dbResult.Order!.OwnerUserId;
+            await _notificationService.AddAsync(needyUserId, $"Delivery {dbResult.Name} of your order is on the way to you!");
 
             return new OkObjectResult(new { Status = "OK" });
         }

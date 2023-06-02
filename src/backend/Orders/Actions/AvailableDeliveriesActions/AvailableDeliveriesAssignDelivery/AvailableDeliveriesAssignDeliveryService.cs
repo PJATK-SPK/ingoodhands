@@ -49,6 +49,7 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
             var encodedDeliveryId = _hashIds.DecodeSingleLong(id);
 
             var dbResult = await _appDbContext.Deliveries
+                .Include(c => c.Warehouse!).ThenInclude(c => c.Users!).ThenInclude(c => c.Roles!).ThenInclude(c => c.Role)
                 .Include(c => c.Order)
                     .ThenInclude(c => c!.OwnerUser)
                 .SingleOrDefaultAsync(c => c.Id == encodedDeliveryId);
@@ -65,7 +66,14 @@ namespace Orders.Actions.AvailableDeliveriesActions.AvailableDeliveriesAssignDel
 
             var needyUserId = dbResult.Order!.OwnerUserId;
 
-            await _notificationService.AddAsync(needyUserId, $"Delivery of your order: {dbResult.Order.Name} is being processed!");
+            await _notificationService.AddAsync(needyUserId, $"Deliverer assigned to your order: {dbResult.Order.Name}!");
+
+            var warehouseKeepers = dbResult!.Warehouse!.Users!.Where(c => c.Roles!.Any(s => s.Role!.Name == RoleName.WarehouseKeeper));
+
+            foreach (var warehouseKeeper in warehouseKeepers!)
+            {
+                await _notificationService.AddAsync(warehouseKeeper.Id, $"Time to prepare delivery: {dbResult.Name}!");
+            }
 
             return new OkResult();
         }
