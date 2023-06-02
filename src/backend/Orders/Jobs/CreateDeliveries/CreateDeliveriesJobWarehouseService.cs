@@ -94,11 +94,11 @@ namespace Orders.Jobs.CreateDeliveries
 
             result.DeliveryProducts = CreateDeliveryProductsForWarehouse(result, remainder, stocks);
 
-            var warehouseKeepers = warehouse.Users!.Where(c => c.Roles!.Any(r => r.Role!.Name == RoleName.WarehouseKeeper)).ToList();
+            var users = warehouse.Users!.Where(c => c.Roles!.Any(r => r.Role!.Name == RoleName.WarehouseKeeper || r.Role!.Name == RoleName.Deliverer)).ToList();
 
-            foreach (var warehouseKeeper in warehouseKeepers)
+            foreach (var user in users)
             {
-                await _notificationService.AddAsync(warehouseKeeper.Id, $"New delivery {result.Name} has been assigned to your warehouse!");
+                await _notificationService.AddAsync(user.Id, $"New delivery {result.Name} has been assigned to your warehouse!");
             }
 
             return result;

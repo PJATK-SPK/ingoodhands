@@ -8,7 +8,8 @@
                             <h2>{{ order.name }}</h2>
                         </div>
 
-                        <div class="flex pb-3 align-items-center justify-content-start">
+                        <div class="flex pb-3 align-items-center justify-content-start"
+                            *ngIf="order.percentage !== 100">
                             <p-confirmPopup></p-confirmPopup>
                             <button pButton icon="pi pi-times" class="p-button-outlined p-button-danger"
                                 label="CANCEL ORDER" (click)="confirm($event)"></button>
