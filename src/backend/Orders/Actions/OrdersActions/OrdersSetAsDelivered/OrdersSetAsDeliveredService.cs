@@ -1,6 +1,7 @@
 ﻿using Core.Database;
 using Core.Database.Models.Auth;
 using Core.Exceptions;
+using Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -10,13 +11,16 @@ namespace Orders.Actions.OrdersActions.OrdersSetAsDelivered
     {
         private readonly AppDbContext _appDbContext;
         private readonly ILogger<OrdersSetAsDeliveredService> _logger;
+        private readonly NotificationService _notificationService;
 
         public OrdersSetAsDeliveredService(
             AppDbContext appDbContext,
-            ILogger<OrdersSetAsDeliveredService> logger)
+            ILogger<OrdersSetAsDeliveredService> logger,
+            NotificationService notificationService)
         {
             _appDbContext = appDbContext;
             _logger = logger;
+            _notificationService = notificationService;
         }
 
         public async Task SetAsDelivered(long orderId, long deliveryId, User currentUser)
@@ -47,6 +51,8 @@ namespace Orders.Actions.OrdersActions.OrdersSetAsDelivered
 
             delivery.IsDelivered = true;
             delivery.UpdatedAt = DateTime.UtcNow;
+
+            await _notificationService.AddAsync(delivery.DelivererUserId!.Value, $"Delivery {delivery.Name} has been completed!");
 
             await _appDbContext.SaveChangesAsync();
         }
