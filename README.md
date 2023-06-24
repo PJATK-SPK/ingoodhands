@@ -14,12 +14,9 @@
 [![Stargazers][stars-shield]][stars-url]
 [![MIT License][license-shield]][license-url]
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=coverage)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=PJATK-SPK_ingoodhands&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=PJATK-SPK_ingoodhands)
-[![Frontend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-fe.yml)
-[![Backend deploy](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml/badge.svg)](https://github.com/PJATK-SPK/ingoodhands/actions/workflows/deploy-be.yml)
 
-<div align="center"><a href="https://sharing.clickup.com/26457183/l/h/4-44518046-1/6dee8c3b461754a" target="_blank"><img width="200px" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
+<div align="center"><a href="https://github.com/PJATK-SPK/ingoodhands/tree/main/docs" target="_blank"><img width="200px" height="auto" src="https://i.imgur.com/XbFYBra.png"></img></a></div>
 
 <br />
 <div align="center">
@@ -28,12 +25,12 @@
 
   <p align="center">
     The "ingoodhands" application facilitates the donation of food and defensive supplies from donors to those in need in Ukraine through the completion of a form, selection of a warehouse, delivery by a supplier and closing of the delivery in the system upon successful delivery.
+    <br /> <br />
+    <a href="https://github.com/PJATK-SPK/ingoodhands/tree/main/docs"><strong>Video »</strong></a> <br />
+    <a href="https://github.com/PJATK-SPK/ingoodhands/tree/main/docs"><strong>Presentation »</strong></a> <br />
+    <a href="https://github.com/PJATK-SPK/ingoodhands/tree/main/docs"><strong>Clickup »</strong></a>
     <br />
-    <a href="https://github.com/PJATK-SPK/ingoodhands"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/PJATK-SPK/ingoodhands">View Demo</a>
-    ·
     <a href="https://github.com/PJATK-SPK/ingoodhands/issues">Report Bug</a>
     ·
     <a href="https://github.com/PJATK-SPK/ingoodhands/issues">Request Feature</a>
